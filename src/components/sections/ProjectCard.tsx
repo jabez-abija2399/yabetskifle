@@ -48,7 +48,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
       {/* Title + Description */}
       <div className="flex-1 space-y-2">
         <h3 className="text-xl font-bold tracking-tight">{project.title}</h3>
-        <p className="text-sm text-muted-foreground leading-relaxed">
+        <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
           {project.description}
         </p>
       </div>
