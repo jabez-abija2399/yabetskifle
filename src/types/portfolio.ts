@@ -21,5 +21,6 @@ export interface Project {
   purpose: string;
   project_type: string;
   what_i_learned: string;
+  featured: boolean; 
 }
 
