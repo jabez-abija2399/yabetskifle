@@ -14,22 +14,29 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
   return (
     // The card container with glass effect and hover animation
     <div className="group relative flex flex-col rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm p-6 gap-4 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-1">
-      
-      {/* Project Image */}
-      {project.image_url && (
-        <div className="overflow-hidden rounded-xl aspect-video bg-muted">
-          <img 
-            src={project.image_url} 
+
+      {/* Show first image as thumbnail, with count badge if more exist */}
+      {project.images && project.images.length > 0 && (
+        <div className="relative overflow-hidden rounded-xl aspect-video bg-muted">
+          <img
+            src={project.images[0]}
             alt={project.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
+          {/* Badge showing total image count */}
+          {project.images.length > 1 && (
+            <span className="absolute bottom-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded-full">
+              +{project.images.length - 1} more
+            </span>
+          )}
         </div>
       )}
+
 
       {/* Tags */}
       <div className="flex flex-wrap gap-2">
         {project.tags.map((tag) => (
-          <span 
+          <span
             key={tag}
             className="text-xs font-medium px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20"
           >
