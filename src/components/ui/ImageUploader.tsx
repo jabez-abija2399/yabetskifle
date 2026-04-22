@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { uploadProjectImage } from "@/lib/storage"
 import { ImagePlus, X, Loader2 } from "lucide-react"
+import Image from "next/image"
 
 interface ImageUploaderProps {
   onUpload: (url: string) => void
@@ -73,7 +74,9 @@ export const ImageUploader = ({ onUpload }: ImageUploaderProps) => {
         <div className="grid grid-cols-4 gap-2">
           {previews.map((src, i) => (
             <div key={i} className="relative aspect-square rounded-lg overflow-hidden border border-border">
-              <img src={src} alt={`Preview ${i + 1}`} className="w-full h-full object-cover" />
+              <Image src={src} alt={`Preview ${i + 1}`}
+                fill
+                className="object-cover" />
               <button
                 type="button"
                 onClick={() => removePreview(i)}
