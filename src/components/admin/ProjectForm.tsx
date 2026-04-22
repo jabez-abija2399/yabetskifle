@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ImageUploader } from "@/components/ui/ImageUploader"
 import { Loader2, X } from "lucide-react"
+import Image from "next/image"
 
 // The "contract" for this component's props
 interface ProjectFormProps {
@@ -55,13 +56,13 @@ export const ProjectForm = ({
         what_i_learned: formData.get("what_i_learned") as string,
         featured: initialData?.featured ?? false,
       },
-      
+
     )
 
     // Only reset if we are in Add mode (edit mode closes the panel)
     if (!isEditMode) {
       setImages([])
-      ;(e.target as HTMLFormElement).reset()
+        ; (e.target as HTMLFormElement).reset()
     }
   }
 
@@ -87,7 +88,9 @@ export const ProjectForm = ({
           <div className="flex gap-2 flex-wrap">
             {images.map((url, i) => (
               <div key={i} className="relative w-24 h-24 rounded-lg overflow-hidden border border-border">
-                <img src={url} alt={`Image ${i + 1}`} className="w-full h-full object-cover" />
+                <Image src={url} alt={`Image ${i + 1}`}
+                  fill
+                  className="object-cover" />
                 <button type="button"
                   onClick={() => setImages(prev => prev.filter((_, idx) => idx !== i))}
                   className="absolute top-1 right-1 bg-black/60 text-white rounded-full p-0.5">
@@ -134,6 +137,19 @@ export const ProjectForm = ({
       <div className="space-y-1">
         <label className="text-sm font-semibold">Display Order</label>
         <Input name="order_index" type="number" defaultValue={initialData?.order_index ?? 0} />
+      </div>
+
+      <div className="flex items-center gap-2 md:col-span-2 p-3 rounded-lg border border-border bg-muted/30">
+        <input
+          type="checkbox"
+          name="featured"
+          id="featured"
+          defaultChecked={initialData?.featured}
+          className="w-4 h-4 accent-primary"
+        />
+        <label htmlFor="featured" className="text-sm font-semibold cursor-pointer">
+          Feature this project on the homepage
+        </label>
       </div>
 
       <div className="space-y-1 md:col-span-2">
