@@ -56,5 +56,25 @@ export const useProjects = () => {
     if (error) toast.error("Failed to delete project")
   }
 
-  return { projects, isLoading, addProject, deleteProject }
+  const updateProject = async (id: string, updatedData: Omit<Project, "id">) => {
+  setIsLoading(true)
+  const { data, error } = await supabase
+    .from("projects")
+    .update(updatedData)   // Send only the changed fields
+    .eq("id", id)          // Find the project by its ID
+    .select()
+    .single()
+  if (data) {
+    // Replace the old project in local state with the updated one
+    setProjects((prev) =>
+      prev.map((p) => (p.id === id ? data : p))
+    )
+    toast.success("Project updated!")
+  }
+  if (error) toast.error("Failed to update: " + error.message)
+  setIsLoading(false)
+}
+
+
+  return { projects, isLoading, addProject, deleteProject, updateProject }
 }
