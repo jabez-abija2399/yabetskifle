@@ -74,7 +74,7 @@ export const useProjects = () => {
   if (error) toast.error("Failed to update: " + error.message)
   setIsLoading(false)
 }
+const featuredProjects = projects.filter((p) => p.featured)
 
-
-  return { projects, isLoading, addProject, deleteProject, updateProject }
+  return { projects, featuredProjects, isLoading, addProject, deleteProject, updateProject }
 }
