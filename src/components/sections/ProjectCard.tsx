@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button"
 import { Project } from "@/types/portfolio"
 
 // We use ExternalLinkIcon from lucide (comes with Nova preset)
-import { ExternalLink, Code2 } from "lucide-react"
+import { ExternalLink, Code2, ArrowRight } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 import { FaGithub } from "react-icons/fa"
 
@@ -19,9 +20,10 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
       {/* Show first image as thumbnail, with count badge if more exist */}
       {project.images && project.images.length > 0 && (
         <div className="relative overflow-hidden rounded-xl aspect-video bg-muted">
-          <img
+          <Image
             src={project.images[0]}
             alt={project.title}
+            fill
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
           {/* Badge showing total image count */}
@@ -72,6 +74,10 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
             </a>
           </Button>
         )}
+        <div className="flex items-center gap-2 text-sm text-primary font-medium mt-auto group-hover:translate-x-1 transition-transform">
+          View Project Details
+          <ArrowRight className="w-4 h-4" />
+        </div>
       </div>
     </Link>
   )
