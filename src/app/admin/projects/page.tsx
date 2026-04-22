@@ -32,6 +32,14 @@ export default function AdminProjectsPage() {
     setIsSaving(false)
     closeModal()
   }
+  const handleToggleFeatured = async (id: string, featured: boolean) => {
+  await updateProject(id, {
+    // We only change the featured field, keep everything else
+    ...projects.find((p) => p.id === id)!,
+    featured,
+  })
+}
+
 
   return (
     <div className="max-w-4xl mx-auto py-16 px-6 space-y-8">
@@ -56,6 +64,7 @@ export default function AdminProjectsPage() {
               project={project}
               onEdit={openEdit}
               onDelete={deleteProject}
+              onToggleFeatured={handleToggleFeatured}
             />
           ))}
           {projects.length === 0 && (
