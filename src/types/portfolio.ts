@@ -8,12 +8,18 @@ export interface HeroData {
 }
 
 export interface Project {
-  id: string;          
+  id: string;
   title: string;
   description: string;
-  image_url: string;
-  tags: string[];       
+  images: string[];       // ✅ Array of image URLs (was image_url: string)
+  tags: string[];
   live_url: string;
   github_url: string;
-  order_index: number;  
+  order_index: number;
+  my_role: string;
+  key_features: string;
+  purpose: string;
+  project_type: string;
+  what_i_learned: string;
 }
+
