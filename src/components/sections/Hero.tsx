@@ -1,6 +1,5 @@
 import { Button } from "../ui/button";
 
-
 interface HeroProps {
     name: string;
     role: string;
