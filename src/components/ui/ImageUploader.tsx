@@ -5,30 +5,41 @@ import { uploadProjectImage } from "@/lib/storage"
 import { ImagePlus, X, Loader2 } from "lucide-react"
 
 interface ImageUploaderProps {
-  // Called by the parent (admin form) when an upload finishes
   onUpload: (url: string) => void
 }
 
 export const ImageUploader = ({ onUpload }: ImageUploaderProps) => {
   const [isUploading, setIsUploading] = useState(false)
-  const [preview, setPreview] = useState<string | null>(null)
+  // Changed from single string to array of previews
+  const [previews, setPreviews] = useState<string[]>([])
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
+    // Get ALL selected files as an array
+    const files = Array.from(e.target.files ?? [])
+    if (files.length === 0) return
 
-    // Show a local preview immediately — no waiting!
-    setPreview(URL.createObjectURL(file))
     setIsUploading(true)
 
-    // Upload to Supabase and get the public URL back
-    const publicUrl = await uploadProjectImage(file)
+    // Show local previews immediately for ALL files (no waiting for upload)
+    const localPreviews = files.map((file) => URL.createObjectURL(file))
+    setPreviews(localPreviews)
 
-    if (publicUrl) {
-      // Pass the URL up to the parent form
-      onUpload(publicUrl)
-    }
+    // Upload ALL files in parallel — much faster than sequential uploads!
+    const uploadResults = await Promise.all(
+      files.map((file) => uploadProjectImage(file))
+    )
+
+    // Filter out any uploads that failed (returned null)
+    const successfulUrls = uploadResults.filter(Boolean) as string[]
+
+    // Notify the parent form of each new image URL
+    successfulUrls.forEach((url) => onUpload(url))
+
     setIsUploading(false)
+  }
+
+  const removePreview = (index: number) => {
+    setPreviews((prev) => prev.filter((_, i) => i !== index))
   }
 
   return (
@@ -38,6 +49,7 @@ export const ImageUploader = ({ onUpload }: ImageUploaderProps) => {
         <input
           type="file"
           accept="image/*"
+          multiple          // ← This is the key addition!
           className="hidden"
           onChange={handleFileChange}
           disabled={isUploading}
@@ -45,26 +57,32 @@ export const ImageUploader = ({ onUpload }: ImageUploaderProps) => {
         {isUploading ? (
           <div className="flex flex-col items-center gap-2 text-muted-foreground">
             <Loader2 className="w-6 h-6 animate-spin" />
-            <span className="text-sm">Uploading...</span>
+            <span className="text-sm">Uploading {previews.length} image{previews.length !== 1 ? "s" : ""}...</span>
           </div>
         ) : (
           <div className="flex flex-col items-center gap-2 text-muted-foreground">
             <ImagePlus className="w-6 h-6" />
-            <span className="text-sm">Click to upload image</span>
+            <span className="text-sm font-medium">Click to upload images</span>
+            <span className="text-xs opacity-60">You can select multiple files</span>
           </div>
         )}
       </label>
 
-      {/* Preview */}
-      {preview && (
-        <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-border">
-          <img src={preview} alt="Preview" className="w-full h-full object-cover" />
-          <button
-            onClick={() => setPreview(null)}
-            className="absolute top-2 right-2 bg-black/60 text-white rounded-full p-1"
-          >
-            <X className="w-4 h-4" />
-          </button>
+      {/* Preview Grid — shows all selected images */}
+      {previews.length > 0 && (
+        <div className="grid grid-cols-4 gap-2">
+          {previews.map((src, i) => (
+            <div key={i} className="relative aspect-square rounded-lg overflow-hidden border border-border">
+              <img src={src} alt={`Preview ${i + 1}`} className="w-full h-full object-cover" />
+              <button
+                type="button"
+                onClick={() => removePreview(i)}
+                className="absolute top-1 right-1 bg-black/60 text-white rounded-full p-0.5 hover:bg-black/80"
+              >
+                <X className="w-3 h-3" />
+              </button>
+            </div>
+          ))}
         </div>
       )}
     </div>
