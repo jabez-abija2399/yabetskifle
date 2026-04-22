@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button"
 import { Project } from "@/types/portfolio"
 
 // We use ExternalLinkIcon from lucide (comes with Nova preset)
-import { ExternalLink, Github } from "lucide-react"
+import { ExternalLink, Code2 } from "lucide-react"
+import { FaGithub } from "react-icons/fa"
 
 interface ProjectCardProps {
   project: Project
@@ -58,7 +59,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
         {project.github_url && (
           <Button asChild size="sm" variant="outline" className="flex-1 rounded-full gap-2">
             <a href={project.github_url} target="_blank" rel="noopener noreferrer">
-              <Github className="w-4 h-4" />
+              <FaGithub className="w-4 h-4" />
               Code
             </a>
           </Button>
