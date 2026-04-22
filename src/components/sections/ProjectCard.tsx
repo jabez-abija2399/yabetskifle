@@ -4,6 +4,7 @@ import { Project } from "@/types/portfolio"
 
 // We use ExternalLinkIcon from lucide (comes with Nova preset)
 import { ExternalLink, Code2 } from "lucide-react"
+import Link from "next/link"
 import { FaGithub } from "react-icons/fa"
 
 interface ProjectCardProps {
@@ -17,6 +18,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
 
       {/* Show first image as thumbnail, with count badge if more exist */}
       {project.images && project.images.length > 0 && (
+        <Link href={`/projects/${project.id}`} className="group cursor-pointer">
         <div className="relative overflow-hidden rounded-xl aspect-video bg-muted">
           <img
             src={project.images[0]}
@@ -30,6 +32,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
             </span>
           )}
         </div>
+        </Link>
       )}
 
 
