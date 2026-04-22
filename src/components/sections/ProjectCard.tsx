@@ -14,11 +14,10 @@ interface ProjectCardProps {
 export const ProjectCard = ({ project }: ProjectCardProps) => {
   return (
     // The card container with glass effect and hover animation
-    <div className="group relative flex flex-col rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm p-6 gap-4 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-1">
-
+    // <div className="group relative flex flex-col rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm p-6 gap-4 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-1">
+    <Link href={`/projects/${project.id}`} className="group relative flex flex-col rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm p-6 gap-4 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-1">
       {/* Show first image as thumbnail, with count badge if more exist */}
       {project.images && project.images.length > 0 && (
-        <Link href={`/projects/${project.id}`} className="group cursor-pointer">
         <div className="relative overflow-hidden rounded-xl aspect-video bg-muted">
           <img
             src={project.images[0]}
@@ -32,7 +31,6 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
             </span>
           )}
         </div>
-        </Link>
       )}
 
 
@@ -75,6 +73,6 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
           </Button>
         )}
       </div>
-    </div>
+    </Link>
   )
 }
