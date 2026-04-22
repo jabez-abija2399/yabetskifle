@@ -12,7 +12,8 @@ interface ProjectFormProps {
   // If provided → Edit mode. If not → Add mode
   initialData?: Project
   isSaving: boolean
-  onSubmit: (data: Omit<Project, "id">, images: string[]) => Promise<void>
+  // onSubmit: (data: Omit<Project, "id">, images: string[]) => Promise<void>
+  onSubmit: (data: Omit<Project, "id">) => Promise<void>
   onCancel?: () => void  // Only needed in Edit mode
 }
 
@@ -52,8 +53,9 @@ export const ProjectForm = ({
         purpose: formData.get("purpose") as string,
         project_type: formData.get("project_type") as string,
         what_i_learned: formData.get("what_i_learned") as string,
+        featured: initialData?.featured ?? false,
       },
-      images
+      
     )
 
     // Only reset if we are in Add mode (edit mode closes the panel)
