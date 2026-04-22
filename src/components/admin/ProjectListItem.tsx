@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { FaGithub } from "react-icons/fa"
 import { Trash2, ExternalLink, Pencil, Star } from "lucide-react"
+import Image from "next/image"
 
 interface ProjectListItemProps {
   project: Project
@@ -19,8 +20,11 @@ export const ProjectListItem = ({ project, onEdit, onDelete, onToggleFeatured }:
 
       {/* Thumbnail */}
       {project.images?.[0] && (
-        <img src={project.images[0]} alt={project.title}
-          className="w-14 h-14 rounded-lg object-cover shrink-0 border border-border" />
+        <div className="relative w-14 h-14 shrink-0">
+          <Image src={project.images[0]} alt={project.title}
+            fill
+            className="object-cover" />
+        </div>
       )}
 
       {/* Info */}
