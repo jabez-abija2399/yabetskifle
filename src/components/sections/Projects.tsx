@@ -1,6 +1,9 @@
 // Pure display component - receives an array of projects
 import { Project } from "@/types/portfolio"
 import { ProjectCard } from "./ProjectCard"
+import { Button } from "../ui/button"
+import Link from "next/link"
+import { ArrowRight } from "lucide-react"
 
 interface ProjectsProps {
   projects: Project[]
@@ -10,7 +13,7 @@ interface ProjectsProps {
 export const Projects = ({ projects, isLoading }: ProjectsProps) => {
   return (
     <section id="projects" className="py-24 px-6 max-w-6xl mx-auto">
-      
+
       {/* Section Header */}
       <div className="text-center space-y-4 mb-16">
         <p className="text-sm font-semibold uppercase tracking-widest text-primary">
@@ -48,6 +51,18 @@ export const Projects = ({ projects, isLoading }: ProjectsProps) => {
         <p className="text-center text-muted-foreground py-20">
           No projects yet. Add some from the Admin panel!
         </p>
+      )}
+      {/* "See All" Button */}
+      {!isLoading && projects.length > 0 && (
+        <div className="text-center mt-12">
+          <Button asChild size="lg" variant="outline" className="rounded-full px-8 gap-2">
+            <Link href="/projects">
+              View All Projects
+              <ArrowRight className="w-4 h-4" />
+              
+            </Link>
+          </Button>
+        </div>
       )}
     </section>
   )
