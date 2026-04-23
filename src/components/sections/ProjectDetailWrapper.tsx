@@ -14,7 +14,7 @@ interface Props { id: string }
 export const ProjectDetailWrapper = ({ id }: Props) => {
   const [project, setProject] = useState<Project | null>(null)
   const [isLoading, setIsLoading] = useState(true)
-  const [currentImage, setCurrentImage] = useState(0)
+  const [currentImage, setCurrentImage] = useState(0) // Used only for the gallery section
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -27,7 +27,6 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
     fetchProject()
   }, [id])
 
-  // ── Loading State ──────────────────────────────────
   if (isLoading) return (
     <div className="animate-pulse space-y-0">
       <div className="h-[60vh] bg-muted w-full" />
@@ -45,245 +44,209 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
   if (!project) return (
     <div className="text-center py-32">
       <p className="text-xl text-muted-foreground">Project not found.</p>
-      <Link href="/projects" className="text-primary underline mt-2 block">← Back</Link>
+      <Link href="/projects" className="text-primary underline mt-2 block">← Back to Projects</Link>
     </div>
   )
 
-  // ── Main Render ────────────────────────────────────
   return (
-    <div>
-
-      {/* ── HERO SECTION: Full-width image with overlay ── */}
-      <div className="relative h-[65vh] min-h-[420px] overflow-hidden bg-muted">
-        {project.images?.[0] ? (
-          <Image
-            src={project.images[0]}
-            alt={project.title}
-            className="w-full h-full object-cover"
-          />
+    <div className="pb-24">
+      {/* ── HERO SECTION: Static Cover with First Image ── */}
+      <div className="relative h-[80vh] min-h-[480px] overflow-hidden bg-black/5">
+        {project.images?.length > 0 ? (
+          <>
+            <Image
+              src={project.images[0]} // ✅ Always use first image
+              alt="Backdrop"
+              fill
+              className="h-full w-full object-cover blur-3xl opacity-20 scale-110"
+            />
+            <div className="relative w-full h-full p-10 md:p-16">
+              <Image
+                src={project.images[0]} // ✅ Always use first image
+                alt={project.title}
+                fill
+                priority
+                quality={100}
+                className="object-contain drop-shadow-2xl"
+              />
+            </div>
+          </>
         ) : (
-          // Gradient fallback if no image
-          <div className="w-full h-full bg-gradient-to-br from-primary/20 via-background to-primary/5" />
+          <div className="w-full h-full bg-gradient-to-br from-primary/10 via-background to-primary/5" />
         )}
 
-        {/* Dark gradient overlay — text readable on any image */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
 
-        {/* Back button — top left */}
-        <div className="absolute top-6 left-6">
+        <div className="absolute top-6 left-6 z-10">
           <Link
             href="/projects"
-            className="inline-flex items-center gap-2 text-sm text-white/80 hover:text-white bg-black/30 backdrop-blur-sm px-4 py-2 rounded-full transition-colors"
+            className="inline-flex items-center gap-2 text-sm font-medium bg-background/50 backdrop-blur-md hover:bg-background border border-border px-5 py-2.5 rounded-full transition-all text-foreground"
           >
             <ArrowLeft className="w-4 h-4" />
-            All Projects
+            Back to Projects
           </Link>
         </div>
 
-        {/* Title content — bottom left */}
-        <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
-          <div className="max-w-6xl mx-auto space-y-3">
-            {/* Badges */}
+        <div className="absolute bottom-8 left-0 right-0 px-6">
+          <div className="max-w-6xl mx-auto space-y-4">
             <div className="flex flex-wrap gap-2">
-              <span className="text-xs font-bold uppercase tracking-widest bg-primary/80 text-white px-3 py-1 rounded-full backdrop-blur-sm">
+              <span className="text-[10px] font-bold uppercase tracking-widest bg-primary text-primary-foreground px-3 py-1 rounded-full">
                 {project.project_type}
               </span>
               {project.featured && (
-                <span className="flex items-center gap-1 text-xs bg-yellow-500/80 text-white px-3 py-1 rounded-full backdrop-blur-sm">
+                <span className="flex items-center gap-1 text-[10px] font-bold bg-yellow-500/10 text-yellow-600 px-3 py-1 rounded-full border border-yellow-500/20">
                   <Star className="w-3 h-3 fill-current" /> Featured
                 </span>
               )}
             </div>
-
-            {/* Title */}
-            <h1 className="text-4xl md:text-6xl font-extrabold text-white tracking-tight drop-shadow-lg">
+            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight max-w-4xl">
               {project.title}
             </h1>
-
-            {/* Tags row */}
-            <div className="flex flex-wrap gap-2">
-              {project.tags.map(tag => (
-                <span key={tag} className="text-xs text-white/80 bg-white/10 backdrop-blur-sm px-2.5 py-1 rounded-full border border-white/20">
-                  {tag}
-                </span>
-              ))}
-            </div>
           </div>
         </div>
       </div>
 
-      {/* ── BODY: Two-column layout ── */}
-      <div className="max-w-6xl mx-auto px-6 py-12 grid lg:grid-cols-3 gap-12">
-
-        {/* ── LEFT: Main Content (2/3 width) ── */}
+      <div className="max-w-6xl mx-auto px-6 grid lg:grid-cols-3 gap-12 pt-8">
+        
         <main className="lg:col-span-2 space-y-12">
-
-          {/* Description */}
-          <div className="space-y-3">
-            <h2 className="text-2xl font-bold">About This Project</h2>
-            <p className="text-muted-foreground leading-relaxed text-lg">
+          
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold">The Story</h2>
+            <p className="text-muted-foreground text-lg leading-relaxed">
               {project.description}
             </p>
           </div>
 
-          {/* Image Gallery (if more than 1 image) */}
-          {project.images?.length > 1 && (
-            <div className="space-y-4">
-              <h2 className="text-2xl font-bold">Gallery</h2>
-
-              {/* Main selected image */}
-              <div className="aspect-video rounded-2xl overflow-hidden border border-border bg-muted shadow-xl">
-                <Image
-                  src={project.images[currentImage]}
-                  alt={`Screenshot ${currentImage + 1}`}
-                  className="w-full h-full object-cover transition-opacity duration-300"
+          {/* ── GALLERY SECTION: Interactive ── */}
+          {project.images?.length > 0 && (
+            <div className="space-y-4 pt-4">
+              <h2 className="text-2xl font-bold">Project Gallery</h2>
+              
+              <div className="relative aspect-video rounded-3xl overflow-hidden border border-border bg-muted/30 shadow-2xl">
+                 <Image
+                  src={project.images[currentImage]} // ✅ Interactive with thumbnails
+                  fill
+                  className="object-cover blur-2xl opacity-10 scale-110"
+                  alt=""
                 />
+                <div className="relative w-full h-full p-4 md:p-8">
+                  <Image
+                    src={project.images[currentImage]} // ✅ Interactive with thumbnails
+                    fill
+                    quality={100}
+                    className="object-contain drop-shadow-xl transition-all duration-500"
+                    alt={`Preview ${currentImage + 1}`}
+                  />
+                </div>
               </div>
 
-              {/* Thumbnail strip */}
-              <div className="flex gap-2 overflow-x-auto pb-2">
-                {project.images.map((img, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setCurrentImage(i)}
-                    className={`shrink-0 w-24 h-16 rounded-xl overflow-hidden border-2 transition-all hover:scale-105 ${
-                      i === currentImage
-                        ? "border-primary ring-2 ring-primary/30"
-                        : "border-border opacity-60 hover:opacity-100"
-                    }`}
-                  >
-                    <Image src={img} alt={`Thumbnail ${i + 1}`} className="w-full h-full object-cover" />
-                  </button>
-                ))}
-              </div>
-
-              {/* Image counter */}
-              <p className="text-xs text-muted-foreground text-center">
-                {currentImage + 1} / {project.images.length}
-              </p>
+              {/* Thumbnails to change the Gallery Image */}
+              {project.images.length > 1 && (
+                <div className="flex gap-3 overflow-x-auto pb-2">
+                  {project.images.map((img, i) => (
+                    <button
+                      key={img}
+                      onClick={() => setCurrentImage(i)}
+                      className={`relative shrink-0 w-24 h-16 rounded-xl overflow-hidden border-2 transition-all ${
+                        i === currentImage ? "border-primary scale-105 shadow-md" : "border-transparent opacity-50 hover:opacity-100"
+                      }`}
+                    >
+                      <Image src={img} alt={`Thumb ${i}`} fill className="object-cover" />
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 
-          {/* Purpose */}
+          {/* Purpose, Features, and Lessons Learned */}
           {project.purpose && (
-            <div className="space-y-3">
-              <h2 className="text-2xl font-bold flex items-center gap-2">
-                <Briefcase className="w-5 h-5 text-primary" />
-                Purpose
-              </h2>
-              <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
+            <div className="space-y-4 p-8 rounded-3xl bg-secondary/30 border border-secondary shadow-sm">
+              <h3 className="text-xl font-bold flex items-center gap-2">
+                <Briefcase className="w-5 h-5 text-primary" /> The Mission
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
                 {project.purpose}
               </p>
             </div>
           )}
 
-          {/* Key Features — displayed as a visual list */}
           {project.key_features && (
-            <div className="space-y-4">
-              <h2 className="text-2xl font-bold flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-primary" />
-                Key Features
-              </h2>
-              {/* Split by newline or comma and display as items */}
-              <ul className="space-y-3">
-                {project.key_features
-                  .split(/\n|,/)
-                  .map(f => f.trim())
-                  .filter(Boolean)
-                  .map((feature, i) => (
-                    <li key={i} className="flex items-start gap-3 p-3 rounded-xl bg-muted/50 border border-border/50">
-                      <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                      <span className="text-sm">{feature}</span>
-                    </li>
-                  ))}
-              </ul>
+            <div className="space-y-4 pt-4">
+              <h3 className="text-xl font-bold flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-green-500" /> Key Features
+              </h3>
+              <div className="grid sm:grid-cols-2 gap-3">
+                {project.key_features.split(/\n|,/).map(f => f.trim()).filter(Boolean).map((feature) => (
+                  <div key={feature} className="flex items-center gap-3 p-4 rounded-2xl bg-card border border-border">
+                    <div className="h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
+                    <span className="text-sm font-medium">{feature}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 
-          {/* What I Learned — highlighted box */}
           {project.what_i_learned && (
-            <div className="relative p-8 rounded-2xl overflow-hidden border border-primary/20">
-              {/* Gradient background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-primary/0 pointer-events-none" />
-
-              <div className="relative space-y-3">
-                <h2 className="text-2xl font-bold flex items-center gap-2">
-                  <Lightbulb className="w-5 h-5 text-yellow-500" />
-                  What I Learned
-                </h2>
-                <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
-                  {project.what_i_learned}
-                </p>
-              </div>
+            <div className="space-y-4 p-8 rounded-3xl bg-yellow-500/5 border border-yellow-500/10 shadow-sm">
+              <h3 className="text-xl font-bold flex items-center gap-2">
+                <Lightbulb className="w-5 h-5 text-yellow-500" /> What I Learned
+              </h3>
+              <p className="text-muted-foreground italic leading-relaxed">
+                "{project.what_i_learned}"
+              </p>
             </div>
           )}
         </main>
 
-        {/* ── RIGHT: Sticky Sidebar (1/3 width) ── */}
-        <aside className="space-y-6 lg:sticky lg:top-24 lg:self-start">
-
-          {/* Action Buttons */}
-          <div className="space-y-3">
+        {/* Sidebar and Action Buttons stay same */}
+        <aside className="space-y-6 lg:sticky lg:top-28 lg:self-start">
+          <div className="flex gap-3">
             {project.live_url && (
-              <Button asChild size="lg" className="w-full rounded-xl gap-2">
-                <a href={project.live_url} target="_blank">
-                  <ExternalLink className="w-4 h-4" /> Live Demo
-                </a>
+              <Button asChild className="flex-1 rounded-2xl h-14 font-bold gap-2">
+                <a href={project.live_url} target="_blank">Live Preview <ExternalLink className="w-4 h-4" /></a>
               </Button>
             )}
             {project.github_url && (
-              <Button asChild size="lg" variant="outline" className="w-full rounded-xl gap-2">
-                <a href={project.github_url} target="_blank">
-                  <FaGithub className="w-4 h-4" /> View Code
-                </a>
+              <Button asChild variant="outline" className="flex-1 rounded-2xl h-14 font-bold border-2 gap-2">
+                <a href={project.github_url} target="_blank">Code <FaGithub className="w-4 h-4" /></a>
               </Button>
             )}
           </div>
 
-          {/* Info Card */}
-          <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
-            <h3 className="font-bold text-sm uppercase tracking-wider text-muted-foreground">
-              Project Info
-            </h3>
-
-            {project.my_role && (
-              <div className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                  <User className="w-4 h-4 text-primary" />
+          <div className="p-6 rounded-3xl border border-border bg-card/50 space-y-6 shadow-sm">
+            <div className="space-y-6">
+              <div className="flex gap-4">
+                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                  <User className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-xs text-muted-foreground">My Role</p>
-                  <p className="text-sm font-semibold">{project.my_role}</p>
+                  <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-tight">Role</p>
+                  <p className="font-bold text-sm tracking-tight">{project.my_role || "Developer"}</p>
                 </div>
               </div>
-            )}
-
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                <Briefcase className="w-4 h-4 text-primary" />
-              </div>
-              <div>
-                <p className="text-xs text-muted-foreground">Project Type</p>
-                <p className="text-sm font-semibold">{project.project_type}</p>
+              <div className="flex gap-4">
+                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                  <Briefcase className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-tight">Category</p>
+                  <p className="font-bold text-sm tracking-tight">{project.project_type}</p>
+                </div>
               </div>
             </div>
-          </div>
-
-          {/* Tech Stack Card */}
-          {project.tags.length > 0 && (
-            <div className="rounded-2xl border border-border bg-card p-5 space-y-3">
-              <h3 className="font-bold text-sm uppercase tracking-wider text-muted-foreground">
-                Tech Stack
-              </h3>
+            <hr className="border-border" />
+            <div className="space-y-3">
+              <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-tight">Tech Stack</p>
               <div className="flex flex-wrap gap-2">
                 {project.tags.map(tag => (
-                  <span key={tag} className="text-xs font-medium px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
+                  <span key={tag} className="text-[10px] px-2.5 py-1 rounded-lg bg-secondary text-secondary-foreground font-bold border border-border">
                     {tag}
                   </span>
                 ))}
               </div>
             </div>
-          )}
+          </div>
         </aside>
       </div>
     </div>
