@@ -119,3 +119,25 @@ export interface FAQ {
   answer: string;
   category: string;
 }
+
+
+export interface Post {
+  id: string;
+  created_at: string;
+  title: string;
+  slug: string;
+  content: string;
+  excerpt: string;
+  cover_image: string;
+  published: boolean;
+  tags: string[];
+}
+
+export interface Education {
+  id: string;
+  institution: string;
+  degree: string;
+  field_of_study: string;
+  duration: string;
+  grade?: string;
+}
