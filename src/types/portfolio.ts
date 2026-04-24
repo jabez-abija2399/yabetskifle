@@ -89,3 +89,16 @@ export interface Testimonial {
   content: string;
   rating: number;
 }
+
+export interface SiteSettings {
+  id: string;
+  site_name: string;
+  site_description: string;
+  meta_keywords: string;
+  favicon_url?: string;
+  logo_url?: string;
+  footer_text: string;
+  contact_email: string;
+  cv_url?: string;
+  google_analytics_id?: string;
+}
