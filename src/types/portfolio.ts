@@ -47,3 +47,35 @@ export interface Profile {
   skills: SkillCategory[]; // Using the sub-interface we just made
   social_links: SocialLinks; // Using the sub-interface we just made
 }
+
+// Add these to src/types/portfolio.ts
+
+export interface Experience {
+  id: string;
+  company: string;
+  role: string;
+  location: string;
+  duration: string;
+  description: string[]; // List of bullet points
+  is_current: boolean;
+  order_index: number;
+}
+
+export interface Service {
+  id: string;
+  title: string;
+  description: string;
+  icon_name: string; 
+  features: string[];
+  order_index: number;
+}
+
+export interface Message {
+  id: string;
+  created_at: string;
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  is_read: boolean;
+}
