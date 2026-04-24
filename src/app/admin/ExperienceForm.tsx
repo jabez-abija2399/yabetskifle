@@ -66,7 +66,7 @@ export const ExperienceForm = ({ initialData, onSave, isSaving, onCancel }: Prop
         <label className="text-xs font-black uppercase tracking-widest text-zinc-500">Key Achievements</label>
         {description.map((point, i) => (
           <div key={i} className="flex gap-2">
-            <Input value={point} onChange={(e) => updatePoint(i, e.target.value)} placeholder="Built a $1M revenue feature..." />
+            <Input value={point || ""} onChange={(e) => updatePoint(i, e.target.value)} placeholder="Built a $1M revenue feature..." />
             <Button type="button" variant="ghost" size="icon" onClick={() => removePoint(i)} className="text-destructive"><X size={14} /></Button>
           </div>
         ))}

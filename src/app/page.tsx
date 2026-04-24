@@ -30,27 +30,25 @@ export default async function HomePage() {
   }
 
   return (
-    <main className="bg-background min-h-screen text-foreground space-y-32 pb-32">
+    <main className="bg-background min-h-screen text-foreground">
       
       {/* Hero Section */}
       <Hero profile={profile} />
 
-      {/* Services Section */}
-      <ServicesGrid services={services} />
+      <div className="space-y-32 pb-32">
+        {/* Conditional Groups */}
+        {settings?.show_services !== false && <ServicesGrid services={services} />}
 
-      {/* Portfolio Gallery */}
-      <ProjectsShowcase projects={projects} />
+        {settings?.show_projects !== false && <ProjectsShowcase projects={projects} />}
 
-      {/* Professional Journey */}
-      <ExperienceTimeline experiences={experiences} />
+        {settings?.show_experience !== false && <ExperienceTimeline experiences={experiences} />}
 
-      {/* Social Proof */}
-      <TestimonialsSection testimonials={testimonials} />
+        {settings?.show_testimonials !== false && <TestimonialsSection testimonials={testimonials} />}
 
-      {/* Lead Generation */}
-      <ContactSection />
+        {/* New Toggles */}
+        {settings?.show_contact !== false && <ContactSection />}
+      </div>
 
-      {/* Final Wrap-up */}
       <Footer settings={settings} />
       
     </main>

@@ -21,7 +21,7 @@ export interface Project {
   github_url?: string;
   order_index: number;
   created_at: string;
-  is_published: boolean; // 👈 Added
+  is_published: boolean;
 }
 
 export interface Service {
@@ -31,7 +31,7 @@ export interface Service {
   icon_name: string;
   features: string[];
   order_index: number;
-  is_published: boolean; // 👈 Added
+  is_published: boolean;
 }
 
 export interface Experience {
@@ -43,7 +43,7 @@ export interface Experience {
   is_current: boolean;
   description: string[];
   order_index: number;
-  is_published: boolean; // 👈 Added
+  is_published: boolean;
 }
 
 export interface Testimonial {
@@ -54,7 +54,7 @@ export interface Testimonial {
   content: string;
   rating: number;
   created_at: string;
-  is_published: boolean; // 👈 Added
+  is_published: boolean;
 }
 
 export interface FAQ {
@@ -63,14 +63,14 @@ export interface FAQ {
   answer: string;
   category: string;
   order_index: number;
-  is_published: boolean; // 👈 Added
+  is_published: boolean;
 }
 
 export interface Language {
   id: string;
   name: string;
   proficiency: string;
-  is_published: boolean; // 👈 Added
+  is_published: boolean;
 }
 
 export interface Post {
@@ -80,7 +80,7 @@ export interface Post {
   content: string;
   excerpt?: string;
   cover_image?: string;
-  published: boolean; // Note: Blog uses 'published', standardizing for others
+  published: boolean;
   tags: string[];
   created_at: string;
 }
@@ -105,6 +105,14 @@ export interface SiteSettings {
   contact_email: string;
   cv_url?: string;
   google_analytics_id?: string;
+  // Master Section Toggles
+  show_services: boolean;
+  show_projects: boolean;
+  show_experience: boolean;
+  show_testimonials: boolean;
+  show_blog: boolean;
+  show_faq: boolean;
+  show_languages: boolean;
 }
 
 export interface SocialLinks {

@@ -6,7 +6,7 @@ import {
   LayoutDashboard, User, Briefcase, Settings, 
   MessageSquare, Star, GraduationCap, Award, 
   FileText, Languages, Mic2, Heart, ShieldCheck,
-  Package, HelpCircle
+  Package, HelpCircle, Columns
 } from "lucide-react"
 
 // 🛡️ PERMISSION LIST: Only include routes that are implemented and allowed
@@ -22,6 +22,7 @@ const ALLOWED_ROUTES = [
   "/admin/posts",
   "/admin/faq",
   "/admin/languages",
+  "/admin/sections", // 👈 Added Section Manager
 ]
 
 const navGroups = [
@@ -36,6 +37,13 @@ const navGroups = [
     ]
   },
   {
+    title: "Structure & Flow",
+    items: [
+      { name: "Section Manager", href: "/admin/sections", icon: <Columns className="w-4 h-4 text-primary" /> },
+      { name: "Settings", href: "/admin/settings", icon: <Settings className="w-4 h-4" /> },
+    ]
+  },
+  {
     title: "Community",
     items: [
       { name: "Messages", href: "/admin/messages", icon: <MessageSquare className="w-4 h-4" /> },
@@ -43,12 +51,11 @@ const navGroups = [
     ]
   },
   {
-    title: "Journal & Setup",
+    title: "Intellectual Property",
     items: [
       { name: "Blog Posts", href: "/admin/posts", icon: <FileText className="w-4 h-4" /> },
       { name: "FAQs", href: "/admin/faq", icon: <HelpCircle className="w-4 h-4" /> },
       { name: "Languages", href: "/admin/languages", icon: <Languages className="w-4 h-4" /> },
-      { name: "Settings", href: "/admin/settings", icon: <Settings className="w-4 h-4" /> },
     ]
   }
 ]

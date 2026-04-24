@@ -128,7 +128,7 @@ export const ProjectForm = ({ initialData, onSave, isSaving, onCancel }: Props) 
                   ))}
                </div>
                <div className="flex gap-2">
-                  <Input value={newTag} onChange={(e) => setNewTag(e.target.value)} placeholder="Add tag (e.g. Next.js)" onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())} />
+                  <Input value={newTag || ""} onChange={(e) => setNewTag(e.target.value)} placeholder="Add tag (e.g. Next.js)" onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())} />
                   <Button type="button" onClick={addTag} variant="outline" className="shrink-0"><Plus size={16}/></Button>
                </div>
             </div>

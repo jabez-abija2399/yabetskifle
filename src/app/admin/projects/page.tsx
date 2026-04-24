@@ -3,13 +3,14 @@
 import { useState } from "react"
 import { AdminPageHeader } from "@/components/ui/AdminPageHeader"
 import { AdminEmptyState } from "@/components/ui/AdminEmptyState"
-import { ProjectForm } from "../ProjectForm"
 import { Project } from "@/types/portfolio"
 import { useAdminData } from "@/hooks/useAdminData"
 import { createSupabaseClient } from "@/lib/supabase"
 import { toast } from "sonner"
-import { Pencil, Trash2, ExternalLink, Github, EyeOff } from "lucide-react"
+import { Pencil, Trash2, ExternalLink, EyeOff } from "lucide-react"
 import Image from "next/image"
+import { FaGithub } from "react-icons/fa"
+import { ProjectForm } from "../ProjectForm"
 
 export default function AdminProjectsPage() {
   const { data: projects, loading, deleteItem, refresh } = useAdminData<Project>("projects")
@@ -67,9 +68,9 @@ export default function AdminProjectsPage() {
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-zinc-500 font-bold uppercase tracking-widest text-xs">No Thumbnail</div>
                 )}
-                {/* 🛡️ Visibility Overlay */}
+                {/* Visibility Overlay */}
                 {!project.is_published && (
-                   <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-destructive text-white text-[10px] font-black uppercase tracking-widest flex items-center gap-2 shadow-xl">
+                   <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-destructive text-white text-[8px] font-black uppercase tracking-widest flex items-center gap-2 shadow-xl">
                       <EyeOff size={12} /> Hidden
                    </div>
                 )}
@@ -83,11 +84,15 @@ export default function AdminProjectsPage() {
                 
                 <div className="flex items-center justify-between pt-4 border-t border-border">
                    <div className="flex gap-2">
-                      <button onClick={() => setEditingProject(project)} className="p-3 rounded-2xl bg-muted hover:bg-primary hover:text-white transition-all"><Pencil size={14} /></button>
-                      <button onClick={() => deleteItem(project.id)} className="p-3 rounded-2xl bg-muted hover:bg-destructive hover:text-white transition-all"><Trash2 size={14} /></button>
+                      <button onClick={() => setEditingProject(project)} className="p-3 rounded-2xl bg-muted hover:bg-primary hover:text-white transition-all">
+                         <Pencil size={14} />
+                      </button>
+                      <button onClick={() => deleteItem(project.id)} className="p-3 rounded-2xl bg-muted hover:bg-destructive hover:text-white transition-all">
+                         <Trash2 size={14} />
+                      </button>
                    </div>
                    <div className="flex gap-2">
-                     {project.github_url && <a href={project.github_url} target="_blank" className="p-3 rounded-2xl bg-zinc-900 text-white"><Github size={14} /></a>}
+                     {project.github_url && <a href={project.github_url} target="_blank" className="p-3 rounded-2xl bg-zinc-900 text-white"><FaGithub size={14} /></a>}
                      {project.live_url && <a href={project.live_url} target="_blank" className="p-3 rounded-2xl bg-primary text-white"><ExternalLink size={14} /></a>}
                    </div>
                 </div>
@@ -97,23 +102,5 @@ export default function AdminProjectsPage() {
         </div>
       )}
     </div>
-  )
-}
-
-function Pencil({ size }: { size: number }) {
-  return (
-    <svg 
-      xmlns="http://www.w3.org/2000/svg" 
-      width={size} 
-      height={size} 
-      viewBox="0 0 24 24" 
-      fill="none" 
-      stroke="currentColor" 
-      strokeWidth="2" 
-      strokeLinecap="round" 
-      strokeLinejoin="round" 
-    >
-      <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/>
-    </svg>
   )
 }
