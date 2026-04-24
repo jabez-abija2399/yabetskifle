@@ -141,3 +141,20 @@ export interface Education {
   duration: string;
   grade?: string;
 }
+
+export interface SpeakingEngagement {
+  id: string;
+  date: string;
+  event_name: string;
+  talk_title: string;
+  event_url?: string;
+  location: string;
+  slides_url?: string;
+  video_url?: string;
+}
+
+export interface Language {
+  id: string;
+  name: string;
+  proficiency: string;
+}
