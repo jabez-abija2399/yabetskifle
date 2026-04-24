@@ -79,3 +79,13 @@ export interface Message {
   message: string;
   is_read: boolean;
 }
+
+
+export interface Testimonial {
+  id: string;
+  client_name: string;
+  client_role: string;
+  client_avatar?: string;
+  content: string;
+  rating: number;
+}
