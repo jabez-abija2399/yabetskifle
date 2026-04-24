@@ -24,3 +24,26 @@ export interface Project {
   featured: boolean; 
 }
 
+
+export interface SkillCategory {
+  name: string;      // e.g., "Frontend"
+  techs: string[];   // e.g., ["React", "Next.js"]
+}
+
+export interface SocialLinks {
+  github?: string;
+  linkedin?: string;
+  twitter?: string;
+  email?: string;
+}
+
+export interface Profile {
+  id: string;
+  full_name: string;
+  role_title: string;
+  bio: string;
+  avatar_url: string;
+  experience_years: number;
+  skills: SkillCategory[]; // Using the sub-interface we just made
+  social_links: SocialLinks; // Using the sub-interface we just made
+}
