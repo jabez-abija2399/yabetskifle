@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { ImageUploader } from "@/components/ui/ImageUploader"
 import { Loader2, X } from "lucide-react"
 import Image from "next/image"
+import { DynamicListInput } from "./DynamicListInput"
 
 // The "contract" for this component's props
 interface ProjectFormProps {
@@ -29,7 +30,24 @@ export const ProjectForm = ({
   const [images, setImages] = useState<string[]>(initialData?.images ?? [])
 
   const isEditMode = !!initialData  // true if editing, false if adding
-
+  // Helper to ensure we always have an array, even if the DB returns a JSON string
+  const ensureArray = (data: any): string[] => {
+    if (Array.isArray(data)) return data;
+    if (typeof data === "string") {
+      try {
+        // Try to parse it if it looks like ["a", "b"]
+        const parsed = JSON.parse(data);
+        if (Array.isArray(parsed)) return parsed;
+        // If it's just a normal string with new lines, split it
+        return data.split(/\n|,/).map(s => s.trim()).filter(Boolean);
+      } catch (e) {
+        return data.split(/\n|,/).map(s => s.trim()).filter(Boolean);
+      }
+    }
+    return [];
+  };
+  const [features, setFeatures] = useState<string[]>(ensureArray(initialData?.key_features))
+  const [learned, setLearned] = useState<string[]>(ensureArray(initialData?.what_i_learned))
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
@@ -50,10 +68,10 @@ export const ProjectForm = ({
         github_url: formData.get("github_url") as string,
         order_index: Number(formData.get("order_index")),
         my_role: formData.get("my_role") as string,
-        key_features: formData.get("key_features") as string,
+        key_features: features,
         purpose: formData.get("purpose") as string,
         project_type: formData.get("project_type") as string,
-        what_i_learned: formData.get("what_i_learned") as string,
+        what_i_learned: learned,
         featured: formData.get("featured") === "on",
       },
 
@@ -159,18 +177,22 @@ export const ProjectForm = ({
           className="w-full min-h-20 p-3 rounded-md border border-input bg-background text-sm" />
       </div>
 
-      <div className="space-y-1 md:col-span-2">
-        <label className="text-sm font-semibold">Key Features</label>
-        <textarea name="key_features" defaultValue={initialData?.key_features}
-          placeholder="Auth, Dashboard, Real-time..."
-          className="w-full min-h-20 p-3 rounded-md border border-input bg-background text-sm" />
+      <div className="md:col-span-2">
+        <DynamicListInput
+          label="Key Features"
+          items={features}
+          onChange={setFeatures}
+          placeholder="e.g., Real-time chat with Socket.io"
+        />
       </div>
 
-      <div className="space-y-1 md:col-span-2">
-        <label className="text-sm font-semibold">What I Learned</label>
-        <textarea name="what_i_learned" defaultValue={initialData?.what_i_learned}
-          placeholder="Key lessons and skills gained..."
-          className="w-full min-h-20 p-3 rounded-md border border-input bg-background text-sm" />
+      <div className="md:col-span-2">
+        <DynamicListInput
+          label="What I Learned"
+          items={learned}
+          onChange={setLearned}
+          placeholder="e.g., Deep dive into PostgreSQL indexing"
+        />
       </div>
 
       {/* Action buttons */}
