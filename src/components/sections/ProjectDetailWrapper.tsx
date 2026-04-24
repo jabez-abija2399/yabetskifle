@@ -11,6 +11,20 @@ import Image from "next/image"
 
 interface Props { id: string }
 
+const ensureArray = (data: any): string[] => {
+  if (Array.isArray(data)) return data;
+  if (typeof data === 'string') {
+    try {
+      const parsed = JSON.parse(data);
+      if (Array.isArray(parsed)) return parsed;
+      return data.split(/\n|,/).map(item => item.trim()).filter(Boolean);
+    } catch (e) {
+      return data.split(/\n|,/).map(item => item.trim()).filter(Boolean);
+    }
+  }
+  return [];
+}
+
 export const ProjectDetailWrapper = ({ id }: Props) => {
   const [project, setProject] = useState<Project | null>(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -28,14 +42,14 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
   }, [id])
 
   if (isLoading) return (
-    <div className="animate-pulse space-y-0">
+    <div className="animate-pulse space-y-0">n
       <div className="h-[60vh] bg-muted w-full" />
       <div className="max-w-6xl mx-auto px-6 py-12 grid lg:grid-cols-3 gap-12">
         <div className="lg:col-span-2 space-y-6">
-          {[1,2,3].map(i => <div key={i} className="h-4 bg-muted rounded" />)}
+          {[1, 2, 3].map(i => <div key={i} className="h-4 bg-muted rounded" />)}
         </div>
         <div className="space-y-4">
-          {[1,2,3,4].map(i => <div key={i} className="h-12 bg-muted rounded-xl" />)}
+          {[1, 2, 3, 4].map(i => <div key={i} className="h-12 bg-muted rounded-xl" />)}
         </div>
       </div>
     </div>
@@ -47,6 +61,9 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
       <Link href="/projects" className="text-primary underline mt-2 block">← Back to Projects</Link>
     </div>
   )
+
+  const safeFeatures = ensureArray(project.key_features);
+  const safeLearned = ensureArray(project.what_i_learned);
 
   return (
     <div className="pb-24">
@@ -107,9 +124,9 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
       </div>
 
       <div className="max-w-6xl mx-auto px-6 grid lg:grid-cols-3 gap-12 pt-8">
-        
+
         <main className="lg:col-span-2 space-y-12">
-          
+
           <div className="space-y-4">
             <h2 className="text-2xl font-bold">The Story</h2>
             <p className="text-muted-foreground text-lg leading-relaxed">
@@ -121,9 +138,9 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
           {project.images?.length > 0 && (
             <div className="space-y-4 pt-4">
               <h2 className="text-2xl font-bold">Project Gallery</h2>
-              
+
               <div className="relative aspect-video rounded-3xl overflow-hidden border border-border bg-muted/30 shadow-2xl">
-                 <Image
+                <Image
                   src={project.images[currentImage]} // ✅ Interactive with thumbnails
                   fill
                   className="object-cover blur-2xl opacity-10 scale-110"
@@ -147,9 +164,8 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
                     <button
                       key={img}
                       onClick={() => setCurrentImage(i)}
-                      className={`relative shrink-0 w-24 h-16 rounded-xl overflow-hidden border-2 transition-all ${
-                        i === currentImage ? "border-primary scale-105 shadow-md" : "border-transparent opacity-50 hover:opacity-100"
-                      }`}
+                      className={`relative shrink-0 w-24 h-16 rounded-xl overflow-hidden border-2 transition-all ${i === currentImage ? "border-primary scale-105 shadow-md" : "border-transparent opacity-50 hover:opacity-100"
+                        }`}
                     >
                       <Image src={img} alt={`Thumb ${i}`} fill className="object-cover" />
                     </button>
@@ -171,14 +187,15 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
             </div>
           )}
 
-          {project.key_features && (
+          {/* Key Features List Section */}
+          {safeFeatures.length > 0 && (
             <div className="space-y-4 pt-4">
               <h3 className="text-xl font-bold flex items-center gap-2">
                 <CheckCircle2 className="w-5 h-5 text-green-500" /> Key Features
               </h3>
               <div className="grid sm:grid-cols-2 gap-3">
-                {project.key_features.split(/\n|,/).map(f => f.trim()).filter(Boolean).map((feature) => (
-                  <div key={feature} className="flex items-center gap-3 p-4 rounded-2xl bg-card border border-border">
+                {safeFeatures.map((feature, i) => (
+                  <div key={i} className="flex items-center gap-3 p-4 rounded-2xl bg-card border border-border group hover:border-primary/30 transition-colors">
                     <div className="h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
                     <span className="text-sm font-medium">{feature}</span>
                   </div>
@@ -186,15 +203,22 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
               </div>
             </div>
           )}
-
-          {project.what_i_learned && (
+          {/* What I Learned Section */}
+          {safeLearned.length > 0 && (
             <div className="space-y-4 p-8 rounded-3xl bg-yellow-500/5 border border-yellow-500/10 shadow-sm">
               <h3 className="text-xl font-bold flex items-center gap-2">
-                <Lightbulb className="w-5 h-5 text-yellow-500" /> What I Learned
+                <Lightbulb className="w-5 h-5 text-yellow-500" /> Reflection & Lessons
               </h3>
-              <p className="text-muted-foreground italic leading-relaxed">
-                "{project.what_i_learned}"
-              </p>
+              <div className="space-y-3">
+                {safeLearned.map((item, i) => (
+                  <div key={i} className="flex items-start gap-3">
+                    <span className="text-primary font-bold mt-0.5">•</span>
+                    <p className="text-muted-foreground italic leading-relaxed">
+                      {item}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </main>
