@@ -2,7 +2,8 @@ import { createClient } from "@supabase/supabase-js"
 import { 
   Profile, Project, Experience, 
   Service, Testimonial, SiteSettings,
-  FAQ, Language, Message
+  FAQ, Language, Message,
+  Post
 } from "@/types/portfolio"
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
@@ -87,6 +88,27 @@ export const PortfolioService = {
   async getLanguages(): Promise<Language[]> {
     const { data } = await supabase.from("languages").select("*").eq("is_published", true)
     return (data as Language[]) || []
+  },
+
+  // 📝 --- KNOWLEDGE ENGINE (BLOG) ---
+
+  /** 📚 List all published articles */
+  async getPosts(): Promise<Post[]> {
+    const { data } = await supabase.from("posts")
+      .select("*")
+      .eq("published", true)
+      .order("created_at", { ascending: false })
+    return (data || []).map(p => ({ ...p, tags: ensureArray(p.tags) }))
+  },
+
+  /** 📖 Get a specific article by Slug */
+  async getPostBySlug(slug: string): Promise<Post | null> {
+    const { data } = await supabase.from("posts")
+      .select("*")
+      .eq("slug", slug)
+      .eq("published", true)
+      .maybeSingle()
+    return data ? { ...data, tags: ensureArray(data.tags) } : null
   },
 
   // ✍️ --- DATA PERSISTENCE (WRITE / UPDATE) ---
