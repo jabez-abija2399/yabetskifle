@@ -1,3 +1,4 @@
+import { Metadata } from "next"
 import { PortfolioService } from "@/services/portfolio"
 import { notFound } from "next/navigation"
 import Image from "next/image"
@@ -8,6 +9,23 @@ import { FaGithub } from "react-icons/fa"
 
 export const dynamic = "force-dynamic"
 export const revalidate = 0
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params
+  const project = await PortfolioService.getProjectById(id)
+  
+  if (!project) return { title: "Project Not Found" }
+
+  return {
+    title: project.title,
+    description: project.purpose || project.description.slice(0, 160),
+    openGraph: {
+      title: project.title,
+      description: project.purpose || project.description.slice(0, 160),
+      images: project.images?.[0] ? [{ url: project.images[0] }] : [],
+    },
+  }
+}
 
 export default async function ProjectDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
