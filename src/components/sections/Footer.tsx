@@ -25,11 +25,13 @@ export const Footer = ({ settings, profile }: Props) => {
         </div>
 
         {/* Quick Links */}
-        <div className="flex gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">
-           <a href="#work" className="hover:text-primary transition-colors">Portfolios</a>
-           <a href="#contact" className="hover:text-primary transition-colors">Inquiry</a>
-           <Link href="/admin" className="hover:text-primary transition-colors opacity-30">Lockdown</Link>
-        </div>
+        <ul className="flex gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">
+           <li><Link href="/" className="hover:text-primary transition-colors">Home</Link></li>
+           <li><Link href="/projects" className="hover:text-primary transition-colors">Projects</Link></li>
+           <li><Link href="/blog" className="hover:text-primary transition-colors">Journal</Link></li>
+           <li><Link href="/#about" className="hover:text-primary transition-colors">About</Link></li>
+           <li><Link href="/admin" className="hover:text-primary transition-colors opacity-30">Lockdown</Link></li>
+        </ul>
 
         {/* Dynamic Socials */}
         <div className="flex items-center gap-3">
