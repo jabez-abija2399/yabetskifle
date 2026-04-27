@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { createClient } from "@supabase/supabase-js"
+import { createBrowserClient } from "@supabase/ssr"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -14,7 +14,7 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
-  const supabase = createClient(
+  const supabase = createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
   )
@@ -32,8 +32,10 @@ export default function LoginPage() {
       if (error) throw error
 
       toast.success("Identity Verified. Entering Workspace...")
-      router.push("/admin")
       router.refresh()
+      setTimeout(() => {
+        router.push("/admin")
+      }, 100)
     } catch (error: any) {
       toast.error(error.message || "Invalid credentials")
     } finally {
