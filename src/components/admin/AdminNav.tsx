@@ -10,7 +10,6 @@ import {
 } from "lucide-react"
 import { createBrowserClient } from "@supabase/ssr"
 
-// 🛡️ PERMISSION LIST: Only include routes that are implemented and allowed
 const ALLOWED_ROUTES = [
   "/admin",
   "/admin/profile",
@@ -75,14 +74,14 @@ export const AdminNav = () => {
 
   return (
     <nav className="w-64 border-r border-border h-screen sticky top-0 p-6 flex flex-col bg-card/50 backdrop-blur-sm">
-      {/* Brand ID */}
+      {/* Brand Branding */}
       <div className="flex items-center gap-2 px-2 mb-10 shrink-0">
          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white italic font-black">Y</div>
-         <span className="font-black italic tracking-tighter">ADMIN PANEL</span>
+         <span className="font-black italic tracking-tighter uppercase">Admin Panel</span>
       </div>
 
-      {/* Nav Scroll Area */}
-      <div className="flex-1 space-y-6 overflow-y-auto custom-scrollbar pr-2">
+      {/* Main Nav Items */}
+      <div className="flex-1 space-y-6 overflow-y-auto custom-scrollbar pr-2 mb-6">
         {navGroups.map((group) => {
           const allowedItems = group.items.filter(item => ALLOWED_ROUTES.includes(item.href))
           if (allowedItems.length === 0) return null
@@ -116,11 +115,11 @@ export const AdminNav = () => {
         })}
       </div>
 
-      {/* 🚪 EXIT STRATEGY */}
+      {/* 🚪 SIGN OUT ACTION */}
       <div className="pt-6 border-t border-border mt-auto shrink-0">
          <button 
            onClick={handleLogout}
-           className="w-full flex items-center gap-3 px-3 py-3 rounded-xl text-xs font-black uppercase tracking-widest text-destructive hover:bg-destructive/10 transition-all italic"
+           className="w-full flex items-center gap-3 px-3 py-3 rounded-xl text-xs font-black uppercase tracking-widest text-destructive hover:bg-destructive/10 transition-all italic border border-transparent hover:border-destructive/20"
          >
             <ShieldCheck className="w-4 h-4" /> Sign Out Securely
          </button>
