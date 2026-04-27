@@ -1,13 +1,15 @@
-import { SiteSettings } from "@/types/portfolio"
-import { ArrowUp } from "lucide-react"
-import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa"
+import { SiteSettings, Profile } from "@/types/portfolio"
+import { FaGithub, FaLinkedin, FaTwitter, FaInstagram } from "react-icons/fa"
 import Link from "next/link"
 
 interface Props {
   settings: SiteSettings | null
+  profile?: Profile | null
 }
 
-export const Footer = ({ settings }: Props) => {
+export const Footer = ({ settings, profile }: Props) => {
+  const socials = profile?.social_links || {}
+
   return (
     <footer className="py-20 px-6 border-t border-border bg-card/30">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
@@ -15,28 +17,42 @@ export const Footer = ({ settings }: Props) => {
         {/* Branding & Legal */}
         <div className="space-y-4 text-center md:text-left">
            <h3 className="text-2xl font-black italic tracking-tighter">
-              {settings?.site_name || "YABETS."}
+              {settings?.site_name || "YABETS.K"}
            </h3>
-           <p className="text-zinc-500 text-xs font-bold uppercase tracking-[0.2em]">
-              {settings?.footer_text || `© ${new Date().getFullYear()}. All rights reserved.`}
+           <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.3em]">
+              {settings?.footer_text || `© ${new Date().getFullYear()} ARCHITECTED BY YABETS.`}
            </p>
         </div>
 
         {/* Quick Links */}
-        <div className="flex gap-8 text-xs font-black uppercase tracking-widest text-zinc-400">
-           <a href="#" className="hover:text-primary transition-colors">Top</a>
-           <a href="#work" className="hover:text-primary transition-colors">Work</a>
-           <a href="#contact" className="hover:text-primary transition-colors">Contact</a>
-           <Link href="/admin" className="hover:text-primary transition-colors opacity-50">Admin</Link>
+        <div className="flex gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">
+           <a href="#work" className="hover:text-primary transition-colors">Portfolios</a>
+           <a href="#contact" className="hover:text-primary transition-colors">Inquiry</a>
+           <Link href="/admin" className="hover:text-primary transition-colors opacity-30">Lockdown</Link>
         </div>
 
-        {/* Socials */}
-        <div className="flex items-center gap-4">
-           <a href="#" className="p-3 rounded-xl bg-muted hover:bg-primary hover:text-white transition-all">
-              <FaLinkedin className="w-5 h-5" />
-           </a>
-           <a href="#" className="p-3 rounded-xl bg-muted hover:bg-primary hover:text-white transition-all"><FaGithub className="w-5 h-5" /></a>
-           <a href="#" className="p-3 rounded-xl bg-muted hover:bg-primary hover:text-white transition-all"><FaTwitter className="w-5 h-5" /></a>
+        {/* Dynamic Socials */}
+        <div className="flex items-center gap-3">
+           {socials.linkedin && (
+             <a href={socials.linkedin} target="_blank" className="w-10 h-10 rounded-xl bg-muted/50 flex items-center justify-center hover:bg-primary hover:text-white transition-all">
+                <FaLinkedin className="w-4 h-4" />
+             </a>
+           )}
+           {socials.github && (
+             <a href={socials.github} target="_blank" className="w-10 h-10 rounded-xl bg-muted/50 flex items-center justify-center hover:bg-primary hover:text-white transition-all">
+                <FaGithub className="w-4 h-4" />
+             </a>
+           )}
+           {socials.twitter && (
+             <a href={socials.twitter} target="_blank" className="w-10 h-10 rounded-xl bg-muted/50 flex items-center justify-center hover:bg-primary hover:text-white transition-all">
+                <FaTwitter className="w-4 h-4" />
+             </a>
+           )}
+           {socials.instagram && (
+             <a href={socials.instagram} target="_blank" className="w-10 h-10 rounded-xl bg-muted/50 flex items-center justify-center hover:bg-primary hover:text-white transition-all">
+                <FaInstagram className="w-4 h-4" />
+             </a>
+           )}
         </div>
       </div>
     </footer>

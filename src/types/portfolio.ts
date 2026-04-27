@@ -14,11 +14,16 @@ export interface Project {
   id: string;
   title: string;
   description: string;
-  content?: string;
+  purpose?: string;            // 👈 Matches your DB
+  my_role?: string;           // 👈 Matches your DB
+  project_type?: string;       // 👈 Matches your DB
+  key_features: string[];      // 👈 Matches your DB (JSON/Array)
+  what_i_learned: string[];    // 👈 Matches your DB (JSON/Array)
   images: string[];
   tags: string[];
   live_url?: string;
   github_url?: string;
+  featured: boolean;           // 👈 Matches your DB
   order_index: number;
   created_at: string;
   is_published: boolean;
@@ -105,7 +110,6 @@ export interface SiteSettings {
   contact_email: string;
   cv_url?: string;
   google_analytics_id?: string;
-  // Master Section Toggles
   show_services: boolean;
   show_projects: boolean;
   show_experience: boolean;
@@ -113,6 +117,7 @@ export interface SiteSettings {
   show_blog: boolean;
   show_faq: boolean;
   show_languages: boolean;
+  show_contact: boolean;
 }
 
 export interface SocialLinks {

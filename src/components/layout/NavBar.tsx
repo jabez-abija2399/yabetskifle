@@ -16,6 +16,9 @@ export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
 
+  // 🛡️ Hide Navbar on Admin & Project Detail pages
+  if (pathname?.startsWith("/admin") || pathname?.startsWith("/projects/")) return null
+
   // Track scroll to change background from transparent to blur
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20)
@@ -46,9 +49,11 @@ export const Navbar = () => {
               {link.name}
             </Link>
           ))}
-          <Button variant="default" size="sm" className="rounded-full px-5">
-            Admin
-          </Button>
+          <Link href="/admin">
+            <Button variant="default" size="sm" className="rounded-full px-5">
+              Admin
+            </Button>
+          </Link>
         </div>
       </div>
     </nav>

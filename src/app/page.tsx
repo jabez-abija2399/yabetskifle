@@ -46,10 +46,10 @@ export default async function HomePage() {
         {settings?.show_testimonials !== false && <TestimonialsSection testimonials={testimonials} />}
 
         {/* New Toggles */}
-        {settings?.show_contact !== false && <ContactSection />}
+        {settings?.show_contact !== false && <ContactSection profile={profile} />}
       </div>
 
-      <Footer settings={settings} />
+      <Footer settings={settings} profile={profile} />
       
     </main>
   )
