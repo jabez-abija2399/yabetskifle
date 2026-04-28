@@ -75,7 +75,7 @@ export default function AdminPostsPage() {
                  <div className="space-y-1 text-center md:text-left">
                     <div className="flex items-center gap-2 justify-center md:justify-start">
                        {!post.published && <span className="text-[10px] px-2 py-0.5 rounded-full bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 font-bold uppercase">Draft</span>}
-                       <span className="text-xs text-muted-foreground">{new Date(post.created_at).toDateString()}</span>
+                       <span className="text-xs text-muted-foreground">{post.created_at ? new Date(post.created_at).toDateString() : "Draft Archive"}</span>
                     </div>
                     <h4 className="font-bold text-xl tracking-tight">{post.title}</h4>
                     <p className="text-sm text-zinc-500 line-clamp-1">{post.excerpt}</p>

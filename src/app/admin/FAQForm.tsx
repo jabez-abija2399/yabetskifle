@@ -20,6 +20,8 @@ export const FAQForm = ({ initialData, onSave, isSaving, onCancel }: Props) => {
       question: formData.get("question") as string,
       answer: formData.get("answer") as string,
       category: formData.get("category") as string,
+      order_index: initialData?.order_index || 0,
+      is_published: initialData ? initialData.is_published : true,
     })
   }
 

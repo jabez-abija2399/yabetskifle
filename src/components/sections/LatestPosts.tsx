@@ -39,7 +39,7 @@ export const LatestPosts = ({ posts }: Props) => {
                 <div className="h-full p-10 rounded-[3.5rem] bg-card border border-border group-hover:border-primary/40 group-hover:bg-primary/5 transition-all flex flex-col justify-between space-y-10">
                    <div className="space-y-6">
                       <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">
-                         <Calendar className="w-3 h-3" /> {new Date(post.created_at).toLocaleDateString()}
+                         <Calendar className="w-3 h-3" /> {post.created_at ? new Date(post.created_at).toLocaleDateString() : "Just Now"}
                       </div>
                       <h3 className="text-3xl font-black italic tracking-tighter leading-tight group-hover:text-primary transition-colors line-clamp-2">
                         {post.title}

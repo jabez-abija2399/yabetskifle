@@ -19,6 +19,7 @@ export const LanguageForm = ({ initialData, onSave, isSaving, onCancel }: Props)
     await onSave({
       name: formData.get("name") as string,
       proficiency: formData.get("proficiency") as string,
+      is_published: initialData ? initialData.is_published : true,
     })
   }
 

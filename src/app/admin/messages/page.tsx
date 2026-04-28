@@ -112,7 +112,7 @@ export default function AdminMessagesPage() {
                         {msg.name[0].toUpperCase()}
                      </div>
                      <div className="text-[10px] font-bold opacity-70 truncate italic">
-                        {msg.name} <span>•</span> {new Date(msg.created_at).toLocaleDateString()}
+                        {msg.name} <span>•</span> {msg.created_at ? new Date(msg.created_at).toLocaleDateString() : "Pending"}
                      </div>
                   </div>
                 </div>
@@ -139,7 +139,7 @@ export default function AdminMessagesPage() {
                    </div>
                    <div className="flex flex-wrap gap-4 pt-2">
                       <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-zinc-500 bg-muted px-4 py-2 rounded-full">
-                         <Calendar className="w-3 h-3" /> {new Date(selectedMessage.created_at).toLocaleString()}
+                         <Calendar className="w-3 h-3" /> {selectedMessage.created_at ? new Date(selectedMessage.created_at).toLocaleString() : "Real-time Encryption"}
                       </div>
                       <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-zinc-500 bg-muted px-4 py-2 rounded-full">
                          <MessageSquare className="w-3 h-3" /> Verified Protocol

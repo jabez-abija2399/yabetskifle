@@ -70,7 +70,7 @@ export default async function BlogPostPage({ params }: Props) {
         <header className="space-y-8 mb-20 px-4 md:px-0">
            <div className="flex flex-wrap items-center gap-6 text-[10px] font-black uppercase tracking-[0.3em] text-primary bg-primary/5 border border-primary/10 w-fit px-8 py-3 rounded-full">
               <span className="flex items-center gap-2">
-                 <Calendar className="w-4 h-4" /> {new Date(post.created_at).toLocaleDateString()}
+                 <Calendar className="w-4 h-4" /> {post.created_at ? new Date(post.created_at).toLocaleDateString() : "Just Now"}
               </span>
               <span className="w-1 h-1 rounded-full bg-primary/40"></span>
               <span className="flex items-center gap-2">

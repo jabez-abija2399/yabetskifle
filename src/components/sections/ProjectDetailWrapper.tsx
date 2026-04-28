@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { PortfolioService } from "@/services/portfolio"
+import { Project } from "@/types/portfolio"
 import { Button } from "@/components/ui/button"
 import { ExternalLink, ArrowLeft, Star, User, Briefcase, Lightbulb, CheckCircle2 } from "lucide-react"
 import { FaGithub } from "react-icons/fa"

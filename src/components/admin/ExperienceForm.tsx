@@ -29,6 +29,7 @@ export const ExperienceForm = ({ initialData, onSave, isSaving, onCancel }: Prop
       description: description,
       is_current: formData.get("is_current") === "on",
       order_index: Number(formData.get("order_index")),
+      is_published: initialData ? initialData.is_published : true,
     })
   }
 

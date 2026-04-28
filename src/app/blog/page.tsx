@@ -61,7 +61,7 @@ export default async function BlogPage() {
                 <div className="md:col-span-8 space-y-6">
                    <div className="flex items-center gap-6 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">
                       <span className="flex items-center gap-2">
-                        <Calendar className="w-3 h-3" /> {new Date(post.created_at).toLocaleDateString()}
+                        <Calendar className="w-3 h-3" /> {post.created_at ? new Date(post.created_at).toLocaleDateString() : "Just Now"}
                       </span>
                       {post.tags?.[0] && (
                         <span className="flex items-center gap-2 text-primary">

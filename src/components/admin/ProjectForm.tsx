@@ -73,6 +73,7 @@ export const ProjectForm = ({
         project_type: formData.get("project_type") as string,
         what_i_learned: learned,
         featured: formData.get("featured") === "on",
+        is_published: initialData ? initialData.is_published : true,
       },
 
     )

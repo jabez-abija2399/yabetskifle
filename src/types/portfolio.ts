@@ -8,7 +8,7 @@ export interface Profile {
   skills?: SkillCategory[];
   resume_url?: string;
   experience_years?: number;
-  created_at: string;
+  created_at?: string;
 }
 
 export interface Project {
@@ -27,7 +27,7 @@ export interface Project {
   view_count?: number;
   featured: boolean;           // 👈 Matches your DB
   order_index: number;
-  created_at: string;
+  created_at?: string;
   is_published: boolean;
 }
 
@@ -60,7 +60,7 @@ export interface Testimonial {
   client_avatar?: string;
   content: string;
   rating: number;
-  created_at: string;
+  created_at?: string;
   is_published: boolean;
 }
 
@@ -90,7 +90,7 @@ export interface Post {
   view_count?: number;
   published: boolean;
   tags: string[];
-  created_at: string;
+  created_at?: string;
 }
 
 export interface Message {
@@ -99,7 +99,7 @@ export interface Message {
   email: string;
   subject: string;
   message: string;
-  created_at: string;
+  created_at?: string;
 }
 
 export interface SiteSettings {
@@ -143,4 +143,13 @@ export interface Certification {
   issued_at?: string;
   credential_url?: string;
   logo_url?: string;
+}
+
+export interface Education {
+  id: string;
+  institution: string;
+  degree: string;
+  field_of_study?: string;
+  duration?: string;
+  grade?: string;
 }
