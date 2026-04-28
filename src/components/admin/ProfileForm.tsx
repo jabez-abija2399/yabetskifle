@@ -61,22 +61,22 @@ export const ProfileForm = ({ initialData, onSave, isSaving }: Props) => {
 
         <div className="p-6 rounded-[2rem] border border-border bg-card space-y-6 mt-8">
           <p className="text-xs font-bold uppercase text-muted-foreground tracking-widest">Connect Links</p>
-          <div className="space-y-4">
+           <div className="space-y-4">
              <div className="flex items-center gap-3">
                <FaGithub className="w-4 h-4 text-zinc-500" />
-               <Input value={socials.github} onChange={e => setSocials({...socials, github: e.target.value})} placeholder="GitHub URL" className="h-9 text-xs" />
+               <Input value={socials.github || ""} onChange={e => setSocials({...socials, github: e.target.value})} placeholder="GitHub URL" className="h-9 text-xs" />
              </div>
              <div className="flex items-center gap-3">
                <FaLinkedin className="w-4 h-4 text-zinc-500" />
-               <Input value={socials.linkedin} onChange={e => setSocials({...socials, linkedin: e.target.value})} placeholder="LinkedIn URL" className="h-9 text-xs" />
+               <Input value={socials.linkedin || ""} onChange={e => setSocials({...socials, linkedin: e.target.value})} placeholder="LinkedIn URL" className="h-9 text-xs" />
              </div>
              <div className="flex items-center gap-3">
                <FaTwitter className="w-4 h-4 text-zinc-500" />
-               <Input value={socials.twitter} onChange={e => setSocials({...socials, twitter: e.target.value})} placeholder="Twitter URL" className="h-9 text-xs" />
+               <Input value={socials.twitter || ""} onChange={e => setSocials({...socials, twitter: e.target.value})} placeholder="Twitter URL" className="h-9 text-xs" />
              </div>
              <div className="flex items-center gap-3">
                <Mail className="w-4 h-4 text-zinc-500" />
-               <Input value={socials.email} onChange={e => setSocials({...socials, email: e.target.value})} placeholder="Contact Email" className="h-9 text-xs" />
+               <Input value={socials.email || ""} onChange={e => setSocials({...socials, email: e.target.value})} placeholder="Contact Email" className="h-9 text-xs" />
              </div>
           </div>
         </div>
