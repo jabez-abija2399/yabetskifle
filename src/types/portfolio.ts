@@ -7,6 +7,7 @@ export interface Profile {
   social_links?: SocialLinks;
   skills?: SkillCategory[];
   resume_url?: string;
+  experience_years?: number;
   created_at: string;
 }
 
@@ -125,6 +126,7 @@ export interface SocialLinks {
   linkedin?: string;
   twitter?: string;
   instagram?: string;
+  email?: string;
 }
 
 export interface SkillCategory {

@@ -30,3 +30,29 @@ export const uploadProjectImage = async (file: File): Promise<string | null> => 
   // 4. Return the URL to be saved in the database
   return urlData.publicUrl
 }
+
+// Dedicated function to handle Document (PDF) uploads
+export const uploadResumeDocument = async (file: File): Promise<string | null> => {
+  const supabase = createSupabaseClient()
+
+  // Place it in a 'resumes' subfolder so it doesn't mix directly with images
+  const fileName = `resumes/${Date.now()}-${file.name.replace(/\s/g, "-")}`
+
+  const { data, error } = await supabase.storage
+    .from("project-images") // Reusing the same publicly accessible bucket
+    .upload(fileName, file, {
+      cacheControl: "3600",
+      upsert: false
+    })
+
+  if (error) {
+    console.error("Upload failed:", error.message)
+    return null
+  }
+
+  const { data: urlData } = supabase.storage
+    .from("project-images")
+    .getPublicUrl(data.path)
+
+  return urlData.publicUrl
+}
