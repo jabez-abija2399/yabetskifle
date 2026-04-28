@@ -4,6 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Button } from "../ui/button"
+import { ThemeToggle } from "../ui/ThemeToggle"
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -50,11 +51,14 @@ export const Navbar = () => {
               {link.name}
             </Link>
           ))}
-          <Link href="/admin">
-            <Button variant="default" size="sm" className="rounded-full px-5">
-              Admin
-            </Button>
-          </Link>
+          <div className="flex items-center gap-2 border-l border-border pl-6 ml-2">
+            <ThemeToggle />
+            <Link href="/admin">
+              <Button variant="default" size="sm" className="rounded-full px-5 hidden sm:inline-flex">
+                Admin
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
     </nav>
