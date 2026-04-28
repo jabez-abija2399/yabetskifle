@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight, ChevronDown, Download } from "lucide-react"
 import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa"
 import { motion, Variants } from "framer-motion"
+import { ViewTracker } from "@/components/analytics/ViewTracker"
 
 interface Props {
   profile: Profile
@@ -31,6 +32,8 @@ const itemVariant: Variants = {
 export const Hero = ({ profile }: Props) => {
   return (
     <section className="min-h-[95vh] flex flex-col items-center justify-center pt-24 px-6 overflow-hidden relative">
+      <ViewTracker path="/" />
+      
       {/* 🌌 Cinematic Abstract Background Elements */}
       <div className="absolute top-1/4 -left-32 w-[600px] h-[600px] bg-primary/10 blur-[130px] rounded-full mix-blend-screen pointer-events-none -z-10" />
       <div className="absolute bottom-1/4 -right-32 w-[500px] h-[500px] bg-blue-500/10 blur-[120px] rounded-full mix-blend-screen pointer-events-none -z-10" />

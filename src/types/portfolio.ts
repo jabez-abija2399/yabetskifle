@@ -24,6 +24,7 @@ export interface Project {
   tags: string[];
   live_url?: string;
   github_url?: string;
+  view_count?: number;
   featured: boolean;           // 👈 Matches your DB
   order_index: number;
   created_at: string;
@@ -86,6 +87,7 @@ export interface Post {
   content: string;
   excerpt?: string;
   cover_image?: string;
+  view_count?: number;
   published: boolean;
   tags: string[];
   created_at: string;

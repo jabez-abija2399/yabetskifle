@@ -3,8 +3,9 @@ import { Metadata } from "next"
 import { notFound } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowLeft, Calendar, Clock, Tag, Share2 } from "lucide-react"
+import { ArrowLeft, Calendar, Clock, Tag, Share2, Eye } from "lucide-react"
 import ReactMarkdown from "react-markdown"
+import { ViewTracker } from "@/components/analytics/ViewTracker"
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -75,6 +76,8 @@ export default async function BlogPostPage({ params }: Props) {
               <span className="flex items-center gap-2">
                  <Clock className="w-4 h-4" /> {Math.ceil(post.content.length / 1000)} MIN READ
               </span>
+              <span className="w-1 h-1 rounded-full bg-primary/40"></span>
+              <ViewTracker path={`/blog/${post.slug}`} showCount={true} className="text-zinc-500" />
            </div>
 
            <h1 className="text-5xl md:text-8xl font-black italic tracking-tighter leading-none">

@@ -161,6 +161,19 @@ export const PortfolioService = {
     if (error) throw error
   },
 
+  /** 👁️ Atomically Increment Global Page Views */
+  async incrementPageView(path: string): Promise<void> {
+    const { error } = await supabase.rpc('increment_page_view', { page_path: path })
+    if (error) console.error("Telemetry failed:", error)
+  },
+
+  /** 📊 Fetch Global Page Views */
+  async getPageView(path: string): Promise<number> {
+    const { data, error } = await supabase.from('page_views').select('view_count').eq('path', path).single()
+    if (error && error.code !== 'PGRST116') console.error("Telemetry fetch failed:", error)
+    return data?.view_count || 1
+  },
+
   // ✉️ --- INTERACTION HANDLING ---
 
   /** 📨 Submit Contact Form Data */
