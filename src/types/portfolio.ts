@@ -135,3 +135,12 @@ export interface SkillCategory {
   name: string;
   techs: string[];
 }
+
+export interface Certification {
+  id: string;
+  title: string;
+  issuer: string;
+  issued_at?: string;
+  credential_url?: string;
+  logo_url?: string;
+}
