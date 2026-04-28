@@ -48,7 +48,7 @@ export default async function BlogPostPage({ params }: Props) {
             Back to Journal
           </Link>
           <div className="text-[8px] font-black uppercase tracking-[0.4em] opacity-30 hidden md:block">
-             ARCHITECTING KNOWLEDGE
+             STRATEGIC INSIGHTS
           </div>
           <button className="p-3 hover:text-primary transition-all">
              <Share2 className="w-4 h-4" />
@@ -80,7 +80,7 @@ export default async function BlogPostPage({ params }: Props) {
               <ViewTracker path={`/blog/${post.slug}`} showCount={true} className="text-zinc-500" />
            </div>
 
-           <h1 className="text-5xl md:text-8xl font-black italic tracking-tighter leading-none">
+           <h1 className="text-display">
               {post.title}
            </h1>
 
@@ -103,7 +103,7 @@ export default async function BlogPostPage({ params }: Props) {
         {/* 🏁 ARTICLE FOOTER */}
         <footer className="mt-20 pt-20 border-t border-border flex flex-col items-center text-center space-y-8">
            <div className="w-16 h-px bg-zinc-800"></div>
-           <p className="text-muted-foreground text-sm font-bold uppercase tracking-[0.3em]">End of Transmission</p>
+           <p className="text-muted-foreground text-sm font-bold uppercase tracking-[0.3em]">End of Entry</p>
            <Link 
              href="/blog" 
              className="px-10 py-5 rounded-2xl bg-muted font-black italic text-sm tracking-widest hover:bg-primary hover:text-white transition-all shadow-xl"

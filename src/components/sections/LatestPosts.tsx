@@ -23,8 +23,8 @@ export const LatestPosts = ({ posts }: Props) => {
                  <BookOpen className="w-4 h-4" />
                  <span className="text-[10px] font-black uppercase tracking-[0.3em]">Latest Insights</span>
               </div>
-              <h2 className="text-4xl md:text-6xl font-black italic tracking-tighter">
-                 Journal <span className="text-zinc-600">Feed.</span>
+              <h2 className="text-display">
+                 Professional <span className="text-zinc-600">Reflections.</span>
               </h2>
            </div>
            <Link href="/blog" className="flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.3em] text-primary hover:gap-6 transition-all">

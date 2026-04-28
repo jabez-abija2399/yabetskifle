@@ -15,8 +15,8 @@ export const ProjectsShowcase = ({ projects }: Props) => {
            <p className="text-primary font-black uppercase tracking-[0.3em] text-xs">
               Selected Projects
            </p>
-           <h2 className="text-5xl md:text-7xl font-black tracking-tighter leading-none italic">
-              Case Studies
+           <h2 className="text-display italic">
+              Featured Case Studies
            </h2>
         </div>
         

@@ -26,10 +26,10 @@ export const AboutSection = ({ profile }: Props) => {
            <div className="space-y-4">
               <div className="flex items-center gap-2 text-primary">
                  <Zap className="w-4 h-4" />
-                 <span className="text-[10px] font-black uppercase tracking-[0.3em]">Technical Stack</span>
+                 <span className="text-[10px] font-black uppercase tracking-[0.3em]">Core Expertise</span>
               </div>
-              <h2 className="text-4xl md:text-6xl font-black italic tracking-tighter">
-                 Knowledge <span className="text-zinc-600">Matrix.</span>
+              <h2 className="text-display">
+                 Project <span className="text-zinc-600">Specializations.</span>
               </h2>
            </div>
            <p className="text-muted-foreground max-w-sm font-medium italic">

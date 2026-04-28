@@ -29,8 +29,8 @@ export default async function BlogPage() {
               <span className="w-10 h-[2px] bg-primary"></span>
               <span className="text-[10px] font-black uppercase tracking-[0.3em]">Technical Journal</span>
            </div>
-           <h1 className="text-6xl md:text-8xl font-black italic tracking-tighter leading-none">
-              Thoughts <span className="text-zinc-600">&</span> Insights.
+           <h1 className="text-display">
+              Professional <span className="text-zinc-600">Journal.</span>
            </h1>
            <p className="text-muted-foreground text-xl max-w-xl font-medium leading-relaxed italic">
               A collection of architectural decisions, technical guides, and reflections on modern software engineering.
@@ -42,7 +42,7 @@ export default async function BlogPage() {
           {posts.length === 0 ? (
             <div className="p-20 rounded-[3rem] border border-dashed border-border flex flex-col items-center justify-center text-center space-y-4 opacity-50 grayscale">
                <Calendar className="w-10 h-10" />
-               <p className="text-sm font-black uppercase tracking-widest italic">The ink hasn't dried yet. Check back soon.</p>
+               <p className="text-sm font-black uppercase tracking-widest italic">Insights are currently being curated. Check back soon.</p>
             </div>
           ) : (
             posts.map((post) => (

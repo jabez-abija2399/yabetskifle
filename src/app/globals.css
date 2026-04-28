@@ -47,6 +47,18 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* 🖋️ ELITE TYPOGRAPHY SCALE (Fluid) */
+  --font-size-xs: clamp(0.7rem, 0.65rem + 0.25vw, 0.8rem);
+  --font-size-sm: clamp(0.8rem, 0.75rem + 0.25vw, 0.9rem);
+  --font-size-base: clamp(0.95rem, 0.9rem + 0.25vw, 1.05rem);
+  --font-size-lg: clamp(1.1rem, 1rem + 0.5vw, 1.25rem);
+  --font-size-xl: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+  --font-size-2xl: clamp(1.5rem, 1.35rem + 0.75vw, 1.85rem);
+  --font-size-3xl: clamp(1.85rem, 1.65rem + 1vw, 2.25rem);
+  --font-size-4xl: clamp(2.25rem, 2rem + 1.25vw, 3rem);
+  --font-size-display: clamp(3rem, 2.5rem + 2.5vw, 5.5rem);
+  --font-size-hero: clamp(4rem, 3rem + 5vw, 9rem);
 }
 
 :root {
@@ -123,9 +135,32 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground tracking-tight;
+    font-size: var(--font-size-base);
+    line-height: 1.6;
   }
   html {
     @apply font-sans;
+    scroll-behavior: smooth;
+  }
+  
+  /* 🏷️ HEADINGS HIERARCHY */
+  h1, .text-hero { font-size: var(--font-size-hero); font-weight: 900; line-height: 0.95; letter-spacing: -0.05em; }
+  h2, .text-display { font-size: var(--font-size-display); font-weight: 800; line-height: 1.05; letter-spacing: -0.04em; }
+  h3, .text-4xl-fluid { font-size: var(--font-size-4xl); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; }
+  h4, .text-3xl-fluid { font-size: var(--font-size-3xl); font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
+  
+  p { @apply text-muted-foreground font-medium; }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-background/50 backdrop-blur-3xl border border-border/50 shadow-2xl;
+  }
+  .text-gradient {
+    @apply bg-gradient-to-br from-foreground to-foreground/50 bg-clip-text text-transparent;
+  }
+  .text-balance {
+    text-wrap: balance;
   }
 }

@@ -11,9 +11,9 @@ export const ExperienceTimeline = ({ experiences }: Props) => {
       
       {/* Section Header */}
       <div className="space-y-4">
-         <h2 className="text-4xl md:text-5xl font-black tracking-tighter italic">Professional Journey</h2>
-         <p className="text-muted-foreground text-sm font-medium uppercase tracking-widest flex items-center gap-2">
-            <span className="w-8 h-px bg-primary" /> My Career Path
+         <h2 className="text-display italic">Career Evolution</h2>
+         <p className="text-muted-foreground text-sm font-medium uppercase tracking-[0.2em] flex items-center gap-2">
+            <span className="w-8 h-px bg-primary" /> Strategic Professional Progression
          </p>
       </div>
 

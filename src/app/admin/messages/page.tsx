@@ -66,13 +66,13 @@ export default function AdminMessagesPage() {
         <div className="space-y-1">
           <div className="flex items-center gap-3">
              <Inbox className="w-6 h-6 text-primary" />
-             <h1 className="text-4xl font-black italic tracking-tighter uppercase leading-none">Inquiry Hub</h1>
+             <h1 className="text-4xl font-black italic tracking-tighter uppercase leading-none">Inquiry Center</h1>
           </div>
-          <p className="text-xs font-black uppercase tracking-[0.3em] text-zinc-500">Master Communications Log</p>
+          <p className="text-xs font-black uppercase tracking-[0.3em] text-zinc-500">Contact Management Dashboard</p>
         </div>
         <div className="flex items-center gap-4">
            <div className="px-4 py-2 bg-muted rounded-2xl text-[10px] font-black uppercase tracking-widest">
-              Total Transmissions: {messages.length}
+              Total Conversations: {messages.length}
            </div>
         </div>
       </div>
@@ -139,10 +139,10 @@ export default function AdminMessagesPage() {
                    </div>
                    <div className="flex flex-wrap gap-4 pt-2">
                       <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-zinc-500 bg-muted px-4 py-2 rounded-full">
-                         <Calendar className="w-3 h-3" /> {selectedMessage.created_at ? new Date(selectedMessage.created_at).toLocaleString() : "Real-time Encryption"}
+                         <Calendar className="w-3 h-3" /> {selectedMessage.created_at ? new Date(selectedMessage.created_at).toLocaleString() : "Date Pending"}
                       </div>
                       <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-zinc-500 bg-muted px-4 py-2 rounded-full">
-                         <MessageSquare className="w-3 h-3" /> Verified Protocol
+                         <MessageSquare className="w-3 h-3" /> Professional Inquiry
                       </div>
                    </div>
                 </div>

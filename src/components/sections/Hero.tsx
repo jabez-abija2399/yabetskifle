@@ -73,31 +73,31 @@ export const Hero = ({ profile }: Props) => {
               </span>
            </div>
 
-           <h1 className="text-5xl md:text-[5.5rem] font-black tracking-tighter leading-[0.9]">
+           <h1 className="text-hero">
               I&apos;m <span className="text-zinc-500 hover:text-foreground transition-colors duration-500 cursor-default">{(profile.full_name || "Guest").split(' ')[0]}</span>. <br />
               <span className="text-primary italic">{profile.role_title}</span>
            </h1>
-           <p className="max-w-xl mx-auto text-muted-foreground text-lg md:text-2xl font-medium pt-2 leading-relaxed">
+           <p className="max-w-xl mx-auto text-muted-foreground text-lg md:text-xl font-medium pt-2 leading-relaxed text-balance">
               {profile.bio}
            </p>
         </motion.div>
-
+ 
         {/* 🚀 CTAs */}
         <motion.div variants={itemVariant} className="flex flex-col sm:flex-row items-center justify-center gap-5 pt-4">
            <Button asChild size="lg" className="rounded-full px-10 h-14 font-black text-lg shadow-xl shadow-primary/25 hover:-translate-y-1 transition-all duration-300">
               <a href="#work">
-                 View Work 
+                 Explore Projects 
                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </a>
            </Button>
            <div className="flex gap-4">
              <Button asChild variant="outline" size="lg" className="rounded-full px-8 h-14 font-black border border-border hover:bg-muted/50 backdrop-blur-md">
-                <a href="#contact">Let&apos;s Talk</a>
+                <a href="#contact">Start Conversation</a>
              </Button>
              {profile.resume_url && (
                <Button asChild variant="secondary" size="lg" className="rounded-full px-8 h-14 font-black shadow-lg hover:-translate-y-1 transition-all">
                   <a href={profile.resume_url} target="_blank" rel="noreferrer">
-                    <Download className="mr-2 w-4 h-4" /> CV / Resume
+                    <Download className="mr-2 w-4 h-4" /> Download Resume
                   </a>
                </Button>
              )}
