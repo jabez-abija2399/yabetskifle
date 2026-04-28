@@ -53,11 +53,11 @@ export const Navbar = () => {
           ))}
           <div className="flex items-center gap-2 border-l border-border pl-6 ml-2">
             <ThemeToggle />
-            <Link href="/admin">
+            {/* <Link href="/admin">
               <Button variant="default" size="sm" className="rounded-full px-5 hidden sm:inline-flex">
                 Admin
               </Button>
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>

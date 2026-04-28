@@ -2,6 +2,7 @@ import { PortfolioService } from "@/services/portfolio"
 import { Hero } from "@/components/sections/Hero"
 import { AboutSection } from "@/components/sections/AboutSection"
 import { ServicesGrid } from "@/components/sections/ServicesGrid"
+import { GithubMetrics } from "@/components/sections/GithubMetrics"
 import { ProjectsShowcase } from "@/components/sections/ProjectsShowcase"
 import { LatestPosts } from "@/components/sections/LatestPosts"
 import { ExperienceTimeline } from "@/components/sections/ExperienceTimeline"
@@ -42,6 +43,9 @@ export default async function HomePage() {
         
         {/* 👤 About & Skills (Derived from Profile) */}
         <AboutSection profile={profile} />
+
+        {/* 📡 Github Live Telemetry Array */}
+        <GithubMetrics username={profile.social_links?.github?.split('/').filter(Boolean).pop() || "jabez-abija2399"} />
 
         {/* 🛠️ Core Services */}
         {settings?.show_services !== false && <ServicesGrid services={services} />}
