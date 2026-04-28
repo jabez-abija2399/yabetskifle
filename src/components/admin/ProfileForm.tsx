@@ -5,6 +5,7 @@ import { Profile, SkillCategory, SocialLinks } from "@/types/portfolio"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ImageUploader } from "@/components/ui/ImageUploader"
+import { DocumentUploader } from "@/components/ui/DocumentUploader"
 import { SkillCategoryInput } from "./SkillCategoryInput"
 import { Loader2, Globe, Mail } from "lucide-react"
 import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
@@ -18,6 +19,7 @@ interface Props {
 
 export const ProfileForm = ({ initialData, onSave, isSaving }: Props) => {
   const [avatar, setAvatar] = useState(initialData.avatar_url)
+  const [resume, setResume] = useState(initialData.resume_url)
   const [skills, setSkills] = useState<SkillCategory[]>(initialData.skills || [])
   const [socials, setSocials] = useState<SocialLinks>(initialData.social_links || {})
 
@@ -32,6 +34,7 @@ export const ProfileForm = ({ initialData, onSave, isSaving }: Props) => {
       bio: formData.get("bio") as string,
       experience_years: Number(formData.get("experience_years")),
       avatar_url: avatar,
+      resume_url: resume,
       skills: skills,
       social_links: socials,
     })
@@ -50,7 +53,13 @@ export const ProfileForm = ({ initialData, onSave, isSaving }: Props) => {
           <ImageUploader onUpload={setAvatar} />
         </div>
 
-        <div className="p-6 rounded-[2rem] border border-border bg-card space-y-6">
+        {/* --- Resume Document Upload --- */}
+        <div className="space-y-4 pt-6 border-t border-border">
+          <label className="text-sm font-semibold">Resume / CV</label>
+          <DocumentUploader onUpload={setResume} currentResumeUrl={resume} />
+        </div>
+
+        <div className="p-6 rounded-[2rem] border border-border bg-card space-y-6 mt-8">
           <p className="text-xs font-bold uppercase text-muted-foreground tracking-widest">Connect Links</p>
           <div className="space-y-4">
              <div className="flex items-center gap-3">
