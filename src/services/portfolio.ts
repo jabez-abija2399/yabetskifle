@@ -200,19 +200,22 @@ export const PortfolioService = {
 
   /** 📊 Get Dashboard Analytics */
   async getDashboardStats() {
-    const [projects, messages, services, settings] = await Promise.all([
+    const [projects, messages, services, settings, pageViews] = await Promise.all([
       supabase.from("projects").select("id", { count: "exact" }),
       supabase.from("messages").select("id", { count: "exact" }),
       supabase.from("services").select("id", { count: "exact" }),
-      supabase.from("site_settings").select("*").single()
+      supabase.from("site_settings").select("*").single(),
+      supabase.from("page_views").select("view_count")
     ])
 
     const activeSections = settings.data ? Object.keys(settings.data).filter(key => key.startsWith('show_') && settings.data[key] === true).length : 0
+    const globalViews = pageViews.data?.reduce((acc, row) => acc + (row.view_count || 0), 0) || 0
 
     return {
       projectsCount: projects.count || 0,
       messagesCount: messages.count || 0,
       servicesCount: services.count || 0,
+      globalViews: globalViews,
       activeSections
     }
   }

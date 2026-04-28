@@ -6,7 +6,7 @@ import { AdminPageHeader } from "@/components/ui/AdminPageHeader"
 import { 
   Briefcase, MessageSquare, Package, 
   Columns, ArrowUpRight, Activity, 
-  ShieldCheck, Loader2, Zap
+  ShieldCheck, Loader2, Zap, Eye
 } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -40,6 +40,14 @@ export default function AdminDashboard() {
   }
 
   const statCards = [
+    { 
+      title: "Telemetry", 
+      value: stats.globalViews || 0, 
+      label: "Total Fleet Hits", 
+      icon: <Eye className="w-5 h-5" />, 
+      href: "/admin",
+      color: "bg-purple-500/10 text-purple-500"
+    },
     { 
       title: "Exhibitions", 
       value: stats.projectsCount, 
@@ -95,7 +103,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* 📊 STATS GRID */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
         {statCards.map((stat, i) => (
           <Link key={i} href={stat.href} className="group transition-all">
             <div className="p-8 rounded-[2.5rem] bg-card border border-border group-hover:border-primary/40 group-hover:shadow-2xl group-hover:shadow-primary/10 transition-all space-y-6 relative overflow-hidden">
