@@ -11,7 +11,7 @@ export const ExperienceTimeline = ({ experiences }: Props) => {
       
       {/* Section Header */}
       <div className="space-y-4">
-         <h2 className="text-display italic">Career Evolution</h2>
+         <h2 className="text-heading-section italic">Career Evolution</h2>
          <p className="text-muted-foreground text-sm font-medium uppercase tracking-[0.2em] flex items-center gap-2">
             <span className="w-8 h-px bg-primary" /> Strategic Professional Progression
          </p>
@@ -33,7 +33,7 @@ export const ExperienceTimeline = ({ experiences }: Props) => {
                <div className="w-full md:w-[45%] p-8 rounded-[2.5rem] border border-border bg-card hover:border-primary/30 transition-all group">
                   <div className="space-y-4">
                      <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-black uppercase tracking-widest text-primary px-3 py-1 bg-primary/10 rounded-full border border-primary/20">
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-primary px-3 py-1 bg-primary/10 rounded-full border border-primary/20">
                            {exp.duration}
                         </span>
                         {exp.is_current && (
@@ -42,7 +42,7 @@ export const ExperienceTimeline = ({ experiences }: Props) => {
                      </div>
 
                      <div className="space-y-1">
-                        <h3 className="text-2xl font-black italic tracking-tight">{exp.role}</h3>
+                        <h3 className="text-2xl font-bold italic tracking-tight">{exp.role}</h3>
                         <p className="text-lg font-bold text-zinc-500">{exp.company}</p>
                      </div>
 
@@ -62,7 +62,7 @@ export const ExperienceTimeline = ({ experiences }: Props) => {
                </div>
 
                {/* Year Display (Desktop) */}
-               <div className={`hidden md:block w-[45%] text-4xl font-black text-muted-foreground/10 uppercase italic ${isEven ? 'text-left pl-10' : 'text-right pr-10'}`}>
+               <div className={`hidden md:block w-[45%] text-4xl font-bold text-muted-foreground/10 uppercase italic ${isEven ? 'text-left pl-10' : 'text-right pr-10'}`}>
                   {exp.duration.split('-')[0].trim()}
                </div>
             </div>

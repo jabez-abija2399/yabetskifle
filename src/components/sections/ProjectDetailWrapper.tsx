@@ -114,7 +114,7 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
                 </span>
               )}
             </div>
-            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight max-w-4xl">
+            <h1 className="text-heading-section font-bold tracking-tight max-w-4xl italic">
               {project.title}
             </h1>
           </div>
@@ -126,16 +126,16 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
         <main className="lg:col-span-2 space-y-12">
 
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold">The Story</h2>
+            <h2 className="text-2xl font-bold">Project Overview</h2>
             <p className="text-muted-foreground text-lg leading-relaxed">
               {project.description}
             </p>
           </div>
 
-          {/* ── GALLERY SECTION: Interactive ── */}
+          {/*  GALLERY SECTION: Interactive */}
           {project.images?.length > 0 && (
-            <div className="space-y-4 pt-4">
-              <h2 className="text-2xl font-bold">Project Gallery</h2>
+            <div className="space-y-6 pt-4">
+              <h2 className="text-heading-card font-bold italic">Project Gallery</h2>
 
               <div className="relative aspect-video rounded-3xl overflow-hidden border border-border bg-muted/30 shadow-2xl">
                 <Image
@@ -174,10 +174,9 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
           )}
 
           {/* Purpose, Features, and Lessons Learned */}
-          {project.purpose && (
             <div className="space-y-4 p-8 rounded-3xl bg-secondary/30 border border-secondary shadow-sm">
-              <h3 className="text-xl font-bold flex items-center gap-2">
-                <Briefcase className="w-5 h-5 text-primary" /> The Mission
+              <h3 className="text-heading-card font-bold flex items-center gap-2 italic">
+                <Briefcase className="w-5 h-5 text-primary" /> Project Objective
               </h3>
               <p className="text-muted-foreground leading-relaxed">
                 {project.purpose}
@@ -187,8 +186,8 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
 
           {/* Key Features List Section */}
           {safeFeatures.length > 0 && (
-            <div className="space-y-4 pt-4">
-              <h3 className="text-xl font-bold flex items-center gap-2">
+            <div className="space-y-6 pt-4">
+              <h3 className="text-heading-card font-bold flex items-center gap-2 italic">
                 <CheckCircle2 className="w-5 h-5 text-green-500" /> Key Features
               </h3>
               <div className="grid sm:grid-cols-2 gap-3">
@@ -203,9 +202,9 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
           )}
           {/* What I Learned Section */}
           {safeLearned.length > 0 && (
-            <div className="space-y-4 p-8 rounded-3xl bg-yellow-500/5 border border-yellow-500/10 shadow-sm">
-              <h3 className="text-xl font-bold flex items-center gap-2">
-                <Lightbulb className="w-5 h-5 text-yellow-500" /> Reflection & Lessons
+            <div className="space-y-6 p-8 rounded-3xl bg-yellow-500/5 border border-yellow-500/10 shadow-sm">
+              <h3 className="text-heading-card font-bold flex items-center gap-2 italic">
+                <Lightbulb className="w-5 h-5 text-yellow-500" /> Project Reflection
               </h3>
               <div className="space-y-3">
                 {safeLearned.map((item, i) => (

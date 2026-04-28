@@ -56,9 +56,9 @@
   --font-size-xl: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
   --font-size-2xl: clamp(1.5rem, 1.35rem + 0.75vw, 1.85rem);
   --font-size-3xl: clamp(1.85rem, 1.65rem + 1vw, 2.25rem);
-  --font-size-4xl: clamp(2.25rem, 2rem + 1.25vw, 3rem);
-  --font-size-display: clamp(3rem, 2.5rem + 2.5vw, 5.5rem);
-  --font-size-hero: clamp(4rem, 3rem + 5vw, 9rem);
+  --font-size-4xl: clamp(2rem, 3vw, 2.75rem);
+  --font-size-display: clamp(2.25rem, 4vw, 3.5rem);
+  --font-size-hero: clamp(3rem, 7vw, 6rem);
 }
 
 :root {
@@ -135,7 +135,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground tracking-tight;
+    @apply bg-background text-foreground tracking-tight selection:bg-primary/20 selection:text-primary;
     font-size: var(--font-size-base);
     line-height: 1.6;
   }
@@ -144,23 +144,37 @@
     scroll-behavior: smooth;
   }
   
-  /* 🏷️ HEADINGS HIERARCHY */
-  h1, .text-hero { font-size: var(--font-size-hero); font-weight: 900; line-height: 0.95; letter-spacing: -0.05em; }
-  h2, .text-display { font-size: var(--font-size-display); font-weight: 800; line-height: 1.05; letter-spacing: -0.04em; }
-  h3, .text-4xl-fluid { font-size: var(--font-size-4xl); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; }
-  h4, .text-3xl-fluid { font-size: var(--font-size-3xl); font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
+  /* 🏷️ HEADINGS HIERARCHY - MODERN & PROFESSIONAL */
+  h1, .text-heading-hero { 
+    font-size: var(--font-size-hero); 
+    font-weight: 800; 
+    line-height: 1; 
+    letter-spacing: -0.04em; 
+  }
+  h2, .text-heading-section { 
+    font-size: var(--font-size-display); 
+    font-weight: 700; 
+    line-height: 1.1; 
+    letter-spacing: -0.03em; 
+  }
+  h3, .text-heading-card { 
+    font-size: var(--font-size-3xl); 
+    font-weight: 700; 
+    line-height: 1.2; 
+    letter-spacing: -0.02em; 
+  }
   
-  p { @apply text-muted-foreground font-medium; }
+  p, .text-body { 
+    @apply text-muted-foreground font-medium; 
+    line-height: 1.7;
+  }
 }
 
 @layer utilities {
-  .glass {
-    @apply bg-background/50 backdrop-blur-3xl border border-border/50 shadow-2xl;
+  .glass-premium {
+    @apply bg-background/60 backdrop-blur-3xl border border-border/50 shadow-2xl;
   }
-  .text-gradient {
-    @apply bg-gradient-to-br from-foreground to-foreground/50 bg-clip-text text-transparent;
-  }
-  .text-balance {
-    text-wrap: balance;
+  .heading-gradient {
+    @apply bg-linear-to-br from-foreground to-foreground/60 bg-clip-text text-transparent;
   }
 }

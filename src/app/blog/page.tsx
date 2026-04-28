@@ -27,9 +27,9 @@ export default async function BlogPage() {
         <div className="space-y-6 text-center md:text-left">
            <div className="flex items-center gap-3 text-primary justify-center md:justify-start">
               <span className="w-10 h-[2px] bg-primary"></span>
-              <span className="text-[10px] font-black uppercase tracking-[0.3em]">Technical Journal</span>
+              <span className="text-[10px] font-bold uppercase tracking-[0.3em]">Technical Journal</span>
            </div>
-           <h1 className="text-display">
+           <h1 className="text-heading-section">
               Professional <span className="text-zinc-600">Journal.</span>
            </h1>
            <p className="text-muted-foreground text-xl max-w-xl font-medium leading-relaxed italic">
@@ -42,7 +42,7 @@ export default async function BlogPage() {
           {posts.length === 0 ? (
             <div className="p-20 rounded-[3rem] border border-dashed border-border flex flex-col items-center justify-center text-center space-y-4 opacity-50 grayscale">
                <Calendar className="w-10 h-10" />
-               <p className="text-sm font-black uppercase tracking-widest italic">Insights are currently being curated. Check back soon.</p>
+               <p className="text-sm font-bold uppercase tracking-widest italic">New insights coming soon. Check back soon.</p>
             </div>
           ) : (
             posts.map((post) => (
@@ -53,13 +53,13 @@ export default async function BlogPage() {
                    {post.cover_image ? (
                      <Image src={post.cover_image} alt={post.title} fill className="object-cover" />
                    ) : (
-                     <div className="w-full h-full bg-muted flex items-center justify-center font-black italic text-zinc-600">Journal</div>
+                     <div className="w-full h-full bg-muted flex items-center justify-center font-bold italic text-zinc-600">Journal</div>
                    )}
                 </div>
 
                 {/* Content Narrative (8/12) */}
                 <div className="md:col-span-8 space-y-6">
-                   <div className="flex items-center gap-6 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">
+                   <div className="flex items-center gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500">
                       <span className="flex items-center gap-2">
                         <Calendar className="w-3 h-3" /> {post.created_at ? new Date(post.created_at).toLocaleDateString() : "Just Now"}
                       </span>
@@ -71,7 +71,7 @@ export default async function BlogPage() {
                    </div>
 
                    <Link href={`/blog/${post.slug}`} className="block group/title">
-                      <h2 className="text-3xl md:text-5xl font-black italic tracking-tighter leading-tight group-hover/title:text-primary transition-colors">
+                      <h2 className="text-3xl md:text-5xl font-bold italic tracking-tighter leading-tight group-hover/title:text-primary transition-colors">
                         {post.title}
                       </h2>
                    </Link>
@@ -82,7 +82,7 @@ export default async function BlogPage() {
 
                    <Link 
                      href={`/blog/${post.slug}`} 
-                     className="inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-primary hover:gap-5 transition-all"
+                     className="inline-flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.3em] text-primary hover:gap-5 transition-all"
                    >
                       Read Full Article <ArrowRight className="w-4 h-4" />
                    </Link>

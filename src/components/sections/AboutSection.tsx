@@ -26,9 +26,9 @@ export const AboutSection = ({ profile }: Props) => {
            <div className="space-y-4">
               <div className="flex items-center gap-2 text-primary">
                  <Zap className="w-4 h-4" />
-                 <span className="text-[10px] font-black uppercase tracking-[0.3em]">Core Expertise</span>
+                 <span className="text-[10px] font-bold uppercase tracking-[0.3em]">Technical Profile</span>
               </div>
-              <h2 className="text-display">
+              <h2 className="text-heading-section">
                  Project <span className="text-zinc-600">Specializations.</span>
               </h2>
            </div>
@@ -45,7 +45,7 @@ export const AboutSection = ({ profile }: Props) => {
                    <div className="w-12 h-12 rounded-2xl bg-muted flex items-center justify-center text-primary transition-all group-hover:scale-110 group-hover:bg-primary group-hover:text-white">
                       {getIcon(category.name)}
                    </div>
-                   <h3 className="text-xl font-black italic tracking-tight">{category.name}</h3>
+                   <h3 className="text-xl font-bold italic tracking-tight">{category.name}</h3>
                 </div>
                 <div className="flex flex-wrap gap-2">
                    {category.techs.map((tech) => (

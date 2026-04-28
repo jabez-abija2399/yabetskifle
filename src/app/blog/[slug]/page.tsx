@@ -42,13 +42,13 @@ export default async function BlogPostPage({ params }: Props) {
         <div className="container mx-auto px-6 h-20 flex items-center justify-between">
           <Link
             href="/blog"
-            className="group flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] hover:text-primary transition-all"
+            className="group flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] hover:text-primary transition-all"
           >
             <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-            Back to Journal
+            Return to Blog
           </Link>
-          <div className="text-[8px] font-black uppercase tracking-[0.4em] opacity-30 hidden md:block">
-             STRATEGIC INSIGHTS
+          <div className="text-[8px] font-bold uppercase tracking-[0.4em] opacity-30 hidden md:block">
+             PROFESSIONAL INSIGHTS
           </div>
           <button className="p-3 hover:text-primary transition-all">
              <Share2 className="w-4 h-4" />
@@ -68,7 +68,7 @@ export default async function BlogPostPage({ params }: Props) {
         
         {/* 🖋️ ARTICLE HEADER */}
         <header className="space-y-8 mb-20 px-4 md:px-0">
-           <div className="flex flex-wrap items-center gap-6 text-[10px] font-black uppercase tracking-[0.3em] text-primary bg-primary/5 border border-primary/10 w-fit px-8 py-3 rounded-full">
+           <div className="flex flex-wrap items-center gap-6 text-[10px] font-bold uppercase tracking-[0.3em] text-primary bg-primary/5 border border-primary/10 w-fit px-8 py-3 rounded-full">
               <span className="flex items-center gap-2">
                  <Calendar className="w-4 h-4" /> {post.created_at ? new Date(post.created_at).toLocaleDateString() : "Just Now"}
               </span>
@@ -80,13 +80,13 @@ export default async function BlogPostPage({ params }: Props) {
               <ViewTracker path={`/blog/${post.slug}`} showCount={true} className="text-zinc-500" />
            </div>
 
-           <h1 className="text-display">
+           <h1 className="text-heading-section">
               {post.title}
            </h1>
 
            <div className="flex flex-wrap gap-3">
               {post.tags?.map((tag) => (
-                <span key={tag} className="px-6 py-2 bg-muted text-zinc-500 rounded-xl text-[10px] font-black uppercase tracking-widest border border-border/50">
+                <span key={tag} className="px-6 py-2 bg-muted text-zinc-500 rounded-xl text-[10px] font-bold uppercase tracking-widest border border-border/50">
                    # {tag}
                 </span>
               ))}
@@ -106,9 +106,9 @@ export default async function BlogPostPage({ params }: Props) {
            <p className="text-muted-foreground text-sm font-bold uppercase tracking-[0.3em]">End of Entry</p>
            <Link 
              href="/blog" 
-             className="px-10 py-5 rounded-2xl bg-muted font-black italic text-sm tracking-widest hover:bg-primary hover:text-white transition-all shadow-xl"
+             className="px-10 py-5 rounded-2xl bg-muted font-bold italic text-sm tracking-widest hover:bg-primary hover:text-white transition-all shadow-xl"
            >
-              Return to Journal Archive
+              Back to Blog Archive
            </Link>
         </footer>
 

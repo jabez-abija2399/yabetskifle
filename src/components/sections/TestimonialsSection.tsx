@@ -12,7 +12,7 @@ export const TestimonialsSection = ({ testimonials }: Props) => {
       
       {/* Section Header */}
       <div className="text-center space-y-4">
-         <h2 className="text-display italic">Professional Endorsements</h2>
+         <h2 className="text-heading-section italic">Client Feedback</h2>
          <p className="text-muted-foreground text-sm font-medium uppercase tracking-[0.2em]">Strategic feedback from global collaborations</p>
       </div>
 
@@ -45,7 +45,7 @@ export const TestimonialsSection = ({ testimonials }: Props) => {
                 </div>
                 <div>
                    <h4 className="font-bold text-sm tracking-tight">{review.client_name}</h4>
-                   <p className="text-[10px] text-muted-foreground uppercase font-black tracking-widest">{review.client_role}</p>
+                   <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest">{review.client_role}</p>
                 </div>
              </div>
           </div>

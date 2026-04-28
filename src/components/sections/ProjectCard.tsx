@@ -50,32 +50,16 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
 
       {/* Title + Description */}
       <div className="flex-1 space-y-2">
-        <h3 className="text-xl font-bold tracking-tight">{project.title}</h3>
-        <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
+        <h3 className="text-heading-card italic">{project.title}</h3>
+        <p className="text-body italic line-clamp-2">
           {project.description}
         </p>
       </div>
 
       {/* Action Buttons */}
-      <div className="flex gap-3 pt-2">
-        {project.live_url && (
-          <Button asChild size="sm" className="flex-1 rounded-full gap-2">
-            <a href={project.live_url} target="_blank" rel="noopener noreferrer">
-              <ExternalLink className="w-4 h-4" />
-              Live Demo
-            </a>
-          </Button>
-        )}
-        {project.github_url && (
-          <Button asChild size="sm" variant="outline" className="flex-1 rounded-full gap-2">
-            <a href={project.github_url} target="_blank" rel="noopener noreferrer">
-              <FaGithub className="w-4 h-4" />
-              Code
-            </a>
-          </Button>
-        )}
-        <div className="flex items-center gap-2 text-sm text-primary font-medium mt-auto group-hover:translate-x-1 transition-transform">
-          View Project Details
+      <div className="flex flex-col gap-4 pt-2">
+        <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-primary group-hover:gap-4 transition-all">
+          Explore Case Study
           <ArrowRight className="w-4 h-4" />
         </div>
       </div>

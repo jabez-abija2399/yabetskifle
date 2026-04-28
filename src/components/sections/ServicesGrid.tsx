@@ -14,8 +14,8 @@ export const ServicesGrid = ({ services }: Props) => {
   return (
     <section id="services" className="py-24 px-6 max-w-7xl mx-auto">
       <div className="text-center mb-16 space-y-3">
-         <h2 className="text-4xl md:text-5xl font-black tracking-tighter italic">Expertise</h2>
-         <p className="text-muted-foreground text-sm font-medium uppercase tracking-widest">What I bring to the table</p>
+         <h2 className="text-heading-section font-bold tracking-tighter italic">Specialized Services</h2>
+         <p className="text-muted-foreground text-sm font-medium uppercase tracking-widest">Professional solutions for digital excellence</p>
       </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -30,7 +30,7 @@ export const ServicesGrid = ({ services }: Props) => {
                   <Icon className="w-7 h-7 text-primary" />
                </div>
 
-               <h3 className="text-2xl font-black mb-4 tracking-tight italic">{service.title}</h3>
+               <h3 className="text-2xl font-bold mb-4 tracking-tight italic">{service.title}</h3>
                <p className="text-muted-foreground text-sm leading-relaxed mb-6">
                   {service.description}
                </p>

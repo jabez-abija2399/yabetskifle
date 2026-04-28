@@ -12,11 +12,11 @@ export const ProjectsShowcase = ({ projects }: Props) => {
       {/* Editorial Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-border pb-12">
         <div className="space-y-4">
-           <p className="text-primary font-black uppercase tracking-[0.3em] text-xs">
+           <p className="text-primary font-bold uppercase tracking-[0.3em] text-xs">
               Selected Projects
            </p>
-           <h2 className="text-display italic">
-              Featured Case Studies
+           <h2 className="text-heading-section italic">
+              Selected Projects
            </h2>
         </div>
         

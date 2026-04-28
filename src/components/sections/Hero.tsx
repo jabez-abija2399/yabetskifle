@@ -62,40 +62,40 @@ export const Hero = ({ profile }: Props) => {
         {/* 📖 Hero Narrative */}
         <motion.div variants={itemVariant} className="space-y-6">
            
-           {/* ✨ Status Indicator */}
-           <div className="inline-flex items-center backdrop-blur-md bg-background/30 border border-border/50 px-4 py-2 rounded-full shadow-sm">
-              <span className="relative flex h-2.5 w-2.5 mr-3">
-                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
-              </span>
-              <span className="text-foreground/80 font-black uppercase tracking-[0.2em] text-[10px]">
-                 Available for new projects
-              </span>
-           </div>
-
-           <h1 className="text-hero">
-              I&apos;m <span className="text-zinc-500 hover:text-foreground transition-colors duration-500 cursor-default">{(profile.full_name || "Guest").split(' ')[0]}</span>. <br />
-              <span className="text-primary italic">{profile.role_title}</span>
-           </h1>
-           <p className="max-w-xl mx-auto text-muted-foreground text-lg md:text-xl font-medium pt-2 leading-relaxed text-balance">
+            {/* ✨ Status Indicator */}
+            <div className="inline-flex items-center backdrop-blur-md bg-background/30 border border-border/50 px-4 py-2 rounded-full shadow-sm">
+               <span className="relative flex h-2.5 w-2.5 mr-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+               </span>
+               <span className="text-foreground/80 font-bold uppercase tracking-[0.2em] text-[10px]">
+                  Available for new opportunities
+               </span>
+            </div>
+ 
+            <h1 className="text-heading-hero">
+               I&apos;m <span className="text-zinc-500 hover:text-foreground transition-colors duration-500 cursor-default">{(profile.full_name || "Guest").split(' ')[0]}</span>. <br />
+               <span className="text-primary italic">{profile.role_title}</span>
+            </h1>
+            <p className="max-w-xl mx-auto text-muted-foreground text-lg md:text-xl font-medium pt-2 leading-relaxed text-balance">
               {profile.bio}
            </p>
         </motion.div>
  
-        {/* 🚀 CTAs */}
+        {/* 🚀 Actions */}
         <motion.div variants={itemVariant} className="flex flex-col sm:flex-row items-center justify-center gap-5 pt-4">
-           <Button asChild size="lg" className="rounded-full px-10 h-14 font-black text-lg shadow-xl shadow-primary/25 hover:-translate-y-1 transition-all duration-300">
+           <Button asChild size="lg" className="rounded-full px-10 h-14 font-bold text-lg shadow-xl shadow-primary/25 hover:-translate-y-1 transition-all duration-300">
               <a href="#work">
-                 Explore Projects 
+                 View Portfolio 
                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </a>
            </Button>
            <div className="flex gap-4">
-             <Button asChild variant="outline" size="lg" className="rounded-full px-8 h-14 font-black border border-border hover:bg-muted/50 backdrop-blur-md">
-                <a href="#contact">Start Conversation</a>
+             <Button asChild variant="outline" size="lg" className="rounded-full px-8 h-14 font-bold border border-border hover:bg-muted/50 backdrop-blur-md">
+                <a href="#contact">Get in Touch</a>
              </Button>
              {profile.resume_url && (
-               <Button asChild variant="secondary" size="lg" className="rounded-full px-8 h-14 font-black shadow-lg hover:-translate-y-1 transition-all">
+               <Button asChild variant="secondary" size="lg" className="rounded-full px-8 h-14 font-bold shadow-lg hover:-translate-y-1 transition-all">
                   <a href={profile.resume_url} target="_blank" rel="noreferrer">
                     <Download className="mr-2 w-4 h-4" /> Download Resume
                   </a>

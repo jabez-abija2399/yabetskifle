@@ -49,9 +49,9 @@ export const ContactSection = ({ profile }: Props) => {
            <div className="space-y-6">
               <div className="flex items-center gap-2 text-primary">
                  <Sparkles className="w-5 h-5" />
-                 <span className="text-[10px] font-black uppercase tracking-[0.3em]">Direct Inquiries</span>
+                 <span className="text-[10px] font-bold uppercase tracking-[0.3em]">Contact Me</span>
               </div>
-              <h2 className="text-display">
+              <h2 className="text-heading-section">
                  Start a <span className="text-primary">Conversation.</span>
               </h2>
               <p className="text-muted-foreground text-xl max-w-md font-medium leading-relaxed italic">
@@ -78,7 +78,7 @@ export const ContactSection = ({ profile }: Props) => {
                       {item.icon}
                    </div>
                    <div>
-                      <p className="text-[10px] font-black uppercase text-zinc-500 tracking-[0.3em] mb-1">{item.label}</p>
+                      <p className="text-[10px] font-bold uppercase text-zinc-500 tracking-[0.3em] mb-1">{item.label}</p>
                       <p className="text-lg font-bold italic group-hover:text-primary transition-colors cursor-default">{item.value}</p>
                    </div>
                 </div>
@@ -93,22 +93,22 @@ export const ContactSection = ({ profile }: Props) => {
               <form onSubmit={handleSubmit} className="space-y-8">
                  <div className="grid md:grid-cols-2 gap-8">
                     <div className="space-y-3">
-                       <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 ml-2">Your Name</label>
+                       <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 ml-2">Your Name</label>
                        <Input name="name" placeholder="E.g. Elon Musk" required className="h-14 rounded-2xl bg-muted/20 border-border/40 focus:ring-primary/20" />
                     </div>
                     <div className="space-y-3">
-                       <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 ml-2">Email Address</label>
+                       <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 ml-2">Email Address</label>
                        <Input name="email" type="email" placeholder="email@example.com" required className="h-14 rounded-2xl bg-muted/20 border-border/40 focus:ring-primary/20" />
                     </div>
                  </div>
 
                  <div className="space-y-3">
-                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 ml-2">Inquiry Subject</label>
+                    <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 ml-2">Inquiry Subject</label>
                     <Input name="subject" placeholder="New Project Proposition" required className="h-14 rounded-2xl bg-muted/20 border-border/40 focus:ring-primary/20" />
                  </div>
 
                  <div className="space-y-3">
-                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 ml-2">Project Brief</label>
+                    <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 ml-2">Project Brief</label>
                     <textarea 
                        name="message" 
                        required 
@@ -117,7 +117,7 @@ export const ContactSection = ({ profile }: Props) => {
                     />
                  </div>
 
-                 <Button type="submit" disabled={isSubmitting} className="w-full h-16 rounded-2xl font-black italic text-lg gap-2 shadow-2xl shadow-primary/20 hover:-translate-y-1 transition-all active:translate-y-0">
+                 <Button type="submit" disabled={isSubmitting} className="w-full h-16 rounded-2xl font-bold italic text-lg gap-2 shadow-2xl shadow-primary/20 hover:-translate-y-1 transition-all active:translate-y-0">
                     {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
                     {isSubmitting ? "SENDING..." : "SEND MESSAGE"}
                  </Button>
