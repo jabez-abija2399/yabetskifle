@@ -6,6 +6,11 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ImageUploader } from "@/components/ui/ImageUploader"
 import { Loader2, FileText, Globe } from "lucide-react"
+import dynamic from "next/dynamic"
+import { useTheme } from "next-themes"
+
+// 🖋️ Dynamically import MDEditor without SSR to prevent navigator errors
+const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false })
 
 interface Props {
   initialData?: Post
@@ -16,6 +21,9 @@ interface Props {
 
 export const PostForm = ({ initialData, onSave, isSaving, onCancel }: Props) => {
   const [coverImage, setCoverImage] = useState(initialData?.cover_image || "")
+  const [content, setContent] = useState(initialData?.content || "")
+  const { theme, systemTheme } = useTheme()
+  const currentTheme = theme === "system" ? systemTheme : theme
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -28,7 +36,7 @@ export const PostForm = ({ initialData, onSave, isSaving, onCancel }: Props) => 
     await onSave({
       title,
       slug,
-      content: formData.get("content") as string,
+      content,
       excerpt: formData.get("excerpt") as string,
       cover_image: coverImage,
       published: formData.get("published") === "on",
@@ -48,14 +56,16 @@ export const PostForm = ({ initialData, onSave, isSaving, onCancel }: Props) => 
           </div>
 
           <div className="space-y-1">
-            <label className="text-sm font-semibold">Content (Markdown/HTML supported)</label>
-            <textarea 
-               name="content" 
-               defaultValue={initialData?.content} 
-               required 
-               className="w-full min-h-[400px] p-6 rounded-3xl border border-border bg-background font-mono text-sm leading-relaxed" 
-               placeholder="Start writing your masterpiece..."
-            />
+            <label className="text-sm font-semibold">Content (Markdown supported)</label>
+            <div data-color-mode={currentTheme} className="border border-border rounded-xl overflow-hidden">
+               <MDEditor 
+                 value={content} 
+                 onChange={(val) => setContent(val || "")} 
+                 height={600} 
+                 preview="live"
+               />
+            </div>
+            <input type="hidden" name="content" value={content} />
           </div>
         </div>
 

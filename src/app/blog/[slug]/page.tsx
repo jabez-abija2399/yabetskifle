@@ -4,6 +4,7 @@ import { notFound } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowLeft, Calendar, Clock, Tag, Share2 } from "lucide-react"
+import ReactMarkdown from "react-markdown"
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -55,11 +56,11 @@ export default async function BlogPostPage({ params }: Props) {
       </nav>
 
       {/* 🎬 HERO COVER */}
-      <div className="relative w-full aspect-[21/9] bg-card overflow-hidden mt-20">
+      <div className="relative w-full aspect-21/9 bg-card overflow-hidden mt-20">
         {post.cover_image && (
           <Image src={post.cover_image} alt={post.title} fill priority className="object-cover opacity-60" />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-background via-background/20 to-transparent" />
       </div>
 
       <div className="container mx-auto px-6 -mt-32 relative z-10 max-w-4xl pb-40">
@@ -90,15 +91,15 @@ export default async function BlogPostPage({ params }: Props) {
         </header>
 
         {/* 📖 CONTENT BODY */}
-        <div className="prose prose-zinc dark:prose-invert max-w-none px-4 md:px-0">
-           <div className="text-xl md:text-2xl leading-[1.8] text-zinc-300 font-medium italic whitespace-pre-wrap selection:bg-primary/30">
+        <div className="prose prose-zinc dark:prose-invert max-w-none px-4 md:px-0 text-lg md:text-xl leading-[1.8] text-zinc-300 font-medium whitespace-pre-wrap selection:bg-primary/30">
+           <ReactMarkdown>
               {post.content}
-           </div>
+           </ReactMarkdown>
         </div>
 
         {/* 🏁 ARTICLE FOOTER */}
         <footer className="mt-20 pt-20 border-t border-border flex flex-col items-center text-center space-y-8">
-           <div className="w-16 h-[1px] bg-zinc-800"></div>
+           <div className="w-16 h-px bg-zinc-800"></div>
            <p className="text-muted-foreground text-sm font-bold uppercase tracking-[0.3em]">End of Transmission</p>
            <Link 
              href="/blog" 
