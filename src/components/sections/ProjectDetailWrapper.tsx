@@ -168,7 +168,7 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
                   </span>
                 )}
               </div>
-              <h1 className="text-heading-section font-bold tracking-tight max-w-2xl italic leading-tight">
+              <h1 className="text-heading-section font-bold tracking-tight max-w-3xl italic leading-tight truncate">
                 {project.title}
               </h1>
           </div>
