@@ -13,11 +13,11 @@ export const ProjectsAllWrapper = () => {
     <section className="py-16 px-6 max-w-6xl mx-auto space-y-12">
 
       {/* Page Header */}
-      <div className="space-y-3">
-        <p className="text-sm font-semibold uppercase tracking-widest text-primary">Portfolio</p>
-        <h1 className="text-5xl font-extrabold tracking-tight">All Projects</h1>
-        <p className="text-muted-foreground max-w-xl">
-          {projects.length} project{projects.length !== 1 ? "s" : ""} — everything I&apos;ve built.
+      <div className="space-y-4">
+        <p className="text-[10px] font-black uppercase tracking-[0.3em] text-primary italic">Portfolio Archive</p>
+        <h1 className="text-display">Project <span className="text-zinc-600">Archive.</span></h1>
+        <p className="text-muted-foreground max-w-xl text-lg font-medium italic">
+          A comprehensive view of my technical contributions across {projects.length} curated works.
         </p>
       </div>
 

@@ -12,8 +12,8 @@ export const TestimonialsSection = ({ testimonials }: Props) => {
       
       {/* Section Header */}
       <div className="text-center space-y-4">
-         <h2 className="text-4xl md:text-5xl font-black tracking-tighter italic">Client Stories</h2>
-         <p className="text-muted-foreground text-sm font-medium uppercase tracking-widest">Feedback from around the world</p>
+         <h2 className="text-display italic">Professional Endorsements</h2>
+         <p className="text-muted-foreground text-sm font-medium uppercase tracking-[0.2em]">Strategic feedback from global collaborations</p>
       </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">

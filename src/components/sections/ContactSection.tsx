@@ -31,7 +31,7 @@ export const ContactSection = ({ profile }: Props) => {
         message: formData.get("message") as string,
       })
 
-      toast.success("Identity Confirmed. Your message is in my inbox!")
+      toast.success("Thank you. Your message has been received successfully!")
       form.reset()
     } catch (error: any) {
       toast.error(error.message)
@@ -49,13 +49,13 @@ export const ContactSection = ({ profile }: Props) => {
            <div className="space-y-6">
               <div className="flex items-center gap-2 text-primary">
                  <Sparkles className="w-5 h-5" />
-                 <span className="text-[10px] font-black uppercase tracking-[0.3em]">Communication Lab</span>
+                 <span className="text-[10px] font-black uppercase tracking-[0.3em]">Direct Inquiries</span>
               </div>
-              <h2 className="text-6xl md:text-8xl font-black tracking-tighter italic leading-none">
-                 Let's Start a <span className="text-primary">Conversation.</span>
+              <h2 className="text-display">
+                 Start a <span className="text-primary">Conversation.</span>
               </h2>
               <p className="text-muted-foreground text-xl max-w-md font-medium leading-relaxed italic">
-                Ready to collaborate on something extraordinary? Ship your project details my way.
+                Ready to collaborate on something extraordinary? Share your project details below.
               </p>
            </div>
 
@@ -63,14 +63,14 @@ export const ContactSection = ({ profile }: Props) => {
               {[
                 { 
                   icon: <Mail className="w-5 h-5" />, 
-                  label: "Transmission", 
-                  value: profile?.social_links?.linkedin ? "Reply via LinkedIn" : "Direct Email",
+                  label: "Inquiry Channel", 
+                  value: profile?.social_links?.linkedin ? "Contact via LinkedIn" : "Direct Email",
                   link: profile?.social_links?.linkedin || `mailto:${profile?.social_links?.twitter || ""}`
                 },
                 { 
                   icon: <MapPin className="w-5 h-5" />, 
-                  label: "Current HQ", 
-                  value: "Global / Remote Optimized"
+                  label: "Base Location", 
+                  value: "Remote / Work from Anywhere"
                 }
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-5 group">
@@ -88,7 +88,7 @@ export const ContactSection = ({ profile }: Props) => {
 
         {/* Right: The High-End Form */}
         <div className="relative group">
-           <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-transparent rounded-[3.5rem] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+           <div className="absolute -inset-1 bg-linear-to-r from-primary/20 to-transparent rounded-[3.5rem] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
            <div className="relative p-12 rounded-[3rem] border border-border bg-card/50 backdrop-blur-3xl shadow-2xl">
               <form onSubmit={handleSubmit} className="space-y-8">
                  <div className="grid md:grid-cols-2 gap-8">
@@ -97,18 +97,18 @@ export const ContactSection = ({ profile }: Props) => {
                        <Input name="name" placeholder="E.g. Elon Musk" required className="h-14 rounded-2xl bg-muted/20 border-border/40 focus:ring-primary/20" />
                     </div>
                     <div className="space-y-3">
-                       <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 ml-2">Secure Email</label>
-                       <Input name="email" type="email" placeholder="elon@spacex.com" required className="h-14 rounded-2xl bg-muted/20 border-border/40 focus:ring-primary/20" />
+                       <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 ml-2">Email Address</label>
+                       <Input name="email" type="email" placeholder="email@example.com" required className="h-14 rounded-2xl bg-muted/20 border-border/40 focus:ring-primary/20" />
                     </div>
                  </div>
 
                  <div className="space-y-3">
-                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 ml-2">Protocol / Subject</label>
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 ml-2">Inquiry Subject</label>
                     <Input name="subject" placeholder="New Project Proposition" required className="h-14 rounded-2xl bg-muted/20 border-border/40 focus:ring-primary/20" />
                  </div>
 
                  <div className="space-y-3">
-                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 ml-2">Brief / Payload</label>
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 ml-2">Project Brief</label>
                     <textarea 
                        name="message" 
                        required 
@@ -119,7 +119,7 @@ export const ContactSection = ({ profile }: Props) => {
 
                  <Button type="submit" disabled={isSubmitting} className="w-full h-16 rounded-2xl font-black italic text-lg gap-2 shadow-2xl shadow-primary/20 hover:-translate-y-1 transition-all active:translate-y-0">
                     {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
-                    {isSubmitting ? "TRANSMITTING..." : "SHIP MESSAGE"}
+                    {isSubmitting ? "SENDING..." : "SEND MESSAGE"}
                  </Button>
               </form>
            </div>

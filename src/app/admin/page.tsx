@@ -34,48 +34,48 @@ export default function AdminDashboard() {
     return (
       <div className="h-[60vh] flex flex-col items-center justify-center space-y-4">
         <Loader2 className="w-10 h-10 animate-spin text-primary" />
-        <p className="text-[10px] font-black uppercase tracking-[0.4em] opacity-30 italic">Synchronizing Fleet...</p>
+        <p className="text-[10px] font-black uppercase tracking-[0.4em] opacity-30 italic">Authenticating Session...</p>
       </div>
     )
   }
 
   const statCards = [
     { 
-      title: "Telemetry", 
+      title: "Analytics", 
       value: stats.globalViews || 0, 
-      label: "Total Fleet Hits", 
+      label: "Global Reach", 
       icon: <Eye className="w-5 h-5" />, 
       href: "/admin",
       color: "bg-purple-500/10 text-purple-500"
     },
     { 
-      title: "Exhibitions", 
+      title: "Portfolio", 
       value: stats.projectsCount, 
-      label: "Live Projects", 
+      label: "Published Works", 
       icon: <Briefcase className="w-5 h-5" />, 
       href: "/admin/projects",
       color: "bg-blue-500/10 text-blue-500"
     },
     { 
-      title: "Inbound", 
+      title: "Inbox", 
       value: stats.messagesCount, 
-      label: "New Messages", 
+      label: "Active Inquiries", 
       icon: <MessageSquare className="w-5 h-5" />, 
       href: "/admin/messages",
       color: "bg-primary/10 text-primary"
     },
     { 
-      title: "Ecosystem", 
+      title: "Offerings", 
       value: stats.servicesCount, 
-      label: "Published Services", 
+      label: "Service Tiers", 
       icon: <Package className="w-5 h-5" />, 
       href: "/admin/services",
       color: "bg-green-500/10 text-green-500"
     },
     { 
-      title: "Architecture", 
+      title: "Structure", 
       value: stats.activeSections, 
-      label: "Active Sections", 
+      label: "Active Modules", 
       icon: <Columns className="w-5 h-5" />, 
       href: "/admin/sections",
       color: "bg-yellow-500/10 text-yellow-500"
@@ -91,8 +91,8 @@ export default function AdminDashboard() {
               <ShieldCheck className="w-5 h-5" />
               <span className="text-[10px] font-black uppercase tracking-[0.3em]">Identity Verified • Secure Session</span>
            </div>
-           <h1 className="text-5xl md:text-7xl font-black italic tracking-tighter leading-none">
-              Control <span className="text-zinc-600">Center.</span>
+           <h1 className="text-display italic">
+              Dashboard <span className="text-zinc-600">Oversight.</span>
            </h1>
            <p className="text-muted-foreground text-xl font-medium italic">Welcome back. Your portfolio is currently performing optimally.</p>
         </div>
@@ -134,10 +134,10 @@ export default function AdminDashboard() {
                   <div className="w-12 h-12 rounded-2xl bg-primary flex items-center justify-center text-white shadow-xl shadow-primary/30">
                      <Zap className="w-6 h-6" />
                   </div>
-                  <h3 className="text-3xl font-black italic tracking-tighter">System Intelligence</h3>
+                  <h3 className="text-3xl font-black italic tracking-tighter">Operational Analytics</h3>
                </div>
                <p className="text-xl font-medium leading-relaxed italic text-zinc-500 max-w-lg transition-colors group-hover:text-zinc-300">
-                 Your portfolio is architecture is currently serving {stats.activeSections} active sections across the main landing page. All transmission protocols are secure.
+                 Your portfolio is currently serving {stats.activeSections} active modules across the primary platform. All security protocols are active.
                </p>
             </div>
             <div className="flex flex-wrap gap-4 pt-6 mt-auto">
@@ -155,8 +155,8 @@ export default function AdminDashboard() {
                <MessageSquare />
             </div>
             <div className="space-y-2">
-               <p className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Inbound Transmissions</p>
-               <h3 className="text-3xl font-black italic tracking-tighter">Newest Inquiry</h3>
+               <p className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Communications Feed</p>
+               <h3 className="text-3xl font-black italic tracking-tighter">Recent Inquiry</h3>
             </div>
             
             {stats.messagesCount > 0 ? (
