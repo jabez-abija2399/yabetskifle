@@ -74,7 +74,7 @@ export const ServiceForm = ({ initialData, onSave, isSaving, onCancel }: Props) 
         <label className="text-xs font-black uppercase tracking-widest text-zinc-500">Core Features / Techs</label>
         {features.map((feat, i) => (
           <div key={i} className="flex gap-2">
-            <Input value={feat || ""} onChange={(e) => setFeatures(f => { f[i] = e.target.value; return [...f] })} placeholder="e.g. Next.js & React" />
+            <Input value={feat || ""} onChange={(e) => setFeatures(prev => prev.map((f, idx) => idx === i ? e.target.value : f))} placeholder="e.g. Next.js & React" />
             <Button type="button" variant="ghost" size="icon" onClick={() => setFeatures(f => f.filter((_, idx) => idx !== i))} className="text-destructive"><X size={14} /></Button>
           </div>
         ))}

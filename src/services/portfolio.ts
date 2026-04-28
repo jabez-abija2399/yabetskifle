@@ -133,7 +133,31 @@ export const PortfolioService = {
 
   /** ⚙️ Update Global Site Configuration */
   async updateSettings(settings: Partial<SiteSettings>): Promise<void> {
-    const { error } = await supabase.from("site_settings").update(settings).eq("id", settings.id)
+    const { error } = await supabase.from("site_settings").upsert(settings)
+    if (error) throw error
+  },
+
+  /** 🛠️ Save or Update a Service Offering */
+  async saveService(service: Partial<Service>): Promise<void> {
+    const { error } = await supabase.from("services").upsert(service, { onConflict: 'id' })
+    if (error) throw error
+  },
+
+  /** 🗑️ Remove a Service Expertise */
+  async deleteService(id: string): Promise<void> {
+    const { error } = await supabase.from("services").delete().eq("id", id)
+    if (error) throw error
+  },
+
+  /** 📝 Save or Update a Journal Article */
+  async savePost(post: Partial<Post>): Promise<void> {
+    const { error } = await supabase.from("posts").upsert(post, { onConflict: 'id' })
+    if (error) throw error
+  },
+
+  /** 🗑️ Delete a Journal Article */
+  async deletePost(id: string): Promise<void> {
+    const { error } = await supabase.from("posts").delete().eq("id", id)
     if (error) throw error
   },
 

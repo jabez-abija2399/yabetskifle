@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { AdminPageHeader } from "@/components/ui/AdminPageHeader"
 import { ProfileForm } from "@/components/admin/ProfileForm"
 import { Profile } from "@/types/portfolio"
-import { createSupabaseClient } from "@/lib/supabase"
+import { PortfolioService } from "@/services/portfolio"
 import { toast } from "sonner"
 import { Loader2 } from "lucide-react"
 
@@ -15,32 +15,27 @@ export default function AdminProfilePage() {
 
   const fetchProfile = async () => {
     setIsLoading(true)
-    const supabase = createSupabaseClient()
-    const { data, error } = await supabase.from("profiles").select("*").single()
-
-    if (error) {
+    const data = await PortfolioService.getProfile()
+    
+    if (!data) {
       toast.error("Could not load profile. Ensure you ran the SQL query.")
     } else {
-      setProfile(data as Profile)
+      setProfile(data)
     }
     setIsLoading(false)
   }
 
   const handleUpdate = async (updatedData: Profile) => {
     setIsSaving(true)
-    const supabase = createSupabaseClient()
-    const { error } = await supabase
-      .from("profiles")
-      .update(updatedData)
-      .eq("id", profile?.id)
-
-    if (error) {
-      toast.error(`Update failed: ${error.message}`)
-    } else {
+    try {
+      await PortfolioService.updateProfile(updatedData)
       toast.success("Profile updated successfully!")
       setProfile(updatedData)
+    } catch (error: any) {
+      toast.error(`Update failed: ${error.message}`)
+    } finally {
+      setIsSaving(false)
     }
-    setIsSaving(false)
   }
 
   useEffect(() => {

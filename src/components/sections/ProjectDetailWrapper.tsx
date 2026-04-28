@@ -1,8 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Project } from "@/types/portfolio"
-import { createSupabaseClient } from "@/lib/supabase"
+import { PortfolioService } from "@/services/portfolio"
 import { Button } from "@/components/ui/button"
 import { ExternalLink, ArrowLeft, Star, User, Briefcase, Lightbulb, CheckCircle2 } from "lucide-react"
 import { FaGithub } from "react-icons/fa"
@@ -28,13 +27,11 @@ const ensureArray = (data: any): string[] => {
 export const ProjectDetailWrapper = ({ id }: Props) => {
   const [project, setProject] = useState<Project | null>(null)
   const [isLoading, setIsLoading] = useState(true)
-  const [currentImage, setCurrentImage] = useState(0) // Used only for the gallery section
+  const [currentImage, setCurrentImage] = useState(0)
 
   useEffect(() => {
     const fetchProject = async () => {
-      const supabase = createSupabaseClient()
-      const { data } = await supabase
-        .from("projects").select("*").eq("id", id).single()
+      const data = await PortfolioService.getProjectById(id)
       if (data) setProject(data)
       setIsLoading(false)
     }
@@ -42,7 +39,7 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
   }, [id])
 
   if (isLoading) return (
-    <div className="animate-pulse space-y-0">n
+    <div className="animate-pulse space-y-0">
       <div className="h-[60vh] bg-muted w-full" />
       <div className="max-w-6xl mx-auto px-6 py-12 grid lg:grid-cols-3 gap-12">
         <div className="lg:col-span-2 space-y-6">
@@ -89,10 +86,10 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
             </div>
           </>
         ) : (
-          <div className="w-full h-full bg-gradient-to-br from-primary/10 via-background to-primary/5" />
+          <div className="w-full h-full bg-linear-to-br from-primary/10 via-background to-primary/5" />
         )}
 
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-background via-transparent to-transparent" />
 
         <div className="absolute top-6 left-6 z-10">
           <Link

@@ -49,7 +49,7 @@ export default async function BlogPage() {
               <article key={post.id} className="group relative grid md:grid-cols-12 gap-10 items-center">
                 
                 {/* Image Preview (4/12) */}
-                <div className="md:col-span-4 relative aspect-[4/3] rounded-[2rem] overflow-hidden border border-border shadow-2xl transition-all group-hover:scale-[1.02]">
+                <div className="md:col-span-4 relative aspect-4/3 rounded-[2rem] overflow-hidden border border-border shadow-2xl transition-all group-hover:scale-[1.02]">
                    {post.cover_image ? (
                      <Image src={post.cover_image} alt={post.title} fill className="object-cover" />
                    ) : (

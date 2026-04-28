@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { AdminPageHeader } from "@/components/ui/AdminPageHeader"
-import { createSupabaseClient } from "@/lib/supabase"
+import { PortfolioService } from "@/services/portfolio"
 import { SiteSettings } from "@/types/portfolio"
 import { toast } from "sonner"
 import { Layout, Eye, EyeOff, Loader2, Save } from "lucide-react"
@@ -18,16 +18,14 @@ export default function AdminSectionsPage() {
   }, [])
 
   const fetchSettings = async () => {
-    const supabase = createSupabaseClient()
-    const { data, error } = await supabase.from("site_settings").select("*").maybeSingle()
+    const data = await PortfolioService.getSettings()
     
-    if (error) console.error("Fetch Error:", error)
     if (data) setSettings(data)
     else {
       // Create a default object if no row exists yet
       setSettings({
         site_name: "My Portfolio",
-        footer_text: "© 2024",
+        footer_text: "© 2026",
         contact_email: "hello@example.com",
         show_services: true,
         show_projects: true,
@@ -36,7 +34,7 @@ export default function AdminSectionsPage() {
         show_blog: true,
         show_faq: true,
         show_languages: true,
-        show_contact: true // 👈
+        show_contact: true
       } as any)
     }
     setLoading(false)
@@ -54,22 +52,16 @@ export default function AdminSectionsPage() {
   const handleSave = async () => {
     if (!settings) return
     setIsSaving(true)
-    const supabase = createSupabaseClient()
     
     console.log("Saving Architecture:", settings)
 
-    const { data, error } = await supabase
-      .from("site_settings")
-      .upsert([settings])
-      .select()
-    
-    if (error) {
+    try {
+      await PortfolioService.updateSettings(settings)
+      console.log("Saved Success")
+      toast.success("Website Architecture synchronized!")
+    } catch (error: any) {
       console.error("Save Error:", error)
       toast.error(`Failed: ${error.message}. Make sure SQL columns were added.`)
-    } else {
-      console.log("Saved Success:", data)
-      if (data && data[0]) setSettings(data[0])
-      toast.success("Website Architecture synchronized!")
     }
     setIsSaving(false)
   }

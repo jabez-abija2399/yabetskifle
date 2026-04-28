@@ -6,32 +6,43 @@ import { AdminEmptyState } from "@/components/ui/AdminEmptyState"
 import { PostForm } from "../PostForm"
 import { Post } from "@/types/portfolio"
 import { useAdminData } from "@/hooks/useAdminData"
-import { createSupabaseClient } from "@/lib/supabase"
+import { PortfolioService } from "@/services/portfolio"
 import { toast } from "sonner"
 import { Pencil, Trash2, Eye } from "lucide-react"
 
 export default function AdminPostsPage() {
-  const { data: posts, loading, deleteItem, refresh } = useAdminData<Post>("posts")
+  const { data: posts, loading, refresh } = useAdminData<Post>("posts")
   const [editingPost, setEditingPost] = useState<Post | null>(null)
   const [isAdding, setIsAdding] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
 
   const handleSave = async (data: Omit<Post, "id" | "created_at">) => {
     setIsSaving(true)
-    const supabase = createSupabaseClient()
-    const { error } = editingPost 
-      ? await supabase.from("posts").update(data).eq("id", editingPost.id)
-      : await supabase.from("posts").insert([data])
-
-    if (error) {
-      toast.error(`Error: ${error.message}`)
-    } else {
+    try {
+      await PortfolioService.savePost({
+         ...data,
+         id: editingPost?.id
+      } as Post)
       toast.success(editingPost ? "Post Updated!" : "Post Published!")
       setEditingPost(null)
       setIsAdding(false)
       refresh()
+    } catch (error: any) {
+      toast.error(`Error: ${error.message}`)
+    } finally {
+      setIsSaving(false)
     }
-    setIsSaving(false)
+  }
+
+  const handleDelete = async (id: string) => {
+    if (!confirm("Remove this transmission permanently?")) return
+    try {
+      await PortfolioService.deletePost(id)
+      toast.success("Article removed.")
+      refresh()
+    } catch (error: any) {
+      toast.error(`Failed: ${error.message}`)
+    }
   }
 
   return (
@@ -58,7 +69,7 @@ export default function AdminPostsPage() {
           {posts.map((post) => (
             <div key={post.id} className="p-6 rounded-[2.5rem] border border-border bg-card group flex flex-col md:flex-row gap-8 items-center justify-between">
               <div className="flex flex-col md:flex-row gap-6 items-center">
-                 <div className="w-32 h-20 rounded-2xl border border-border overflow-hidden bg-muted flex-shrink-0 relative">
+                 <div className="w-32 h-20 rounded-2xl border border-border overflow-hidden bg-muted shrink-0 relative">
                     {post.cover_image && <img src={post.cover_image} alt="" className="w-full h-full object-cover" />}
                  </div>
                  <div className="space-y-1 text-center md:text-left">
@@ -75,7 +86,7 @@ export default function AdminPostsPage() {
                 <button onClick={() => setEditingPost(post)} className="p-3 rounded-xl bg-muted hover:bg-primary hover:text-white transition-all">
                   <Pencil className="w-4 h-4" />
                 </button>
-                <button onClick={() => deleteItem(post.id)} className="p-3 rounded-xl bg-muted hover:bg-destructive hover:text-white transition-all">
+                <button onClick={() => handleDelete(post.id)} className="p-3 rounded-xl bg-muted hover:bg-destructive hover:text-white transition-all">
                   <Trash2 className="w-4 h-4" />
                 </button>
               </div>

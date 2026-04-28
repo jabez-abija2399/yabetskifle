@@ -17,15 +17,15 @@ export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
 
-  // 🛡️ Hide Navbar on Admin & Project Detail pages
-  if (pathname?.startsWith("/admin") || pathname?.startsWith("/projects/")) return null
-
   // Track scroll to change background from transparent to blur
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20)
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  // 🛡️ Hide Navbar on Admin & Project Detail pages
+  if (pathname?.startsWith("/admin") || pathname?.startsWith("/projects/")) return null;
 
   return (
     <nav className={cn(

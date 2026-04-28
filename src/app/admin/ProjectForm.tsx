@@ -125,7 +125,7 @@ export const ProjectForm = ({ initialData, onSave, isSaving, onCancel }: Props) 
                <div className="space-y-3">
                   {keyFeatures.map((feat, i) => (
                     <div key={i} className="flex gap-2">
-                       <Input value={feat || ""} onChange={(e) => setKeyFeatures(f => { f[i] = e.target.value; return [...f] })} placeholder="e.g. Dashboard with charts" />
+                       <Input value={feat || ""} onChange={(e) => setKeyFeatures(prev => prev.map((f, idx) => idx === i ? e.target.value : f))} placeholder="e.g. Dashboard with charts" />
                        <Button type="button" variant="ghost" size="icon" onClick={() => setKeyFeatures(f => f.filter((_, idx) => idx !== i))} className="text-destructive"><X size={14} /></Button>
                     </div>
                   ))}
@@ -141,7 +141,7 @@ export const ProjectForm = ({ initialData, onSave, isSaving, onCancel }: Props) 
                <div className="space-y-3">
                   {learnings.map((ln, i) => (
                     <div key={i} className="flex gap-2">
-                       <Input value={ln || ""} onChange={(e) => setLearnings(l => { l[i] = e.target.value; return [...l] })} placeholder="e.g. Optimized SQL queries" />
+                       <Input value={ln || ""} onChange={(e) => setLearnings(prev => prev.map((l, idx) => idx === i ? e.target.value : l))} placeholder="e.g. Optimized SQL queries" />
                        <Button type="button" variant="ghost" size="icon" onClick={() => setLearnings(l => l.filter((_, idx) => idx !== i))} className="text-destructive"><X size={14} /></Button>
                     </div>
                   ))}

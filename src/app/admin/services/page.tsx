@@ -6,34 +6,45 @@ import { AdminEmptyState } from "@/components/ui/AdminEmptyState"
 import { ServiceForm } from "../ServiceForm"
 import { Service } from "@/types/portfolio"
 import { useAdminData } from "@/hooks/useAdminData"
-import { createSupabaseClient } from "@/lib/supabase"
+import { PortfolioService } from "@/services/portfolio"
 import { toast } from "sonner"
 import { Pencil, Trash2, Box, Code2, Layout, Database, Smartphone, Palette, EyeOff } from "lucide-react"
 
 const IconMap: any = { Code2, Layout, Database, Smartphone, Palette, Box }
 
 export default function AdminServicesPage() {
-  const { data: services, loading, deleteItem, refresh } = useAdminData<Service>("services")
+  const { data: services, loading, refresh } = useAdminData<Service>("services")
   const [editingService, setEditingService] = useState<Service | null>(null)
   const [isAdding, setIsAdding] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
 
   const handleSave = async (data: Omit<Service, "id">) => {
     setIsSaving(true)
-    const supabase = createSupabaseClient()
-    const { error } = editingService 
-      ? await supabase.from("services").update(data).eq("id", editingService.id)
-      : await supabase.from("services").insert([data])
-
-    if (error) {
-      toast.error(`Error: ${error.message}`)
-    } else {
+    try {
+      await PortfolioService.saveService({
+        ...data,
+        id: editingService?.id
+      } as Service)
       toast.success("Service expertise updated!")
       setEditingService(null)
       setIsAdding(false)
       refresh()
+    } catch (error: any) {
+      toast.error(`Error: ${error.message}`)
+    } finally {
+      setIsSaving(false)
     }
-    setIsSaving(false)
+  }
+
+  const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to remove this service?")) return
+    try {
+      await PortfolioService.deleteService(id)
+      toast.success("Service removed.")
+      refresh()
+    } catch (error: any) {
+      toast.error(`Failed to delete: ${error.message}`)
+    }
   }
 
   return (
@@ -85,7 +96,7 @@ export default function AdminServicesPage() {
                 </div>
                 <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-all">
                   <button onClick={() => setEditingService(service)} className="p-3 rounded-xl bg-muted hover:bg-primary hover:text-white transition-all shadow-sm"><Pencil size={14} /></button>
-                  <button onClick={() => deleteItem(service.id)} className="p-3 rounded-xl bg-muted hover:bg-destructive hover:text-white transition-all shadow-sm"><Trash2 size={14} /></button>
+                  <button onClick={() => handleDelete(service.id)} className="p-3 rounded-xl bg-muted hover:bg-destructive hover:text-white transition-all shadow-sm"><Trash2 size={14} /></button>
                 </div>
               </div>
             )
