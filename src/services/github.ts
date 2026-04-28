@@ -1,4 +1,5 @@
 export interface GithubStats {
+  yearlyCommits: { year: string; count: number }[];
   totalCommits: number;
   totalPRs: number;
   totalStars: number;
@@ -21,6 +22,15 @@ export async function fetchGithubStats(username: string): Promise<GithubStats | 
         pullRequests(first: 1) {
           totalCount
         }
+        y2026: contributionsCollection(from: "2026-01-01T00:00:00Z", to: "2026-12-31T23:59:59Z") { contributionCalendar { totalContributions } }
+        y2025: contributionsCollection(from: "2025-01-01T00:00:00Z", to: "2025-12-31T23:59:59Z") { contributionCalendar { totalContributions } }
+        y2024: contributionsCollection(from: "2024-01-01T00:00:00Z", to: "2024-12-31T23:59:59Z") { contributionCalendar { totalContributions } }
+        y2023: contributionsCollection(from: "2023-01-01T00:00:00Z", to: "2023-12-31T23:59:59Z") { contributionCalendar { totalContributions } }
+        y2022: contributionsCollection(from: "2022-01-01T00:00:00Z", to: "2022-12-31T23:59:59Z") { contributionCalendar { totalContributions } }
+        y2021: contributionsCollection(from: "2021-01-01T00:00:00Z", to: "2021-12-31T23:59:59Z") { contributionCalendar { totalContributions } }
+        y2020: contributionsCollection(from: "2020-01-01T00:00:00Z", to: "2020-12-31T23:59:59Z") { contributionCalendar { totalContributions } }
+        y2019: contributionsCollection(from: "2019-01-01T00:00:00Z", to: "2019-12-31T23:59:59Z") { contributionCalendar { totalContributions } }
+        y2018: contributionsCollection(from: "2018-01-01T00:00:00Z", to: "2018-12-31T23:59:59Z") { contributionCalendar { totalContributions } }
         repositories(first: 100, ownerAffiliations: OWNER, isFork: false) {
           nodes {
             stargazerCount
@@ -33,11 +43,6 @@ export async function fetchGithubStats(username: string): Promise<GithubStats | 
                 }
               }
             }
-          }
-        }
-        contributionsCollection {
-          contributionCalendar {
-            totalContributions
           }
         }
       }
@@ -84,8 +89,26 @@ export async function fetchGithubStats(username: string): Promise<GithubStats | 
       .sort((a, b) => b.size - a.size)
       .slice(0, 3); // Top 3 Languages
 
+    // 🔥 Calculate immense lifetime contributions historically
+    const yearlyCommitsRaw = [
+      { year: "2026", count: user.y2026?.contributionCalendar.totalContributions || 0 },
+      { year: "2025", count: user.y2025?.contributionCalendar.totalContributions || 0 },
+      { year: "2024", count: user.y2024?.contributionCalendar.totalContributions || 0 },
+      { year: "2023", count: user.y2023?.contributionCalendar.totalContributions || 0 },
+      { year: "2022", count: user.y2022?.contributionCalendar.totalContributions || 0 },
+      { year: "2021", count: user.y2021?.contributionCalendar.totalContributions || 0 },
+      { year: "2020", count: user.y2020?.contributionCalendar.totalContributions || 0 },
+      { year: "2019", count: user.y2019?.contributionCalendar.totalContributions || 0 },
+      { year: "2018", count: user.y2018?.contributionCalendar.totalContributions || 0 },
+    ];
+
+    // Remove empty years to keep the UI tabs pristine
+    const yearlyCommits = yearlyCommitsRaw.filter(y => y.count > 0);
+    const lifetimeCommits = yearlyCommits.reduce((acc, y) => acc + y.count, 0);
+
     return {
-      totalCommits: user.contributionsCollection.contributionCalendar.totalContributions,
+      yearlyCommits,
+      totalCommits: lifetimeCommits,
       totalPRs: user.pullRequests.totalCount,
       totalStars,
       topLanguages
