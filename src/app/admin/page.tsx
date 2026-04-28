@@ -89,7 +89,7 @@ export default function AdminDashboard() {
         <div className="space-y-4">
            <div className="flex items-center gap-2 text-primary">
               <ShieldCheck className="w-5 h-5" />
-              <span className="text-[10px] font-black uppercase tracking-[0.3em]">Identity Verified • Secure Session</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.3em]">Authenticated • Secure Session</span>
            </div>
            <h1 className="text-display italic">
               Dashboard <span className="text-zinc-600">Oversight.</span>
@@ -137,7 +137,7 @@ export default function AdminDashboard() {
                   <h3 className="text-3xl font-black italic tracking-tighter">Operational Analytics</h3>
                </div>
                <p className="text-xl font-medium leading-relaxed italic text-zinc-500 max-w-lg transition-colors group-hover:text-zinc-300">
-                 Your portfolio is currently serving {stats.activeSections} active modules across the primary platform. All security protocols are active.
+                 Your portfolio is currently serving {stats.activeSections} active modules across the primary platform. All security systems are active.
                </p>
             </div>
             <div className="flex flex-wrap gap-4 pt-6 mt-auto">
@@ -162,7 +162,7 @@ export default function AdminDashboard() {
             {stats.messagesCount > 0 ? (
                <div className="space-y-6">
                   <p className="text-sm font-bold leading-relaxed text-zinc-400 italic">
-                    Someone has reached out to collaborate. Head over to the Inbox to review the latest transmission.
+                    Someone has reached out to collaborate. Head over to the Inbox to review the latest inquiry.
                   </p>
                   <Link href="/admin/messages" className="flex items-center justify-between p-6 rounded-[2rem] bg-primary text-white font-black italic shadow-xl shadow-primary/20 hover:scale-[1.02] transition-all">
                      View Inbox <ArrowUpRight className="w-5 h-5" />

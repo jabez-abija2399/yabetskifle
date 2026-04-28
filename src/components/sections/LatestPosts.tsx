@@ -28,7 +28,7 @@ export const LatestPosts = ({ posts }: Props) => {
               </h2>
            </div>
            <Link href="/blog" className="flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.3em] text-primary hover:gap-6 transition-all">
-             View All Transmissions <ArrowRight className="w-5 h-5" />
+             Browse Insights <ArrowRight className="w-5 h-5" />
            </Link>
         </div>
 
