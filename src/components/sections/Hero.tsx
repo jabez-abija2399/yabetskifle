@@ -69,12 +69,12 @@ export const Hero = ({ profile }: Props) => {
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
                </span>
                <span className="text-foreground/80 font-bold uppercase tracking-[0.2em] text-[10px]">
-                  Available for new opportunities
+                  Open to Full-time • Remote • Hybrid • Freelance
                </span>
             </div>
  
             <h1 className="text-heading-hero">
-               I&apos;m <span className="text-zinc-500 hover:text-foreground transition-colors duration-500 cursor-default">{(profile.full_name || "Guest").split(' ')[0]}</span>. <br />
+               I&apos;m <span className="text-zinc-500 hover:text-foreground transition-colors duration-500 cursor-default">{(profile.full_name || "Guest")}</span>. <br />
                <span className="text-primary italic">{profile.role_title}</span>
             </h1>
             <p className="max-w-xl mx-auto text-muted-foreground text-lg md:text-xl font-medium pt-2 leading-relaxed text-balance">
@@ -104,21 +104,21 @@ export const Hero = ({ profile }: Props) => {
            </div>
         </motion.div>
 
-        {/* 🌍 Social Icons Component */}
-        <motion.div variants={itemVariant} className="flex items-center justify-center gap-8 pt-8 border-t border-border/30 w-fit mx-auto px-10">
+        {/* 🌍 Social Interaction Array */}
+        <motion.div variants={itemVariant} className="flex items-center justify-center gap-4 pt-10 border-t border-border/30 w-fit mx-auto px-10">
            {profile.social_links?.github && (
-             <a href={profile.social_links.github} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-primary transition-all hover:scale-110 hover:-translate-y-1 p-2">
-                <FaGithub className="w-6 h-6" />
+             <a href={profile.social_links.github} target="_blank" rel="noreferrer" className="w-12 h-12 rounded-2xl bg-secondary/50 border border-border/50 flex items-center justify-center text-muted-foreground hover:text-white hover:bg-primary hover:shadow-xl hover:shadow-primary/20 transition-all hover:-translate-y-1">
+                <FaGithub className="w-5 h-5" />
              </a>
            )}
            {profile.social_links?.linkedin && (
-             <a href={profile.social_links.linkedin} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-primary transition-all hover:scale-110 hover:-translate-y-1 p-2">
-                <FaLinkedin className="w-6 h-6" />
+             <a href={profile.social_links.linkedin} target="_blank" rel="noreferrer" className="w-12 h-12 rounded-2xl bg-secondary/50 border border-border/50 flex items-center justify-center text-muted-foreground hover:text-white hover:bg-primary hover:shadow-xl hover:shadow-primary/20 transition-all hover:-translate-y-1">
+                <FaLinkedin className="w-5 h-5" />
              </a>
            )}
            {profile.social_links?.twitter && (
-             <a href={profile.social_links.twitter} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-primary transition-all hover:scale-110 hover:-translate-y-1 p-2">
-                <FaTwitter className="w-6 h-6" />
+             <a href={profile.social_links.twitter} target="_blank" rel="noreferrer" className="w-12 h-12 rounded-2xl bg-secondary/50 border border-border/50 flex items-center justify-center text-muted-foreground hover:text-white hover:bg-primary hover:shadow-xl hover:shadow-primary/20 transition-all hover:-translate-y-1">
+                <FaTwitter className="w-5 h-5" />
              </a>
            )}
         </motion.div>

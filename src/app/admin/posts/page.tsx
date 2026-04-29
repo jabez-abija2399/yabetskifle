@@ -35,7 +35,7 @@ export default function AdminPostsPage() {
   }
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Remove this transmission permanently?")) return
+    if (!confirm("Remove this article permanently?")) return
     try {
       await PortfolioService.deletePost(id)
       toast.success("Article removed.")

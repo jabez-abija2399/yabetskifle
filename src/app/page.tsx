@@ -1,19 +1,23 @@
 import { PortfolioService } from "@/services/portfolio"
 import { Hero } from "@/components/sections/Hero"
 import { AboutSection } from "@/components/sections/AboutSection"
+import { TechStack } from "@/components/sections/TechStack"
 import { ServicesGrid } from "@/components/sections/ServicesGrid"
 import { GithubMetrics } from "@/components/sections/GithubMetrics"
 import { ProjectsShowcase } from "@/components/sections/ProjectsShowcase"
+import { CTASection } from "@/components/sections/CTASection"
 import { LatestPosts } from "@/components/sections/LatestPosts"
 import { ExperienceTimeline } from "@/components/sections/ExperienceTimeline"
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection"
+import { FAQSection } from "@/components/sections/FAQSection"
 import { ContactSection } from "@/components/sections/ContactSection"
 import { Footer } from "@/components/sections/Footer"
 
 export default async function HomePage() {
   // Server-Side Data Fetching
-  const [profile, services, projects, experiences, testimonials, settings, posts] = await Promise.all([
+  const [profile, skills, services, projects, experiences, testimonials, settings, posts] = await Promise.all([
     PortfolioService.getProfile(),
+    PortfolioService.getSkills(),
     PortfolioService.getServices(),
     PortfolioService.getProjects(),
     PortfolioService.getExperience(),
@@ -26,7 +30,7 @@ export default async function HomePage() {
   if (!profile) {
     return (
       <div className="h-screen flex flex-col items-center justify-center gap-4">
-        <h1 className="text-2xl font-black italic">Start Your Engine</h1>
+        <h1 className="text-2xl font-black italic">ADMIN SETUP</h1>
         <p className="text-muted-foreground">Setup your profile in the admin dashboard to go live.</p>
         <a href="/admin/profile" className="px-6 py-2 bg-primary text-white rounded-xl font-bold">Go to Admin</a>
       </div>
@@ -44,7 +48,10 @@ export default async function HomePage() {
         {/* 👤 About & Skills (Derived from Profile) */}
         <AboutSection profile={profile} />
 
-        {/* 📡 Github Live Telemetry Array */}
+        {/* 🧱 Core technical ecosystem */}
+         {settings?.show_skills !== false && <TechStack skills={skills} />}
+
+        {/* 📡 Live Development Activity Array */}
         <GithubMetrics username={profile.social_links?.github?.split('/').filter(Boolean).pop() || "jabez-abija2399"} />
 
         {/* 🛠️ Core Services */}
@@ -53,7 +60,10 @@ export default async function HomePage() {
         {/* 📂 Project Exhibition */}
         {settings?.show_projects !== false && <ProjectsShowcase projects={projects} />}
 
-        {/* 🖋️ Latest Transmissions (Blog) */}
+        {/* 📣 Direct CTA Banner */}
+        {/* <CTASection /> */}
+
+        {/* 🖋️ Latest Insights (Blog) */}
         {settings?.show_blog !== false && <LatestPosts posts={posts} />}
 
         {/* ⏳ Experience Timeline */}
@@ -61,6 +71,9 @@ export default async function HomePage() {
 
         {/* 💬 Social Evidence */}
         {settings?.show_testimonials !== false && <TestimonialsSection testimonials={testimonials} />}
+
+        {/* 💡 Consultative Insights */}
+        {/* <FAQSection /> */}
 
         {/* ✉️ Direct Inquiry */}
         {settings?.show_contact !== false && <ContactSection profile={profile} />}

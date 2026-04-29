@@ -1,63 +1,69 @@
 import { Profile } from "@/types/portfolio"
-import { Code2, Terminal, Cpu, Database, Cloud, Zap } from "lucide-react"
+import { Sparkles, User, GraduationCap, Target } from "lucide-react"
 
 interface Props {
   profile: Profile
 }
 
 export const AboutSection = ({ profile }: Props) => {
-  if (!profile.skills || profile.skills.length === 0) return null
-
-  const getIcon = (name: string) => {
-    const n = name.toLowerCase()
-    if (n.includes('front')) return <Code2 className="w-5 h-5" />
-    if (n.includes('back')) return <Database className="w-5 h-5" />
-    if (n.includes('dev') || n.includes('cloud')) return <Cloud className="w-5 h-5" />
-    if (n.includes('tool') || n.includes('tech')) return <Terminal className="w-5 h-5" />
-    return <Cpu className="w-5 h-5" />
-  }
+  if (!profile.bio) return null
 
   return (
     <section id="about" className="px-6 scroll-mt-32">
-      <div className="max-w-6xl mx-auto space-y-16">
-        
-        {/* Title Meta */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-           <div className="space-y-4">
-              <div className="flex items-center gap-2 text-primary">
-                 <Zap className="w-4 h-4" />
-                 <span className="text-[10px] font-bold uppercase tracking-[0.3em]">Technical Profile</span>
+      <div className="max-w-6xl mx-auto">
+        <div className="grid lg:grid-cols-12 gap-16 items-start">
+           
+           {/* 🎭 Narrating Title */}
+           <div className="lg:col-span-5 space-y-8">
+              <div className="space-y-4">
+                 <div className="flex items-center gap-2 text-primary">
+                    <Sparkles className="w-5 h-5" />
+                    <span className="text-[10px] font-bold uppercase tracking-[0.4em]">Personal Profile</span>
+                 </div>
+                 <h2 className="text-4xl md:text-5xl font-bold tracking-tight italic leading-tight">
+                    Professional <span className="text-zinc-600">Narrative.</span>
+                 </h2>
               </div>
-              <h2 className="text-heading-section">
-                 Project <span className="text-zinc-600">Specializations.</span>
-              </h2>
+              
+              <div className="flex flex-col gap-6">
+                 {[
+                    { icon: <User className="w-4 h-4" />, label: "Current Focus", value: profile.role_title },
+                    { icon: <GraduationCap className="w-4 h-4" />, label: "Experience Intensity", value: `${profile.experience_years || 0}+ Years in Engineering` },
+                    { icon: <Target className="w-4 h-4" />, label: "Primary Objective", value: "Scalability & Architectural Integrity" }
+                 ].map((stat, i) => (
+                    <div key={i} className="flex flex-col gap-1">
+                       <div className="flex items-center gap-2 text-zinc-500">
+                          {stat.icon}
+                          <span className="text-[8px] font-bold uppercase tracking-widest">{stat.label}</span>
+                       </div>
+                       <p className="text-lg font-bold italic tracking-tight">{stat.value}</p>
+                    </div>
+                 ))}
+              </div>
            </div>
-           <p className="text-muted-foreground max-w-sm font-medium italic">
-             A specialized technical foundation built on modern architectural principles and iterative learning.
-           </p>
-        </div>
 
-        {/* Skills Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-           {profile.skills.map((category, idx) => (
-             <div key={idx} className="group p-10 rounded-[3rem] bg-card border border-border hover:border-primary/40 transition-all hover:shadow-2xl hover:shadow-primary/5">
-                <div className="flex items-center gap-4 mb-8">
-                   <div className="w-12 h-12 rounded-2xl bg-muted flex items-center justify-center text-primary transition-all group-hover:scale-110 group-hover:bg-primary group-hover:text-white">
-                      {getIcon(category.name)}
-                   </div>
-                   <h3 className="text-xl font-bold italic tracking-tight">{category.name}</h3>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                   {category.techs.map((tech) => (
-                     <span key={tech} className="px-4 py-1.5 rounded-xl bg-muted text-[10px] font-bold uppercase tracking-widest text-zinc-500 border border-border/50 group-hover:text-zinc-300 transition-colors">
-                        {tech}
-                     </span>
-                   ))}
-                </div>
-             </div>
-           ))}
-        </div>
+           {/* 🖋️ The Bio Narrative */}
+           <div className="lg:col-span-7 relative">
+              <div className="absolute -inset-8 bg-muted/30 rounded-[3rem] -z-10 blur-xl" />
+              <div className="p-10 md:p-14 rounded-[3.5rem] bg-card border border-border shadow-2xl shadow-primary/5 space-y-8">
+                 <div className="prose prose-zinc dark:prose-invert max-w-none">
+                    <p className="text-lg md:text-xl font-medium leading-relaxed italic text-muted-foreground whitespace-pre-wrap">
+                       {profile.bio}
+                    </p>
+                 </div>
+                 
+                 <div className="pt-8 border-t border-border/50 flex items-center justify-between">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary italic">Expert Collaboration Ready</p>
+                    <div className="flex -space-x-2">
+                       {[1,2,3].map(i => (
+                         <div key={i} className="w-8 h-8 rounded-full bg-muted border-2 border-card shadow-sm" />
+                       ))}
+                    </div>
+                 </div>
+              </div>
+           </div>
 
+        </div>
       </div>
     </section>
   )

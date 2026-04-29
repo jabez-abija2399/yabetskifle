@@ -161,16 +161,44 @@ export const PortfolioService = {
     if (error) throw error
   },
 
+  // 🛠️ --- TECHNICAL ECOSYSTEM (SKILLS) ---
+
+  /** 🧩 Fetch all skill categories */
+  async getSkills(): Promise<any[]> {
+    const { data } = await supabase
+      .from("skills")
+      .select("*")
+      .order("order_index", { ascending: true })
+    return (data || []).map(s => ({ ...s, technologies: ensureArray(s.technologies) }))
+  },
+
+  /** 💾 Save or Update a Skill Category */
+  async saveSkill(skill: any): Promise<void> {
+    const { error } = await supabase
+      .from("skills")
+      .upsert({
+        ...skill,
+        technologies: ensureArray(skill.technologies)
+      }, { onConflict: 'id' })
+    if (error) throw error
+  },
+
+  /** 🗑️ Remove a Skill Category */
+  async deleteSkill(id: string): Promise<void> {
+    const { error } = await supabase.from("skills").delete().eq("id", id)
+    if (error) throw error
+  },
+
   /** 👁️ Atomically Increment Global Page Views */
   async incrementPageView(path: string): Promise<void> {
     const { error } = await supabase.rpc('increment_page_view', { page_path: path })
-    if (error) console.error("Telemetry failed:", error)
+    if (error) console.error("Analytics failed:", error)
   },
 
   /** 📊 Fetch Global Page Views */
   async getPageView(path: string): Promise<number> {
     const { data, error } = await supabase.from('page_views').select('view_count').eq('path', path).single()
-    if (error && error.code !== 'PGRST116') console.error("Telemetry fetch failed:", error)
+    if (error && error.code !== 'PGRST116') console.error("Analytics fetch failed:", error)
     return data?.view_count || 1
   },
 

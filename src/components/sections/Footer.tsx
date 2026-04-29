@@ -30,7 +30,7 @@ export const Footer = ({ settings, profile }: Props) => {
            <li><Link href="/projects" className="hover:text-primary transition-colors">Projects</Link></li>
            <li><Link href="/blog" className="hover:text-primary transition-colors">Journal</Link></li>
            <li><Link href="/#about" className="hover:text-primary transition-colors">About</Link></li>
-           {/* <li><Link href="/admin" className="hover:text-primary transition-colors opacity-30">Management</Link></li> */}
+           {/* <li><Link href="/admin" className="hover:text-primary transition-colors opacity-30">Management</Link></li>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          */}
         </ul>
 
         {/* Dynamic Socials */}

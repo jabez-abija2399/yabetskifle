@@ -14,7 +14,7 @@ export const ServicesGrid = ({ services }: Props) => {
   return (
     <section id="services" className="py-24 px-6 max-w-7xl mx-auto">
       <div className="text-center mb-16 space-y-3">
-         <h2 className="text-heading-section font-bold tracking-tighter italic">Specialized Services</h2>
+         <h2 className="text-heading-section font-bold tracking-tighter italic">SERVICES</h2>
          <p className="text-muted-foreground text-sm font-medium uppercase tracking-widest">Professional solutions for digital excellence</p>
       </div>
 

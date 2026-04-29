@@ -11,7 +11,7 @@ export async function fetchGithubStats(username: string): Promise<GithubStats | 
   
   // If the user hasn't generated their private token yet, fail gracefully
   if (!token) {
-    console.warn("GITHUB_TOKEN is profoundly missing from .env.local. Suspending telemetry.");
+    console.warn("GITHUB_TOKEN is profoundly missing from .env.local. Suspending GitHub connection.");
     return null;
   }
 

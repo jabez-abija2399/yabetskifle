@@ -6,7 +6,8 @@ import {
   LayoutDashboard, User, Briefcase, Settings, 
   MessageSquare, Star, GraduationCap, Award, 
   FileText, Languages, Mic2, Heart, ShieldCheck,
-  Package, HelpCircle, Columns
+  Package, HelpCircle, Columns,
+  AwardIcon
 } from "lucide-react"
 import { createBrowserClient } from "@supabase/ssr"
 
@@ -23,6 +24,7 @@ const ALLOWED_ROUTES = [
   "/admin/faq",
   "/admin/languages",
   "/admin/sections", 
+  "/admin/skills",
 ]
 
 const navGroups = [
@@ -34,6 +36,7 @@ const navGroups = [
       { name: "Projects", href: "/admin/projects", icon: <Briefcase className="w-4 h-4" /> },
       { name: "Services", href: "/admin/services", icon: <Package className="w-4 h-4" /> },
       { name: "Experience", href: "/admin/experiences", icon: <GraduationCap className="w-4 h-4" /> },
+      { name: "Skills", href: "/admin/skills", icon: <AwardIcon className="w-4 h-4" /> },
     ]
   },
   {

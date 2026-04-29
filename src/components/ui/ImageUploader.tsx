@@ -37,6 +37,7 @@ export const ImageUploader = ({ onUpload }: ImageUploaderProps) => {
     successfulUrls.forEach((url) => onUpload(url))
 
     setIsUploading(false)
+    setPreviews([]) // Clear local previews once handed off to the parent
   }
 
   const removePreview = (index: number) => {

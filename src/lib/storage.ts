@@ -5,9 +5,9 @@ import { createSupabaseClient } from "./supabase"
 export const uploadProjectImage = async (file: File): Promise<string | null> => {
   const supabase = createSupabaseClient()
 
-  // 1. Create a unique filename to avoid collisions
-  // e.g. "project-images/1714000000000-screenshot.png"
-  const fileName = `${Date.now()}-${file.name.replace(/\s/g, "-")}`
+  // 1. Create a unique filename to avoid collisions (Added Math.random() for tight loops)
+  const randomSuffix = Math.random().toString(36).substring(2, 8)
+  const fileName = `${Date.now()}-${randomSuffix}-${file.name.replace(/\s/g, "-")}`
 
   // 2. Upload the file to our bucket
   const { data, error } = await supabase.storage

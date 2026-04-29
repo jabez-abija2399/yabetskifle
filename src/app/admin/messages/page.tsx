@@ -26,7 +26,7 @@ export default function AdminMessagesPage() {
       const data = await PortfolioService.getMessages()
       setMessages(data)
     } catch (error) {
-      toast.error("Failed to load your transmission log.")
+      toast.error("Failed to load your message log.")
     } finally {
       setLoading(false)
     }
@@ -41,7 +41,7 @@ export default function AdminMessagesPage() {
       await PortfolioService.deleteMessage(id)
       setMessages(messages.filter(m => m.id !== id))
       if (selectedMessage?.id === id) setSelectedMessage(null)
-      toast.success("Transmission deleted from archive.")
+      toast.success("Message deleted from archive.")
     } catch (error) {
       toast.error("Failed to delete the message.")
     } finally {
@@ -84,7 +84,7 @@ export default function AdminMessagesPage() {
           {messages.length === 0 ? (
             <div className="flex flex-col items-center justify-center p-12 bg-muted/20 border border-dashed border-border rounded-[2.5rem] text-center">
                <Mail className="w-12 h-12 text-zinc-700 mb-4" />
-               <p className="text-sm font-bold opacity-30 italic">No incoming transmissions yet.</p>
+               <p className="text-sm font-bold opacity-30 italic">No incoming messages yet.</p>
             </div>
           ) : (
             messages.map((msg) => (
@@ -187,7 +187,7 @@ export default function AdminMessagesPage() {
                   <Mail className="w-10 h-10" />
                </div>
                <div className="space-y-2">
-                  <h3 className="text-xl font-black italic uppercase tracking-widest leading-none">Select a Transmission</h3>
+                  <h3 className="text-xl font-black italic uppercase tracking-widest leading-none">Select a Message</h3>
                   <p className="text-xs font-bold uppercase tracking-[0.2em]">Archived communications are waiting for review.</p>
                </div>
             </div>

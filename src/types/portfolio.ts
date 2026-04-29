@@ -114,6 +114,7 @@ export interface SiteSettings {
   cv_url?: string;
   google_analytics_id?: string;
   show_services: boolean;
+  show_skills: boolean;
   show_projects: boolean;
   show_experience: boolean;
   show_testimonials: boolean;

@@ -4,7 +4,7 @@ import { Service } from "@/types/portfolio"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
-import { Plus, X, Box, Code2, Layout, Database, Smartphone, Palette, Eye, EyeOff } from "lucide-react"
+import { Plus, X, Box, Code2, Layout, Database, Smartphone, Palette, Eye, EyeOff, Zap, Sparkles } from "lucide-react"
 
 const icons = [
   { name: "Code2", icon: <Code2 size={16} /> },
@@ -13,6 +13,8 @@ const icons = [
   { name: "Smartphone", icon: <Smartphone size={16} /> },
   { name: "Palette", icon: <Palette size={16} /> },
   { name: "Box", icon: <Box size={16} /> },
+   { name: "Zap", icon: <Zap size={16} /> },
+   { name: "Sparkles", icon: <Sparkles size={16} /> },
 ]
 
 interface Props {

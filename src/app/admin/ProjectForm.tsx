@@ -91,7 +91,7 @@ export const ProjectForm = ({ initialData, onSave, isSaving, onCancel }: Props) 
              </div>
            ))}
            <div className="aspect-square flex flex-col items-center justify-center border-2 border-dashed border-border rounded-2xl hover:border-primary/50 transition-colors">
-              <ImageUploader onUpload={(url) => setImages([...images, url])} />
+              <ImageUploader onUpload={(url) => setImages(prev => [...prev, url])} />
               <p className="text-[10px] font-bold text-zinc-500 mt-2 uppercase tracking-widest text-center px-4 leading-none">Add Media</p>
            </div>
         </div>

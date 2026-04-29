@@ -7,6 +7,7 @@ import { SiteSettings } from "@/types/portfolio"
 import { toast } from "sonner"
 import { Layout, Eye, EyeOff, Loader2, Save } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { TechStack } from "@/components/sections/TechStack"
 
 export default function AdminSectionsPage() {
   const [settings, setSettings] = useState<SiteSettings | null>(null)
@@ -39,6 +40,7 @@ export default function AdminSectionsPage() {
     }
     setLoading(false)
   }
+ 
 
   const handleToggle = (field: string) => {
     if (!settings) return
@@ -68,6 +70,7 @@ export default function AdminSectionsPage() {
 
   const sections = [
     { id: "show_services", name: "Services & Expertise", desc: "Display your core service offerings." },
+    { id: "show_skills", name: "Technical Ecosystem", desc: "Show your categorized tools and frameworks." },
     { id: "show_projects", name: "Featured Projects", desc: "Showcase your work gallery." },
     { id: "show_experience", name: "Work History", desc: "Display your professional timeline." },
     { id: "show_testimonials", name: "Testimonials", desc: "Show client and student feedback." },
