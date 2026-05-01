@@ -75,17 +75,21 @@ export const Hero = ({ profile, copy }: Props) => {
             variants={item}
             className="col-span-12 md:col-span-4 lg:col-span-3 space-y-6 order-2 md:order-1"
           >
-            <a href="#about" className="block relative w-32 h-32 md:w-36 md:h-36 group" aria-label="About me">
+            <a
+              href="#about"
+              className="block relative w-40 h-40 md:w-56 md:h-56 lg:w-64 lg:h-64 group"
+              aria-label="About me"
+            >
               {/* Persistent soft glow + intensifies on hover */}
-              <div className="absolute -inset-3 bg-signal/15 blur-2xl rounded-full opacity-60 group-hover:opacity-100 group-hover:bg-signal/35 transition-all duration-500" />
-              <div className="relative w-full h-full rounded-[28px] overflow-hidden border border-border bg-card shadow-xl transition-transform duration-500 ease-out group-hover:scale-[1.03] group-hover:-rotate-1">
+              <div className="absolute -inset-4 bg-signal/15 blur-3xl rounded-full opacity-70 group-hover:opacity-100 group-hover:bg-signal/35 transition-all duration-500" />
+              <div className="relative w-full h-full rounded-[32px] overflow-hidden border border-border bg-card shadow-xl transition-transform duration-500 ease-out group-hover:scale-[1.02] group-hover:-rotate-1">
                 <Image
                   src={profile.avatar_url || "/placeholder.jpg"}
                   alt={profile.full_name}
                   fill
                   className="object-cover"
                   priority
-                  sizes="(max-width: 768px) 128px, 144px"
+                  sizes="(max-width: 768px) 160px, (max-width: 1024px) 224px, 256px"
                 />
               </div>
             </a>
