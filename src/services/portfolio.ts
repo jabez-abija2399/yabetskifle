@@ -235,8 +235,6 @@ export const PortfolioService = {
     return data?.view_count || 1
   },
 
-  // ✉️ --- INTERACTION HANDLING ---
-
   /** 📨 Submit Contact Form Data */
   async submitMessage(message: Omit<Message, "id" | "created_at">): Promise<void> {
     const { error } = await supabase.from("messages").insert([message])
