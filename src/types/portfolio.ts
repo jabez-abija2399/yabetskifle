@@ -23,17 +23,17 @@ export interface Project {
   id: string;
   title: string;
   description: string;
-  purpose?: string;            // 👈 Matches your DB
-  my_role?: string;           // 👈 Matches your DB
-  project_type?: string;       // 👈 Matches your DB
-  key_features: string[];      // 👈 Matches your DB (JSON/Array)
-  what_i_learned: string[];    // 👈 Matches your DB (JSON/Array)
+  purpose?: string;          
+  my_role?: string;         
+  project_type?: string;       
+  key_features: string[];    
+  what_i_learned: string[];   
   images: string[];
   tags: string[];
   live_url?: string;
   github_url?: string;
   view_count?: number;
-  featured: boolean;           // 👈 Matches your DB
+  featured: boolean;           
   order_index: number;
   created_at?: string;
   is_published: boolean;
