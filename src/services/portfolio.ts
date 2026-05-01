@@ -11,7 +11,6 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
-// 🛡️ INTERNAL HELPERS (Calculations & Formatting)
 const ensureArray = (val: any): string[] => {
   if (!val) return []
   if (Array.isArray(val)) return val
