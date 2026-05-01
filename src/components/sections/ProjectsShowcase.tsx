@@ -1,50 +1,68 @@
 import { Project } from "@/types/portfolio"
 import { ProjectCard } from "./ProjectCard"
+import Link from "next/link"
+import { ArrowUpRight } from "lucide-react"
+import { SiteCopy, t, renderRichTitle } from "@/lib/copy"
 
 interface Props {
   projects: Project[]
+  copy?: SiteCopy
 }
 
-export const ProjectsShowcase = ({ projects }: Props) => {
-  return (
-    <section id="work" className="py-24 px-6 max-w-7xl mx-auto space-y-16">
-      
-      {/* Editorial Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-border pb-12">
-        <div className="space-y-4">
-           <p className="text-primary font-bold uppercase tracking-[0.3em] text-xs">
-              Selected Projects
-           </p>
-           <h2 className="text-heading-section italic">
-              Selected Projects
-           </h2>
-        </div>
-        
-        <div className="max-w-xs">
-           <p className="text-muted-foreground text-sm leading-relaxed">
-              Explorations in full-stack architecture, interactive design, and performance optimization across multiple platforms.
-           </p>
-        </div>
-      </div>
+export const ProjectsShowcase = ({ projects, copy }: Props) => {
+  const featured = projects[0]
+  const rest = projects.slice(1)
 
-      {/* Responsive Grid of Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-        {projects.length > 0 ? (
-          projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))
+  return (
+    <section id="work" className="px-6 md:px-12 scroll-mt-32">
+      <div className="max-w-7xl mx-auto">
+        {/* Section header */}
+        <div className="flex items-end justify-between gap-8 mb-12 md:mb-16 border-b border-border pb-8">
+          <div className="space-y-3">
+            <p className="eyebrow">{t(copy, "projects.eyebrow", "— 04 / Selected Work")}</p>
+            <h2 className="text-heading-section">
+              {renderRichTitle(t(copy, "projects.title", "Recent *case studies*"))}
+            </h2>
+          </div>
+          <Link
+            href="/projects"
+            className="hidden md:inline-flex items-center gap-1.5 text-sm font-medium hover:text-signal transition-colors"
+          >
+            {t(copy, "projects.archive_link", "View archive")} <ArrowUpRight className="w-4 h-4" />
+          </Link>
+        </div>
+
+        {projects.length === 0 ? (
+          <div className="py-24 text-center border border-dashed border-border rounded-3xl">
+            <p className="text-muted-foreground">{t(copy, "projects.empty", "No projects yet — add some via the admin dashboard.")}</p>
+          </div>
         ) : (
-          <div className="col-span-full py-20 text-center border-2 border-dashed border-border rounded-[3rem] bg-muted/20">
-             <p className="text-muted-foreground font-medium italic">No projects found. Use your dashboard to add some work!</p>
+          <div className="space-y-12 md:space-y-16">
+            {/* Featured */}
+            {featured && (
+              <ProjectCard project={featured} index={0} variant="wide" />
+            )}
+
+            {/* Two-column rest */}
+            {rest.length > 0 && (
+              <div className="grid md:grid-cols-2 gap-10 md:gap-12 pt-4">
+                {rest.map((project, i) => (
+                  <ProjectCard key={project.id} project={project} index={i + 1} />
+                ))}
+              </div>
+            )}
           </div>
         )}
-      </div>
 
-      {/* Bottom Call to Action */}
-      <div className="flex justify-center pt-8">
-         <div className="px-6 py-3 rounded-full bg-muted border border-border text-xs font-bold text-zinc-500 flex items-center gap-2">
-            Currently displaying <span className="text-foreground">{projects.length}</span> curated works
-         </div>
+        <div className="flex justify-center mt-16">
+          <Link
+            href="/projects"
+            className="group inline-flex items-center gap-2 border border-border px-6 h-12 rounded-full font-medium text-sm hover:border-foreground transition-colors"
+          >
+            {t(copy, "projects.see_all_format", "See all {count} projects").replace("{count}", String(projects.length))}
+            <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </Link>
+        </div>
       </div>
     </section>
   )

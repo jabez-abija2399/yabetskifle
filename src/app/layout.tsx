@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import { Navbar } from "@/components/layout/NavBar"
 import { ThemeProvider } from "@/components/providers/ThemeProvider"
+import { PortfolioService } from "@/services/portfolio"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,37 +16,35 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-display",
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+});
+
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
   title: {
-    default: "Yabets Kifle | Software Architect & Full-Stack Developer",
-    template: "%s | Yabets Kifle"
+    default: "Yabets Kifle — Frontend Developer · Full-stack with Next.js",
+    template: "%s — Yabets Kifle"
   },
-  description: "Specialized in building high-performance web applications, cinematic user interfaces, and robust systems architecture.",
-  keywords: ["Software Engineer", "Full-Stack Developer", "Next.js Expert", "React Developer", "Portfolio"],
+  description: "Frontend engineer building thoughtful, fast, beautifully crafted web products with React, Next.js, and TypeScript. Open to full-time, contract, and freelance roles — anywhere in the world.",
+  keywords: ["Frontend Developer", "React Developer", "Next.js", "TypeScript", "UI Engineer", "Web Developer", "Full-time", "Freelance", "Remote", "Hybrid", "Yabets Kifle"],
   authors: [{ name: "Yabets Kifle" }],
   creator: "Yabets Kifle",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://yabetskifle.com", // Replace with your real URL later
-    siteName: "Yabets Kifle Portfolio",
-    title: "Yabets Kifle | Software Architect",
-    description: "Architecting the future of digital experiences with precision and cinematic design.",
-    images: [
-      {
-        url: "/og-image.png", // We can generate this later
-        width: 1200,
-        height: 630,
-        alt: "Yabets Kifle Portfolio",
-      },
-    ],
+    siteName: "Yabets Kifle",
+    title: "Yabets Kifle — Frontend Developer",
+    description: "Frontend engineer building thoughtful, fast, beautifully crafted web products. Open to full-time, contract, and freelance roles worldwide.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Yabets Kifle | Software Architect",
-    description: "Cinematic digital experiences and robust systems architecture.",
-    creator: "@yabetskifle", // Add your handle
-    images: ["/og-image.png"],
+    title: "Yabets Kifle — Frontend Developer",
+    description: "Frontend engineer building thoughtful, fast, beautifully crafted web products.",
+    creator: "@yabetskifle",
   },
   robots: {
     index: true,
@@ -60,15 +59,17 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const copy = await PortfolioService.getSiteCopy().catch(() => ({}))
+
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} h-full antialiased`}
       suppressHydrationWarning
     >
      <body className="min-h-full flex flex-col bg-background selection:bg-primary selection:text-white">
@@ -78,7 +79,7 @@ export default function RootLayout({
         enableSystem
         disableTransitionOnChange
       >
-        <Navbar />
+        <Navbar copy={copy} />
         <main className="flex-1">
           {children}
         </main>

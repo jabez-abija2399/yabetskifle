@@ -1,55 +1,71 @@
 import { Testimonial } from "@/types/portfolio"
-import { Star, Quote } from "lucide-react"
+import { Star } from "lucide-react"
 import Image from "next/image"
+import { SiteCopy, t, renderRichTitle } from "@/lib/copy"
 
 interface Props {
   testimonials: Testimonial[]
+  copy?: SiteCopy
 }
 
-export const TestimonialsSection = ({ testimonials }: Props) => {
+export const TestimonialsSection = ({ testimonials, copy }: Props) => {
+  if (!testimonials || testimonials.length === 0) return null
+
   return (
-    <section className="py-24 px-6 max-w-7xl mx-auto space-y-16">
-      
-      {/* Section Header */}
-      <div className="text-center space-y-4">
-         <h2 className="text-heading-section italic">Client Feedback</h2>
-         <p className="text-muted-foreground text-sm font-medium uppercase tracking-[0.2em]">Strategic feedback from global collaborations</p>
-      </div>
+    <section className="px-6 md:px-12 scroll-mt-32">
+      <div className="max-w-7xl mx-auto">
+        {/* Section header */}
+        <div className="flex items-end justify-between gap-8 mb-12 md:mb-16 border-b border-border pb-8">
+          <div className="space-y-3">
+            <p className="eyebrow">{t(copy, "testimonials.eyebrow", "— 08 / Testimonials")}</p>
+            <h2 className="text-heading-section">
+              {renderRichTitle(t(copy, "testimonials.title", "Kind *words*"))}
+            </h2>
+          </div>
+          <p className="hidden md:block text-sm text-muted-foreground max-w-xs text-pretty">
+            {t(copy, "testimonials.subtitle", "What clients and collaborators have said after working with me.")}
+          </p>
+        </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {testimonials.map((review) => (
-          <div key={review.id} className="p-10 rounded-[3rem] bg-card border border-border relative group hover:border-primary/40 transition-all">
-             <Quote className="absolute top-8 right-10 w-12 h-12 text-primary/5 transition-colors group-hover:text-primary/20" />
-             
-             {/* Rating Stars */}
-             <div className="flex gap-1 text-yellow-500 mb-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+          {testimonials.map((review) => (
+            <figure
+              key={review.id}
+              className="group bg-card border border-border rounded-3xl p-7 md:p-8 flex flex-col gap-6 hover:border-foreground/30 transition-colors"
+            >
+              <div className="flex gap-0.5 text-signal">
                 {[...Array(review.rating || 5)].map((_, i) => (
-                   <Star key={i} className="w-4 h-4 fill-current" />
+                  <Star key={i} className="w-3.5 h-3.5 fill-current" />
                 ))}
-             </div>
+              </div>
 
-             <p className="text-muted-foreground leading-relaxed italic mb-10 relative z-10">
-                "{review.content}"
-             </p>
+              <blockquote className="font-display text-xl md:text-2xl leading-snug text-foreground flex-1 text-pretty">
+                &ldquo;{review.content}&rdquo;
+              </blockquote>
 
-             {/* Client Info */}
-             <div className="flex items-center gap-4 border-t border-border pt-6">
-                <div className="relative w-12 h-12 rounded-full overflow-hidden border border-border bg-muted">
-                   {review.client_avatar ? (
-                     <Image src={review.client_avatar} alt={review.client_name} fill className="object-cover" />
-                   ) : (
-                     <div className="w-full h-full flex items-center justify-center font-bold text-zinc-600">
-                        {review.client_name.charAt(0)}
-                     </div>
-                   )}
+              <figcaption className="flex items-center gap-3 pt-5 border-t border-border">
+                <div className="relative w-10 h-10 rounded-full overflow-hidden border border-border bg-secondary shrink-0">
+                  {review.client_avatar ? (
+                    <Image
+                      src={review.client_avatar}
+                      alt={review.client_name}
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center font-medium">
+                      {review.client_name.charAt(0)}
+                    </div>
+                  )}
                 </div>
                 <div>
-                   <h4 className="font-bold text-sm tracking-tight">{review.client_name}</h4>
-                   <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest">{review.client_role}</p>
+                  <p className="text-sm font-medium">{review.client_name}</p>
+                  <p className="text-xs text-muted-foreground">{review.client_role}</p>
                 </div>
-             </div>
-          </div>
-        ))}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
       </div>
     </section>
   )

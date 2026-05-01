@@ -3,114 +3,108 @@
 import { useEffect, useState } from "react"
 import { PortfolioService } from "@/services/portfolio"
 import { Project } from "@/types/portfolio"
-import { Button } from "@/components/ui/button"
-import { ExternalLink, ArrowLeft, Star, User, Briefcase, Lightbulb, CheckCircle2, X, Layers, ChevronLeft, ChevronRight } from "lucide-react"
+import { ArrowLeft, ArrowUpRight, ChevronLeft, ChevronRight, X } from "lucide-react"
 import { FaGithub } from "react-icons/fa"
 import Link from "next/link"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
+import { SiteCopy, t, renderRichTitle } from "@/lib/copy"
 
-interface Props { id: string }
+interface Props {
+  id: string
+}
 
-const ensureArray = (data: any): string[] => {
-  if (Array.isArray(data)) return data;
-  if (typeof data === 'string') {
+const ensureArray = (data: unknown): string[] => {
+  if (Array.isArray(data)) return data as string[]
+  if (typeof data === "string") {
     try {
-      const parsed = JSON.parse(data);
-      if (Array.isArray(parsed)) return parsed;
-      return data.split(/\n|,/).map(item => item.trim()).filter(Boolean);
-    } catch (e) {
-      return data.split(/\n|,/).map(item => item.trim()).filter(Boolean);
+      const parsed = JSON.parse(data)
+      if (Array.isArray(parsed)) return parsed
+      return data.split(/\n|,/).map((s) => s.trim()).filter(Boolean)
+    } catch {
+      return data.split(/\n|,/).map((s) => s.trim()).filter(Boolean)
     }
   }
-  return [];
+  return []
 }
 
 export const ProjectDetailWrapper = ({ id }: Props) => {
   const [project, setProject] = useState<Project | null>(null)
+  const [copy, setCopy] = useState<SiteCopy>({})
   const [isLoading, setIsLoading] = useState(true)
   const [currentImage, setCurrentImage] = useState(0)
   const [isZoomed, setIsZoomed] = useState(false)
   const [direction, setDirection] = useState(0)
 
   useEffect(() => {
-    const fetchProject = async () => {
-      const data = await PortfolioService.getProjectById(id)
+    Promise.all([
+      PortfolioService.getProjectById(id),
+      PortfolioService.getSiteCopy().catch(() => ({})),
+    ]).then(([data, copyData]) => {
       if (data) setProject(data)
+      setCopy(copyData)
       setIsLoading(false)
-    }
-    fetchProject()
+    })
   }, [id])
 
-  const nextImage = () => {
+  const next = () => {
     if (!project?.images) return
     setDirection(1)
-    setCurrentImage((prev) => (prev + 1) % project.images.length)
+    setCurrentImage((p) => (p + 1) % project.images.length)
   }
-
-  const prevImage = () => {
+  const prev = () => {
     if (!project?.images) return
     setDirection(-1)
-    setCurrentImage((prev) => (prev - 1 + project.images.length) % project.images.length)
+    setCurrentImage((p) => (p - 1 + project.images.length) % project.images.length)
   }
 
-  if (isLoading) return (
-    <div className="animate-pulse space-y-0">
-      <div className="h-[60vh] bg-muted w-full" />
-      <div className="max-w-6xl mx-auto px-6 py-12 grid lg:grid-cols-3 gap-12">
-        <div className="lg:col-span-2 space-y-6">
-          {[1, 2, 3].map(i => <div key={i} className="h-4 bg-muted rounded" />)}
-        </div>
-        <div className="space-y-4">
-          {[1, 2, 3, 4].map(i => <div key={i} className="h-12 bg-muted rounded-xl" />)}
-        </div>
+  if (isLoading)
+    return (
+      <div className="px-6 md:px-12 py-32 max-w-7xl mx-auto animate-pulse">
+        <div className="h-4 w-32 bg-secondary rounded-full mb-8" />
+        <div className="h-12 w-2/3 bg-secondary rounded-full mb-6" />
+        <div className="h-4 w-1/2 bg-secondary rounded-full mb-12" />
+        <div className="aspect-video bg-secondary rounded-3xl" />
       </div>
-    </div>
-  )
+    )
 
-  if (!project) return (
-    <div className="text-center py-32">
-      <p className="text-xl text-muted-foreground">Project not found.</p>
-      <Link href="/projects" className="text-primary underline mt-2 block">← Back to Projects</Link>
-    </div>
-  )
+  if (!project)
+    return (
+      <div className="text-center py-32">
+        <p className="font-display text-3xl">Project not found.</p>
+        <Link href="/projects" className="inline-flex items-center gap-2 mt-6 text-sm font-medium hover:text-signal transition-colors">
+          <ArrowLeft className="w-4 h-4" /> Back to all projects
+        </Link>
+      </div>
+    )
 
-  const safeFeatures = ensureArray(project.key_features);
-  const safeLearned = ensureArray(project.what_i_learned);
+  const features = ensureArray(project.key_features)
+  const learned = ensureArray(project.what_i_learned)
 
   const variants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 100 : -100,
-      opacity: 0,
-    }),
-    center: {
-      zIndex: 1,
-      x: 0,
-      opacity: 1,
-    },
-    exit: (direction: number) => ({
-      zIndex: 0,
-      x: direction < 0 ? 100 : -100,
-      opacity: 0,
-    }),
+    enter: (d: number) => ({ x: d > 0 ? 60 : -60, opacity: 0 }),
+    center: { x: 0, opacity: 1 },
+    exit: (d: number) => ({ x: d < 0 ? 60 : -60, opacity: 0 }),
   }
 
   return (
-    <div className="pb-24">
-      {/* ── FULL VIEW MODAL ── */}
+    <div className="pb-24 md:pb-32">
+      {/* Zoom modal */}
       {isZoomed && (
-        <div 
-          className="fixed inset-0 z-100 bg-black/95 backdrop-blur-3xl flex items-center justify-center p-4 md:p-10"
+        <div
+          className="fixed inset-0 z-100 bg-foreground/95 backdrop-blur-3xl flex items-center justify-center p-4 md:p-12 cursor-zoom-out"
           onClick={() => setIsZoomed(false)}
         >
-          <button className="absolute top-10 right-10 text-white/50 hover:text-white transition-colors bg-white/10 p-4 rounded-full backdrop-blur-md border border-white/10">
-             <X className="w-8 h-8" />
+          <button
+            aria-label="Close"
+            className="absolute top-6 right-6 w-12 h-12 rounded-full bg-background/10 hover:bg-background/20 backdrop-blur border border-background/20 flex items-center justify-center text-background"
+          >
+            <X className="w-5 h-5" />
           </button>
-          
           <div className="relative w-full h-full max-w-7xl">
             <Image
               src={project.images[currentImage]}
-              alt="Full View"
+              alt={project.title}
               fill
               className="object-contain"
               priority
@@ -119,103 +113,78 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
         </div>
       )}
 
-      {/* ── HERO SECTION: Static First Image ── */}
-      <div className="relative h-[70vh] min-h-[450px] overflow-hidden bg-black/5 flex items-center justify-center">
-        {project.images?.[0] ? (
-          <>
-            <Image
-              src={project.images[0]} 
-              alt="Backdrop"
-              fill
-              className="h-full w-full object-cover blur-3xl opacity-20 scale-110"
-            />
-            <div className="relative w-full h-full p-10 md:p-20">
-              <Image
-                src={project.images[0]} 
-                alt={project.title}
-                fill
-                priority
-                quality={100}
-                className="object-contain drop-shadow-2xl"
-              />
-            </div>
-          </>
-        ) : (
-          <div className="w-full h-full bg-linear-to-br from-primary/10 via-background to-primary/5" />
-        )}
-
-        <div className="absolute inset-0 bg-linear-to-t from-background via-transparent to-transparent pointer-events-none" />
-
-        <div className="absolute top-6 left-6 z-10">
+      {/* Top bar */}
+      <div className="px-6 md:px-12 pt-28 md:pt-32 pb-8">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
           <Link
             href="/projects"
-            className="inline-flex items-center gap-2 text-sm font-bold bg-background/50 backdrop-blur-md hover:bg-background border border-border px-6 py-3 rounded-full transition-all text-foreground"
+            className="group inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
           >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Projects
+            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-0.5" />
+            {t(copy, "project.back_link", "All projects")}
           </Link>
-        </div>
-
-        <div className="absolute bottom-12 left-0 right-0 px-6">
-          <div className="max-w-6xl mx-auto space-y-4">
-              <div className="flex flex-wrap gap-2">
-                <span className="text-[10px] font-bold uppercase tracking-widest bg-primary text-primary-foreground px-4 py-1.5 rounded-full">
-                  {project.project_type || "Production Project"}
-                </span>
-                {project.featured && (
-                  <span className="flex items-center gap-1.5 text-[10px] font-bold bg-yellow-500/10 text-yellow-600 px-4 py-1.5 rounded-full border border-yellow-500/20">
-                    <Star className="w-3 h-3 fill-current" /> Featured Case
-                  </span>
-                )}
-              </div>
-              <h1 className="text-heading-section font-bold tracking-tight max-w-3xl italic leading-tight truncate">
-                {project.title}
-              </h1>
-          </div>
+          <p className="eyebrow hidden md:block">{t(copy, "project.kicker", "Case study")}</p>
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 grid lg:grid-cols-3 gap-16 pt-16">
+      {/* Title block */}
+      <header className="px-6 md:px-12 pb-16 md:pb-20">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-end justify-between gap-8 border-b border-border pb-10">
+            <div className="space-y-5 max-w-3xl">
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="text-xs font-medium px-3 py-1.5 rounded-full bg-secondary text-secondary-foreground">
+                  {project.project_type || "Project"}
+                </span>
+                {project.featured && (
+                  <span className="text-xs font-medium px-3 py-1.5 rounded-full bg-signal text-signal-foreground">
+                    Featured
+                  </span>
+                )}
+              </div>
+              <h1 className="font-display text-heading-hero leading-[0.9]">
+                {project.title}
+                <span className="text-signal">.</span>
+              </h1>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed text-pretty max-w-2xl">
+                {project.description}
+              </p>
+            </div>
 
-        <main className="lg:col-span-2 space-y-20">
-
-          {/* Project Overview */}
-          <div className="space-y-6">
-            <h2 className="text-heading-card font-bold italic border-l-4 border-primary pl-6">Project Overview</h2>
-            <p className="text-muted-foreground text-lg md:text-xl font-medium leading-relaxed italic text-balance">
-              {project.description}
-            </p>
+            <div className="hidden md:flex flex-col gap-3 shrink-0">
+              {project.live_url && (
+                <a
+                  href={project.live_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 bg-foreground text-background h-12 px-5 rounded-full text-sm font-medium hover:bg-signal hover:text-signal-foreground transition-colors"
+                >
+                  {t(copy, "project.live_cta", "Visit live site")} <ArrowUpRight className="w-4 h-4" />
+                </a>
+              )}
+              {project.github_url && (
+                <a
+                  href={project.github_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 border border-border h-12 px-5 rounded-full text-sm font-medium hover:border-foreground transition-colors"
+                >
+                  <FaGithub className="w-4 h-4" /> {t(copy, "project.source_cta", "Source")}
+                </a>
+              )}
+            </div>
           </div>
+        </div>
+      </header>
 
-          {/* GALLERY SECTION: Interactive Slider (Where it belongs) */}
-          {project.images?.length > 0 && (
-            <div className="space-y-10 pt-4">
-               <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                     <Layers className="w-6 h-6 text-primary" />
-                     <h2 className="text-heading-card font-bold italic uppercase tracking-wider">Visual Gallery</h2>
-                  </div>
-                  {project.images.length > 1 && (
-                    <div className="flex gap-2">
-                       <button 
-                         onClick={prevImage}
-                         className="p-3 rounded-xl bg-card border border-border hover:bg-primary hover:text-white transition-all shadow-sm"
-                       >
-                          <ChevronLeft className="w-5 h-5" />
-                       </button>
-                       <button 
-                         onClick={nextImage}
-                         className="p-3 rounded-xl bg-card border border-border hover:bg-primary hover:text-white transition-all shadow-sm"
-                       >
-                          <ChevronRight className="w-5 h-5" />
-                       </button>
-                    </div>
-                  )}
-               </div>
-
-              <div 
-                className="relative aspect-video rounded-[3rem] overflow-hidden border border-border bg-muted/20 shadow-2xl group/slider cursor-zoom-in"
+      {/* Hero image gallery */}
+      {project.images?.length > 0 && (
+        <section className="px-6 md:px-12 mb-16 md:mb-24">
+          <div className="max-w-7xl mx-auto">
+            <div className="relative">
+              <div
                 onClick={() => setIsZoomed(true)}
+                className="group relative aspect-video rounded-3xl overflow-hidden border border-border bg-secondary cursor-zoom-in"
               >
                 <AnimatePresence initial={false} custom={direction} mode="wait">
                   <motion.div
@@ -226,149 +195,212 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
                     animate="center"
                     exit="exit"
                     transition={{
-                      x: { type: "spring", stiffness: 300, damping: 30 },
-                      opacity: { duration: 0.2 }
+                      x: { type: "spring", stiffness: 280, damping: 32 },
+                      opacity: { duration: 0.2 },
                     }}
                     className="absolute inset-0"
                   >
                     <Image
-                      src={project.images[currentImage]} 
-                      alt={`Slide ${currentImage + 1}`}
+                      src={project.images[currentImage]}
+                      alt={`${project.title} — frame ${currentImage + 1}`}
                       fill
                       className="object-cover"
+                      sizes="(max-width: 1280px) 100vw, 1280px"
                     />
                   </motion.div>
                 </AnimatePresence>
-                
-                {/* Click to Zoom Overlay */}
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/slider:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
-                   <div className="bg-white/10 backdrop-blur-md border border-white/20 px-8 py-3 rounded-full text-white text-[10px] font-bold uppercase tracking-[0.3em]">
-                      View Full Details
-                   </div>
+
+                <div className="absolute inset-0 bg-foreground/30 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none flex items-center justify-center">
+                  <span className="bg-background text-foreground text-xs font-medium px-4 py-2 rounded-full">
+                    Click to view full
+                  </span>
                 </div>
 
-                {/* Counter Badge */}
-                <div className="absolute bottom-8 right-8 bg-black/60 backdrop-blur-md px-4 py-2 rounded-xl text-white text-[10px] font-bold">
-                   {currentImage + 1} / {project.images.length}
+                <div className="absolute bottom-5 right-5 bg-foreground/80 text-background text-xs font-mono px-3 py-1.5 rounded-full backdrop-blur">
+                  {currentImage + 1} / {project.images.length}
                 </div>
               </div>
 
-              {/* Thumbnails list */}
               {project.images.length > 1 && (
-                <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
-                  {project.images.map((img, i) => (
-                    <button
-                      key={img}
-                      onClick={() => setCurrentImage(i)}
-                      className={`relative shrink-0 w-32 h-20 rounded-2xl overflow-hidden border-2 transition-all ${
-                        i === currentImage ? "border-primary scale-105 shadow-md" : "border-transparent opacity-40 hover:opacity-100"
-                      }`}
-                    >
-                      <Image src={img} alt={`Thumb ${i}`} fill className="object-cover" />
-                    </button>
-                  ))}
-                </div>
+                <>
+                  <button
+                    onClick={prev}
+                    aria-label="Previous"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-background/90 backdrop-blur border border-border flex items-center justify-center hover:bg-foreground hover:text-background transition-colors shadow-md"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                  <button
+                    onClick={next}
+                    aria-label="Next"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-background/90 backdrop-blur border border-border flex items-center justify-center hover:bg-foreground hover:text-background transition-colors shadow-md"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                </>
               )}
             </div>
-          )}
 
-          {/* Mission/Objective */}
-          {project.purpose && (
-            <div className="space-y-6 p-10 rounded-[3rem] bg-primary/5 border border-primary/10 shadow-sm relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
-                 <Briefcase className="w-32 h-32 text-primary" />
+            {/* Thumbnails */}
+            {project.images.length > 1 && (
+              <div className="flex gap-3 overflow-x-auto pt-5 pb-2 no-scrollbar">
+                {project.images.map((img, i) => (
+                  <button
+                    key={img}
+                    onClick={() => {
+                      setDirection(i > currentImage ? 1 : -1)
+                      setCurrentImage(i)
+                    }}
+                    className={`relative shrink-0 w-28 aspect-video rounded-xl overflow-hidden border-2 transition-all ${
+                      i === currentImage
+                        ? "border-foreground"
+                        : "border-transparent opacity-50 hover:opacity-100"
+                    }`}
+                  >
+                    <Image src={img} alt={`Thumb ${i + 1}`} fill className="object-cover" sizes="112px" />
+                  </button>
+                ))}
               </div>
-              <h3 className="text-heading-card font-bold flex items-center gap-3 italic">
-                <Briefcase className="w-6 h-6 text-primary" /> Project Objective
-              </h3>
-              <p className="text-muted-foreground text-lg leading-relaxed relative z-10 italic">
-                {project.purpose}
-              </p>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* Body grid */}
+      <div className="px-6 md:px-12">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 md:gap-16">
+          {/* Main column */}
+          <div className="lg:col-span-8 space-y-16 md:space-y-20">
+            {/* Purpose */}
+            {project.purpose && (
+              <section className="space-y-5">
+                <p className="eyebrow">{t(copy, "project.brief_eyebrow", "— The brief")}</p>
+                <h2 className="font-display text-3xl md:text-4xl leading-tight">
+                  {renderRichTitle(t(copy, "project.brief_title", "Why this *existed*."))}
+                </h2>
+                <p className="text-base md:text-lg text-muted-foreground leading-relaxed text-pretty max-w-2xl">
+                  {project.purpose}
+                </p>
+              </section>
+            )}
+
+            {/* Features */}
+            {features.length > 0 && (
+              <section className="space-y-6">
+                <p className="eyebrow">{t(copy, "project.features_eyebrow", "— What it does")}</p>
+                <h2 className="font-display text-3xl md:text-4xl leading-tight">
+                  {renderRichTitle(t(copy, "project.features_title", "Key *features*."))}
+                </h2>
+                <ul className="grid sm:grid-cols-2 gap-3 pt-2">
+                  {features.map((feature, i) => (
+                    <li
+                      key={i}
+                      className="flex items-start gap-3 bg-card border border-border rounded-2xl px-5 py-4"
+                    >
+                      <span className="font-mono text-xs text-muted-foreground pt-0.5 shrink-0">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span className="text-sm leading-relaxed">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {/* Learned */}
+            {learned.length > 0 && (
+              <section className="space-y-6">
+                <p className="eyebrow">{t(copy, "project.learned_eyebrow", "— Reflection")}</p>
+                <h2 className="font-display text-3xl md:text-4xl leading-tight">
+                  {renderRichTitle(t(copy, "project.learned_title", "What I *took away*."))}
+                </h2>
+                <div className="space-y-4 pt-2">
+                  {learned.map((item, i) => (
+                    <p
+                      key={i}
+                      className="text-base md:text-lg leading-relaxed text-foreground/90 text-pretty max-w-2xl border-l-2 border-signal pl-5"
+                    >
+                      {item}
+                    </p>
+                  ))}
+                </div>
+              </section>
+            )}
+          </div>
+
+          {/* Sidebar */}
+          <aside className="lg:col-span-4">
+            <div className="lg:sticky lg:top-28 space-y-6">
+              <div className="bg-card border border-border rounded-3xl p-7 space-y-7">
+                <div>
+                  <p className="eyebrow">{t(copy, "project.role_label", "My role")}</p>
+                  <p className="text-base font-medium mt-1">{project.my_role || "Designer & Developer"}</p>
+                </div>
+
+                <div>
+                  <p className="eyebrow">{t(copy, "project.type_label", "Project type")}</p>
+                  <p className="text-base font-medium mt-1">{project.project_type || "Production project"}</p>
+                </div>
+
+                <div>
+                  <p className="eyebrow">{t(copy, "project.stack_label", "Tech stack")}</p>
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-xs font-medium px-2.5 py-1 rounded-full bg-secondary text-secondary-foreground"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Mobile actions (sidebar already has links on desktop) */}
+              <div className="md:hidden flex flex-col gap-3">
+                {project.live_url && (
+                  <a
+                    href={project.live_url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center justify-center gap-2 bg-foreground text-background h-12 rounded-full text-sm font-medium"
+                  >
+                    {t(copy, "project.live_cta", "Visit live site")} <ArrowUpRight className="w-4 h-4" />
+                  </a>
+                )}
+                {project.github_url && (
+                  <a
+                    href={project.github_url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center justify-center gap-2 border border-border h-12 rounded-full text-sm font-medium"
+                  >
+                    <FaGithub className="w-4 h-4" /> {t(copy, "project.source_cta", "Source")}
+                  </a>
+                )}
+              </div>
             </div>
-          )}
+          </aside>
+        </div>
+      </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-             {/* Key Features */}
-             {safeFeatures.length > 0 && (
-               <div className="space-y-8 p-10 rounded-[3rem] bg-card border border-border shadow-sm">
-                 <h3 className="text-heading-card font-bold flex items-center gap-3 italic">
-                   <CheckCircle2 className="w-6 h-6 text-green-500" /> Key Features
-                 </h3>
-                 <div className="space-y-4">
-                   {safeFeatures.map((feature, i) => (
-                     <div key={i} className="flex items-center gap-4 transition-all hover:translate-x-2">
-                       <div className="h-2 w-2 rounded-full bg-primary shrink-0 shadow-[0_0_10px_rgba(var(--primary),0.5)]" />
-                       <span className="text-sm font-bold text-zinc-400">{feature}</span>
-                     </div>
-                   ))}
-                 </div>
-               </div>
-             )}
-
-             {/* Lessons Learned */}
-             {safeLearned.length > 0 && (
-               <div className="space-y-8 p-10 rounded-[3rem] bg-yellow-500/5 border border-yellow-500/10 shadow-sm">
-                 <h3 className="text-heading-card font-bold flex items-center gap-3 italic">
-                   <Lightbulb className="w-6 h-6 text-yellow-500" /> Key Learnings
-                 </h3>
-                 <div className="space-y-4">
-                   {safeLearned.map((item, i) => (
-                     <div key={i} className="flex items-start gap-3">
-                       <span className="text-yellow-500 font-black mt-0.5">•</span>
-                       <p className="text-sm text-zinc-400 font-bold leading-relaxed italic">
-                         {item}
-                       </p>
-                     </div>
-                   ))}
-                 </div>
-               </div>
-             )}
+      {/* Bottom CTA */}
+      <div className="px-6 md:px-12 pt-24 mt-16 border-t border-border">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-end justify-between gap-8 pt-12">
+          <div className="space-y-3">
+            <p className="eyebrow">{t(copy, "project.up_next_eyebrow", "— Up next")}</p>
+            <h3 className="font-display text-3xl md:text-5xl leading-tight">
+              {renderRichTitle(t(copy, "project.up_next_title", "Browse more *work*"))}
+            </h3>
           </div>
-        </main>
-
-        {/* Sidebar */}
-        <aside className="space-y-8 lg:sticky lg:top-28 lg:self-start">
-          <div className="flex flex-col gap-4">
-            {project.live_url && (
-              <Button asChild size="lg" className="rounded-[2rem] h-16 font-bold gap-3 shadow-xl shadow-primary/20 hover:-translate-y-1 transition-all">
-                <a href={project.live_url} target="_blank">Launch Project <ExternalLink className="w-5 h-5" /></a>
-              </Button>
-            )}
-            {project.github_url && (
-              <Button asChild variant="outline" size="lg" className="rounded-[2rem] h-16 font-bold border-2 gap-3 hover:-translate-y-1 transition-all">
-                <a href={project.github_url} target="_blank">Browse Source <FaGithub className="w-5 h-5" /></a>
-              </Button>
-            )}
-          </div>
-
-          <div className="p-8 rounded-[3rem] border border-border bg-card/30 backdrop-blur-xl relative overflow-hidden">
-             {/* Decorative element */}
-             <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/5 blur-3xl rounded-full" />
-             
-             <div className="space-y-10 relative z-10">
-               <div className="flex gap-5">
-                 <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0">
-                   <User className="w-6 h-6 text-primary" />
-                 </div>
-                 <div>
-                   <p className="text-[10px] text-muted-foreground uppercase font-black tracking-widest mb-1">Ownership</p>
-                   <p className="font-bold text-base tracking-tight italic">{project.my_role || "Designer & Developer"}</p>
-                 </div>
-               </div>
-
-               <div className="space-y-5">
-                 <p className="text-[10px] text-muted-foreground uppercase font-black tracking-widest px-1">Technical Stack</p>
-                 <div className="flex flex-wrap gap-2">
-                   {project.tags.map(tag => (
-                     <span key={tag} className="text-[10px] px-4 py-2 rounded-xl bg-secondary text-secondary-foreground font-bold border border-border/50 hover:border-primary/50 transition-colors">
-                       {tag}
-                     </span>
-                   ))}
-                 </div>
-               </div>
-             </div>
-          </div>
-        </aside>
+          <Link
+            href="/projects"
+            className="inline-flex items-center gap-2 bg-foreground text-background h-12 px-6 rounded-full text-sm font-medium hover:bg-signal hover:text-signal-foreground transition-colors"
+          >
+            {t(copy, "project.back_link", "All projects")} <ArrowUpRight className="w-4 h-4" />
+          </Link>
+        </div>
       </div>
     </div>
   )

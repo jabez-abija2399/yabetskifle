@@ -1,51 +1,77 @@
 import { Service } from "@/types/portfolio"
-import { Box, Code2, Layout, Database, Smartphone, Palette } from "lucide-react"
+import { Box, Code2, Layout, Database, Smartphone, Palette, Zap, Cpu } from "lucide-react"
+import { SiteCopy, t, renderRichTitle } from "@/lib/copy"
 
-// A helper to map icon names from DB to real Lucide Icons
-const IconMap: any = {
-  Code2, Layout, Database, Smartphone, Palette, Box
+const IconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  Code2, Layout, Database, Smartphone, Palette, Box, Zap, Cpu,
 }
 
 interface Props {
   services: Service[]
+  copy?: SiteCopy
 }
 
-export const ServicesGrid = ({ services }: Props) => {
+export const ServicesGrid = ({ services, copy }: Props) => {
+  if (!services || services.length === 0) return null
+
   return (
-    <section id="services" className="py-24 px-6 max-w-7xl mx-auto">
-      <div className="text-center mb-16 space-y-3">
-         <h2 className="text-heading-section font-bold tracking-tighter italic">SERVICES</h2>
-         <p className="text-muted-foreground text-sm font-medium uppercase tracking-widest">Professional solutions for digital excellence</p>
-      </div>
+    <section id="services" className="px-6 md:px-12 scroll-mt-32">
+      <div className="max-w-7xl mx-auto">
+        {/* Section header */}
+        <div className="flex items-end justify-between gap-8 mb-12 md:mb-16 border-b border-border pb-8">
+          <div className="space-y-3">
+            <p className="eyebrow">{t(copy, "services.eyebrow", "— 03 / Services")}</p>
+            <h2 className="text-heading-section">
+              {renderRichTitle(t(copy, "services.title", "How I can *help*"))}
+            </h2>
+          </div>
+          <p className="hidden md:block text-sm text-muted-foreground max-w-xs text-pretty">
+            {t(copy, "services.subtitle", "Selected service offerings for teams looking to ship beautiful, performant web products.")}
+          </p>
+        </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {services.map((service) => {
-          const Icon = IconMap[service.icon_name || "Box"] || Box
-          return (
-            <div key={service.id} className="p-10 rounded-[3rem] bg-card border border-border hover:border-primary/50 transition-all group relative overflow-hidden">
-               {/* Decorative background glow */}
-               <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-primary/5 blur-3xl group-hover:bg-primary/10 transition-all rounded-full" />
-               
-               <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
-                  <Icon className="w-7 h-7 text-primary" />
-               </div>
-
-               <h3 className="text-2xl font-bold mb-4 tracking-tight italic">{service.title}</h3>
-               <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+        {/* Editorial list — numbered rows */}
+        <div className="divide-y divide-border border-y border-border">
+          {services.map((service, i) => {
+            const Icon = IconMap[service.icon_name || "Box"] || Box
+            return (
+              <div
+                key={service.id}
+                className="group grid grid-cols-12 gap-6 md:gap-10 py-8 md:py-12 hover:bg-card transition-colors -mx-6 md:-mx-12 px-6 md:px-12"
+              >
+                <div className="col-span-12 md:col-span-1 flex md:flex-col items-center md:items-start gap-3">
+                  <span className="font-mono text-xs text-muted-foreground">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                </div>
+                <div className="col-span-12 md:col-span-4 flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-2xl border border-border bg-secondary flex items-center justify-center shrink-0 group-hover:bg-signal group-hover:text-signal-foreground group-hover:border-transparent transition-colors">
+                    <Icon className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-display text-2xl md:text-3xl leading-tight">
+                    {service.title.trim()}
+                  </h3>
+                </div>
+                <div className="col-span-12 md:col-span-4 text-sm text-muted-foreground leading-relaxed text-pretty">
                   {service.description}
-               </p>
-
-               <ul className="space-y-2">
-                  {service.features?.map((feature, i) => (
-                    <li key={i} className="flex items-center gap-2 text-xs font-bold text-zinc-500">
-                       <span className="w-1 h-1 rounded-full bg-primary" />
-                       {feature}
-                    </li>
-                  ))}
-               </ul>
-            </div>
-          )
-        })}
+                </div>
+                <div className="col-span-12 md:col-span-3">
+                  <ul className="space-y-2">
+                    {service.features?.map((feature, j) => (
+                      <li
+                        key={j}
+                        className="text-xs font-medium text-foreground/80 flex items-start gap-2"
+                      >
+                        <span className="text-signal mt-[2px]">→</span>
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )
+          })}
+        </div>
       </div>
     </section>
   )

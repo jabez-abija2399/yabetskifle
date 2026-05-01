@@ -8,6 +8,14 @@ export interface Profile {
   skills?: SkillCategory[];
   resume_url?: string;
   experience_years?: number;
+  // New admin-editable content fields
+  about_story?: string;
+  currently_learning?: string;
+  philosophy_quote?: string;
+  philosophy_author?: string;
+  location?: string;
+  timezone?: string;
+  availability_tags?: string[];
   created_at?: string;
 }
 

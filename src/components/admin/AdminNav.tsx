@@ -2,12 +2,12 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { 
-  LayoutDashboard, User, Briefcase, Settings, 
-  MessageSquare, Star, GraduationCap, Award, 
-  FileText, Languages, Mic2, Heart, ShieldCheck,
+import {
+  LayoutDashboard, User, Briefcase, Settings,
+  MessageSquare, Star, GraduationCap,
+  FileText, Languages, ShieldCheck,
   Package, HelpCircle, Columns,
-  AwardIcon
+  AwardIcon, Type
 } from "lucide-react"
 import { createBrowserClient } from "@supabase/ssr"
 
@@ -23,8 +23,9 @@ const ALLOWED_ROUTES = [
   "/admin/posts",
   "/admin/faq",
   "/admin/languages",
-  "/admin/sections", 
+  "/admin/sections",
   "/admin/skills",
+  "/admin/copy",
 ]
 
 const navGroups = [
@@ -40,8 +41,9 @@ const navGroups = [
     ]
   },
   {
-    title: "Structure & Flow",
+    title: "Structure & Copy",
     items: [
+      { name: "Site Copy", href: "/admin/copy", icon: <Type className="w-4 h-4" /> },
       { name: "Section Manager", href: "/admin/sections", icon: <Columns className="w-4 h-4 text-primary" /> },
       { name: "Settings", href: "/admin/settings", icon: <Settings className="w-4 h-4" /> },
     ]

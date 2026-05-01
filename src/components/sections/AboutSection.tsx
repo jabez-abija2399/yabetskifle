@@ -1,68 +1,113 @@
 import { Profile } from "@/types/portfolio"
-import { Sparkles, User, GraduationCap, Target } from "lucide-react"
+import { Globe, MapPin, Sparkles } from "lucide-react"
+import { SiteCopy, t, renderRichTitle } from "@/lib/copy"
 
 interface Props {
   profile: Profile
+  languagesLine?: { short: string; long: string }
+  copy?: SiteCopy
 }
 
-export const AboutSection = ({ profile }: Props) => {
-  if (!profile.bio) return null
+const FALLBACK_STORY = `I started writing code because I wanted to build the kinds of products I admired — fast, clear, and quietly delightful to use. That curiosity grew into two years of shipping real software with small teams, mostly on the frontend, often end-to-end.
+
+Today I'm most at home in React, Next.js, and TypeScript. I love the moment a Figma frame becomes a real, interactive thing on screen — and I care a lot about making interfaces feel calm rather than busy. My backend practice is still growing: I'm comfortable with Supabase and full-stack Next.js, and I treat "I don't know that yet" as an invitation, not a problem.
+
+If a project needs me to pick up a new tool, framework, or domain — I'll go find it. Flexible, curious, and ready to ship.`
+
+export const AboutSection = ({ profile, languagesLine, copy }: Props) => {
+  const story = (profile.about_story || FALLBACK_STORY).split(/\n\n+/).filter(Boolean)
+  const learning = profile.currently_learning || "Going deeper on backend & cloud — always picking up the next tool."
+  const quote = profile.philosophy_quote || "Details aren't details. They make the design."
+  const author = profile.philosophy_author || "Charles Eames"
+  const location = profile.location || "Addis Ababa"
+  const timezone = profile.timezone || "Working globally · GMT+3"
+  const langShort = languagesLine?.short || "EN · AM"
+  const langLong = languagesLine?.long || "English · Amharic"
 
   return (
-    <section id="about" className="px-6 scroll-mt-32">
-      <div className="max-w-6xl mx-auto">
-        <div className="grid lg:grid-cols-12 gap-16 items-start">
-           
-           {/* 🎭 Narrating Title */}
-           <div className="lg:col-span-5 space-y-8">
-              <div className="space-y-4">
-                 <div className="flex items-center gap-2 text-primary">
-                    <Sparkles className="w-5 h-5" />
-                    <span className="text-[10px] font-bold uppercase tracking-[0.4em]">Personal Profile</span>
-                 </div>
-                 <h2 className="text-4xl md:text-5xl font-bold tracking-tight italic leading-tight">
-                    Professional <span className="text-zinc-600">Narrative.</span>
-                 </h2>
-              </div>
-              
-              <div className="flex flex-col gap-6">
-                 {[
-                    { icon: <User className="w-4 h-4" />, label: "Current Focus", value: profile.role_title },
-                    { icon: <GraduationCap className="w-4 h-4" />, label: "Experience Intensity", value: `${profile.experience_years || 0}+ Years in Engineering` },
-                    { icon: <Target className="w-4 h-4" />, label: "Primary Objective", value: "Scalability & Architectural Integrity" }
-                 ].map((stat, i) => (
-                    <div key={i} className="flex flex-col gap-1">
-                       <div className="flex items-center gap-2 text-zinc-500">
-                          {stat.icon}
-                          <span className="text-[8px] font-bold uppercase tracking-widest">{stat.label}</span>
-                       </div>
-                       <p className="text-lg font-bold italic tracking-tight">{stat.value}</p>
-                    </div>
-                 ))}
-              </div>
-           </div>
+    <section id="about" className="px-6 md:px-12 scroll-mt-32">
+      <div className="max-w-7xl mx-auto">
+        {/* Section header */}
+        <div className="flex items-end justify-between gap-8 mb-12 md:mb-16 border-b border-border pb-8">
+          <div className="space-y-3">
+            <p className="eyebrow">{t(copy, "about.eyebrow", "— 01 / About")}</p>
+            <h2 className="text-heading-section">
+              {renderRichTitle(t(copy, "about.title", "A bit more *about me*"))}
+            </h2>
+          </div>
+          <p className="hidden md:block text-sm text-muted-foreground max-w-xs text-pretty">
+            {t(copy, "about.subtitle", "How I got here, what I care about, and how I like to work.")}
+          </p>
+        </div>
 
-           {/* 🖋️ The Bio Narrative */}
-           <div className="lg:col-span-7 relative">
-              <div className="absolute -inset-8 bg-muted/30 rounded-[3rem] -z-10 blur-xl" />
-              <div className="p-10 md:p-14 rounded-[3.5rem] bg-card border border-border shadow-2xl shadow-primary/5 space-y-8">
-                 <div className="prose prose-zinc dark:prose-invert max-w-none">
-                    <p className="text-lg md:text-xl font-medium leading-relaxed italic text-muted-foreground whitespace-pre-wrap">
-                       {profile.bio}
-                    </p>
-                 </div>
-                 
-                 <div className="pt-8 border-t border-border/50 flex items-center justify-between">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary italic">Expert Collaboration Ready</p>
-                    <div className="flex -space-x-2">
-                       {[1,2,3].map(i => (
-                         <div key={i} className="w-8 h-8 rounded-full bg-muted border-2 border-card shadow-sm" />
-                       ))}
-                    </div>
-                 </div>
-              </div>
-           </div>
+        {/* Bento grid */}
+        <div className="grid grid-cols-12 gap-4 md:gap-5 auto-rows-[minmax(180px,auto)]">
+          {/* Story */}
+          <article className="col-span-12 lg:col-span-8 row-span-2 bg-card border border-border rounded-3xl p-8 md:p-12 relative overflow-hidden flex flex-col gap-6">
+            <p className="eyebrow">{t(copy, "about.story_eyebrow", "— The longer story")}</p>
 
+            <div className="space-y-5 text-base md:text-lg leading-relaxed text-foreground/90 text-pretty whitespace-pre-line">
+              {story.map((para, i) => (
+                <p key={i} className={i === story.length - 1 ? "text-foreground" : ""}>
+                  {para}
+                </p>
+              ))}
+            </div>
+
+            <div className="flex items-center gap-2 pt-4 mt-auto border-t border-border">
+              <Sparkles className="w-4 h-4 text-signal" />
+              <span className="eyebrow">{t(copy, "about.story_footer", "Open to learn · Open to teach · Open to ship")}</span>
+            </div>
+          </article>
+
+          {/* Years */}
+          <div className="col-span-6 lg:col-span-4 bg-card border border-border rounded-3xl p-7 flex flex-col justify-between">
+            <p className="eyebrow">{t(copy, "about.experience_label", "Experience")}</p>
+            <div>
+              <p className="font-display text-6xl md:text-7xl leading-none">
+                {profile.experience_years || 2}
+                <span className="text-signal">+</span>
+              </p>
+              <p className="text-sm text-muted-foreground mt-2">{t(copy, "about.experience_unit", "years shipping production code")}</p>
+            </div>
+          </div>
+
+          {/* Currently learning */}
+          <div className="col-span-6 lg:col-span-4 bg-foreground text-background rounded-3xl p-7 flex flex-col justify-between">
+            <p className="eyebrow opacity-60">{t(copy, "about.learning_label", "Currently learning")}</p>
+            <p className="font-display text-2xl md:text-3xl leading-tight text-pretty">
+              {learning}
+            </p>
+          </div>
+
+          {/* Philosophy */}
+          <div className="col-span-6 lg:col-span-4 bg-card border border-border rounded-3xl p-7 flex flex-col justify-between">
+            <p className="eyebrow">{t(copy, "about.philosophy_label", "Philosophy")}</p>
+            <p className="font-display text-xl md:text-2xl leading-snug italic text-pretty">
+              &ldquo;{quote}&rdquo;
+            </p>
+            <p className="text-xs text-muted-foreground">— {author}</p>
+          </div>
+
+          {/* Location */}
+          <div className="col-span-6 lg:col-span-4 bg-card border border-border rounded-3xl p-7 flex flex-col justify-between">
+            <p className="eyebrow">{t(copy, "about.location_label", "Based in")}</p>
+            <div className="flex items-center gap-2">
+              <MapPin className="w-5 h-5 text-signal" />
+              <p className="font-display text-2xl md:text-3xl">{location.split(",")[0]}</p>
+            </div>
+            <p className="text-xs text-muted-foreground">{timezone}</p>
+          </div>
+
+          {/* Languages */}
+          <div className="col-span-6 lg:col-span-4 bg-card border border-border rounded-3xl p-7 flex flex-col justify-between">
+            <p className="eyebrow">{t(copy, "about.languages_label", "Speaks")}</p>
+            <div className="flex items-center gap-2">
+              <Globe className="w-5 h-5 text-signal" />
+              <p className="font-display text-2xl md:text-3xl">{langShort}</p>
+            </div>
+            <p className="text-xs text-muted-foreground">{langLong}</p>
+          </div>
         </div>
       </div>
     </section>

@@ -2,138 +2,205 @@
 
 import Image from "next/image"
 import { Profile } from "@/types/portfolio"
-import { Button } from "@/components/ui/button"
-import { ArrowRight, ChevronDown, Download } from "lucide-react"
+import { ArrowUpRight, Download } from "lucide-react"
 import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa"
 import { motion, Variants } from "framer-motion"
 import { ViewTracker } from "@/components/analytics/ViewTracker"
+import { SiteCopy, t } from "@/lib/copy"
 
 interface Props {
   profile: Profile
+  copy?: SiteCopy
 }
 
-// 🎬 Framer Motion Variants for Staggered Entrance
-const containerVariant: Variants = {
+const container: Variants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.2
-    }
-  }
+    transition: { staggerChildren: 0.08, delayChildren: 0.15 },
+  },
 }
 
-const itemVariant: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 60 } }
+const item: Variants = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
 }
 
-export const Hero = ({ profile }: Props) => {
+export const Hero = ({ profile, copy }: Props) => {
+  const firstName = (profile.full_name || "Yabets").split(" ")[0]
+  const lastName = (profile.full_name || "Yabets Kifle").split(" ").slice(1).join(" ") || "Kifle"
+  const year = new Date().getFullYear()
+  const statusText = t(copy, "hero.status_text", `Open to work — Full-time · Contract · Freelance · ${year}`)
+
   return (
-    <section className="min-h-[95vh] flex flex-col items-center justify-center pt-24 px-6 overflow-hidden relative">
+    <section className="relative min-h-[100svh] overflow-hidden flex flex-col">
       <ViewTracker path="/" />
-      
-      {/* 🌌 Cinematic Abstract Background Elements */}
-      <div className="absolute top-1/4 -left-32 w-[600px] h-[600px] bg-primary/10 blur-[130px] rounded-full mix-blend-screen pointer-events-none -z-10" />
-      <div className="absolute bottom-1/4 -right-32 w-[500px] h-[500px] bg-blue-500/10 blur-[120px] rounded-full mix-blend-screen pointer-events-none -z-10" />
-      <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.015] mix-blend-overlay pointer-events-none -z-10" />
 
-      <motion.div 
-        variants={containerVariant} 
-        initial="hidden" 
-        animate="show" 
-        className="max-w-4xl w-full text-center space-y-12 z-10"
-      >
-        
-        {/* 🎭 Avatar Wrapper (Glassmorphic & Interactive) */}
-        <motion.div variants={itemVariant} className="relative w-36 h-36 mx-auto group perspective-1000">
-          <div className="absolute inset-0 bg-primary/30 blur-3xl group-hover:bg-primary/50 transition-all duration-700 ease-out rounded-full" />
-          <div className="relative w-full h-full rounded-[2.5rem] overflow-hidden border border-border/50 p-1 bg-background/50 backdrop-blur-xl shadow-2xl transition-transform duration-500 group-hover:scale-105 group-hover:rotate-1">
-            <Image 
-               src={profile.avatar_url || "/placeholder.jpg"} 
-               alt={profile.full_name} 
-               fill 
-               className="object-cover rounded-[2.2rem]"
-            />
-          </div>
-        </motion.div>
+      {/* Background */}
+      <div className="absolute inset-0 bg-grid text-foreground/40 pointer-events-none -z-10" />
+      <div className="absolute -top-40 -right-40 w-[700px] h-[700px] bg-signal/20 blur-[160px] rounded-full pointer-events-none -z-10" />
+      <div className="absolute bottom-0 -left-40 w-[500px] h-[500px] bg-foreground/5 blur-[120px] rounded-full pointer-events-none -z-10" />
 
-        {/* 📖 Hero Narrative */}
-        <motion.div variants={itemVariant} className="space-y-6">
-           
-            {/* ✨ Status Indicator */}
-            <div className="inline-flex items-center backdrop-blur-md bg-background/30 border border-border/50 px-4 py-2 rounded-full shadow-sm">
-               <span className="relative flex h-2.5 w-2.5 mr-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
-               </span>
-               <span className="text-foreground/80 font-bold uppercase tracking-[0.2em] text-[10px]">
-                  Open to Full-time • Remote • Hybrid • Freelance
-               </span>
+      {/* Top frame: meta */}
+      <div className="px-6 md:px-12 pt-28 md:pt-32">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="max-w-7xl mx-auto w-full"
+        >
+          <motion.div variants={item} className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-signal animate-ping opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-signal" />
+              </span>
+              <span className="eyebrow">{statusText}</span>
             </div>
- 
-            <h1 className="text-heading-hero">
-               I&apos;m <span className="text-zinc-500 hover:text-foreground transition-colors duration-500 cursor-default">{(profile.full_name || "Guest")}</span>. <br />
-               <span className="text-primary italic">{profile.role_title}</span>
+            <span className="eyebrow hidden md:inline-block">{t(copy, "hero.label_right", "Portfolio · 2026")}</span>
+          </motion.div>
+        </motion.div>
+      </div>
+
+      {/* Center: massive display name */}
+      <div className="flex-1 flex items-center px-6 md:px-12 py-16">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="max-w-7xl mx-auto w-full grid grid-cols-12 gap-6 md:gap-8 items-end"
+        >
+          {/* Left: avatar + role meta */}
+          <motion.div variants={item} className="col-span-12 md:col-span-4 lg:col-span-3 space-y-6">
+            <div className="relative w-28 h-28 md:w-32 md:h-32 group">
+              <div className="absolute inset-0 bg-signal/30 blur-2xl rounded-full transition-opacity duration-500 opacity-0 group-hover:opacity-100" />
+              <div className="relative w-full h-full rounded-3xl overflow-hidden border border-border bg-card shadow-xl">
+                <Image
+                  src={profile.avatar_url || "/placeholder.jpg"}
+                  alt={profile.full_name}
+                  fill
+                  className="object-cover"
+                  priority
+                  sizes="(max-width: 768px) 112px, 128px"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2 max-w-xs">
+              <p className="eyebrow">{t(copy, "hero.role_eyebrow", "Currently")}</p>
+              <p className="text-base md:text-lg font-medium leading-snug text-foreground">
+                {profile.role_title}
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-1.5 max-w-xs pt-1">
+              {(profile.availability_tags && profile.availability_tags.length > 0
+                ? profile.availability_tags
+                : ["Full-time", "Contract", "Freelance", "Remote", "Hybrid", "On-site"]
+              ).map((t) => (
+                <span
+                  key={t}
+                  className="text-[10px] font-medium px-2.5 py-1 rounded-full border border-border text-muted-foreground"
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Right: name display */}
+          <motion.div variants={item} className="col-span-12 md:col-span-8 lg:col-span-9">
+            <h1 className="text-heading-hero font-display leading-[0.85]">
+              <span className="block italic text-foreground/90">{firstName}</span>
+              <span className="block">
+                {lastName}
+                <span className="text-signal">.</span>
+              </span>
             </h1>
-            <p className="max-w-xl mx-auto text-muted-foreground text-lg md:text-xl font-medium pt-2 leading-relaxed text-balance">
+          </motion.div>
+        </motion.div>
+      </div>
+
+      {/* Bottom frame: bio + actions + socials */}
+      <div className="px-6 md:px-12 pb-12">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="max-w-7xl mx-auto w-full grid grid-cols-12 gap-8 items-end border-t border-border pt-8"
+        >
+          {/* Bio */}
+          <motion.div variants={item} className="col-span-12 md:col-span-6 lg:col-span-5">
+            <p className="text-base md:text-lg text-muted-foreground leading-relaxed text-pretty max-w-md">
               {profile.bio}
-           </p>
-        </motion.div>
- 
-        {/* 🚀 Actions */}
-        <motion.div variants={itemVariant} className="flex flex-col sm:flex-row items-center justify-center gap-5 pt-4">
-           <Button asChild size="lg" className="rounded-full px-10 h-14 font-bold text-lg shadow-xl shadow-primary/25 hover:-translate-y-1 transition-all duration-300">
-              <a href="#work">
-                 View Portfolio 
-                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </p>
+          </motion.div>
+
+          {/* Actions */}
+          <motion.div variants={item} className="col-span-12 md:col-span-3 lg:col-span-4 flex flex-wrap gap-3">
+            <a
+              href="#work"
+              className="group inline-flex items-center gap-2 bg-foreground text-background px-6 h-12 rounded-full font-medium text-sm hover:bg-signal hover:text-signal-foreground transition-colors"
+            >
+              {t(copy, "hero.cta_primary", "View Work")}
+              <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 border border-border px-6 h-12 rounded-full font-medium text-sm hover:border-foreground transition-colors"
+            >
+              {t(copy, "hero.cta_secondary", "Get in Touch")}
+            </a>
+            {profile.resume_url && (
+              <a
+                href={profile.resume_url}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 px-6 h-12 rounded-full font-medium text-sm hover:text-foreground text-muted-foreground transition-colors"
+              >
+                <Download className="w-4 h-4" /> {t(copy, "hero.cta_resume", "Resume")}
               </a>
-           </Button>
-           <div className="flex gap-4">
-             <Button asChild variant="outline" size="lg" className="rounded-full px-8 h-14 font-bold border border-border hover:bg-muted/50 backdrop-blur-md">
-                <a href="#contact">Get in Touch</a>
-             </Button>
-             {profile.resume_url && (
-               <Button asChild variant="secondary" size="lg" className="rounded-full px-8 h-14 font-bold shadow-lg hover:-translate-y-1 transition-all">
-                  <a href={profile.resume_url} target="_blank" rel="noreferrer">
-                    <Download className="mr-2 w-4 h-4" /> Download Resume
-                  </a>
-               </Button>
-             )}
-           </div>
-        </motion.div>
+            )}
+          </motion.div>
 
-        {/* 🌍 Social Interaction Array */}
-        <motion.div variants={itemVariant} className="flex items-center justify-center gap-4 pt-10 border-t border-border/30 w-fit mx-auto px-10">
-           {profile.social_links?.github && (
-             <a href={profile.social_links.github} target="_blank" rel="noreferrer" className="w-12 h-12 rounded-2xl bg-secondary/50 border border-border/50 flex items-center justify-center text-muted-foreground hover:text-white hover:bg-primary hover:shadow-xl hover:shadow-primary/20 transition-all hover:-translate-y-1">
-                <FaGithub className="w-5 h-5" />
-             </a>
-           )}
-           {profile.social_links?.linkedin && (
-             <a href={profile.social_links.linkedin} target="_blank" rel="noreferrer" className="w-12 h-12 rounded-2xl bg-secondary/50 border border-border/50 flex items-center justify-center text-muted-foreground hover:text-white hover:bg-primary hover:shadow-xl hover:shadow-primary/20 transition-all hover:-translate-y-1">
-                <FaLinkedin className="w-5 h-5" />
-             </a>
-           )}
-           {profile.social_links?.twitter && (
-             <a href={profile.social_links.twitter} target="_blank" rel="noreferrer" className="w-12 h-12 rounded-2xl bg-secondary/50 border border-border/50 flex items-center justify-center text-muted-foreground hover:text-white hover:bg-primary hover:shadow-xl hover:shadow-primary/20 transition-all hover:-translate-y-1">
-                <FaTwitter className="w-5 h-5" />
-             </a>
-           )}
+          {/* Socials */}
+          <motion.div variants={item} className="col-span-12 md:col-span-3 flex md:justify-end items-center gap-2">
+            {profile.social_links?.github && (
+              <a
+                href={profile.social_links.github}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="GitHub"
+                className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-foreground transition-colors"
+              >
+                <FaGithub className="w-4 h-4" />
+              </a>
+            )}
+            {profile.social_links?.linkedin && (
+              <a
+                href={profile.social_links.linkedin}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="LinkedIn"
+                className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-foreground transition-colors"
+              >
+                <FaLinkedin className="w-4 h-4" />
+              </a>
+            )}
+            {profile.social_links?.twitter && (
+              <a
+                href={profile.social_links.twitter}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Twitter"
+                className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-foreground transition-colors"
+              >
+                <FaTwitter className="w-4 h-4" />
+              </a>
+            )}
+          </motion.div>
         </motion.div>
-      </motion.div>
-
-      {/* ⬇️ Scroll Down Indicator */}
-      <motion.div 
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-muted-foreground flex flex-col items-center gap-2 opacity-50 hover:opacity-100 transition-opacity"
-      >
-         <span className="text-[10px] font-bold uppercase tracking-widest leading-none">Scroll</span>
-         <ChevronDown className="w-4 h-4 animate-bounce" />
-      </motion.div>
+      </div>
     </section>
   )
 }

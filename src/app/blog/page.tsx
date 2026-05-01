@@ -3,95 +3,110 @@ import { Metadata } from "next"
 import Link from "next/link"
 import Image from "next/image"
 import { notFound } from "next/navigation"
-import { Calendar, Clock, ArrowRight, Tag } from "lucide-react"
+import { ArrowUpRight } from "lucide-react"
+import { t, renderRichTitle } from "@/lib/copy"
 
 export const metadata: Metadata = {
   title: "Journal",
-  description: "Technical insights, architectural decisions, and reflections on building software.",
+  description: "Notes on engineering, design, and shipping software.",
 }
 
 export default async function BlogPage() {
-  const [posts, settings] = await Promise.all([
+  const [posts, settings, copy] = await Promise.all([
     PortfolioService.getPosts(),
-    PortfolioService.getSettings()
+    PortfolioService.getSettings(),
+    PortfolioService.getSiteCopy().catch(() => ({})),
   ])
 
-  // 🛡️ SECURITY: Respect the master toggle
   if (settings?.show_blog === false) return notFound()
 
   return (
-    <main className="min-h-screen bg-background pt-32 pb-20 px-6">
-      <div className="max-w-4xl mx-auto space-y-20">
-        
-        {/* 🎬 HEADER SECTION */}
-        <div className="space-y-6 text-center md:text-left">
-           <div className="flex items-center gap-3 text-primary justify-center md:justify-start">
-              <span className="w-10 h-[2px] bg-primary"></span>
-              <span className="text-[10px] font-bold uppercase tracking-[0.3em]">Technical Journal</span>
-           </div>
-           <h1 className="text-heading-section">
-              Professional <span className="text-zinc-600">Journal.</span>
-           </h1>
-           <p className="text-muted-foreground text-xl max-w-xl font-medium leading-relaxed italic">
-              A collection of architectural decisions, technical guides, and reflections on modern software engineering.
-           </p>
+    <main className="min-h-screen bg-background px-6 md:px-12 py-24 md:py-32">
+      <div className="max-w-5xl mx-auto">
+        {/* Header */}
+        <div className="flex items-end justify-between gap-8 mb-16 md:mb-20 border-b border-border pb-10">
+          <div className="space-y-4 max-w-2xl">
+            <p className="eyebrow">{t(copy, "blog.archive.eyebrow", "Journal")}</p>
+            <h1 className="font-display text-heading-hero leading-[0.9]">
+              {renderRichTitle(t(copy, "blog.archive.title", "Notes & *writing*"))}<span className="text-signal">.</span>
+            </h1>
+            <p className="text-base md:text-lg text-muted-foreground text-pretty pt-2">
+              {t(copy, "blog.archive.subtitle", "Thoughts on building products, design systems, and the craft of frontend engineering.")}
+            </p>
+          </div>
+          <p className="hidden md:block font-mono text-xs text-muted-foreground">
+            {String(posts.length).padStart(2, "0")} entries
+          </p>
         </div>
 
-        {/* 📑 POSTS LIST */}
-        <div className="space-y-16">
-          {posts.length === 0 ? (
-            <div className="p-20 rounded-[3rem] border border-dashed border-border flex flex-col items-center justify-center text-center space-y-4 opacity-50 grayscale">
-               <Calendar className="w-10 h-10" />
-               <p className="text-sm font-bold uppercase tracking-widest italic">New insights coming soon. Check back soon.</p>
-            </div>
-          ) : (
-            posts.map((post) => (
-              <article key={post.id} className="group relative grid md:grid-cols-12 gap-10 items-center">
-                
-                {/* Image Preview (4/12) */}
-                <div className="md:col-span-4 relative aspect-4/3 rounded-[2rem] overflow-hidden border border-border shadow-2xl transition-all group-hover:scale-[1.02]">
-                   {post.cover_image ? (
-                     <Image src={post.cover_image} alt={post.title} fill className="object-cover" />
-                   ) : (
-                     <div className="w-full h-full bg-muted flex items-center justify-center font-bold italic text-zinc-600">Journal</div>
-                   )}
-                </div>
+        {/* Posts list */}
+        {posts.length === 0 ? (
+          <div className="py-24 text-center border border-dashed border-border rounded-3xl">
+            <p className="text-muted-foreground">{t(copy, "blog.archive.empty", "New articles coming soon.")}</p>
+          </div>
+        ) : (
+          <div className="space-y-12 md:space-y-16">
+            {posts.map((post, i) => (
+              <article key={post.id} className="group">
+                <Link href={`/blog/${post.slug}`} className="grid md:grid-cols-12 gap-6 md:gap-10 items-start">
+                  <div className="md:col-span-1 font-mono text-xs text-muted-foreground">
+                    {String(i + 1).padStart(2, "0")}
+                  </div>
 
-                {/* Content Narrative (8/12) */}
-                <div className="md:col-span-8 space-y-6">
-                   <div className="flex items-center gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500">
-                      <span className="flex items-center gap-2">
-                        <Calendar className="w-3 h-3" /> {post.created_at ? new Date(post.created_at).toLocaleDateString() : "Just Now"}
+                  {/* Cover */}
+                  <div className="md:col-span-4 relative aspect-4/3 rounded-3xl overflow-hidden border border-border bg-secondary">
+                    {post.cover_image ? (
+                      <Image
+                        src={post.cover_image}
+                        alt={post.title}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-secondary flex items-center justify-center">
+                        <span className="font-display italic text-3xl text-muted-foreground">
+                          Journal
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Content */}
+                  <div className="md:col-span-7 space-y-4">
+                    <div className="flex items-center gap-4 text-xs">
+                      <span className="font-mono text-muted-foreground uppercase tracking-wider">
+                        {post.created_at
+                          ? new Date(post.created_at).toLocaleDateString("en-US", {
+                              day: "numeric",
+                              month: "short",
+                              year: "numeric",
+                            })
+                          : "Recent"}
                       </span>
                       {post.tags?.[0] && (
-                        <span className="flex items-center gap-2 text-primary">
-                          <Tag className="w-3 h-3" /> {post.tags[0]}
+                        <span className="px-2.5 py-1 rounded-full bg-secondary text-secondary-foreground">
+                          {post.tags[0]}
                         </span>
                       )}
-                   </div>
+                    </div>
 
-                   <Link href={`/blog/${post.slug}`} className="block group/title">
-                      <h2 className="text-3xl md:text-5xl font-bold italic tracking-tighter leading-tight group-hover/title:text-primary transition-colors">
-                        {post.title}
-                      </h2>
-                   </Link>
+                    <h2 className="font-display text-3xl md:text-5xl leading-[1.05] group-hover:text-signal transition-colors">
+                      {post.title}
+                    </h2>
 
-                   <p className="text-muted-foreground text-lg font-medium leading-relaxed italic line-clamp-3">
-                      {post.excerpt || post.content.slice(0, 150) + "..."}
-                   </p>
+                    <p className="text-base text-muted-foreground leading-relaxed line-clamp-3 text-pretty max-w-xl">
+                      {post.excerpt || post.content.slice(0, 180) + "…"}
+                    </p>
 
-                   <Link 
-                     href={`/blog/${post.slug}`} 
-                     className="inline-flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.3em] text-primary hover:gap-5 transition-all"
-                   >
-                      Read Full Article <ArrowRight className="w-4 h-4" />
-                   </Link>
-                </div>
+                    <span className="inline-flex items-center gap-1.5 text-sm font-medium pt-2 group-hover:text-signal transition-colors">
+                      Read article <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    </span>
+                  </div>
+                </Link>
               </article>
-            ))
-          )}
-        </div>
-
+            ))}
+          </div>
+        )}
       </div>
     </main>
   )

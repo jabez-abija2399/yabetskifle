@@ -1,9 +1,9 @@
 import { createClient } from "@supabase/supabase-js"
-import { 
-  Profile, Project, Experience, 
+import {
+  Profile, Project, Experience,
   Service, Testimonial, SiteSettings,
   FAQ, Language, Message,
-  Post
+  Post, Education, Certification
 } from "@/types/portfolio"
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
@@ -88,6 +88,35 @@ export const PortfolioService = {
   async getLanguages(): Promise<Language[]> {
     const { data } = await supabase.from("languages").select("*").eq("is_published", true)
     return (data as Language[]) || []
+  },
+
+  async getEducation(): Promise<Education[]> {
+    const { data } = await supabase.from("education").select("*").order("created_at", { ascending: false })
+    return (data as Education[]) || []
+  },
+
+  async getCertifications(): Promise<Certification[]> {
+    const { data } = await supabase.from("certifications").select("*").order("issued_at", { ascending: false })
+    return (data as Certification[]) || []
+  },
+
+  async getSiteCopy(): Promise<Record<string, string>> {
+    const { data } = await supabase.from("site_copy").select("key,value")
+    return Object.fromEntries((data || []).map((r: { key: string; value: string }) => [r.key, r.value || ""]))
+  },
+
+  async getSiteCopyRows(): Promise<Array<{ key: string; value: string; description?: string; group_name?: string; sort_order?: number }>> {
+    const { data } = await supabase.from("site_copy").select("*").order("group_name").order("sort_order")
+    return data || []
+  },
+
+  async updateSiteCopy(updates: Array<{ key: string; value: string }>): Promise<void> {
+    if (updates.length === 0) return
+    const { error } = await supabase.from("site_copy").upsert(
+      updates.map(u => ({ ...u, updated_at: new Date().toISOString() })),
+      { onConflict: "key" }
+    )
+    if (error) throw error
   },
 
   // 📝 --- KNOWLEDGE ENGINE (BLOG) ---
