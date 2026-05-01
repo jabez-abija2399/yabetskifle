@@ -67,7 +67,36 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const copy = await PortfolioService.getSiteCopy().catch(() => ({}))
+  const [copy, profile] = await Promise.all([
+    PortfolioService.getSiteCopy().catch(() => ({})),
+    PortfolioService.getProfile().catch(() => null),
+  ])
+
+  // JSON-LD Person schema — helps Google show name, role, photo, links
+  // as a rich result when someone searches for the person by name.
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
+  const personSchema = profile && {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: profile.full_name,
+    jobTitle: profile.role_title,
+    url: siteUrl,
+    image: profile.avatar_url || `${siteUrl}/opengraph-image`,
+    description: profile.bio,
+    sameAs: [
+      profile.social_links?.github,
+      profile.social_links?.linkedin,
+      profile.social_links?.twitter,
+    ].filter(Boolean),
+    address: profile.location
+      ? {
+          "@type": "PostalAddress",
+          addressLocality: profile.location.split(",")[0]?.trim(),
+          addressCountry: profile.location.split(",")[1]?.trim() || undefined,
+        }
+      : undefined,
+    knowsAbout: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Supabase", "Frontend Engineering", "UI Engineering"],
+  }
 
   return (
     <html
@@ -76,6 +105,12 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
      <body className="min-h-full flex flex-col bg-background selection:bg-primary selection:text-white">
+      {personSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+        />
+      )}
       <ThemeProvider
         attribute="class"
         defaultTheme="system"
