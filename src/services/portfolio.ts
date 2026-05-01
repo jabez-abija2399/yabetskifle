@@ -144,8 +144,6 @@ export const PortfolioService = {
     return data ? { ...data, tags: ensureArray(data.tags) } : null
   },
 
-  // ✍️ --- DATA PERSISTENCE (WRITE / UPDATE) ---
-
   /** 📂 Update or Create a Project */
   async saveProject(project: Partial<Project>): Promise<{ data: any, error: any }> {
     const { data, error } = await supabase
