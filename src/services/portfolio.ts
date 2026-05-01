@@ -34,11 +34,10 @@ const transformProject = (p: any): Project => ({
   what_i_learned: ensureArray(p.what_i_learned),
 })
 
-// 🚀 MASTER PORTFOLIO BACKEND SERVICE [v2.1-sync]
+
 export const PortfolioService = {
   
-  // 🔍 --- DATA FETCHING (READ) ---
-  
+
   async getProjects(): Promise<Project[]> {
     const { data } = await supabase.from("projects").select("*").eq("is_published", true).order("order_index", { ascending: true })
     return (data || []).map(transformProject)
