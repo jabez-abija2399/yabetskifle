@@ -2,10 +2,13 @@ import React from "react"
 
 export type SiteCopy = Record<string, string>
 
-/** Get a copy value with fallback. Use in components: t(copy, "about.eyebrow", "— 01 / About") */
+/**
+ * Get a copy value, with fallback only if the key is missing from the database.
+ * If the user has explicitly set the value to empty in admin, return "" (intentional).
+ */
 export const t = (copy: SiteCopy | undefined, key: string, fallback: string): string => {
-  const v = copy?.[key]
-  return v && v.length > 0 ? v : fallback
+  if (!copy || !(key in copy)) return fallback
+  return copy[key] ?? ""
 }
 
 /**

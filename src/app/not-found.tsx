@@ -3,6 +3,8 @@ import { ArrowUpRight } from "lucide-react"
 import { PortfolioService } from "@/services/portfolio"
 import { t, renderRichTitle } from "@/lib/copy"
 
+export const revalidate = 0
+
 export default async function NotFound() {
   const copy = await PortfolioService.getSiteCopy().catch(() => ({}))
 

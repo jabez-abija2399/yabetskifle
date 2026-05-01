@@ -1,5 +1,7 @@
 import { PortfolioService } from "@/services/portfolio"
 import { Metadata } from "next"
+
+export const revalidate = 0
 import Link from "next/link"
 import Image from "next/image"
 import { notFound } from "next/navigation"

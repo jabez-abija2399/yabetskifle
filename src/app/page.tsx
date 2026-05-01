@@ -1,3 +1,7 @@
+// Always re-fetch from database — every label, project, and post change in admin
+// shows up immediately on the public site without rebuilding.
+export const revalidate = 0
+
 import { PortfolioService } from "@/services/portfolio"
 import { Hero } from "@/components/sections/Hero"
 import { AboutSection } from "@/components/sections/AboutSection"

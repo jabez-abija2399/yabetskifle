@@ -101,7 +101,12 @@ export const PortfolioService = {
 
   async getSiteCopy(): Promise<Record<string, string>> {
     const { data } = await supabase.from("site_copy").select("key,value")
-    return Object.fromEntries((data || []).map((r: { key: string; value: string }) => [r.key, r.value || ""]))
+    // Preserve empty strings as intentional. Only NULL is treated as "missing".
+    return Object.fromEntries(
+      (data || [])
+        .filter((r: { key: string; value: string | null }) => r.value !== null)
+        .map((r: { key: string; value: string | null }) => [r.key, r.value as string])
+    )
   },
 
   async getSiteCopyRows(): Promise<Array<{ key: string; value: string; description?: string; group_name?: string; sort_order?: number }>> {

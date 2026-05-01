@@ -6,6 +6,9 @@ import { Navbar } from "@/components/layout/NavBar"
 import { ThemeProvider } from "@/components/providers/ThemeProvider"
 import { PortfolioService } from "@/services/portfolio"
 
+// Always re-fetch site copy so navbar updates instantly when admin saves edits.
+export const revalidate = 0
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
