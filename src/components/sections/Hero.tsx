@@ -70,21 +70,25 @@ export const Hero = ({ profile, copy }: Props) => {
           animate="show"
           className="max-w-7xl mx-auto w-full grid grid-cols-12 gap-6 md:gap-8 items-end"
         >
-          {/* Left: avatar + role meta */}
-          <motion.div variants={item} className="col-span-12 md:col-span-4 lg:col-span-3 space-y-6">
-            <div className="relative w-28 h-28 md:w-32 md:h-32 group">
-              <div className="absolute inset-0 bg-signal/30 blur-2xl rounded-full transition-opacity duration-500 opacity-0 group-hover:opacity-100" />
-              <div className="relative w-full h-full rounded-3xl overflow-hidden border border-border bg-card shadow-xl">
+          {/* Avatar + role meta (left column on desktop, after name on mobile) */}
+          <motion.div
+            variants={item}
+            className="col-span-12 md:col-span-4 lg:col-span-3 space-y-6 order-2 md:order-1"
+          >
+            <a href="#about" className="block relative w-32 h-32 md:w-36 md:h-36 group" aria-label="About me">
+              {/* Persistent soft glow + intensifies on hover */}
+              <div className="absolute -inset-3 bg-signal/15 blur-2xl rounded-full opacity-60 group-hover:opacity-100 group-hover:bg-signal/35 transition-all duration-500" />
+              <div className="relative w-full h-full rounded-[28px] overflow-hidden border border-border bg-card shadow-xl transition-transform duration-500 ease-out group-hover:scale-[1.03] group-hover:-rotate-1">
                 <Image
                   src={profile.avatar_url || "/placeholder.jpg"}
                   alt={profile.full_name}
                   fill
                   className="object-cover"
                   priority
-                  sizes="(max-width: 768px) 112px, 128px"
+                  sizes="(max-width: 768px) 128px, 144px"
                 />
               </div>
-            </div>
+            </a>
 
             <div className="space-y-2 max-w-xs">
               <p className="eyebrow">{t(copy, "hero.role_eyebrow", "Currently")}</p>
@@ -97,21 +101,24 @@ export const Hero = ({ profile, copy }: Props) => {
               {(profile.availability_tags && profile.availability_tags.length > 0
                 ? profile.availability_tags
                 : ["Full-time", "Contract", "Freelance", "Remote", "Hybrid", "On-site"]
-              ).map((t) => (
+              ).map((tag) => (
                 <span
-                  key={t}
+                  key={tag}
                   className="text-[10px] font-medium px-2.5 py-1 rounded-full border border-border text-muted-foreground"
                 >
-                  {t}
+                  {tag}
                 </span>
               ))}
             </div>
           </motion.div>
 
-          {/* Right: name display */}
-          <motion.div variants={item} className="col-span-12 md:col-span-8 lg:col-span-9">
+          {/* Name display (right on desktop, first on mobile) */}
+          <motion.div
+            variants={item}
+            className="col-span-12 md:col-span-8 lg:col-span-9 order-1 md:order-2"
+          >
             <h1 className="text-heading-hero font-display leading-[0.85]">
-              <span className="block italic text-foreground/90">{firstName}</span>
+              <span className="block italic text-foreground/70">{firstName}</span>
               <span className="block">
                 {lastName}
                 <span className="text-signal">.</span>
