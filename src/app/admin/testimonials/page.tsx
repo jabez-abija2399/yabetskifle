@@ -92,7 +92,7 @@ export default function AdminTestimonialsPage() {
                      <p className="text-[10px] text-muted-foreground uppercase font-black">{item.client_role}</p>
                   </div>
                   <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-all">
-                    <button onClick={() => setEditingItem(item)} className="p-2 rounded-lg bg-muted text-primary hover:bg-primary hover:text-white transition-all"><Pencil size={14} /></button>
+                    <button onClick={() => setEditingItem(item)} className="p-2 rounded-lg bg-muted text-primary hover:bg-primary hover:text-primary-foreground transition-all"><Pencil size={14} /></button>
                     <button onClick={() => deleteItem(item.id)} className="p-2 rounded-lg bg-muted text-destructive hover:bg-destructive hover:text-white transition-all"><Trash2 size={14} /></button>
                   </div>
                 </div>

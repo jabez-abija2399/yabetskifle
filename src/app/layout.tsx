@@ -104,7 +104,7 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-     <body className="min-h-full flex flex-col bg-background selection:bg-primary selection:text-white">
+     <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-signal selection:text-signal-foreground">
       {personSchema && (
         <script
           type="application/ld+json"

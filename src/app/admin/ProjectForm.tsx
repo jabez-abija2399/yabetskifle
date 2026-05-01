@@ -104,7 +104,7 @@ export const ProjectForm = ({ initialData, onSave, isSaving, onCancel }: Props) 
                   <div className="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-500"><Target size={18}/></div>
                   <h3 className="font-bold text-lg leading-none">Project Purpose</h3>
                </div>
-               <textarea name="purpose" defaultValue={initialData?.purpose} placeholder="Why did you build this? What problem does it solve?" className="w-full min-h-32 p-4 rounded-xl border border-border bg-background text-sm leading-relaxed" />
+               <textarea name="purpose" defaultValue={initialData?.purpose} placeholder="Why did you build this? What problem does it solve?" className="w-full min-h-32 p-4 rounded-xl border border-border bg-background text-foreground text-sm leading-relaxed" />
             </div>
 
             <div className="space-y-6">
@@ -112,7 +112,7 @@ export const ProjectForm = ({ initialData, onSave, isSaving, onCancel }: Props) 
                   <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary"><Lightbulb size={18}/></div>
                   <h3 className="font-bold text-lg leading-none">Project Description (Case Study)</h3>
                </div>
-               <textarea name="description" defaultValue={initialData?.description} placeholder="The full story of the project..." className="w-full min-h-64 p-5 rounded-[2rem] border border-border bg-background text-sm leading-relaxed font-serif" />
+               <textarea name="description" defaultValue={initialData?.description} placeholder="The full story of the project..." className="w-full min-h-64 p-5 rounded-[2rem] border border-border bg-background text-foreground text-sm leading-relaxed font-serif" />
             </div>
          </div>
 

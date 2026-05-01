@@ -138,7 +138,7 @@ export const ProfileForm = ({ initialData, onSave, isSaving }: Props) => {
             name="bio"
             defaultValue={initialData.bio}
             required
-            className="w-full min-h-32 p-4 rounded-2xl border border-border bg-background text-sm leading-relaxed"
+            className="w-full min-h-32 p-4 rounded-2xl border border-border bg-background text-foreground text-sm leading-relaxed"
             placeholder="Hi — I'm Yabets, a frontend engineer who..."
           />
         </section>
@@ -150,7 +150,7 @@ export const ProfileForm = ({ initialData, onSave, isSaving }: Props) => {
           <textarea
             name="about_story"
             defaultValue={initialData.about_story || ""}
-            className="w-full min-h-64 p-4 rounded-2xl border border-border bg-background text-sm leading-relaxed font-mono"
+            className="w-full min-h-64 p-4 rounded-2xl border border-border bg-background text-foreground text-sm leading-relaxed font-mono"
             placeholder={`Para 1...
 
 Para 2...

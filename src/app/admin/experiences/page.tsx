@@ -82,7 +82,7 @@ export default function AdminExperiencePage() {
                  </div>
               </div>
               <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-all">
-                <button onClick={() => setEditingExp(exp)} className="p-3 rounded-xl bg-muted hover:bg-primary hover:text-white transition-all shadow-sm"><Pencil size={14} /></button>
+                <button onClick={() => setEditingExp(exp)} className="p-3 rounded-xl bg-muted hover:bg-primary hover:text-primary-foreground transition-all shadow-sm"><Pencil size={14} /></button>
                 <button onClick={() => deleteItem(exp.id)} className="p-3 rounded-xl bg-muted hover:bg-destructive hover:text-white transition-all shadow-sm"><Trash2 size={14} /></button>
               </div>
             </div>

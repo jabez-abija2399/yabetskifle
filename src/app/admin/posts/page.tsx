@@ -83,7 +83,7 @@ export default function AdminPostsPage() {
               </div>
 
               <div className="flex gap-2">
-                <button onClick={() => setEditingPost(post)} className="p-3 rounded-xl bg-muted hover:bg-primary hover:text-white transition-all">
+                <button onClick={() => setEditingPost(post)} className="p-3 rounded-xl bg-muted hover:bg-primary hover:text-primary-foreground transition-all">
                   <Pencil className="w-4 h-4" />
                 </button>
                 <button onClick={() => handleDelete(post.id)} className="p-3 rounded-xl bg-muted hover:bg-destructive hover:text-white transition-all">

@@ -55,7 +55,7 @@ export const SettingsForm = ({ initialData, onSave, isSaving }: Props) => {
           <div className="space-y-1">
             <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest">Global Description</label>
             <textarea name="site_description" defaultValue={initialData.site_description} 
-              className="w-full min-h-24 p-3 rounded-xl border border-border bg-background text-sm" />
+              className="w-full min-h-24 p-3 rounded-xl border border-border bg-background text-foreground text-sm" />
           </div>
           <div className="space-y-1">
             <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest">Meta Keywords</label>

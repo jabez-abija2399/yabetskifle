@@ -94,7 +94,7 @@ export default function AdminLanguagesPage() {
                </div>
             </div>
             <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-              <button onClick={() => setEditingItem(lang)} className="p-2 rounded-lg bg-muted hover:bg-primary hover:text-white transition-all"><Pencil size={12} /></button>
+              <button onClick={() => setEditingItem(lang)} className="p-2 rounded-lg bg-muted hover:bg-primary hover:text-primary-foreground transition-all"><Pencil size={12} /></button>
               <button onClick={() => deleteItem(lang.id)} className="p-2 rounded-lg bg-muted hover:bg-destructive hover:text-white transition-all"><Trash2 size={12} /></button>
             </div>
           </div>

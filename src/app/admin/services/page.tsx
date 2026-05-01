@@ -75,7 +75,7 @@ export default function AdminServicesPage() {
               <div key={service.id} className={`p-6 rounded-[2.5rem] border border-border bg-card group flex items-center justify-between hover:border-primary/30 transition-all ${!service.is_published ? "opacity-60 grayscale-[0.5]" : ""}`}>
                 <div className="flex items-center gap-6">
                    <div className="relative">
-                      <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all shrink-0">
+                      <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all shrink-0">
                          <Icon size={24} />
                       </div>
                       {!service.is_published && (
@@ -95,7 +95,7 @@ export default function AdminServicesPage() {
                    </div>
                 </div>
                 <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-all">
-                  <button onClick={() => setEditingService(service)} className="p-3 rounded-xl bg-muted hover:bg-primary hover:text-white transition-all shadow-sm"><Pencil size={14} /></button>
+                  <button onClick={() => setEditingService(service)} className="p-3 rounded-xl bg-muted hover:bg-primary hover:text-primary-foreground transition-all shadow-sm"><Pencil size={14} /></button>
                   <button onClick={() => handleDelete(service.id)} className="p-3 rounded-xl bg-muted hover:bg-destructive hover:text-white transition-all shadow-sm"><Trash2 size={14} /></button>
                 </div>
               </div>

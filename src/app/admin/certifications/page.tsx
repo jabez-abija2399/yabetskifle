@@ -75,7 +75,7 @@ export default function AdminCertificationsPage() {
                     <ExternalLink className="w-4 h-4" />
                   </a>
                 )}
-                <button onClick={() => setEditingCert(cert)} className="p-3 rounded-xl bg-muted hover:bg-primary hover:text-white transition-colors">
+                <button onClick={() => setEditingCert(cert)} className="p-3 rounded-xl bg-muted hover:bg-primary hover:text-primary-foreground transition-colors">
                   <Pencil className="w-4 h-4" />
                 </button>
                 <button onClick={() => deleteItem(cert.id)} className="p-3 rounded-xl bg-muted hover:bg-destructive hover:text-white transition-colors">

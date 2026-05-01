@@ -70,7 +70,7 @@ export const TestimonialForm = ({ initialData, onSave, isSaving, onCancel }: Pro
                  name="content" 
                  defaultValue={initialData?.content} 
                  required 
-                 className="w-full min-h-32 p-4 rounded-2xl border border-border bg-background text-sm leading-relaxed" 
+                 className="w-full min-h-32 p-4 rounded-2xl border border-border bg-background text-foreground text-sm leading-relaxed" 
                  placeholder="Working with Yabets was an absolute game changer..."
               />
            </div>

@@ -82,7 +82,7 @@ export default function AdminExperiencePage() {
               <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                 <button 
                   onClick={() => setEditingExperience(exp)}
-                  className="p-3 rounded-xl bg-muted hover:bg-primary hover:text-white transition-colors"
+                  className="p-3 rounded-xl bg-muted hover:bg-primary hover:text-primary-foreground transition-colors"
                 >
                   <Pencil className="w-4 h-4" />
                 </button>

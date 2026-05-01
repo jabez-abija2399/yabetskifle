@@ -131,7 +131,7 @@ export default function AdminDashboard() {
          <div className="lg:col-span-8 p-12 rounded-[3.5rem] bg-muted/20 border border-border flex flex-col justify-between space-y-10 group">
             <div className="space-y-6">
                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-primary flex items-center justify-center text-white shadow-xl shadow-primary/30">
+                  <div className="w-12 h-12 rounded-2xl bg-primary flex items-center justify-center text-primary-foreground shadow-xl shadow-primary/30">
                      <Zap className="w-6 h-6" />
                   </div>
                   <h3 className="text-3xl font-black italic tracking-tighter">Operational Analytics</h3>
@@ -141,7 +141,7 @@ export default function AdminDashboard() {
                </p>
             </div>
             <div className="flex flex-wrap gap-4 pt-6 mt-auto">
-               <Button asChild variant="outline" className="rounded-2xl px-8 h-14 font-black italic text-sm tracking-widest border-border/50 hover:bg-primary hover:text-white transition-all shadow-xl">
+               <Button asChild variant="outline" className="rounded-2xl px-8 h-14 font-black italic text-sm tracking-widest border-border/50 hover:bg-primary hover:text-primary-foreground transition-all shadow-xl">
                   <Link href="/admin/sections">Manage Architecture</Link>
                </Button>
                <Button asChild className="rounded-2xl px-10 h-14 font-black italic text-lg shadow-2xl shadow-primary/20">
@@ -164,7 +164,7 @@ export default function AdminDashboard() {
                   <p className="text-sm font-bold leading-relaxed text-zinc-400 italic">
                     Someone has reached out to collaborate. Head over to the Inbox to review the latest inquiry.
                   </p>
-                  <Link href="/admin/messages" className="flex items-center justify-between p-6 rounded-[2rem] bg-primary text-white font-black italic shadow-xl shadow-primary/20 hover:scale-[1.02] transition-all">
+                  <Link href="/admin/messages" className="flex items-center justify-between p-6 rounded-[2rem] bg-primary text-primary-foreground font-black italic shadow-xl shadow-primary/20 hover:scale-[1.02] transition-all">
                      View Inbox <ArrowUpRight className="w-5 h-5" />
                   </Link>
                </div>

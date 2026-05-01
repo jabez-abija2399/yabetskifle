@@ -40,7 +40,7 @@ export const FAQForm = ({ initialData, onSave, isSaving, onCancel }: Props) => {
       <div className="space-y-1">
         <label className="text-sm font-semibold text-zinc-400">Answer</label>
         <textarea name="answer" defaultValue={initialData?.answer} required 
-          className="w-full min-h-32 p-4 rounded-xl border border-border bg-background text-sm leading-relaxed" 
+          className="w-full min-h-32 p-4 rounded-xl border border-border bg-background text-foreground text-sm leading-relaxed" 
           placeholder="I typically complete most projects within 4-6 weeks..." />
       </div>
 

@@ -93,7 +93,7 @@ export default function AdminMessagesPage() {
                 onClick={() => setSelectedMessage(msg)}
                 className={`group cursor-pointer p-6 rounded-[2rem] border transition-all relative overflow-hidden ${
                   selectedMessage?.id === msg.id 
-                    ? "bg-primary text-white border-primary shadow-xl shadow-primary/20 scale-[1.02]" 
+                    ? "bg-primary text-primary-foreground border-primary shadow-xl shadow-primary/20 scale-[1.02]" 
                     : "bg-card border-border hover:border-primary/40 hover:bg-muted/30"
                 }`}
               >
@@ -102,13 +102,13 @@ export default function AdminMessagesPage() {
                 )}
                 <div className="space-y-4">
                   <div className="space-y-1">
-                    <p className={`text-[10px] font-black uppercase tracking-[0.2em] ${selectedMessage?.id === msg.id ? "text-white/60" : "text-primary"}`}>
+                    <p className={`text-[10px] font-black uppercase tracking-[0.2em] ${selectedMessage?.id === msg.id ? "text-primary-foreground/60" : "text-primary"}`}>
                        New Inquiry
                     </p>
                     <h3 className="font-black italic text-lg leading-tight truncate pr-6">{msg.subject}</h3>
                   </div>
                   <div className="flex items-center gap-3">
-                     <div className={`w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-black ${selectedMessage?.id === msg.id ? "bg-white/20" : "bg-muted"}`}>
+                     <div className={`w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-black ${selectedMessage?.id === msg.id ? "bg-primary-foreground/20" : "bg-muted"}`}>
                         {msg.name[0].toUpperCase()}
                      </div>
                      <div className="text-[10px] font-bold opacity-70 truncate italic">
@@ -175,7 +175,7 @@ export default function AdminMessagesPage() {
               <div className="p-8 border-t border-border flex justify-end">
                  <a 
                    href={`mailto:${selectedMessage.email}?subject=RE: ${selectedMessage.subject}`}
-                   className="h-14 px-10 bg-primary text-white font-black italic rounded-2xl flex items-center gap-3 transition-all hover:scale-[1.02] shadow-xl shadow-primary/20"
+                   className="h-14 px-10 bg-primary text-primary-foreground font-black italic rounded-2xl flex items-center gap-3 transition-all hover:scale-[1.02] shadow-xl shadow-primary/20"
                  >
                     <Send className="w-4 h-4" /> REPLY VIA EMAIL
                  </a>

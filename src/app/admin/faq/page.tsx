@@ -61,7 +61,7 @@ export default function AdminFAQPage() {
               <Input name="question" defaultValue={editingItem?.question} placeholder="The Question" required />
               <Input name="category" defaultValue={editingItem?.category} placeholder="Category (e.g. Services)" required />
            </div>
-           <textarea name="answer" defaultValue={editingItem?.answer} placeholder="The Answer..." required className="w-full min-h-24 p-3 rounded-xl border border-border bg-background text-sm" />
+           <textarea name="answer" defaultValue={editingItem?.answer} placeholder="The Answer..." required className="w-full min-h-24 p-3 rounded-xl border border-border bg-background text-foreground text-sm" />
            
            <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
@@ -103,7 +103,7 @@ export default function AdminFAQPage() {
                </div>
             </div>
             <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-              <button onClick={() => setEditingItem(faq)} className="p-2 rounded-lg bg-muted hover:bg-primary hover:text-white transition-all"><Pencil size={14} /></button>
+              <button onClick={() => setEditingItem(faq)} className="p-2 rounded-lg bg-muted hover:bg-primary hover:text-primary-foreground transition-all"><Pencil size={14} /></button>
               <button onClick={() => deleteItem(faq.id)} className="p-2 rounded-lg bg-muted hover:bg-destructive hover:text-white transition-all"><Trash2 size={14} /></button>
             </div>
           </div>

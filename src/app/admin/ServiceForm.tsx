@@ -52,7 +52,7 @@ export const ServiceForm = ({ initialData, onSave, isSaving, onCancel }: Props) 
                 type="button" 
                 onClick={() => setSelectedIcon(item.name)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-xl border-2 transition-all ${
-                  selectedIcon === item.name ? "bg-primary text-white border-primary" : "bg-muted border-transparent hover:border-border"
+                  selectedIcon === item.name ? "bg-primary text-primary-foreground border-primary" : "bg-muted border-transparent hover:border-border"
                 }`}
               >
                 {item.icon} <span className="text-xs font-bold">{item.name}</span>
@@ -68,7 +68,7 @@ export const ServiceForm = ({ initialData, onSave, isSaving, onCancel }: Props) 
         </div>
         <div className="space-y-1">
            <label className="text-[10px] font-black uppercase text-zinc-500">Elevator Pitch (Short Description)</label>
-           <textarea name="description" defaultValue={initialData?.description} required className="w-full min-h-24 p-3 rounded-xl border border-border bg-background text-sm" />
+           <textarea name="description" defaultValue={initialData?.description} required className="w-full min-h-24 p-3 rounded-xl border border-border bg-background text-foreground text-sm" />
         </div>
       </div>
       

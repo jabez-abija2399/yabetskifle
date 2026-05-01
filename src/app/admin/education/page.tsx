@@ -70,7 +70,7 @@ export default function AdminEducationPage() {
               </div>
 
               <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                <button onClick={() => setEditingEdu(edu)} className="p-3 rounded-xl bg-muted hover:bg-primary hover:text-white transition-colors">
+                <button onClick={() => setEditingEdu(edu)} className="p-3 rounded-xl bg-muted hover:bg-primary hover:text-primary-foreground transition-colors">
                   <Pencil className="w-4 h-4" />
                 </button>
                 <button onClick={() => deleteItem(edu.id)} className="p-3 rounded-xl bg-muted hover:bg-destructive hover:text-white transition-colors">

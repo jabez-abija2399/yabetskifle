@@ -82,7 +82,7 @@ export const AdminNav = () => {
     <nav className="w-64 border-r border-border h-screen sticky top-0 p-6 flex flex-col bg-card/50 backdrop-blur-sm">
       {/* Brand Branding */}
       <div className="flex items-center gap-2 px-2 mb-10 shrink-0">
-         <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white italic font-black">Y</div>
+         <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground italic font-black">Y</div>
          <span className="font-black italic tracking-tighter uppercase">Admin Panel</span>
       </div>
 
@@ -106,7 +106,7 @@ export const AdminNav = () => {
                       href={item.href}
                       className={`flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-bold transition-all ${
                         isActive 
-                          ? "bg-primary text-white shadow-lg shadow-primary/20 scale-[1.02]" 
+                          ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20 scale-[1.02]" 
                           : "text-muted-foreground hover:bg-muted hover:text-foreground"
                       }`}
                     >

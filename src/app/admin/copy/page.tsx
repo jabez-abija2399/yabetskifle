@@ -186,7 +186,7 @@ export default function CopyAdminPage() {
                           value={edits[r.key] || ""}
                           onChange={(e) => setEdits({ ...edits, [r.key]: e.target.value })}
                           rows={Math.min(8, Math.max(2, (edits[r.key] || "").split("\n").length + 1))}
-                          className="w-full p-3 rounded-xl border border-border bg-background text-sm leading-relaxed font-mono"
+                          className="w-full p-3 rounded-xl border border-border bg-background text-foreground text-sm leading-relaxed font-mono"
                         />
                       ) : (
                         <Input

@@ -84,7 +84,7 @@ export default function AdminProjectsPage() {
                 
                 <div className="flex items-center justify-between pt-4 border-t border-border">
                    <div className="flex gap-2">
-                      <button onClick={() => setEditingProject(project)} className="p-3 rounded-2xl bg-muted hover:bg-primary hover:text-white transition-all">
+                      <button onClick={() => setEditingProject(project)} className="p-3 rounded-2xl bg-muted hover:bg-primary hover:text-primary-foreground transition-all">
                          <Pencil size={14} />
                       </button>
                       <button onClick={() => deleteItem(project.id)} className="p-3 rounded-2xl bg-muted hover:bg-destructive hover:text-white transition-all">
@@ -93,7 +93,7 @@ export default function AdminProjectsPage() {
                    </div>
                    <div className="flex gap-2">
                      {project.github_url && <a href={project.github_url} target="_blank" className="p-3 rounded-2xl bg-zinc-900 text-white"><FaGithub size={14} /></a>}
-                     {project.live_url && <a href={project.live_url} target="_blank" className="p-3 rounded-2xl bg-primary text-white"><ExternalLink size={14} /></a>}
+                     {project.live_url && <a href={project.live_url} target="_blank" className="p-3 rounded-2xl bg-primary text-primary-foreground"><ExternalLink size={14} /></a>}
                    </div>
                 </div>
               </div>

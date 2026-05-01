@@ -71,7 +71,7 @@ export default function LoginPage() {
                   placeholder="admin@yabets.k" 
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="pl-12 h-14 rounded-2xl bg-muted/30 border-border focus:ring-primary"
+                  className="pl-12 h-14 rounded-2xl bg-muted/30 text-foreground border-border focus:ring-primary"
                   required
                 />
               </div>
