@@ -42,12 +42,12 @@ export const Hero = ({ profile, copy }: Props) => {
       <div className="absolute bottom-0 -left-40 w-[500px] h-[500px] bg-foreground/5 blur-[120px] rounded-full pointer-events-none -z-10" />
 
       {/* Top frame: meta */}
-      <div className="px-6 md:px-12 pt-28 md:pt-32">
+      <div className="px-6 md:px-12 lg:px-16 xl:px-24 pt-28 md:pt-32">
         <motion.div
           variants={container}
           initial="hidden"
           animate="show"
-          className="max-w-7xl mx-auto w-full"
+          className="max-w-[1600px] mx-auto w-full"
         >
           <motion.div variants={item} className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -63,12 +63,12 @@ export const Hero = ({ profile, copy }: Props) => {
       </div>
 
       {/* Center: massive display name */}
-      <div className="flex-1 flex items-center px-6 md:px-12 py-16">
+      <div className="flex-1 flex items-center px-6 md:px-12 lg:px-16 xl:px-24 py-16">
         <motion.div
           variants={container}
           initial="hidden"
           animate="show"
-          className="max-w-7xl mx-auto w-full grid grid-cols-12 gap-6 md:gap-8 items-end"
+          className="max-w-[1600px] mx-auto w-full grid grid-cols-12 gap-6 md:gap-10 items-end"
         >
           {/* Avatar + role meta (left column on desktop, after name on mobile) */}
           <motion.div
@@ -77,19 +77,19 @@ export const Hero = ({ profile, copy }: Props) => {
           >
             <a
               href="#about"
-              className="block relative w-40 h-40 md:w-56 md:h-56 lg:w-64 lg:h-64 group"
+              className="block relative w-40 h-40 md:w-60 md:h-60 lg:w-72 lg:h-72 xl:w-80 xl:h-80 2xl:w-96 2xl:h-96 group"
               aria-label="About me"
             >
               {/* Persistent soft glow + intensifies on hover */}
-              <div className="absolute -inset-4 bg-signal/15 blur-3xl rounded-full opacity-70 group-hover:opacity-100 group-hover:bg-signal/35 transition-all duration-500" />
-              <div className="relative w-full h-full rounded-[32px] overflow-hidden border border-border bg-card shadow-xl transition-transform duration-500 ease-out group-hover:scale-[1.02] group-hover:-rotate-1">
+              <div className="absolute -inset-6 bg-signal/15 blur-3xl rounded-full opacity-70 group-hover:opacity-100 group-hover:bg-signal/35 transition-all duration-500" />
+              <div className="relative w-full h-full rounded-[40px] overflow-hidden border border-border bg-card shadow-xl transition-transform duration-500 ease-out group-hover:scale-[1.02] group-hover:-rotate-1">
                 <Image
                   src={profile.avatar_url || "/placeholder.jpg"}
                   alt={profile.full_name}
                   fill
                   className="object-cover"
                   priority
-                  sizes="(max-width: 768px) 160px, (max-width: 1024px) 224px, 256px"
+                  sizes="(max-width: 768px) 160px, (max-width: 1024px) 240px, (max-width: 1280px) 288px, (max-width: 1536px) 320px, 384px"
                 />
               </div>
             </a>
@@ -133,12 +133,12 @@ export const Hero = ({ profile, copy }: Props) => {
       </div>
 
       {/* Bottom frame: bio + actions + socials */}
-      <div className="px-6 md:px-12 pb-12">
+      <div className="px-6 md:px-12 lg:px-16 xl:px-24 pb-12">
         <motion.div
           variants={container}
           initial="hidden"
           animate="show"
-          className="max-w-7xl mx-auto w-full grid grid-cols-12 gap-8 items-end border-t border-border pt-8"
+          className="max-w-[1600px] mx-auto w-full grid grid-cols-12 gap-8 items-end border-t border-border pt-8"
         >
           {/* Bio */}
           <motion.div variants={item} className="col-span-12 md:col-span-6 lg:col-span-5">
