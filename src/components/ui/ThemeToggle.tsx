@@ -1,24 +1,79 @@
 "use client"
 
 import * as React from "react"
-import { Moon, Sun } from "lucide-react"
+import { Moon, Sun, Monitor } from "lucide-react"
 import { useTheme } from "next-themes"
+import { cn } from "@/lib/utils"
 
-import { Button } from "@/components/ui/button"
+interface Props {
+  /** "compact" = small pill (~80px) for navbar; "full" = wider for admin */
+  size?: "compact" | "full"
+}
 
-export function ThemeToggle() {
-  const { setTheme, theme } = useTheme()
+const OPTIONS = [
+  { value: "light", icon: Sun, label: "Light" },
+  { value: "system", icon: Monitor, label: "System" },
+  { value: "dark", icon: Moon, label: "Dark" },
+] as const
+
+export function ThemeToggle({ size = "compact" }: Props) {
+  const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = React.useState(false)
+
+  React.useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  // Avoid SSR/CSR hydration mismatch — placeholder until mounted
+  if (!mounted) {
+    return (
+      <div
+        aria-hidden
+        className={cn(
+          "inline-flex items-center rounded-full border border-border bg-card",
+          size === "compact" ? "h-9 w-[88px]" : "h-10 w-full"
+        )}
+      />
+    )
+  }
+
+  const current = theme || "system"
+  const isCompact = size === "compact"
 
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      className="rounded-full w-9 h-9"
-      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+    <div
+      role="radiogroup"
+      aria-label="Theme"
+      className={cn(
+        "relative inline-flex items-center rounded-full border border-border bg-card p-0.5",
+        isCompact ? "h-9" : "h-10 w-full"
+      )}
     >
-      <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 text-zinc-500 hover:text-foreground" />
-      <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 text-zinc-500 hover:text-foreground" />
-      <span className="sr-only">Toggle theme</span>
-    </Button>
+      {OPTIONS.map((opt) => {
+        const Icon = opt.icon
+        const active = current === opt.value
+        return (
+          <button
+            key={opt.value}
+            type="button"
+            role="radio"
+            aria-checked={active}
+            aria-label={opt.label}
+            onClick={() => setTheme(opt.value)}
+            title={opt.label}
+            className={cn(
+              "relative inline-flex items-center justify-center rounded-full transition-colors duration-200",
+              isCompact ? "w-7 h-7" : "flex-1 h-9 gap-2",
+              active
+                ? "bg-foreground text-background shadow-sm"
+                : "text-muted-foreground hover:text-foreground"
+            )}
+          >
+            <Icon className={cn(isCompact ? "w-3.5 h-3.5" : "w-4 h-4")} />
+            {!isCompact && <span className="text-xs font-medium">{opt.label}</span>}
+          </button>
+        )
+      })}
+    </div>
   )
 }

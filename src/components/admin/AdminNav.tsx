@@ -10,6 +10,7 @@ import {
   AwardIcon, Type
 } from "lucide-react"
 import { createBrowserClient } from "@supabase/ssr"
+import { ThemeToggle } from "@/components/ui/ThemeToggle"
 
 const ALLOWED_ROUTES = [
   "/admin",
@@ -120,13 +121,17 @@ export const AdminNav = () => {
         })}
       </div>
 
-      {/* 🚪 SIGN OUT ACTION */}
-      <div className="pt-6 border-t border-border mt-auto shrink-0">
-         <button 
+      {/* THEME + SIGN OUT */}
+      <div className="pt-6 border-t border-border mt-auto shrink-0 space-y-3">
+         <div className="space-y-2">
+            <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground px-1">Appearance</p>
+            <ThemeToggle size="full" />
+         </div>
+         <button
            onClick={handleLogout}
-           className="w-full flex items-center gap-3 px-3 py-3 rounded-xl text-xs font-black uppercase tracking-widest text-destructive hover:bg-destructive/10 transition-all italic border border-transparent hover:border-destructive/20"
+           className="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-full text-xs font-medium text-destructive hover:bg-destructive/10 transition-all border border-transparent hover:border-destructive/20"
          >
-            <ShieldCheck className="w-4 h-4" /> Sign Out Securely
+            <ShieldCheck className="w-3.5 h-3.5" /> Sign out
          </button>
       </div>
     </nav>
