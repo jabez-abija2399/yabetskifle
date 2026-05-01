@@ -11,7 +11,7 @@ export const ExperienceTimeline = ({ experiences, copy }: Props) => {
   if (!experiences || experiences.length === 0) return null
 
   return (
-    <section id="experience" className="px-6 md:px-12 scroll-mt-32">
+    <section id="experience" className="px-6 md:px-12 lg:px-16 xl:px-24 scroll-mt-32">
       <div className="max-w-5xl mx-auto">
         {/* Section header */}
         <div className="flex items-end justify-between gap-8 mb-12 md:mb-16 border-b border-border pb-8">
@@ -30,7 +30,7 @@ export const ExperienceTimeline = ({ experiences, copy }: Props) => {
           {experiences.map((exp, i) => (
             <div
               key={exp.id}
-              className="group grid grid-cols-12 gap-4 md:gap-8 py-8 border-b border-border hover:bg-card transition-colors -mx-6 md:-mx-12 px-6 md:px-12"
+              className="group grid grid-cols-12 gap-4 md:gap-8 py-8 border-b border-border hover:bg-card transition-colors -mx-6 md:-mx-12 lg:-mx-16 xl:-mx-24 px-6 md:px-12 lg:px-16 xl:px-24"
             >
               {/* Number */}
               <div className="col-span-12 md:col-span-1">

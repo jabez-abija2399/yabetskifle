@@ -18,8 +18,8 @@ export const Footer = ({ settings, profile, copy }: Props) => {
   const firstName = fullName.split(" ")[0] || "Yabets"
 
   return (
-    <footer className="relative mt-32 px-6 md:px-12 pt-20 pb-10 border-t border-border bg-card/40 overflow-hidden">
-      <div className="max-w-7xl mx-auto">
+    <footer className="relative mt-32 px-6 md:px-12 lg:px-16 xl:px-24 pt-20 pb-10 border-t border-border bg-card/40 overflow-hidden">
+      <div className="max-w-[1600px] mx-auto">
         {/* Top: editorial CTA */}
         <div className="grid md:grid-cols-12 gap-10 pb-16 border-b border-border">
           <div className="md:col-span-7 space-y-6">

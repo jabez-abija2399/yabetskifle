@@ -7,7 +7,7 @@ export default async function NotFound() {
   const copy = await PortfolioService.getSiteCopy().catch(() => ({}))
 
   return (
-    <main className="min-h-screen bg-background flex items-center justify-center px-6 md:px-12 relative overflow-hidden">
+    <main className="min-h-screen bg-background flex items-center justify-center px-6 md:px-12 lg:px-16 xl:px-24 relative overflow-hidden">
       <div className="absolute inset-0 bg-grid text-foreground/40 pointer-events-none" />
       <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-signal/15 blur-[140px] rounded-full pointer-events-none" />
 

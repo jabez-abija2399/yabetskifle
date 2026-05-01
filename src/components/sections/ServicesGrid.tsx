@@ -15,8 +15,8 @@ export const ServicesGrid = ({ services, copy }: Props) => {
   if (!services || services.length === 0) return null
 
   return (
-    <section id="services" className="px-6 md:px-12 scroll-mt-32">
-      <div className="max-w-7xl mx-auto">
+    <section id="services" className="px-6 md:px-12 lg:px-16 xl:px-24 scroll-mt-32">
+      <div className="max-w-[1600px] mx-auto">
         {/* Section header */}
         <div className="flex items-end justify-between gap-8 mb-12 md:mb-16 border-b border-border pb-8">
           <div className="space-y-3">
@@ -37,7 +37,7 @@ export const ServicesGrid = ({ services, copy }: Props) => {
             return (
               <div
                 key={service.id}
-                className="group grid grid-cols-12 gap-6 md:gap-10 py-8 md:py-12 hover:bg-card transition-colors -mx-6 md:-mx-12 px-6 md:px-12"
+                className="group grid grid-cols-12 gap-6 md:gap-10 py-8 md:py-12 hover:bg-card transition-colors -mx-6 md:-mx-12 lg:-mx-16 xl:-mx-24 px-6 md:px-12 lg:px-16 xl:px-24"
               >
                 <div className="col-span-12 md:col-span-1 flex md:flex-col items-center md:items-start gap-3">
                   <span className="font-mono text-xs text-muted-foreground">

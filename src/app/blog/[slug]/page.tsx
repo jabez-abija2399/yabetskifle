@@ -49,7 +49,7 @@ export default async function BlogPostPage({ params }: Props) {
   return (
     <article className="min-h-screen bg-background">
       {/* Top bar */}
-      <div className="px-6 md:px-12 pt-28 md:pt-32 pb-8">
+      <div className="px-6 md:px-12 lg:px-16 xl:px-24 pt-28 md:pt-32 pb-8">
         <div className="max-w-3xl mx-auto flex items-center justify-between">
           <Link
             href="/blog"
@@ -63,7 +63,7 @@ export default async function BlogPostPage({ params }: Props) {
       </div>
 
       {/* Header */}
-      <header className="px-6 md:px-12 pb-10 md:pb-14">
+      <header className="px-6 md:px-12 lg:px-16 xl:px-24 pb-10 md:pb-14">
         <div className="max-w-3xl mx-auto space-y-8">
           <div className="flex flex-wrap items-center gap-4 text-xs">
             {date && (
@@ -109,7 +109,7 @@ export default async function BlogPostPage({ params }: Props) {
 
       {/* Cover */}
       {post.cover_image && (
-        <div className="px-6 md:px-12 mb-14 md:mb-20">
+        <div className="px-6 md:px-12 lg:px-16 xl:px-24 mb-14 md:mb-20">
           <div className="max-w-5xl mx-auto">
             <div className="relative aspect-21/10 rounded-3xl overflow-hidden border border-border bg-secondary">
               <Image
@@ -126,7 +126,7 @@ export default async function BlogPostPage({ params }: Props) {
       )}
 
       {/* Body */}
-      <div className="px-6 md:px-12 pb-20">
+      <div className="px-6 md:px-12 lg:px-16 xl:px-24 pb-20">
         <div className="max-w-3xl mx-auto">
           <div className="prose prose-zinc dark:prose-invert prose-lg max-w-none
             prose-headings:font-display prose-headings:tracking-tight
@@ -148,7 +148,7 @@ export default async function BlogPostPage({ params }: Props) {
       </div>
 
       {/* Footer CTA */}
-      <div className="px-6 md:px-12 pt-16 pb-32 border-t border-border">
+      <div className="px-6 md:px-12 lg:px-16 xl:px-24 pt-16 pb-32 border-t border-border">
         <div className="max-w-3xl mx-auto pt-12 space-y-10">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <div className="space-y-2">

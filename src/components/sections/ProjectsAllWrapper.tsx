@@ -16,8 +16,8 @@ export const ProjectsAllWrapper = () => {
   }, [])
 
   return (
-    <section className="px-6 md:px-12 py-24 md:py-32">
-      <div className="max-w-7xl mx-auto">
+    <section className="px-6 md:px-12 lg:px-16 xl:px-24 py-24 md:py-32">
+      <div className="max-w-[1600px] mx-auto">
         {/* Header */}
         <div className="flex items-end justify-between gap-8 mb-16 md:mb-20 border-b border-border pb-10">
           <div className="space-y-4 max-w-2xl">

@@ -71,8 +71,8 @@ export const TechStack = ({ skills, copy }: Props) => {
   const rowBRepeated = [...rowB, ...rowB, ...rowB]
 
   return (
-    <section id="skills" className="px-6 md:px-12 scroll-mt-32">
-      <div className="max-w-7xl mx-auto">
+    <section id="skills" className="px-6 md:px-12 lg:px-16 xl:px-24 scroll-mt-32">
+      <div className="max-w-[1600px] mx-auto">
         {/* Section header */}
         <div className="flex items-end justify-between gap-8 mb-12 md:mb-16 border-b border-border pb-8">
           <div className="space-y-3">
@@ -87,7 +87,7 @@ export const TechStack = ({ skills, copy }: Props) => {
         </div>
 
         {/* Marquee */}
-        <div className="relative -mx-6 md:-mx-12">
+        <div className="relative -mx-6 md:-mx-12 lg:-mx-16 xl:-mx-24">
           <div className="absolute left-0 top-0 bottom-0 w-24 md:w-40 bg-linear-to-r from-background to-transparent z-10 pointer-events-none" />
           <div className="absolute right-0 top-0 bottom-0 w-24 md:w-40 bg-linear-to-l from-background to-transparent z-10 pointer-events-none" />
 

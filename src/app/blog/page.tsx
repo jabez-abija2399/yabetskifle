@@ -21,7 +21,7 @@ export default async function BlogPage() {
   if (settings?.show_blog === false) return notFound()
 
   return (
-    <main className="min-h-screen bg-background px-6 md:px-12 py-24 md:py-32">
+    <main className="min-h-screen bg-background px-6 md:px-12 lg:px-16 xl:px-24 py-24 md:py-32">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="flex items-end justify-between gap-8 mb-16 md:mb-20 border-b border-border pb-10">

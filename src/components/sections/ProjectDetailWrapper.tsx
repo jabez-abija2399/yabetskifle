@@ -60,7 +60,7 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
 
   if (isLoading)
     return (
-      <div className="px-6 md:px-12 py-32 max-w-7xl mx-auto animate-pulse">
+      <div className="px-6 md:px-12 lg:px-16 xl:px-24 py-32 max-w-[1600px] mx-auto animate-pulse">
         <div className="h-4 w-32 bg-secondary rounded-full mb-8" />
         <div className="h-12 w-2/3 bg-secondary rounded-full mb-6" />
         <div className="h-4 w-1/2 bg-secondary rounded-full mb-12" />
@@ -114,8 +114,8 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
       )}
 
       {/* Top bar */}
-      <div className="px-6 md:px-12 pt-28 md:pt-32 pb-8">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <div className="px-6 md:px-12 lg:px-16 xl:px-24 pt-28 md:pt-32 pb-8">
+        <div className="max-w-[1600px] mx-auto flex items-center justify-between">
           <Link
             href="/projects"
             className="group inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
@@ -128,8 +128,8 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
       </div>
 
       {/* Title block */}
-      <header className="px-6 md:px-12 pb-16 md:pb-20">
-        <div className="max-w-7xl mx-auto">
+      <header className="px-6 md:px-12 lg:px-16 xl:px-24 pb-16 md:pb-20">
+        <div className="max-w-[1600px] mx-auto">
           <div className="flex items-end justify-between gap-8 border-b border-border pb-10">
             <div className="space-y-5 max-w-3xl">
               <div className="flex flex-wrap items-center gap-3">
@@ -179,8 +179,8 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
 
       {/* Hero image gallery */}
       {project.images?.length > 0 && (
-        <section className="px-6 md:px-12 mb-16 md:mb-24">
-          <div className="max-w-7xl mx-auto">
+        <section className="px-6 md:px-12 lg:px-16 xl:px-24 mb-16 md:mb-24">
+          <div className="max-w-[1600px] mx-auto">
             <div className="relative">
               <div
                 onClick={() => setIsZoomed(true)}
@@ -267,8 +267,8 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
       )}
 
       {/* Body grid */}
-      <div className="px-6 md:px-12">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 md:gap-16">
+      <div className="px-6 md:px-12 lg:px-16 xl:px-24">
+        <div className="max-w-[1600px] mx-auto grid lg:grid-cols-12 gap-10 md:gap-16">
           {/* Main column */}
           <div className="lg:col-span-8 space-y-16 md:space-y-20">
             {/* Purpose */}
@@ -386,8 +386,8 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
       </div>
 
       {/* Bottom CTA */}
-      <div className="px-6 md:px-12 pt-24 mt-16 border-t border-border">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-end justify-between gap-8 pt-12">
+      <div className="px-6 md:px-12 lg:px-16 xl:px-24 pt-24 mt-16 border-t border-border">
+        <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row items-start md:items-end justify-between gap-8 pt-12">
           <div className="space-y-3">
             <p className="eyebrow">{t(copy, "project.up_next_eyebrow", "— Up next")}</p>
             <h3 className="font-display text-3xl md:text-5xl leading-tight">

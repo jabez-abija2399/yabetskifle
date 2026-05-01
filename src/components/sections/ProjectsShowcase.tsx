@@ -14,8 +14,8 @@ export const ProjectsShowcase = ({ projects, copy }: Props) => {
   const rest = projects.slice(1)
 
   return (
-    <section id="work" className="px-6 md:px-12 scroll-mt-32">
-      <div className="max-w-7xl mx-auto">
+    <section id="work" className="px-6 md:px-12 lg:px-16 xl:px-24 scroll-mt-32">
+      <div className="max-w-[1600px] mx-auto">
         {/* Section header */}
         <div className="flex items-end justify-between gap-8 mb-12 md:mb-16 border-b border-border pb-8">
           <div className="space-y-3">
