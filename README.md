@@ -17,6 +17,7 @@ The heavy use of TypeScript ensures strong typing and maintainable code, while C
 - Modern web stack with a focus on maintainability and performance.
 - Responsive design for all devices.
 - Easy to extend and customize for personal or professional projects.
+- Data feeding from admin
 
 ## Getting Started
 
