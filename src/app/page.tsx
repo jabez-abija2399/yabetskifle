@@ -42,10 +42,10 @@ export default async function HomePage() {
 
   if (!profile) {
     return (
-      <div className="h-screen flex flex-col items-center justify-center gap-4">
-        <h1 className="text-2xl font-display italic">Setup needed</h1>
-        <p className="text-muted-foreground">Set up your profile in the admin dashboard to go live.</p>
-        <a href="/admin/profile" className="px-6 py-2 bg-foreground text-background rounded-full font-medium">Go to Admin</a>
+      <div className="h-screen flex flex-col items-center justify-center gap-4 bg-background text-foreground font-mono text-xs">
+        <h1 className="text-xl font-semibold text-foreground">System initialization needed</h1>
+        <p className="text-muted-foreground">Configure profile parameters in the admin dashboard to deploy.</p>
+        <a href="/admin/profile" className="px-4 py-2 bg-[#2D5F6B] text-white rounded-xs font-medium">Go to Admin</a>
       </div>
     )
   }
@@ -54,20 +54,20 @@ export default async function HomePage() {
     <main className="bg-background min-h-screen text-foreground">
       <Hero profile={profile} copy={copy} />
 
-      <div className="space-y-32 md:space-y-40 pb-32 pt-24 md:pt-32">
-        <AboutSection profile={profile} languagesLine={languagesLine} copy={copy} />
+      <div className="space-y-24 md:space-y-28 pb-24 pt-16 md:pt-20">
+        {settings?.show_projects !== false && <ProjectsShowcase projects={projects} copy={copy} />}
 
         {settings?.show_skills !== false && <TechStack skills={skills} copy={copy} />}
 
-        {settings?.show_services !== false && <ServicesGrid services={services} copy={copy} />}
-
-        {settings?.show_projects !== false && <ProjectsShowcase projects={projects} copy={copy} />}
-
-        {settings?.show_blog !== false && <LatestPosts posts={posts} copy={copy} />}
+        <AboutSection profile={profile} languagesLine={languagesLine} copy={copy} />
 
         {settings?.show_experience !== false && <ExperienceTimeline experiences={experiences} copy={copy} />}
 
+        {settings?.show_services !== false && <ServicesGrid services={services} copy={copy} />}
+
         <EducationSection education={education} certifications={certifications} copy={copy} />
+
+        {settings?.show_blog !== false && <LatestPosts posts={posts} copy={copy} />}
 
         {settings?.show_testimonials !== false && <TestimonialsSection testimonials={testimonials} copy={copy} />}
 

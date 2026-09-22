@@ -1,6 +1,6 @@
 import { Education, Certification } from "@/types/portfolio"
-import { GraduationCap, Award, ArrowUpRight } from "lucide-react"
-import { SiteCopy, t, renderRichTitle } from "@/lib/copy"
+import { GraduationCap, Award } from "lucide-react"
+import { SiteCopy, t } from "@/lib/copy"
 
 interface Props {
   education: Education[]
@@ -14,56 +14,57 @@ export const EducationSection = ({ education, certifications = [], copy }: Props
   }
 
   return (
-    <section id="education" className="px-6 md:px-12 lg:px-16 xl:px-24 scroll-mt-32">
+    <section id="education" className="px-6 md:px-12 lg:px-16 xl:px-24 scroll-mt-24">
       <div className="max-w-[1600px] mx-auto">
-        {/* Section header */}
-        <div className="flex items-end justify-between gap-8 mb-12 md:mb-16 border-b border-border pb-8">
-          <div className="space-y-3">
-            <p className="eyebrow">{t(copy, "education.eyebrow", "— 07 / Education")}</p>
-            <h2 className="text-heading-section">
-              {renderRichTitle(t(copy, "education.title", "Where I've *learned*"))}
+        {/* Section header — Sentence case */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-border">
+          <div className="space-y-2">
+            <div className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987]">
+              {t(copy, "education.eyebrow", "06. Education & credentials")}
+            </div>
+            <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
+              {t(copy, "education.title", "Academic background & certified programs")}
             </h2>
           </div>
-          <p className="hidden md:block text-sm text-muted-foreground max-w-xs text-pretty">
-            {t(copy, "education.subtitle", "A self-driven learner. Programs, nanodegrees, and intensive courses I've completed.")}
+          <p className="font-mono text-xs text-muted-foreground max-w-sm">
+            {t(copy, "education.subtitle", "Intensive programs, degrees, and verified technical credentials.")}
           </p>
         </div>
 
-        <div className="grid grid-cols-12 gap-4 md:gap-5">
+        <div className="grid grid-cols-12 gap-6">
           {/* Education entries */}
           {education?.map((edu, i) => (
             <article
               key={edu.id}
-              className="col-span-12 md:col-span-6 bg-card border border-border rounded-3xl p-7 md:p-8 hover:border-foreground/30 transition-colors group"
+              className="col-span-12 md:col-span-6 bg-card border border-border rounded-xs p-6 corner-ticks flex flex-col justify-between"
             >
-              <div className="flex items-start justify-between gap-4 mb-6">
-                <div className="w-11 h-11 rounded-2xl bg-secondary flex items-center justify-center group-hover:bg-signal group-hover:text-signal-foreground transition-colors">
-                  <GraduationCap className="w-5 h-5" />
+              <div>
+                <div className="flex items-center justify-between pb-3 mb-4 border-b border-border/80 font-mono text-xs text-muted-foreground">
+                  <span className="flex items-center gap-1.5 text-foreground font-medium">
+                    <GraduationCap className="w-3.5 h-3.5 text-[#2D5F6B] dark:text-[#3E7987]" />
+                    <span>Degree spec</span>
+                  </span>
+                  <span>[edu.{String(i + 1).padStart(2, "0")}]</span>
                 </div>
-                <span className="font-mono text-xs text-muted-foreground">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
+
+                <h3 className="text-lg md:text-xl font-semibold text-foreground tracking-tight mb-1">
+                  {edu.institution}
+                </h3>
+                <p className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987] font-medium">
+                  {edu.degree}
+                </p>
+
+                {edu.field_of_study && (
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed mt-3 font-sans">
+                    {edu.field_of_study}
+                  </p>
+                )}
               </div>
 
-              <h3 className="font-display text-2xl md:text-3xl leading-tight mb-2">
-                {edu.institution}
-              </h3>
-              <p className="text-base font-medium text-foreground/90">{edu.degree}</p>
-
-              {edu.field_of_study && (
-                <p className="text-sm text-muted-foreground leading-relaxed mt-3 text-pretty">
-                  {edu.field_of_study}
-                </p>
-              )}
-
-              <div className="flex items-center gap-4 pt-5 mt-5 border-t border-border text-xs">
-                {edu.duration && (
-                  <span className="font-mono uppercase tracking-wider text-muted-foreground">
-                    {edu.duration}
-                  </span>
-                )}
+              <div className="flex items-center gap-4 pt-4 mt-6 border-t border-border/80 text-xs font-mono text-muted-foreground">
+                {edu.duration && <span>{edu.duration}</span>}
                 {edu.grade && (
-                  <span className="px-2.5 py-1 rounded-full bg-secondary text-secondary-foreground font-medium">
+                  <span className="px-2 py-0.5 border border-border/60 bg-secondary rounded-xs text-[11px] text-foreground">
                     {edu.grade}
                   </span>
                 )}
@@ -71,36 +72,48 @@ export const EducationSection = ({ education, certifications = [], copy }: Props
             </article>
           ))}
 
-          {/* Certifications */}
+          {/* Certifications heading if present */}
           {certifications.length > 0 && (
-            <div className="col-span-12 mt-8 mb-2">
-              <p className="eyebrow">{t(copy, "education.cert_label", "— Credentials & Certifications")}</p>
+            <div className="col-span-12 mt-6">
+              <div className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987] pb-2 border-b border-border">
+                {t(copy, "education.cert_label", "Verified technical credentials")}
+              </div>
             </div>
           )}
+
           {certifications?.map((cert, i) => (
             <article
               key={cert.id}
-              className="col-span-12 md:col-span-6 lg:col-span-4 bg-card border border-border rounded-3xl p-6 hover:border-foreground/30 transition-colors group"
+              className="col-span-12 md:col-span-6 lg:col-span-4 bg-card border border-border rounded-xs p-5 corner-ticks flex flex-col justify-between"
             >
-              <div className="flex items-start justify-between gap-4 mb-5">
-                <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center group-hover:bg-signal group-hover:text-signal-foreground transition-colors">
-                  <Award className="w-4 h-4" />
+              <div>
+                <div className="flex items-center justify-between pb-3 mb-3 border-b border-border/80 font-mono text-xs text-muted-foreground">
+                  <span className="flex items-center gap-1.5 text-foreground font-medium">
+                    <Award className="w-3.5 h-3.5 text-[#2D5F6B] dark:text-[#3E7987]" />
+                    <span>Certificate</span>
+                  </span>
+                  <span>[crt.{String(i + 1).padStart(2, "0")}]</span>
                 </div>
-                <span className="font-mono text-xs text-muted-foreground">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
+
+                <h4 className="text-base font-semibold text-foreground tracking-tight">
+                  {cert.title}
+                </h4>
+                <p className="font-mono text-xs text-muted-foreground mt-1">
+                  issuer: {cert.issuer}
+                </p>
               </div>
-              <h4 className="font-display text-xl leading-tight">{cert.title}</h4>
-              <p className="text-sm text-muted-foreground mt-1">{cert.issuer}</p>
+
               {cert.credential_url && (
-                <a
-                  href={cert.credential_url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs font-medium mt-4 hover:text-signal transition-colors"
-                >
-                  {t(copy, "education.verify_link", "Verify")} <ArrowUpRight className="w-3 h-3" />
-                </a>
+                <div className="pt-3 mt-4 border-t border-border/60">
+                  <a
+                    href={cert.credential_url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1 font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987] hover:underline transition-colors"
+                  >
+                    <span>[ {t(copy, "education.verify_link", "verify credential")} ↗ ]</span>
+                  </a>
+                </div>
               )}
             </article>
           ))}

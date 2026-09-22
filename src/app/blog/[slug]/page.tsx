@@ -52,28 +52,24 @@ export default async function BlogPostPage({ params }: Props) {
     <article className="min-h-screen bg-background">
       {/* Top bar */}
       <div className="px-6 md:px-12 lg:px-16 xl:px-24 pt-28 md:pt-32 pb-8">
-        <div className="max-w-3xl mx-auto flex items-center justify-between">
+        <div className="max-w-3xl mx-auto flex items-center justify-between border-b border-border pb-4">
           <Link
             href="/blog"
-            className="group inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            className="group inline-flex items-center gap-2 font-mono text-xs text-muted-foreground hover:text-[#2D5F6B] transition-colors"
           >
-            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-0.5" />
-            {t(copy, "blogpost.back_link", "All articles")}
+            <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-0.5" />
+            <span>[ {t(copy, "blogpost.back_link", "All articles")} ]</span>
           </Link>
           <p className="eyebrow hidden md:block">{t(copy, "blogpost.kicker", "Journal entry")}</p>
         </div>
       </div>
 
-      {/* Header */}
+      {/* Header — intentional architectural scale, mono metadata, no tracked uppercase */}
       <header className="px-6 md:px-12 lg:px-16 xl:px-24 pb-10 md:pb-14">
         <div className="max-w-3xl mx-auto space-y-8">
-          <div className="flex flex-wrap items-center gap-4 text-xs">
-            {date && (
-              <span className="font-mono uppercase tracking-wider text-muted-foreground">
-                {date}
-              </span>
-            )}
-            <span className="inline-flex items-center gap-1.5 text-muted-foreground">
+          <div className="flex flex-wrap items-center gap-4 font-mono text-xs text-muted-foreground">
+            {date && <span>{date}</span>}
+            <span className="inline-flex items-center gap-1.5">
               <Clock className="w-3.5 h-3.5" />
               {minRead} {t(copy, "blogpost.read_time", "min read")}
             </span>
@@ -84,22 +80,22 @@ export default async function BlogPostPage({ params }: Props) {
             />
           </div>
 
-          <h1 className="font-display text-5xl md:text-7xl leading-[0.95] tracking-tight">
+          <h1 className="text-heading-hero text-foreground">
             {post.title}
           </h1>
 
           {post.excerpt && (
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed text-pretty">
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed text-pretty font-sans">
               {post.excerpt}
             </p>
           )}
 
           {post.tags && post.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 pt-2">
+            <div className="flex flex-wrap gap-1.5 pt-2 font-mono text-[11px]">
               {post.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="text-xs font-medium px-3 py-1.5 rounded-full bg-secondary text-secondary-foreground"
+                  className="text-xs px-2 py-0.5 rounded-xs border border-border/60 bg-secondary text-secondary-foreground"
                 >
                   {tag}
                 </span>
@@ -109,11 +105,11 @@ export default async function BlogPostPage({ params }: Props) {
         </div>
       </header>
 
-      {/* Cover */}
+      {/* Cover — crisp technical frame */}
       {post.cover_image && (
         <div className="px-6 md:px-12 lg:px-16 xl:px-24 mb-14 md:mb-20">
           <div className="max-w-5xl mx-auto">
-            <div className="relative aspect-21/10 rounded-3xl overflow-hidden border border-border bg-secondary">
+            <div className="relative aspect-21/10 rounded-xs overflow-hidden border border-border bg-secondary corner-ticks">
               <Image
                 src={post.cover_image}
                 alt={post.title}
@@ -131,17 +127,17 @@ export default async function BlogPostPage({ params }: Props) {
       <div className="px-6 md:px-12 lg:px-16 xl:px-24 pb-20">
         <div className="max-w-3xl mx-auto">
           <div className="prose prose-zinc dark:prose-invert prose-lg max-w-none
-            prose-headings:font-display prose-headings:tracking-tight
+            prose-headings:font-sans prose-headings:tracking-tight prose-headings:text-foreground
             prose-h1:hidden
             prose-h2:text-3xl md:prose-h2:text-4xl prose-h2:mt-12 prose-h2:mb-5
             prose-h3:text-2xl prose-h3:mt-10 prose-h3:mb-4
             prose-p:leading-[1.75] prose-p:text-foreground/85 prose-p:text-pretty
             prose-strong:text-foreground prose-strong:font-medium
-            prose-a:text-signal hover:prose-a:underline prose-a:no-underline
-            prose-blockquote:border-l-signal prose-blockquote:bg-card prose-blockquote:rounded-r-2xl prose-blockquote:py-1 prose-blockquote:px-6
-            prose-code:bg-secondary prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:text-sm prose-code:before:content-none prose-code:after:content-none
-            prose-pre:bg-card prose-pre:border prose-pre:border-border prose-pre:rounded-2xl
-            prose-img:rounded-2xl prose-img:border prose-img:border-border
+            prose-a:text-[#2D5F6B] dark:prose-a:text-[#3E7987] hover:prose-a:underline prose-a:no-underline
+            prose-blockquote:border-l-[#2D5F6B] prose-blockquote:bg-card prose-blockquote:rounded-r-xs prose-blockquote:py-1 prose-blockquote:px-6
+            prose-code:bg-secondary prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-xs prose-code:text-sm prose-code:before:content-none prose-code:after:content-none
+            prose-pre:bg-card prose-pre:border prose-pre:border-border prose-pre:rounded-xs
+            prose-img:rounded-xs prose-img:border prose-img:border-border
             prose-li:my-1
             ">
             <ReactMarkdown>{post.content}</ReactMarkdown>
@@ -155,15 +151,15 @@ export default async function BlogPostPage({ params }: Props) {
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <div className="space-y-2">
               <p className="eyebrow">{t(copy, "blogpost.cta_eyebrow", "— Thanks for reading")}</p>
-              <p className="font-display text-3xl md:text-4xl leading-tight">
-                {renderRichTitle(t(copy, "blogpost.cta_title", "More *in the journal*."))}
+              <p className="text-2xl md:text-3xl font-semibold tracking-tight text-foreground">
+                {renderRichTitle(t(copy, "blogpost.cta_title", "More in the journal."), "text-[#2D5F6B] dark:text-[#3E7987]")}
               </p>
             </div>
             <Link
               href="/blog"
-              className="inline-flex items-center gap-2 bg-foreground text-background h-12 px-6 rounded-full text-sm font-medium hover:bg-signal hover:text-signal-foreground transition-colors w-fit"
+              className="inline-flex items-center gap-2 bg-[#2D5F6B] text-white dark:bg-[#3E7987] dark:text-background h-11 px-5 rounded-xs font-mono text-xs font-medium hover:bg-[#234b54] transition-colors w-fit"
             >
-              {t(copy, "blogpost.back_link", "All articles")} <ArrowUpRight className="w-4 h-4" />
+              <span>[ {t(copy, "blogpost.back_link", "All articles")} ]</span> <ArrowUpRight className="w-3.5 h-3.5" />
             </Link>
           </div>
         </div>

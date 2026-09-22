@@ -2,7 +2,7 @@
 import { Plus } from "lucide-react"
 import { useState } from "react"
 import { FAQ } from "@/types/portfolio"
-import { SiteCopy, t, renderRichTitle } from "@/lib/copy"
+import { SiteCopy, t } from "@/lib/copy"
 
 interface Props {
   faqs?: FAQ[]
@@ -10,8 +10,8 @@ interface Props {
 }
 
 const fallback: FAQ[] = [
-  { id: "1", question: "What kind of projects do you take on?", answer: "Production web apps and marketing sites built on React, Next.js, and TypeScript.", category: "General", order_index: 0, is_published: true },
-  { id: "2", question: "Are you available for full-time roles?", answer: "Yes — open to full-time, remote, hybrid, and freelance.", category: "Availability", order_index: 1, is_published: true },
+  { id: "1", question: "What kind of projects do you take on?", answer: "Production web applications, frontend architecture, and design systems built with React, Next.js, and TypeScript.", category: "General", order_index: 0, is_published: true },
+  { id: "2", question: "Are you available for full-time roles?", answer: "Yes — available for full-time roles, remote positions, and select contracts worldwide.", category: "Availability", order_index: 1, is_published: true },
 ]
 
 export const FAQSection = ({ faqs = fallback, copy }: Props) => {
@@ -19,45 +19,52 @@ export const FAQSection = ({ faqs = fallback, copy }: Props) => {
   if (!faqs || faqs.length === 0) return null
 
   return (
-    <section className="px-6 md:px-12 lg:px-16 xl:px-24 scroll-mt-32">
-      <div className="max-w-4xl mx-auto">
-        {/* Section header */}
-        <div className="flex items-end justify-between gap-8 mb-12 md:mb-16 border-b border-border pb-8">
-          <div className="space-y-3">
-            <p className="eyebrow">{t(copy, "faq.eyebrow", "— 09 / FAQ")}</p>
-            <h2 className="text-heading-section">
-              {renderRichTitle(t(copy, "faq.title", "Common *questions*"))}
+    <section className="px-6 md:px-12 lg:px-16 xl:px-24 scroll-mt-24">
+      <div className="max-w-[1600px] mx-auto">
+        {/* Section header — Sentence case */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-border">
+          <div className="space-y-2">
+            <div className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987]">
+              {t(copy, "faq.eyebrow", "10. Inquiries & parameters")}
+            </div>
+            <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
+              {t(copy, "faq.title", "Frequently answered engineering questions")}
             </h2>
           </div>
         </div>
 
-        <div className="border-y border-border divide-y divide-border">
+        <div className="border-t border-border divide-y divide-border max-w-4xl">
           {faqs.map((faq, idx) => {
             const open = openIdx === idx
             return (
               <div key={faq.id || idx}>
                 <button
                   onClick={() => setOpenIdx(open ? null : idx)}
-                  className="w-full py-6 md:py-8 flex items-center justify-between gap-6 text-left group"
+                  className="w-full py-5 sm:py-6 flex items-center justify-between gap-6 text-left group cursor-pointer"
                 >
-                  <h3 className="font-display text-xl md:text-2xl leading-snug group-hover:text-signal transition-colors">
-                    {faq.question}
-                  </h3>
+                  <div className="flex items-center gap-3">
+                    <span className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987]">
+                      [{String(idx + 1).padStart(2, "0")}]
+                    </span>
+                    <h3 className="text-base sm:text-lg font-semibold text-foreground tracking-tight group-hover:text-[#2D5F6B] dark:group-hover:text-[#3E7987] transition-colors">
+                      {faq.question}
+                    </h3>
+                  </div>
                   <div
-                    className={`shrink-0 w-10 h-10 rounded-full border border-border flex items-center justify-center transition-all ${
-                      open ? "bg-foreground text-background border-transparent rotate-45" : ""
+                    className={`shrink-0 w-7 h-7 rounded-xs border border-border flex items-center justify-center transition-transform duration-200 ${
+                      open ? "bg-secondary rotate-45 border-foreground/30" : "bg-card"
                     }`}
                   >
-                    <Plus className="w-4 h-4" />
+                    <Plus className="w-3.5 h-3.5 text-foreground" />
                   </div>
                 </button>
                 <div
-                  className={`grid transition-all duration-500 ease-out ${
-                    open ? "grid-rows-[1fr] opacity-100 pb-6 md:pb-8" : "grid-rows-[0fr] opacity-0"
+                  className={`grid transition-all duration-300 ease-out ${
+                    open ? "grid-rows-[1fr] opacity-100 pb-5" : "grid-rows-[0fr] opacity-0"
                   }`}
                 >
-                  <div className="overflow-hidden">
-                    <p className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-2xl text-pretty">
+                  <div className="overflow-hidden pl-7">
+                    <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed max-w-2xl font-sans">
                       {faq.answer}
                     </p>
                   </div>
