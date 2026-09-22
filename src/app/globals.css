@@ -237,3 +237,19 @@
     background-size: 22px 22px;
   }
 }
+
+/* ── Job Application AI — phrase highlights ─────────────────── */
+.apply-highlight-preview mark.apply-ai-phrase {
+  background-color: #fef08a;
+  color: #713f12;
+  border-radius: 2px;
+  padding: 0 2px;
+  font-style: normal;
+}
+
+@media (prefers-color-scheme: dark) {
+  .apply-highlight-preview mark.apply-ai-phrase {
+    background-color: #422006;
+    color: #fde68a;
+  }
+}
