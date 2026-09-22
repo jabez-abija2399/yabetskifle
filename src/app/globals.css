@@ -8,10 +8,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-display: var(--font-display);
-  --font-heading: var(--font-display);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -20,11 +19,13 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
+
   --color-chart-5: var(--chart-5);
   --color-chart-4: var(--chart-4);
   --color-chart-3: var(--chart-3);
   --color-chart-2: var(--chart-2);
   --color-chart-1: var(--chart-1);
+
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -42,145 +43,174 @@
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
 
-  /* SIGNATURE BRAND ACCENT */
+  /* SYSTEMS ACCENTS */
   --color-signal: var(--signal);
   --color-signal-foreground: var(--signal-foreground);
+  --color-teal: var(--blueprint-teal);
+  --color-rust: var(--rust-red);
 
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+  /* PRECISE TECHNICAL RADIUS - no puffy pills */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+  --radius-xl: 8px;
+  --radius-2xl: 12px;
+  --radius-3xl: 16px;
 
-  /* FLUID TYPOGRAPHY SCALE */
-  --font-size-xs: clamp(0.7rem, 0.65rem + 0.25vw, 0.8rem);
-  --font-size-sm: clamp(0.8rem, 0.75rem + 0.25vw, 0.9rem);
-  --font-size-base: clamp(0.95rem, 0.9rem + 0.25vw, 1.05rem);
-  --font-size-lg: clamp(1.1rem, 1rem + 0.5vw, 1.25rem);
-  --font-size-xl: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
-  --font-size-2xl: clamp(1.5rem, 1.35rem + 0.75vw, 1.85rem);
-  --font-size-3xl: clamp(1.85rem, 1.65rem + 1vw, 2.4rem);
-  --font-size-4xl: clamp(2.25rem, 1.85rem + 2vw, 3.25rem);
-  --font-size-display: clamp(2.5rem, 2rem + 3vw, 5rem);
-  --font-size-hero: clamp(3.5rem, 2rem + 10vw, 13rem);
+  /* INTENTIONAL ARCHITECTURAL TYPOGRAPHY SCALE */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-display: clamp(2rem, 1.6rem + 1.8vw, 3rem);
+  --font-size-hero: clamp(2.5rem, 1.8rem + 3.2vw, 4.25rem);
 }
 
-/* LIGHT MODE — paper & ink */
+/* LIGHT MODE — Engineer's field-notebook / Warm paper-white & Ink */
 :root {
-  --background: oklch(0.985 0.005 90);            /* warm paper white */
-  --foreground: oklch(0.18 0.012 270);            /* near-black ink */
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.18 0.012 270);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.18 0.012 270);
-  --primary: oklch(0.18 0.012 270);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.96 0.005 90);
-  --secondary-foreground: oklch(0.18 0.012 270);
-  --muted: oklch(0.95 0.005 90);
-  --muted-foreground: oklch(0.5 0.012 270);
-  --accent: oklch(0.95 0.005 90);
-  --accent-foreground: oklch(0.18 0.012 270);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.9 0.008 90);
-  --input: oklch(0.9 0.008 90);
-  --ring: oklch(0.5 0.012 270);
+  --background: #F5F3EE;
+  --foreground: #1A1D23;
 
-  /* Signature: electric lime — confident, modern */
-  --signal: oklch(0.85 0.22 130);
-  --signal-foreground: oklch(0.18 0.012 270);
+  --card: #FFFFFF;
+  --card-foreground: #1A1D23;
 
-  --chart-1: oklch(0.85 0.22 130);
-  --chart-2: oklch(0.55 0.012 270);
-  --chart-3: oklch(0.42 0.012 270);
-  --chart-4: oklch(0.32 0.012 270);
-  --chart-5: oklch(0.22 0.012 270);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0.005 90);
-  --sidebar-foreground: oklch(0.18 0.012 270);
-  --sidebar-primary: oklch(0.18 0.012 270);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.95 0.005 90);
-  --sidebar-accent-foreground: oklch(0.18 0.012 270);
-  --sidebar-border: oklch(0.9 0.008 90);
-  --sidebar-ring: oklch(0.5 0.012 270);
+  --popover: #FFFFFF;
+  --popover-foreground: #1A1D23;
+
+  --primary: #1A1D23;
+  --primary-foreground: #F5F3EE;
+
+  --secondary: #ECE8DF;
+  --secondary-foreground: #1A1D23;
+
+  --muted: #ECE8E0;
+  --muted-foreground: #8B8577;
+
+  /* Accent: Deep blueprint teal */
+  --accent: #2D5F6B;
+  --accent-foreground: #F5F3EE;
+  --blueprint-teal: #2D5F6B;
+
+  /* Secondary accent: Muted rust-red (status indicator only) */
+  --signal: #C4432E;
+  --signal-foreground: #FFFFFF;
+  --rust-red: #C4432E;
+
+  --border: #DDD8CD;
+  --input: #DDD8CD;
+  --ring: #2D5F6B;
+  --destructive: #C4432E;
+
+  --radius: 0.25rem;
+
+  --chart-1: #2D5F6B;
+  --chart-2: #8B8577;
+  --chart-3: #1A1D23;
+  --chart-4: #C4432E;
+  --chart-5: #DDD8CD;
+
+  --sidebar: #F5F3EE;
+  --sidebar-foreground: #1A1D23;
+  --sidebar-primary: #2D5F6B;
+  --sidebar-primary-foreground: #F5F3EE;
+  --sidebar-accent: #ECE8DF;
+  --sidebar-accent-foreground: #1A1D23;
+  --sidebar-border: #DDD8CD;
+  --sidebar-ring: #2D5F6B;
 }
 
-/* DARK MODE — deep ink */
+/* DARK MODE — Deep blueprint & Technical slate */
 .dark {
-  --background: oklch(0.13 0.012 270);            /* deep ink */
-  --foreground: oklch(0.97 0.005 90);             /* paper */
-  --card: oklch(0.17 0.012 270);
-  --card-foreground: oklch(0.97 0.005 90);
-  --popover: oklch(0.17 0.012 270);
-  --popover-foreground: oklch(0.97 0.005 90);
-  --primary: oklch(0.97 0.005 90);
-  --primary-foreground: oklch(0.13 0.012 270);
-  --secondary: oklch(0.22 0.012 270);
-  --secondary-foreground: oklch(0.97 0.005 90);
-  --muted: oklch(0.22 0.012 270);
-  --muted-foreground: oklch(0.65 0.012 270);
-  --accent: oklch(0.22 0.012 270);
-  --accent-foreground: oklch(0.97 0.005 90);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 8%);
-  --input: oklch(1 0 0 / 12%);
-  --ring: oklch(0.55 0 0);
+  --background: #12151A;
+  --foreground: #E8E6DF;
 
-  --signal: oklch(0.88 0.24 130);
-  --signal-foreground: oklch(0.13 0.012 270);
+  --card: #181C23;
+  --card-foreground: #E8E6DF;
 
-  --chart-1: oklch(0.88 0.24 130);
-  --chart-2: oklch(0.65 0.012 270);
-  --chart-3: oklch(0.5 0.012 270);
-  --chart-4: oklch(0.35 0.012 270);
-  --chart-5: oklch(0.22 0.012 270);
-  --sidebar: oklch(0.17 0.012 270);
-  --sidebar-foreground: oklch(0.97 0.005 90);
-  --sidebar-primary: oklch(0.88 0.24 130);
-  --sidebar-primary-foreground: oklch(0.13 0.012 270);
-  --sidebar-accent: oklch(0.22 0.012 270);
-  --sidebar-accent-foreground: oklch(0.97 0.005 90);
-  --sidebar-border: oklch(1 0 0 / 8%);
-  --sidebar-ring: oklch(0.55 0 0);
+  --popover: #181C23;
+  --popover-foreground: #E8E6DF;
+
+  --primary: #E8E6DF;
+  --primary-foreground: #12151A;
+
+  --secondary: #1F242D;
+  --secondary-foreground: #E8E6DF;
+
+  --muted: #1F242D;
+  --muted-foreground: #8B8577;
+
+  /* Accent: Blueprint teal (slightly lifted for dark mode) */
+  --accent: #3E7987;
+  --accent-foreground: #E8E6DF;
+  --blueprint-teal: #3E7987;
+
+  /* Secondary accent: Muted rust-red */
+  --signal: #D9533D;
+  --signal-foreground: #FFFFFF;
+  --rust-red: #D9533D;
+
+  --border: rgba(232, 230, 223, 0.12);
+  --input: rgba(232, 230, 223, 0.15);
+  --ring: #3E7987;
+  --destructive: #D9533D;
+
+  --radius: 0.25rem;
+
+  --chart-1: #3E7987;
+  --chart-2: #8B8577;
+  --chart-3: #E8E6DF;
+  --chart-4: #D9533D;
+  --chart-5: #2B313D;
+
+  --sidebar: #181C23;
+  --sidebar-foreground: #E8E6DF;
+  --sidebar-primary: #3E7987;
+  --sidebar-primary-foreground: #E8E6DF;
+  --sidebar-accent: #1F242D;
+  --sidebar-accent-foreground: #E8E6DF;
+  --sidebar-border: rgba(232, 230, 223, 0.12);
+  --sidebar-ring: #3E7987;
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
   }
   body {
-    @apply bg-background text-foreground tracking-tight selection:bg-signal selection:text-signal-foreground;
-    font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+    @apply bg-background text-foreground selection:bg-accent selection:text-white;
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
     font-size: var(--font-size-base);
-    line-height: 1.55;
+    line-height: 1.6;
   }
   html {
     scroll-behavior: smooth;
   }
 
-  /* HEADINGS — editorial serif display */
-  h1, h2, h3, .text-heading-hero, .text-heading-section, .text-heading-card {
-    font-family: var(--font-display), ui-serif, Georgia, "Times New Roman", serif;
-    font-weight: 400;
-    letter-spacing: -0.025em;
+  /* HEADINGS — Architectural, intentional hierarchy */
+  h1, h2, h3, h4, .text-heading-hero, .text-heading-section, .text-heading-card {
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--foreground);
   }
   h1, .text-heading-hero {
     font-size: var(--font-size-hero);
-    line-height: 0.9;
-    letter-spacing: -0.04em;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
   }
   h2, .text-heading-section {
     font-size: var(--font-size-display);
-    line-height: 1.0;
-    letter-spacing: -0.03em;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
   }
   h3, .text-heading-card {
-    font-size: var(--font-size-3xl);
-    line-height: 1.1;
-    letter-spacing: -0.02em;
+    font-size: var(--font-size-2xl);
+    line-height: 1.25;
+    letter-spacing: -0.015em;
   }
 
   p, .text-body {
@@ -190,50 +220,84 @@
 }
 
 @layer utilities {
-  .font-display {
-    font-family: var(--font-display), ui-serif, Georgia, "Times New Roman", serif;
-  }
   .font-mono {
-    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-family: var(--font-mono), ui-monospace, monospace;
   }
-  .glass-premium {
-    @apply bg-background/60 backdrop-blur-3xl border border-border/50 shadow-2xl;
+  .font-sans {
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   }
-  .heading-gradient {
-    @apply bg-linear-to-br from-foreground to-foreground/40 bg-clip-text text-transparent;
-  }
+
   .text-balance { text-wrap: balance; }
   .text-pretty { text-wrap: pretty; }
 
-  /* Eyebrow label — uppercase mono tag used for section markers */
-  .eyebrow {
-    @apply font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground;
+  /* Technical metadata / Section marker — Sentence case, clean mono */
+  .eyebrow, .meta-label, .meta-mono, .field-label {
+    @apply font-mono text-xs text-muted-foreground font-normal tracking-normal;
   }
 
-  /* Marquee — infinite horizontal scroll */
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
+  /* Technical schematic border accents */
+  .schematic-box {
+    @apply relative border border-border bg-card transition-colors;
   }
-  .animate-marquee {
-    animation: marquee 40s linear infinite;
-  }
-  .animate-marquee-slow {
-    animation: marquee 60s linear infinite;
-  }
-  .animate-marquee-reverse {
-    animation: marquee 50s linear infinite reverse;
+  .schematic-box-accent {
+    @apply relative border border-[#2D5F6B]/30 bg-card hover:border-[#2D5F6B] transition-colors;
   }
 
-  /* Subtle grid background */
-  .bg-grid {
+  /* Technical corner ticks */
+  .corner-ticks {
+    position: relative;
+  }
+  .corner-ticks::before,
+  .corner-ticks::after {
+    content: "";
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-color: var(--blueprint-teal);
+    pointer-events: none;
+  }
+  .corner-ticks::before {
+    top: -1px;
+    left: -1px;
+    border-top: 1px solid;
+    border-left: 1px solid;
+  }
+  .corner-ticks::after {
+    bottom: -1px;
+    right: -1px;
+    border-bottom: 1px solid;
+    border-right: 1px solid;
+  }
+
+  /* Drafting / Technical Grid Background */
+  .bg-grid,
+  .bg-drafting-grid,
+  .bg-schematic-grid {
     background-image:
-      linear-gradient(to right, color-mix(in oklab, currentColor 6%, transparent) 1px, transparent 1px),
-      linear-gradient(to bottom, color-mix(in oklab, currentColor 6%, transparent) 1px, transparent 1px);
-    background-size: 48px 48px;
+      linear-gradient(to right, color-mix(in srgb, var(--border) 60%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, var(--border) 60%, transparent) 1px, transparent 1px);
+    background-size: 32px 32px;
   }
-  .bg-dotted {
-    background-image: radial-gradient(color-mix(in oklab, currentColor 10%, transparent) 1px, transparent 1px);
-    background-size: 22px 22px;
+
+  .bg-blueprint-lines {
+    background-image:
+      linear-gradient(to right, color-mix(in srgb, var(--border) 40%, transparent) 1px, transparent 1px);
+    background-size: 24px 100%;
+  }
+}
+
+/* ── Job Application AI — phrase highlights ─────────────────── */
+.apply-highlight-preview mark.apply-ai-phrase {
+  background-color: #fef08a;
+  color: #713f12;
+  border-radius: 2px;
+  padding: 0 2px;
+  font-style: normal;
+}
+
+@media (prefers-color-scheme: dark) {
+  .apply-highlight-preview mark.apply-ai-phrase {
+    background-color: #422006;
+    color: #fde68a;
   }
 }

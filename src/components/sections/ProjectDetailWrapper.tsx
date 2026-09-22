@@ -8,7 +8,7 @@ import { FaGithub } from "react-icons/fa"
 import Link from "next/link"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
-import { SiteCopy, t, renderRichTitle } from "@/lib/copy"
+import { SiteCopy, t } from "@/lib/copy"
 
 interface Props {
   id: string
@@ -61,19 +61,19 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
   if (isLoading)
     return (
       <div className="px-6 md:px-12 lg:px-16 xl:px-24 py-32 max-w-[1600px] mx-auto animate-pulse">
-        <div className="h-4 w-32 bg-secondary rounded-full mb-8" />
-        <div className="h-12 w-2/3 bg-secondary rounded-full mb-6" />
-        <div className="h-4 w-1/2 bg-secondary rounded-full mb-12" />
-        <div className="aspect-video bg-secondary rounded-3xl" />
+        <div className="h-4 w-32 bg-secondary rounded-xs mb-8" />
+        <div className="h-12 w-2/3 bg-secondary rounded-xs mb-6" />
+        <div className="h-4 w-1/2 bg-secondary rounded-xs mb-12" />
+        <div className="aspect-video bg-secondary rounded-xs border border-border" />
       </div>
     )
 
   if (!project)
     return (
       <div className="text-center py-32">
-        <p className="font-display text-3xl">Project not found.</p>
-        <Link href="/projects" className="inline-flex items-center gap-2 mt-6 text-sm font-medium hover:text-signal transition-colors">
-          <ArrowLeft className="w-4 h-4" /> Back to all projects
+        <p className="text-heading-section text-foreground">Project not found.</p>
+        <Link href="/projects" className="inline-flex items-center gap-2 mt-6 font-mono text-xs text-muted-foreground hover:text-[#2D5F6B] dark:hover:text-[#3E7987] transition-colors">
+          <span>[ Back to all projects ]</span>
         </Link>
       </div>
     )
@@ -97,7 +97,7 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
         >
           <button
             aria-label="Close"
-            className="absolute top-6 right-6 w-12 h-12 rounded-full bg-background/10 hover:bg-background/20 backdrop-blur border border-background/20 flex items-center justify-center text-background"
+            className="absolute top-6 right-6 w-10 h-10 rounded-xs bg-background/10 hover:bg-background/20 border border-background/20 flex items-center justify-center text-background"
           >
             <X className="w-5 h-5" />
           </button>
@@ -114,52 +114,54 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
       )}
 
       {/* Top bar */}
-      <div className="px-6 md:px-12 lg:px-16 xl:px-24 pt-28 md:pt-32 pb-8">
-        <div className="max-w-[1600px] mx-auto flex items-center justify-between">
+      <div className="px-6 md:px-12 lg:px-16 xl:px-24 pt-24 md:pt-28 pb-6">
+        <div className="max-w-[1600px] mx-auto flex items-center justify-between border-b border-border pb-4">
           <Link
             href="/projects"
-            className="group inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            className="group inline-flex items-center gap-2 font-mono text-xs text-muted-foreground hover:text-[#2D5F6B] transition-colors"
           >
-            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-0.5" />
-            {t(copy, "project.back_link", "All projects")}
+            <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-0.5" />
+            <span>[ {t(copy, "project.back_link", "Return to catalog")} ]</span>
           </Link>
-          <p className="eyebrow hidden md:block">{t(copy, "project.kicker", "Case study")}</p>
+          <p className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987]">
+            {t(copy, "project.kicker", "system.spec // case study")}
+          </p>
         </div>
       </div>
 
       {/* Title block */}
-      <header className="px-6 md:px-12 lg:px-16 xl:px-24 pb-16 md:pb-20">
+      <header className="px-6 md:px-12 lg:px-16 xl:px-24 pb-12 md:pb-16">
         <div className="max-w-[1600px] mx-auto">
-          <div className="flex items-end justify-between gap-8 border-b border-border pb-10">
-            <div className="space-y-5 max-w-3xl">
-              <div className="flex flex-wrap items-center gap-3">
-                <span className="text-xs font-medium px-3 py-1.5 rounded-full bg-secondary text-secondary-foreground">
-                  {project.project_type || "Project"}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-8">
+            <div className="space-y-4 max-w-3xl">
+              <div className="flex flex-wrap items-center gap-2 font-mono text-xs">
+                <span className="px-2.5 py-1 rounded-xs bg-secondary border border-border/80 text-foreground">
+                  {project.project_type || "Production System"}
                 </span>
                 {project.featured && (
-                  <span className="text-xs font-medium px-3 py-1.5 rounded-full bg-signal text-signal-foreground">
-                    Featured
+                  <span className="px-2.5 py-1 rounded-xs border border-[#2D5F6B]/30 text-[#2D5F6B] dark:text-[#3E7987] font-medium">
+                    Featured Spec
                   </span>
                 )}
               </div>
-              <h1 className="font-display text-heading-hero leading-[0.9]">
+              <h1 className="text-heading-hero font-semibold tracking-tight text-foreground">
                 {project.title}
-                <span className="text-signal">.</span>
               </h1>
-              <p className="text-base md:text-lg text-muted-foreground leading-relaxed text-pretty max-w-2xl">
+              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed text-pretty max-w-2xl font-sans">
                 {project.description}
               </p>
             </div>
 
-            <div className="hidden md:flex flex-col gap-3 shrink-0">
+            <div className="flex flex-wrap md:flex-col gap-3 shrink-0 font-mono text-xs">
               {project.live_url && (
                 <a
                   href={project.live_url}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 bg-foreground text-background h-12 px-5 rounded-full text-sm font-medium hover:bg-signal hover:text-signal-foreground transition-colors"
+                  className="inline-flex items-center justify-center gap-2 bg-[#2D5F6B] text-white dark:bg-[#3E7987] dark:text-background h-11 px-5 rounded-xs font-medium hover:bg-[#234b54] transition-colors"
                 >
-                  {t(copy, "project.live_cta", "Visit live site")} <ArrowUpRight className="w-4 h-4" />
+                  <span>[ {t(copy, "project.live_cta", "Launch live system")} ]</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
                 </a>
               )}
               {project.github_url && (
@@ -167,9 +169,10 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
                   href={project.github_url}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 border border-border h-12 px-5 rounded-full text-sm font-medium hover:border-foreground transition-colors"
+                  className="inline-flex items-center justify-center gap-2 border border-border bg-card h-11 px-5 rounded-xs text-foreground hover:border-[#2D5F6B] transition-colors"
                 >
-                  <FaGithub className="w-4 h-4" /> {t(copy, "project.source_cta", "Source")}
+                  <FaGithub className="w-3.5 h-3.5" />
+                  <span>[ {t(copy, "project.source_cta", "View repository")} ]</span>
                 </a>
               )}
             </div>
@@ -179,12 +182,12 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
 
       {/* Hero image gallery */}
       {project.images?.length > 0 && (
-        <section className="px-6 md:px-12 lg:px-16 xl:px-24 mb-16 md:mb-24">
+        <section className="px-6 md:px-12 lg:px-16 xl:px-24 mb-16 md:mb-20">
           <div className="max-w-[1600px] mx-auto">
             <div className="relative">
               <div
                 onClick={() => setIsZoomed(true)}
-                className="group relative aspect-video rounded-3xl overflow-hidden border border-border bg-secondary cursor-zoom-in"
+                className="group relative aspect-video rounded-xs overflow-hidden border border-border bg-secondary cursor-zoom-in corner-ticks"
               >
                 <AnimatePresence initial={false} custom={direction} mode="wait">
                   <motion.div
@@ -210,14 +213,14 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
                   </motion.div>
                 </AnimatePresence>
 
-                <div className="absolute inset-0 bg-foreground/30 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none flex items-center justify-center">
-                  <span className="bg-background text-foreground text-xs font-medium px-4 py-2 rounded-full">
-                    Click to view full
+                <div className="absolute inset-0 bg-foreground/20 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none flex items-center justify-center">
+                  <span className="bg-background/90 text-foreground font-mono text-xs px-3 py-1.5 rounded-xs border border-border">
+                    [ Click to inspect frame ]
                   </span>
                 </div>
 
-                <div className="absolute bottom-5 right-5 bg-foreground/80 text-background text-xs font-mono px-3 py-1.5 rounded-full backdrop-blur">
-                  {currentImage + 1} / {project.images.length}
+                <div className="absolute bottom-4 right-4 bg-background/90 backdrop-blur-xs text-foreground text-xs font-mono px-2.5 py-1 rounded-xs border border-border">
+                  frame {currentImage + 1} / {project.images.length}
                 </div>
               </div>
 
@@ -225,17 +228,17 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
                 <>
                   <button
                     onClick={prev}
-                    aria-label="Previous"
-                    className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-background/90 backdrop-blur border border-border flex items-center justify-center hover:bg-foreground hover:text-background transition-colors shadow-md"
+                    aria-label="Previous frame"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-xs bg-background/90 backdrop-blur-xs border border-border flex items-center justify-center hover:border-foreground transition-colors cursor-pointer"
                   >
-                    <ChevronLeft className="w-5 h-5" />
+                    <ChevronLeft className="w-4 h-4 text-foreground" />
                   </button>
                   <button
                     onClick={next}
-                    aria-label="Next"
-                    className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-background/90 backdrop-blur border border-border flex items-center justify-center hover:bg-foreground hover:text-background transition-colors shadow-md"
+                    aria-label="Next frame"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-xs bg-background/90 backdrop-blur-xs border border-border flex items-center justify-center hover:border-foreground transition-colors cursor-pointer"
                   >
-                    <ChevronRight className="w-5 h-5" />
+                    <ChevronRight className="w-4 h-4 text-foreground" />
                   </button>
                 </>
               )}
@@ -243,7 +246,7 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
 
             {/* Thumbnails */}
             {project.images.length > 1 && (
-              <div className="flex gap-3 overflow-x-auto pt-5 pb-2 no-scrollbar">
+              <div className="flex gap-3 overflow-x-auto pt-4 pb-2 no-scrollbar">
                 {project.images.map((img, i) => (
                   <button
                     key={img}
@@ -251,13 +254,13 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
                       setDirection(i > currentImage ? 1 : -1)
                       setCurrentImage(i)
                     }}
-                    className={`relative shrink-0 w-28 aspect-video rounded-xl overflow-hidden border-2 transition-all ${
+                    className={`relative shrink-0 w-24 aspect-video rounded-xs overflow-hidden border transition-all cursor-pointer ${
                       i === currentImage
-                        ? "border-foreground"
-                        : "border-transparent opacity-50 hover:opacity-100"
+                        ? "border-[#2D5F6B] ring-1 ring-[#2D5F6B]"
+                        : "border-border opacity-60 hover:opacity-100"
                     }`}
                   >
-                    <Image src={img} alt={`Thumb ${i + 1}`} fill className="object-cover" sizes="112px" />
+                    <Image src={img} alt={`Thumb ${i + 1}`} fill className="object-cover" sizes="96px" />
                   </button>
                 ))}
               </div>
@@ -268,17 +271,19 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
 
       {/* Body grid */}
       <div className="px-6 md:px-12 lg:px-16 xl:px-24">
-        <div className="max-w-[1600px] mx-auto grid lg:grid-cols-12 gap-10 md:gap-16">
+        <div className="max-w-[1600px] mx-auto grid lg:grid-cols-12 gap-10 md:gap-14">
           {/* Main column */}
-          <div className="lg:col-span-8 space-y-16 md:space-y-20">
+          <div className="lg:col-span-8 space-y-12 md:space-y-16">
             {/* Purpose */}
             {project.purpose && (
-              <section className="space-y-5">
-                <p className="eyebrow">{t(copy, "project.brief_eyebrow", "— The brief")}</p>
-                <h2 className="font-display text-3xl md:text-4xl leading-tight">
-                  {renderRichTitle(t(copy, "project.brief_title", "Why this *existed*."))}
+              <section className="space-y-4 border-b border-border pb-10">
+                <div className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987]">
+                  {t(copy, "project.brief_eyebrow", "01. Technical brief & problem")}
+                </div>
+                <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
+                  {t(copy, "project.brief_title", "Why this was engineered")}
                 </h2>
-                <p className="text-base md:text-lg text-muted-foreground leading-relaxed text-pretty max-w-2xl">
+                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed text-pretty max-w-2xl font-sans">
                   {project.purpose}
                 </p>
               </section>
@@ -286,21 +291,23 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
 
             {/* Features */}
             {features.length > 0 && (
-              <section className="space-y-6">
-                <p className="eyebrow">{t(copy, "project.features_eyebrow", "— What it does")}</p>
-                <h2 className="font-display text-3xl md:text-4xl leading-tight">
-                  {renderRichTitle(t(copy, "project.features_title", "Key *features*."))}
+              <section className="space-y-5 border-b border-border pb-10">
+                <div className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987]">
+                  {t(copy, "project.features_eyebrow", "02. Implementation specifications")}
+                </div>
+                <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
+                  {t(copy, "project.features_title", "Core architecture & functional capabilities")}
                 </h2>
                 <ul className="grid sm:grid-cols-2 gap-3 pt-2">
                   {features.map((feature, i) => (
                     <li
                       key={i}
-                      className="flex items-start gap-3 bg-card border border-border rounded-2xl px-5 py-4"
+                      className="flex items-start gap-3 bg-card border border-border rounded-xs px-4 py-3.5 corner-ticks"
                     >
-                      <span className="font-mono text-xs text-muted-foreground pt-0.5 shrink-0">
-                        {String(i + 1).padStart(2, "0")}
+                      <span className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987] font-medium pt-0.5 shrink-0">
+                        [{String(i + 1).padStart(2, "0")}]
                       </span>
-                      <span className="text-sm leading-relaxed">{feature}</span>
+                      <span className="text-xs sm:text-sm font-sans leading-relaxed text-foreground/90">{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -309,19 +316,21 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
 
             {/* Learned */}
             {learned.length > 0 && (
-              <section className="space-y-6">
-                <p className="eyebrow">{t(copy, "project.learned_eyebrow", "— Reflection")}</p>
-                <h2 className="font-display text-3xl md:text-4xl leading-tight">
-                  {renderRichTitle(t(copy, "project.learned_title", "What I *took away*."))}
+              <section className="space-y-5">
+                <div className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987]">
+                  {t(copy, "project.learned_eyebrow", "03. Engineering takeaways")}
+                </div>
+                <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
+                  {t(copy, "project.learned_title", "Hardest technical challenges & insights")}
                 </h2>
-                <div className="space-y-4 pt-2">
+                <div className="space-y-4 pt-1">
                   {learned.map((item, i) => (
-                    <p
+                    <div
                       key={i}
-                      className="text-base md:text-lg leading-relaxed text-foreground/90 text-pretty max-w-2xl border-l-2 border-signal pl-5"
+                      className="text-xs sm:text-sm leading-relaxed text-foreground/90 font-sans max-w-2xl border-l-2 border-[#2D5F6B] pl-4"
                     >
                       {item}
-                    </p>
+                    </div>
                   ))}
                 </div>
               </section>
@@ -330,25 +339,30 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
 
           {/* Sidebar */}
           <aside className="lg:col-span-4">
-            <div className="lg:sticky lg:top-28 space-y-6">
-              <div className="bg-card border border-border rounded-3xl p-7 space-y-7">
-                <div>
-                  <p className="eyebrow">{t(copy, "project.role_label", "My role")}</p>
-                  <p className="text-base font-medium mt-1">{project.my_role || "Designer & Developer"}</p>
+            <div className="lg:sticky lg:top-24 space-y-6">
+              <div className="border border-border bg-card rounded-xs p-6 corner-ticks space-y-6 font-mono text-xs">
+                <div className="border-b border-border pb-3 flex justify-between items-center text-muted-foreground">
+                  <span className="text-foreground font-semibold">Metadata manifest</span>
+                  <span>spec.tbl</span>
                 </div>
 
-                <div>
-                  <p className="eyebrow">{t(copy, "project.type_label", "Project type")}</p>
-                  <p className="text-base font-medium mt-1">{project.project_type || "Production project"}</p>
+                <div className="space-y-1">
+                  <span className="text-muted-foreground block text-[11px]">{t(copy, "project.role_label", "Engineering role")}</span>
+                  <p className="text-sm font-medium text-foreground">{project.my_role || "Frontend & Full-stack Engineer"}</p>
                 </div>
 
-                <div>
-                  <p className="eyebrow">{t(copy, "project.stack_label", "Tech stack")}</p>
-                  <div className="flex flex-wrap gap-2 mt-2">
+                <div className="space-y-1">
+                  <span className="text-muted-foreground block text-[11px]">{t(copy, "project.type_label", "System type")}</span>
+                  <p className="text-sm font-medium text-foreground">{project.project_type || "Production Web Application"}</p>
+                </div>
+
+                <div className="space-y-2">
+                  <span className="text-muted-foreground block text-[11px]">{t(copy, "project.stack_label", "Stack manifest")}</span>
+                  <div className="flex flex-wrap gap-1.5 pt-1">
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="text-xs font-medium px-2.5 py-1 rounded-full bg-secondary text-secondary-foreground"
+                        className="px-2 py-0.5 border border-border/80 bg-secondary rounded-xs text-[11px] text-foreground"
                       >
                         {tag}
                       </span>
@@ -357,16 +371,17 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
                 </div>
               </div>
 
-              {/* Mobile actions (sidebar already has links on desktop) */}
-              <div className="md:hidden flex flex-col gap-3">
+              {/* Mobile actions */}
+              <div className="md:hidden flex flex-col gap-3 font-mono text-xs">
                 {project.live_url && (
                   <a
                     href={project.live_url}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center justify-center gap-2 bg-foreground text-background h-12 rounded-full text-sm font-medium"
+                    className="inline-flex items-center justify-center gap-2 bg-[#2D5F6B] text-white h-11 rounded-xs font-medium"
                   >
-                    {t(copy, "project.live_cta", "Visit live site")} <ArrowUpRight className="w-4 h-4" />
+                    <span>[ {t(copy, "project.live_cta", "Visit live site")} ]</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
                   </a>
                 )}
                 {project.github_url && (
@@ -374,9 +389,10 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
                     href={project.github_url}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center justify-center gap-2 border border-border h-12 rounded-full text-sm font-medium"
+                    className="inline-flex items-center justify-center gap-2 border border-border bg-card h-11 rounded-xs font-medium"
                   >
-                    <FaGithub className="w-4 h-4" /> {t(copy, "project.source_cta", "Source")}
+                    <FaGithub className="w-3.5 h-3.5" />
+                    <span>[ {t(copy, "project.source_cta", "Source code")} ]</span>
                   </a>
                 )}
               </div>
@@ -386,19 +402,22 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
       </div>
 
       {/* Bottom CTA */}
-      <div className="px-6 md:px-12 lg:px-16 xl:px-24 pt-24 mt-16 border-t border-border">
-        <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row items-start md:items-end justify-between gap-8 pt-12">
-          <div className="space-y-3">
-            <p className="eyebrow">{t(copy, "project.up_next_eyebrow", "— Up next")}</p>
-            <h3 className="font-display text-3xl md:text-5xl leading-tight">
-              {renderRichTitle(t(copy, "project.up_next_title", "Browse more *work*"))}
+      <div className="px-6 md:px-12 lg:px-16 xl:px-24 pt-16 mt-16 border-t border-border">
+        <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row items-start md:items-end justify-between gap-6 pb-8">
+          <div className="space-y-2">
+            <div className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987]">
+              {t(copy, "project.up_next_eyebrow", "Catalog traversal")}
+            </div>
+            <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
+              {t(copy, "project.up_next_title", "Browse more case studies")}
             </h3>
           </div>
           <Link
             href="/projects"
-            className="inline-flex items-center gap-2 bg-foreground text-background h-12 px-6 rounded-full text-sm font-medium hover:bg-signal hover:text-signal-foreground transition-colors"
+            className="inline-flex items-center gap-2 border border-border bg-card h-11 px-5 rounded-xs font-mono text-xs text-foreground hover:border-[#2D5F6B] hover:text-[#2D5F6B] transition-colors"
           >
-            {t(copy, "project.back_link", "All projects")} <ArrowUpRight className="w-4 h-4" />
+            <span>[ {t(copy, "project.back_link", "All cataloged projects")} ]</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
           </Link>
         </div>
       </div>
