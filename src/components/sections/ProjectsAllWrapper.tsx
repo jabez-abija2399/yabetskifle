@@ -6,7 +6,7 @@ import { ProjectCard } from "./ProjectCard"
 import { EmptyState } from "@/components/ui/EmptyState"
 import { FolderGit2 } from "lucide-react"
 import { PortfolioService } from "@/services/portfolio"
-import { SiteCopy, t } from "@/lib/copy"
+import { SiteCopy, t, renderRichTitle } from "@/lib/copy"
 
 export const ProjectsAllWrapper = () => {
   const { projects, isLoading } = useProjects()
@@ -25,7 +25,7 @@ export const ProjectsAllWrapper = () => {
               {t(copy, "projects.archive_eyebrow", "System archive // Index")}
             </div>
             <h1 className="text-heading-hero font-semibold tracking-tight text-foreground">
-              {t(copy, "projects.archive_title", "Selected production projects")}
+              {renderRichTitle(t(copy, "projects.archive_title", "Selected production projects"), "text-[#2D5F6B] dark:text-[#3E7987]")}
             </h1>
             <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
               {t(copy, "projects.archive_subtitle", "A structured index of deployed applications, architectural case studies, and frontend experiments.")}

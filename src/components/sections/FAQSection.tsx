@@ -2,7 +2,7 @@
 import { Plus } from "lucide-react"
 import { useState } from "react"
 import { FAQ } from "@/types/portfolio"
-import { SiteCopy, t } from "@/lib/copy"
+import { SiteCopy, t, renderRichTitle } from "@/lib/copy"
 
 interface Props {
   faqs?: FAQ[]
@@ -25,10 +25,10 @@ export const FAQSection = ({ faqs = fallback, copy }: Props) => {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-border">
           <div className="space-y-2">
             <div className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987]">
-              {t(copy, "faq.eyebrow", "10. Inquiries & parameters")}
+              {t(copy, "faq.eyebrow", "09. Inquiries & parameters")}
             </div>
             <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
-              {t(copy, "faq.title", "Frequently answered engineering questions")}
+              {renderRichTitle(t(copy, "faq.title", "Frequently answered engineering questions"), "text-[#2D5F6B] dark:text-[#3E7987]")}
             </h2>
           </div>
         </div>

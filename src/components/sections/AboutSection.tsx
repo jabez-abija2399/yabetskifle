@@ -1,6 +1,6 @@
 import { Profile } from "@/types/portfolio"
 import { Globe, MapPin, Compass, BookOpen, Quote } from "lucide-react"
-import { SiteCopy, t } from "@/lib/copy"
+import { SiteCopy, t, renderRichTitle } from "@/lib/copy"
 
 interface Props {
   profile: Profile
@@ -34,7 +34,7 @@ export const AboutSection = ({ profile, languagesLine, copy }: Props) => {
               {t(copy, "about.eyebrow", "03. Engineering background")}
             </div>
             <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
-              {t(copy, "about.title", "Operating principles & technical narrative")}
+              {renderRichTitle(t(copy, "about.title", "Operating principles & technical narrative"), "text-[#2D5F6B] dark:text-[#3E7987]")}
             </h2>
           </div>
           <p className="font-mono text-xs text-muted-foreground max-w-sm">

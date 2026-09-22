@@ -10,7 +10,7 @@ import {
 import { IconType } from "react-icons"
 import { Braces, Layers } from "lucide-react"
 
-import { SiteCopy, t } from "@/lib/copy"
+import { SiteCopy, t, renderRichTitle } from "@/lib/copy"
 
 interface SkillCategory {
   category_name: string
@@ -61,7 +61,7 @@ export const TechStack = ({ skills, copy }: Props) => {
               {t(copy, "skills.eyebrow", "02. Technical specifications")}
             </div>
             <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
-              {t(copy, "skills.title", "Architecture, runtime & stack inventory")}
+              {renderRichTitle(t(copy, "skills.title", "Architecture, runtime & stack inventory"), "text-[#2D5F6B] dark:text-[#3E7987]")}
             </h2>
           </div>
           <div className="font-mono text-xs text-muted-foreground">

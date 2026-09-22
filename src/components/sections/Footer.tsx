@@ -2,7 +2,7 @@ import { SiteSettings, Profile } from "@/types/portfolio"
 import { FaGithub, FaLinkedin, FaTwitter, FaInstagram } from "react-icons/fa"
 import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
-import { SiteCopy, t } from "@/lib/copy"
+import { SiteCopy, t, renderRichTitle } from "@/lib/copy"
 
 interface Props {
   settings: SiteSettings | null
@@ -22,10 +22,10 @@ export const Footer = ({ settings, profile, copy }: Props) => {
         <div className="grid md:grid-cols-12 gap-10 pb-12 border-b border-border">
           <div className="md:col-span-7 space-y-4">
             <div className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987]">
-              {t(copy, "footer.cta_eyebrow", "08. Ready to collaborate?")}
+              {t(copy, "footer.cta_eyebrow", "11. Ready to collaborate?")}
             </div>
             <h3 className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight text-foreground">
-              {t(copy, "footer.cta_title", "Let's engineer something robust together.")}
+              {renderRichTitle(t(copy, "footer.cta_title", "Let's engineer something robust together."), "text-[#2D5F6B] dark:text-[#3E7987]")}
             </h3>
             <p className="text-xs sm:text-sm text-muted-foreground max-w-md font-sans">
               Open for full-time engineering roles, high-impact contracts, and design systems architecture.

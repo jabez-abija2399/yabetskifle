@@ -3,11 +3,12 @@ import { createSupabaseClient } from "@/lib/supabase"
 import { Project } from "@/types/portfolio"
 import { toast } from "sonner"
 
+const supabase = createSupabaseClient()
+
 export const useProjects = () => {
   // 1. State starts as an empty array (not null or undefined!)
   const [projects, setProjects] = useState<Project[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  const supabase = createSupabaseClient()
 
   // 2. Fetch ALL projects, sorted by order_index
   useEffect(() => {

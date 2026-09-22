@@ -41,7 +41,7 @@ export function JobForm({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {docConfig.showCompany && (
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold tracking-widest uppercase text-neutral-400 dark:text-neutral-500">
+              <label className="text-xs font-mono text-muted-foreground">
                 Company
               </label>
               <input
@@ -49,13 +49,13 @@ export function JobForm({
                 value={companyName}
                 onChange={(e) => onCompanyNameChange(e.target.value)}
                 placeholder="e.g. Stripe, HOPn, Notion"
-                className="w-full px-3 py-2.5 text-sm rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 dark:placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-neutral-400 dark:focus:ring-neutral-600 transition-all duration-200"
+                className="w-full px-3 py-2.5 text-sm rounded-xs border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-[#2D5F6B] transition-colors"
               />
             </div>
           )}
           {docConfig.showRole && (
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold tracking-widest uppercase text-neutral-400 dark:text-neutral-500">
+              <label className="text-xs font-mono text-muted-foreground">
                 Role
               </label>
               <input
@@ -63,7 +63,7 @@ export function JobForm({
                 value={roleName}
                 onChange={(e) => onRoleNameChange(e.target.value)}
                 placeholder="e.g. Frontend Engineer, Full-Stack Dev"
-                className="w-full px-3 py-2.5 text-sm rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 dark:placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-neutral-400 dark:focus:ring-neutral-600 transition-all duration-200"
+                className="w-full px-3 py-2.5 text-sm rounded-xs border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-[#2D5F6B] transition-colors"
               />
             </div>
           )}
@@ -72,14 +72,12 @@ export function JobForm({
 
       <div className="space-y-1.5">
         <div className="flex items-center justify-between">
-          <label className="text-xs font-semibold tracking-widest uppercase text-neutral-400 dark:text-neutral-500">
+          <label className="text-xs font-mono text-muted-foreground">
             {docType === "proposal" ? "Project Brief" : "Job Description"}
           </label>
           <span
-            className={`text-xs tabular-nums transition-colors ${
-              charCount < 50
-                ? "text-neutral-300 dark:text-neutral-700"
-                : "text-neutral-400 dark:text-neutral-500"
+            className={`text-xs font-mono tabular-nums transition-colors ${
+              charCount < 50 ? "text-muted-foreground/50" : "text-muted-foreground"
             }`}
           >
             {charCount} chars
@@ -90,9 +88,9 @@ export function JobForm({
           onChange={(e) => onJobDescriptionChange(e.target.value)}
           placeholder={docConfig.placeholder}
           rows={8}
-          className="w-full px-4 py-3 text-sm rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 dark:placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-neutral-400 dark:focus:ring-neutral-600 resize-none leading-relaxed transition-all duration-200"
+          className="w-full px-4 py-3 text-sm rounded-xs border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-[#2D5F6B] resize-none leading-relaxed transition-colors"
         />
-        <p className="text-xs text-neutral-400 dark:text-neutral-600">
+        <p className="text-xs text-muted-foreground">
           More detail → more tailored output. Paste the full JD.
         </p>
       </div>
@@ -100,7 +98,7 @@ export function JobForm({
       <button
         onClick={onSubmit}
         disabled={!isValid || isLoading}
-        className="w-full flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 disabled:opacity-40 disabled:cursor-not-allowed bg-neutral-900 dark:bg-neutral-100 text-white dark:text-neutral-900 hover:bg-neutral-700 dark:hover:bg-neutral-300 active:scale-[0.99]"
+        className="w-full flex items-center justify-center gap-2 px-6 py-3.5 rounded-xs font-mono text-xs font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2D5F6B] disabled:opacity-40 disabled:cursor-not-allowed bg-[#2D5F6B] text-white dark:bg-[#3E7987] dark:text-background hover:bg-[#234b54] cursor-pointer"
       >
         {isLoading ? (
           <>
@@ -110,7 +108,7 @@ export function JobForm({
         ) : (
           <>
             <Sparkles className="w-4 h-4" />
-            Generate
+            [ Generate document ]
           </>
         )}
       </button>

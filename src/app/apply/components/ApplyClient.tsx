@@ -26,7 +26,7 @@ export function ApplyClient() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-neutral-950 px-4 py-16 sm:py-24">
+    <div className="min-h-screen bg-background px-4 py-16 sm:py-24">
       <div className="max-w-2xl mx-auto space-y-12">
 
         <motion.div
@@ -35,15 +35,15 @@ export function ApplyClient() {
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="space-y-3"
         >
-          <p className="text-xs font-semibold tracking-widest uppercase text-neutral-400 dark:text-neutral-500">
+          <p className="font-mono text-xs text-muted-foreground">
             Private — Yabets only
           </p>
-          <h1 className="text-3xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
+          <h1 className="text-3xl font-semibold tracking-tight text-foreground">
             Job Application AI
           </h1>
-          <p className="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed max-w-lg">
+          <p className="text-sm text-muted-foreground leading-relaxed max-w-lg">
             Reads your live portfolio at{" "}
-            <span className="font-mono text-xs text-neutral-700 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-900 px-1.5 py-0.5 rounded">
+            <span className="font-mono text-xs text-foreground bg-secondary px-1.5 py-0.5 rounded-xs border border-border">
               yabetskifle.vercel.app
             </span>{" "}
             and generates documents in your actual voice. Nothing hardcoded — updates automatically when your site updates.
@@ -106,12 +106,12 @@ export function ApplyClient() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="flex items-start gap-2.5 px-4 py-3 rounded-xl bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800"
-            >
-              <AlertCircle className="w-4 h-4 text-red-600 dark:text-red-400 shrink-0 mt-0.5" />
-              <div>
-                <p className="text-sm font-medium text-red-700 dark:text-red-300">Generation failed</p>
-                <p className="text-xs text-red-600 dark:text-red-400 mt-0.5">{gen.errorMsg}</p>
+            className="flex items-start gap-2.5 px-4 py-3 rounded-xs bg-destructive/10 border border-destructive/30"
+          >
+            <AlertCircle className="w-4 h-4 text-destructive shrink-0 mt-0.5" />
+            <div>
+              <p className="text-sm font-medium text-destructive">Generation failed</p>
+              <p className="text-xs text-destructive/80 mt-0.5">{gen.errorMsg}</p>
               </div>
             </motion.div>
           )}

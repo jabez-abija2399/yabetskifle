@@ -9,6 +9,7 @@ interface HeroData {
   bio: string;
 }
 
+const supabase = createSupabaseClient();
 
 export const usePortfolio = () => {
   const [heroData, setHeroData] = useState<HeroData>({
@@ -18,11 +19,10 @@ export const usePortfolio = () => {
   })
 
   const [isLoading, setIsLoading] = useState(false);
-  const supabase = createSupabaseClient();
 
   useEffect(() => {
     const fetchSetting = async () => {
-      const {data, error} = await supabase
+      const {data} = await supabase
       .from('portfolio_settings')
       .select('*')
       .limit(1)

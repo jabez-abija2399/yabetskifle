@@ -1,6 +1,6 @@
 import { Experience } from "@/types/portfolio"
 import { MapPin } from "lucide-react"
-import { SiteCopy, t } from "@/lib/copy"
+import { SiteCopy, t, renderRichTitle } from "@/lib/copy"
 
 interface Props {
   experiences: Experience[]
@@ -20,7 +20,7 @@ export const ExperienceTimeline = ({ experiences, copy }: Props) => {
               {t(copy, "experience.eyebrow", "04. Engineering experience")}
             </div>
             <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
-              {t(copy, "experience.title", "Roles, teams & production contributions")}
+              {renderRichTitle(t(copy, "experience.title", "Roles, teams & production contributions"), "text-[#2D5F6B] dark:text-[#3E7987]")}
             </h2>
           </div>
           <p className="font-mono text-xs text-muted-foreground max-w-sm">

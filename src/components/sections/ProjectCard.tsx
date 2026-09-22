@@ -41,7 +41,16 @@ export const ProjectCard = ({ project, index = 0, variant = "default" }: Project
   return (
     <article
       onClick={handleNavigate}
-      className={`group cursor-pointer border border-[#2D5F6B]/30 hover:border-[#2D5F6B] bg-card rounded-xs transition-all duration-200 flex flex-col justify-between p-5 md:p-6 corner-ticks ${
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault()
+          handleNavigate()
+        }
+      }}
+      role="link"
+      tabIndex={0}
+      aria-label={`Open case study: ${project.title}`}
+      className={`group cursor-pointer border border-[#2D5F6B]/30 hover:border-[#2D5F6B] focus-visible:border-[#2D5F6B] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2D5F6B] bg-card rounded-xs transition-all duration-200 flex flex-col justify-between p-5 md:p-6 corner-ticks ${
         variant === "wide" ? "md:grid md:grid-cols-12 md:gap-8 items-stretch" : ""
       }`}
     >

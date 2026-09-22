@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "sonner";
 import { Navbar } from "@/components/layout/NavBar"
 import { ThemeProvider } from "@/components/providers/ThemeProvider"
+import { MotionConfig } from "framer-motion"
 import { PortfolioService } from "@/services/portfolio"
 
 // Always re-fetch site copy so navbar updates instantly when admin saves edits.
@@ -110,11 +111,13 @@ export default async function RootLayout({
         enableSystem
         disableTransitionOnChange
       >
-        <Navbar copy={copy} />
-        <main className="flex-1">
-          {children}
-        </main>
-        <Toaster position="top-center" richColors />
+        <MotionConfig reducedMotion="user">
+          <Navbar copy={copy} />
+          <main className="flex-1">
+            {children}
+          </main>
+          <Toaster position="top-center" richColors />
+        </MotionConfig>
       </ThemeProvider>
       </body>
     </html>

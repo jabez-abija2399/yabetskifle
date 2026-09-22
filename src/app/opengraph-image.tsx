@@ -11,8 +11,7 @@ export default async function Image() {
   const profile = await PortfolioService.getProfile().catch(() => null)
   const fullName = profile?.full_name || "Yabets Kifle"
   const role = profile?.role_title || "Frontend Developer · Full-stack with Next.js"
-  const firstName = fullName.split(" ")[0]
-  const lastName = fullName.split(" ").slice(1).join(" ") || "Kifle"
+  const year = new Date().getFullYear()
 
   return new ImageResponse(
     (
@@ -23,106 +22,137 @@ export default async function Image() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          backgroundColor: "#0F0F12",
-          color: "#FAFAF7",
-          padding: "70px 80px",
-          fontFamily: "Georgia, serif",
+          backgroundColor: "#F5F3EE",
+          color: "#1A1D23",
+          padding: "56px 64px",
           position: "relative",
           overflow: "hidden",
         }}
       >
-        {/* Lime glow */}
+        {/* Drafting grid — faint technical lines */}
         <div
           style={{
             position: "absolute",
-            top: -200,
-            right: -200,
-            width: 700,
-            height: 700,
-            borderRadius: "50%",
-            background: "radial-gradient(circle, #C9F73C40, transparent 70%)",
+            inset: 0,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            opacity: 0.5,
           }}
-        />
+        >
+          {[0, 1, 2, 3].map((i) => (
+            <div key={i} style={{ height: 1, backgroundColor: "#DDD8CD" }} />
+          ))}
+        </div>
 
-        {/* Top: status */}
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <div
-            style={{
-              width: 12,
-              height: 12,
-              borderRadius: "50%",
-              background: "#C9F73C",
-            }}
-          />
+        {/* Top rail — mono status + version */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            zIndex: 1,
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+            <div
+              style={{
+                width: 12,
+                height: 12,
+                borderRadius: 6,
+                backgroundColor: "#C4432E",
+              }}
+            />
+            <span
+              style={{
+                fontSize: 20,
+                fontFamily: "ui-monospace, monospace",
+                color: "#8B8577",
+              }}
+            >
+              Open to roles — Full-time · Contract · Remote
+            </span>
+          </div>
           <span
             style={{
-              fontSize: 18,
-              fontFamily: "system-ui, sans-serif",
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: "#FAFAF780",
-              fontWeight: 500,
+              fontSize: 20,
+              fontFamily: "ui-monospace, monospace",
+              color: "#2D5F6B",
             }}
           >
-            Open to work · Full-time · Contract · Freelance
+            v{year}.sys
           </span>
         </div>
 
-        {/* Center: massive name */}
+        {/* Center — name, intentional sans scale (no serif italic) */}
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            lineHeight: 0.85,
-            letterSpacing: "-0.04em",
+            gap: 18,
+            zIndex: 1,
           }}
         >
           <span
             style={{
-              fontSize: 200,
-              fontStyle: "italic",
-              color: "#FAFAF7E0",
+              fontSize: 22,
+              fontFamily: "ui-monospace, monospace",
+              color: "#2D5F6B",
             }}
           >
-            {firstName}
+            system.profile // portfolio
           </span>
-          <span style={{ fontSize: 200, display: "flex", alignItems: "baseline" }}>
-            {lastName}
-            <span style={{ color: "#C9F73C", marginLeft: 4 }}>.</span>
+          <span
+            style={{
+              fontSize: 118,
+              fontWeight: 700,
+              letterSpacing: -4,
+              color: "#1A1D23",
+              lineHeight: 1,
+            }}
+          >
+            {fullName}
+          </span>
+          <span
+            style={{
+              fontSize: 32,
+              color: "#1A1D23",
+              opacity: 0.85,
+              maxWidth: 900,
+            }}
+          >
+            {role}
           </span>
         </div>
 
-        {/* Bottom: role + signature */}
+        {/* Bottom rail — hairline + colophon */}
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "flex-end",
-            borderTop: "1px solid #FAFAF725",
-            paddingTop: 28,
+            borderTop: "1px solid #DDD8CD",
+            paddingTop: 24,
+            zIndex: 1,
           }}
         >
           <span
             style={{
-              fontSize: 28,
-              fontFamily: "system-ui, sans-serif",
-              fontWeight: 500,
-              maxWidth: 700,
+              fontSize: 20,
+              fontFamily: "ui-monospace, monospace",
+              color: "#1A1D23",
             }}
           >
-            {role}
+            React · Next.js · TypeScript
           </span>
           <span
             style={{
-              fontSize: 16,
-              fontFamily: "system-ui, sans-serif",
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: "#FAFAF770",
-              fontWeight: 500,
+              fontSize: 20,
+              fontFamily: "ui-monospace, monospace",
+              color: "#8B8577",
             }}
           >
-            Portfolio · 2026
+            Systems, not screens · {year}
           </span>
         </div>
       </div>

@@ -6,12 +6,19 @@ import {
   Post, Education, Certification
 } from "@/types/portfolio"
 
+export interface DbSkillCategory {
+  id?: string
+  category_name: string
+  technologies: string[]
+  order_index?: number
+}
+
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
-const ensureArray = (val: any): string[] => {
+const ensureArray = (val: unknown): string[] => {
   if (!val) return []
   if (Array.isArray(val)) return val
   if (typeof val === 'string') {
@@ -25,8 +32,8 @@ const ensureArray = (val: any): string[] => {
   return []
 }
 
-const transformProject = (p: any): Project => ({
-  ...p,
+const transformProject = (p: Record<string, unknown>): Project => ({
+  ...(p as unknown as Project),
   tags: ensureArray(p.tags),
   images: ensureArray(p.images),
   key_features: ensureArray(p.key_features),
@@ -144,7 +151,7 @@ export const PortfolioService = {
   },
 
   /** 📂 Update or Create a Project */
-  async saveProject(project: Partial<Project>): Promise<{ data: any, error: any }> {
+  async saveProject(project: Partial<Project>): Promise<{ data: Project[] | null, error: { message: string } | null }> {
     const { data, error } = await supabase
       .from("projects")
       .upsert({
@@ -152,7 +159,7 @@ export const PortfolioService = {
         updated_at: new Date().toISOString()
       }, { onConflict: 'id' })
       .select()
-    return { data, error }
+    return { data: (data as Project[]) || null, error }
   },
 
   /** 👤 Update Identity & Socials */
@@ -194,16 +201,16 @@ export const PortfolioService = {
   // 🛠️ --- TECHNICAL ECOSYSTEM (SKILLS) ---
 
   /** 🧩 Fetch all skill categories */
-  async getSkills(): Promise<any[]> {
+  async getSkills(): Promise<DbSkillCategory[]> {
     const { data } = await supabase
       .from("skills")
       .select("*")
       .order("order_index", { ascending: true })
-    return (data || []).map(s => ({ ...s, technologies: ensureArray(s.technologies) }))
+    return ((data || []) as DbSkillCategory[]).map(s => ({ ...s, technologies: ensureArray(s.technologies) }))
   },
 
   /** 💾 Save or Update a Skill Category */
-  async saveSkill(skill: any): Promise<void> {
+  async saveSkill(skill: Partial<DbSkillCategory> & { id?: string }): Promise<void> {
     const { error } = await supabase
       .from("skills")
       .upsert({

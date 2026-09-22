@@ -46,125 +46,6 @@ async function insert(table, rows) {
   return true
 }
 
-async function tryEducationTable() {
-  for (const t of ["education", "educations"]) {
-    const probe = await fetch(`${SUPA}/rest/v1/${t}?select=id&limit=1`, { headers })
-    if (probe.ok) return t
-  }
-  return null
-}
-
-async function tryCertTable() {
-  for (const t of ["certifications", "certification"]) {
-    const probe = await fetch(`${SUPA}/rest/v1/${t}?select=id&limit=1`, { headers })
-    if (probe.ok) return t
-  }
-  return null
-}
-
-const educationRows = [
-  {
-    institution: "Addis Ababa Science and Technology University",
-    degree: "B.Sc. in Software Engineering",
-    field_of_study: "Software Engineering",
-    duration: "2020 — 2025",
-    grade: "Distinction",
-  },
-]
-
-const certificationRows = [
-  {
-    title: "Meta Front-End Developer Professional Certificate",
-    issuer: "Meta / Coursera",
-    issued_at: "2025-03-01",
-    credential_url: "https://coursera.org/verify/your-credential-id",
-  },
-  {
-    title: "Advanced React",
-    issuer: "Meta",
-    issued_at: "2024-12-01",
-    credential_url: "https://coursera.org/verify/your-credential-id",
-  },
-]
-
-const testimonialRows = [
-  {
-    client_name: "Daniel Mekonnen",
-    client_role: "Founder, HarifMoments",
-    content:
-      "Yabets translated a vague vision into a polished, production-grade product faster than I thought possible. His attention to UI detail and animation quality is rare — clients keep asking who built our platform.",
-    rating: 5,
-    is_published: true,
-  },
-  {
-    client_name: "Sara Tesfaye",
-    client_role: "Product Manager",
-    content:
-      "Reliable, communicative, and pixel-perfect. Yabets shipped a complex admin dashboard with role-based access and clean UX in record time. Easy 10/10 hire.",
-    rating: 5,
-    is_published: true,
-  },
-  {
-    client_name: "Michael Brown",
-    client_role: "CTO, Munich Tech Expo",
-    content:
-      "Took ownership of our marketing site from day one. Strong React fundamentals, great taste, and shipped responsive, accessible code that just worked across browsers.",
-    rating: 5,
-    is_published: true,
-  },
-]
-
-const faqRows = [
-  {
-    question: "What kind of projects do you take on?",
-    answer:
-      "Production web apps and marketing sites built on React, Next.js, and TypeScript. I focus on dashboards, SaaS products, and content-driven platforms where UI quality matters.",
-    category: "General",
-    order_index: 0,
-    is_published: true,
-  },
-  {
-    question: "Are you available for full-time roles?",
-    answer:
-      "Yes — open to full-time, remote, hybrid, and freelance engagements. Reach out via the contact form below.",
-    category: "Availability",
-    order_index: 1,
-    is_published: true,
-  },
-  {
-    question: "What is your typical timeline?",
-    answer:
-      "A polished landing page lands in 1–2 weeks; a full SaaS dashboard with auth, RBAC, and admin tooling lands in 4–8 weeks depending on scope.",
-    category: "Process",
-    order_index: 2,
-    is_published: true,
-  },
-  {
-    question: "Do you handle backend work?",
-    answer:
-      "I build full-stack on Next.js with Supabase, Prisma, and PostgreSQL — auth, RBAC, file storage, and protected admin dashboards included.",
-    category: "Capabilities",
-    order_index: 3,
-    is_published: true,
-  },
-  {
-    question: "Can you work with an existing design system?",
-    answer:
-      "Yes — Figma hand-offs, design tokens, shadcn/ui, custom systems. I adapt to whatever exists, or build a system from scratch with Tailwind.",
-    category: "Process",
-    order_index: 4,
-    is_published: true,
-  },
-  {
-    question: "How do we start?",
-    answer:
-      "Send a message via the contact form with a short description of your project, timeline, and budget range. I usually reply within 24 hours.",
-    category: "General",
-    order_index: 5,
-    is_published: true,
-  },
-]
-
 const postRows = [
   {
     title: "Building a Real-Time Event Platform with Next.js and Supabase",
@@ -190,9 +71,6 @@ const postRows = [
     tags: ["UX", "Dashboard", "Design", "Frontend"],
   },
 ]
-
-const eduTable = await tryEducationTable()
-const certTable = await tryCertTable()
 
 await Promise.all([
   insert("posts", postRows),

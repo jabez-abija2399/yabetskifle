@@ -72,16 +72,16 @@ export function OutputEditor({ output, onChange, onReset }: Props) {
       className="space-y-3"
     >
       <div className="flex items-center justify-between">
-        <p className="text-xs font-semibold tracking-widest uppercase text-neutral-400 dark:text-neutral-500">
+        <p className="text-xs font-mono text-muted-foreground">
           Your document
         </p>
         <div className="flex items-center gap-2">
           <button
             onClick={() => setShowHighlights((v) => !v)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border transition-all duration-200 ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xs font-mono text-xs border transition-colors ${
               aiCount > 0 && showHighlights
-                ? "border-amber-300 bg-amber-50 text-amber-700 dark:border-amber-700 dark:bg-amber-950 dark:text-amber-300"
-                : "border-neutral-200 dark:border-neutral-800 text-neutral-500 dark:text-neutral-400 hover:border-neutral-400"
+                ? "border-amber-400/60 bg-amber-500/10 text-amber-600 dark:text-amber-400"
+                : "border-border text-muted-foreground hover:border-foreground"
             }`}
           >
             {showHighlights ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
@@ -90,7 +90,7 @@ export function OutputEditor({ output, onChange, onReset }: Props) {
 
           <button
             onClick={handleCopy}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-400 hover:border-neutral-400 dark:hover:border-neutral-600 transition-all duration-200"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xs font-mono text-xs border border-border text-muted-foreground hover:border-foreground transition-colors"
           >
             <AnimatePresence mode="wait" initial={false}>
               {copied ? (
@@ -107,7 +107,7 @@ export function OutputEditor({ output, onChange, onReset }: Props) {
 
           <button
             onClick={onReset}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border border-neutral-200 dark:border-neutral-800 text-neutral-500 dark:text-neutral-400 hover:border-neutral-400 dark:hover:border-neutral-600 transition-all duration-200"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xs font-mono text-xs border border-border text-muted-foreground hover:border-foreground transition-colors"
           >
             <RefreshCw className="w-3 h-3" /> New
           </button>
@@ -120,7 +120,7 @@ export function OutputEditor({ output, onChange, onReset }: Props) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="flex items-start gap-2 px-3 py-2.5 rounded-lg bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800"
+            className="flex items-start gap-2 px-3 py-2.5 rounded-xs bg-amber-500/10 border border-amber-500/40"
           >
             <AlertTriangle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
             <p className="text-xs text-amber-700 dark:text-amber-300 leading-relaxed">
@@ -132,20 +132,20 @@ export function OutputEditor({ output, onChange, onReset }: Props) {
 
       {showHighlights && aiCount > 0 && (
         <div
-          className="text-sm leading-relaxed px-4 py-3 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 text-neutral-700 dark:text-neutral-300 whitespace-pre-wrap pointer-events-none select-none apply-highlight-preview"
+          className="text-sm leading-relaxed px-4 py-3 rounded-xs border border-border bg-secondary text-foreground/90 whitespace-pre-wrap pointer-events-none select-none apply-highlight-preview"
           dangerouslySetInnerHTML={{ __html: highlightAIPhrases(output) }}
         />
       )}
 
       <div className="space-y-1">
-        <p className="text-xs text-neutral-400 dark:text-neutral-600">
+        <p className="text-xs text-muted-foreground">
           Edit directly below — this is your copy.
         </p>
         <textarea
           value={output}
           onChange={(e) => onChange(e.target.value)}
           rows={16}
-          className="w-full px-4 py-3 text-sm rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-neutral-400 dark:focus:ring-neutral-600 resize-none leading-relaxed font-mono transition-all duration-200"
+          className="w-full px-4 py-3 text-sm rounded-xs border border-border bg-background text-foreground focus:outline-none focus:border-[#2D5F6B] resize-none leading-relaxed font-mono transition-colors"
         />
       </div>
     </motion.div>

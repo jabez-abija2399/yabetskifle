@@ -88,7 +88,7 @@
   --secondary-foreground: #1A1D23;
 
   --muted: #ECE8E0;
-  --muted-foreground: #8B8577;
+  --muted-foreground: #6E675A;
 
   /* Accent: Deep blueprint teal */
   --accent: #2D5F6B;
@@ -283,6 +283,14 @@
     background-image:
       linear-gradient(to right, color-mix(in srgb, var(--border) 40%, transparent) 1px, transparent 1px);
     background-size: 24px 100%;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 }
 

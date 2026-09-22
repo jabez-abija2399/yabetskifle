@@ -2,7 +2,7 @@ import { Project } from "@/types/portfolio"
 import { ProjectCard } from "./ProjectCard"
 import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
-import { SiteCopy, t } from "@/lib/copy"
+import { SiteCopy, t, renderRichTitle } from "@/lib/copy"
 
 interface Props {
   projects: Project[]
@@ -23,7 +23,7 @@ export const ProjectsShowcase = ({ projects, copy }: Props) => {
               {t(copy, "projects.eyebrow", "01. Selected projects")}
             </div>
             <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
-              {t(copy, "projects.title", "Recent production systems & case studies")}
+              {renderRichTitle(t(copy, "projects.title", "Recent production systems & case studies"), "text-[#2D5F6B] dark:text-[#3E7987]")}
             </h2>
           </div>
           <Link

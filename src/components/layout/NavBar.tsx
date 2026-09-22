@@ -80,9 +80,9 @@ export const Navbar = ({ copy }: Props) => {
           <nav className="hidden md:flex items-center gap-7">
             {navLinks.map((link) => {
               const active =
-                link.href === pathname ||
-                (link.href.startsWith("/#") && pathname === "/") ||
-                (link.href !== "/" && pathname?.startsWith(link.href))
+                !link.href.startsWith("/#") &&
+                (link.href === pathname ||
+                  (link.href !== "/" && pathname?.startsWith(link.href)))
               return (
                 <Link
                   key={link.href}
@@ -163,9 +163,9 @@ export const Navbar = ({ copy }: Props) => {
             <nav className="flex-1 px-6 py-10 flex flex-col justify-center space-y-4">
               {navLinks.map((link) => {
                 const active =
-                  link.href === pathname ||
-                  (link.href.startsWith("/#") && pathname === "/") ||
-                  (link.href !== "/" && pathname?.startsWith(link.href))
+                  !link.href.startsWith("/#") &&
+                  (link.href === pathname ||
+                    (link.href !== "/" && pathname?.startsWith(link.href)))
                 return (
                   <Link
                     key={link.href}

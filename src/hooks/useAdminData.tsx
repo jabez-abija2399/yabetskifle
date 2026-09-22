@@ -6,22 +6,13 @@ import { toast } from "sonner"
 
 export function useAdminData<T>(tableName: string) {
   const [data, setData] = useState<T[]>([])
-  const [loading, setLoading] = useState(true)
+  const [loadedKey, setLoadedKey] = useState<string | null>(null)
+  const [refreshKey, setRefreshKey] = useState(0)
+  const loadKey = `${tableName}:${refreshKey}`
+  const loading = loadedKey !== loadKey
 
   const fetchData = async () => {
-    setLoading(true)
-    const supabase = createSupabaseClient()
-    const { data: result, error } = await supabase
-      .from(tableName)
-      .select("*")
-      .order("created_at", { ascending: false }) // Most recent first
-
-    if (error) {
-      toast.error(`Error fetching ${tableName}: ${error.message}`)
-    } else {
-      setData(result as T[])
-    }
-    setLoading(false)
+    setRefreshKey(k => k + 1)
   }
 
   const deleteItem = async (id: string) => {
@@ -33,14 +24,32 @@ export function useAdminData<T>(tableName: string) {
       return false
     } else {
       toast.success("Item deleted successfully")
-      fetchData() // Refresh the list
+      fetchData()
       return true
     }
   }
 
   useEffect(() => {
-    fetchData()
-  }, [tableName])
+    let cancelled = false
+    ;(async () => {
+      const supabase = createSupabaseClient()
+      const { data: result, error } = await supabase
+        .from(tableName)
+        .select("*")
+        .order("created_at", { ascending: false })
+
+      if (cancelled) return
+      if (error) {
+        toast.error(`Error fetching ${tableName}: ${error.message}`)
+      } else {
+        setData(result as T[])
+      }
+      setLoadedKey(loadKey)
+    })()
+    return () => {
+      cancelled = true
+    }
+  }, [tableName, loadKey])
 
   return { data, loading, deleteItem, refresh: fetchData }
 }

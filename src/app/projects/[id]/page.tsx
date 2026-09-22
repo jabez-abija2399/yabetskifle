@@ -1,6 +1,5 @@
 import { Metadata } from "next"
 import { PortfolioService } from "@/services/portfolio"
-import { notFound } from "next/navigation"
 import { ProjectDetailWrapper } from "@/components/sections/ProjectDetailWrapper"
 
 export const dynamic = "force-dynamic"
@@ -25,13 +24,14 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
 export default async function ProjectDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
-  
-  // 🛡️ We use the centralized, interactive ProjectDetailWrapper 
-  // to ensure consistent typography, professional language, 
-  // and high-end gallery interactions (Slider + Full Screen).
+
+  // Server-fetch the project so title/description are in the initial HTML
+  // (SEO + no layout shift); the wrapper still fetches site copy client-side.
+  const project = await PortfolioService.getProjectById(id).catch(() => null)
+
   return (
     <main className="min-h-screen bg-background">
-      <ProjectDetailWrapper id={id} />
+      <ProjectDetailWrapper id={id} initialProject={project} />
     </main>
   )
 }

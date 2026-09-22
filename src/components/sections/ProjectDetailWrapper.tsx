@@ -8,10 +8,11 @@ import { FaGithub } from "react-icons/fa"
 import Link from "next/link"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
-import { SiteCopy, t } from "@/lib/copy"
+import { SiteCopy, t, renderRichTitle } from "@/lib/copy"
 
 interface Props {
   id: string
+  initialProject?: Project | null
 }
 
 const ensureArray = (data: unknown): string[] => {
@@ -28,24 +29,30 @@ const ensureArray = (data: unknown): string[] => {
   return []
 }
 
-export const ProjectDetailWrapper = ({ id }: Props) => {
-  const [project, setProject] = useState<Project | null>(null)
+export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
+  const [fetched, setFetched] = useState<{ id: string; data: Project | null } | null>(null)
   const [copy, setCopy] = useState<SiteCopy>({})
-  const [isLoading, setIsLoading] = useState(true)
   const [currentImage, setCurrentImage] = useState(0)
   const [isZoomed, setIsZoomed] = useState(false)
   const [direction, setDirection] = useState(0)
 
+  const project = initialProject ?? (fetched?.id === id ? fetched.data : null)
+  const isLoading = !initialProject && fetched?.id !== id
+
   useEffect(() => {
-    Promise.all([
-      PortfolioService.getProjectById(id),
-      PortfolioService.getSiteCopy().catch(() => ({})),
-    ]).then(([data, copyData]) => {
-      if (data) setProject(data)
-      setCopy(copyData)
-      setIsLoading(false)
-    })
-  }, [id])
+    let cancelled = false
+    if (!initialProject) {
+      PortfolioService.getProjectById(id).then((data) => {
+        if (!cancelled) setFetched({ id, data })
+      })
+    }
+    PortfolioService.getSiteCopy()
+      .then((c) => { if (!cancelled) setCopy(c) })
+      .catch(() => { if (!cancelled) setCopy({}) })
+    return () => {
+      cancelled = true
+    }
+  }, [id, initialProject])
 
   const next = () => {
     if (!project?.images) return
@@ -281,7 +288,7 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
                   {t(copy, "project.brief_eyebrow", "01. Technical brief & problem")}
                 </div>
                 <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
-                  {t(copy, "project.brief_title", "Why this was engineered")}
+                  {renderRichTitle(t(copy, "project.brief_title", "Why this was engineered"), "text-[#2D5F6B] dark:text-[#3E7987]")}
                 </h2>
                 <p className="text-sm sm:text-base text-muted-foreground leading-relaxed text-pretty max-w-2xl font-sans">
                   {project.purpose}
@@ -296,7 +303,7 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
                   {t(copy, "project.features_eyebrow", "02. Implementation specifications")}
                 </div>
                 <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
-                  {t(copy, "project.features_title", "Core architecture & functional capabilities")}
+                  {renderRichTitle(t(copy, "project.features_title", "Core architecture & functional capabilities"), "text-[#2D5F6B] dark:text-[#3E7987]")}
                 </h2>
                 <ul className="grid sm:grid-cols-2 gap-3 pt-2">
                   {features.map((feature, i) => (
@@ -321,7 +328,7 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
                   {t(copy, "project.learned_eyebrow", "03. Engineering takeaways")}
                 </div>
                 <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
-                  {t(copy, "project.learned_title", "Hardest technical challenges & insights")}
+                  {renderRichTitle(t(copy, "project.learned_title", "Hardest technical challenges & insights"), "text-[#2D5F6B] dark:text-[#3E7987]")}
                 </h2>
                 <div className="space-y-4 pt-1">
                   {learned.map((item, i) => (
@@ -409,7 +416,7 @@ export const ProjectDetailWrapper = ({ id }: Props) => {
               {t(copy, "project.up_next_eyebrow", "Catalog traversal")}
             </div>
             <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
-              {t(copy, "project.up_next_title", "Browse more case studies")}
+              {renderRichTitle(t(copy, "project.up_next_title", "Browse more case studies"), "text-[#2D5F6B] dark:text-[#3E7987]")}
             </h3>
           </div>
           <Link

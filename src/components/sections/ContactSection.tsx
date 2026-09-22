@@ -6,7 +6,7 @@ import { Profile } from "@/types/portfolio"
 import { toast } from "sonner"
 import { Loader2, ArrowUpRight, Send, Mail } from "lucide-react"
 import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa"
-import { SiteCopy, t } from "@/lib/copy"
+import { SiteCopy, t, renderRichTitle } from "@/lib/copy"
 
 interface Props {
   profile?: Profile | null
@@ -48,10 +48,10 @@ export const ContactSection = ({ profile, copy }: Props) => {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-border">
           <div className="space-y-2">
             <div className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987]">
-              {t(copy, "contact.eyebrow", "07. Communications & inquiry")}
+              {t(copy, "contact.eyebrow", "10. Communications & inquiry")}
             </div>
             <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
-              {t(copy, "contact.title", "Initiate project or discuss open roles")}
+              {renderRichTitle(t(copy, "contact.title", "Initiate project or discuss open roles"), "text-[#2D5F6B] dark:text-[#3E7987]")}
             </h2>
           </div>
           <p className="font-mono text-xs text-muted-foreground max-w-sm">

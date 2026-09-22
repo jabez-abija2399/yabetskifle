@@ -22,7 +22,7 @@ export function ViewTracker({ path, showCount = false, className = "" }: { path:
 
   return (
     <span className={`inline-flex items-center gap-2 ${className}`}>
-      <Eye className="w-4 h-4" /> {views} VIEWS
+      <Eye className="w-3.5 h-3.5" /> {views} views
     </span>
   )
 }

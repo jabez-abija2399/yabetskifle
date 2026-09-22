@@ -1,6 +1,6 @@
 import { Education, Certification } from "@/types/portfolio"
 import { GraduationCap, Award } from "lucide-react"
-import { SiteCopy, t } from "@/lib/copy"
+import { SiteCopy, t, renderRichTitle } from "@/lib/copy"
 
 interface Props {
   education: Education[]
@@ -23,7 +23,7 @@ export const EducationSection = ({ education, certifications = [], copy }: Props
               {t(copy, "education.eyebrow", "06. Education & credentials")}
             </div>
             <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
-              {t(copy, "education.title", "Academic background & certified programs")}
+              {renderRichTitle(t(copy, "education.title", "Academic background & certified programs"), "text-[#2D5F6B] dark:text-[#3E7987]")}
             </h2>
           </div>
           <p className="font-mono text-xs text-muted-foreground max-w-sm">

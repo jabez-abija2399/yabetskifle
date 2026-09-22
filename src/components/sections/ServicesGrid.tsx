@@ -1,6 +1,6 @@
 import { Service } from "@/types/portfolio"
 import { Box, Code2, Layout, Database, Smartphone, Palette, Zap, Cpu } from "lucide-react"
-import { SiteCopy, t } from "@/lib/copy"
+import { SiteCopy, t, renderRichTitle } from "@/lib/copy"
 
 const IconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Code2, Layout, Database, Smartphone, Palette, Box, Zap, Cpu,
@@ -24,7 +24,7 @@ export const ServicesGrid = ({ services, copy }: Props) => {
               {t(copy, "services.eyebrow", "05. Capabilities & domains")}
             </div>
             <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
-              {t(copy, "services.title", "Technical services & scope of work")}
+              {renderRichTitle(t(copy, "services.title", "Technical services & scope of work"), "text-[#2D5F6B] dark:text-[#3E7987]")}
             </h2>
           </div>
           <p className="font-mono text-xs text-muted-foreground max-w-sm">
