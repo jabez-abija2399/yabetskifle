@@ -85,9 +85,9 @@ export function AtsPanel({ output, jobDescription }: Props) {
         {items.map((item) => (
           <li key={item.label} className="flex items-start gap-2 text-xs">
             {item.ok ? (
-              <Check className="w-3.5 h-3.5 text-green-600 dark:text-green-400 shrink-0 mt-0.5" />
+              <Check className="w-3.5 h-3.5 text-accent shrink-0 mt-0.5" />
             ) : (
-              <X className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+              <X className="w-3.5 h-3.5 text-signal shrink-0 mt-0.5" />
             )}
             <span className="text-foreground">{item.label}</span>
             <span className="text-muted-foreground ml-auto font-mono">

@@ -72,7 +72,7 @@ export function ShareActions({ text, docType, roleName, companyName }: Props) {
       >
         {copied ? (
           <>
-            <Check className="w-3.5 h-3.5 text-green-600" /> Copied
+            <Check className="w-3.5 h-3.5 text-accent" /> Copied
           </>
         ) : (
           <>

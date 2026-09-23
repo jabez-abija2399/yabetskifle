@@ -45,21 +45,21 @@ export const DocumentUploader = ({ onUpload, currentResumeUrl }: Props) => {
         <div className="flex items-center gap-4">
            {isUploading ? (
              <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
-                <Loader2 className="w-5 h-5 animate-spin text-zinc-500" />
+                <Loader2 className="w-5 h-5 animate-spin text-muted-foreground" />
              </div>
            ) : uploadSuccess ? (
              <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center text-primary">
                 <CheckCircle2 className="w-5 h-5" />
              </div>
            ) : (
-             <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center text-zinc-500">
+             <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center text-muted-foreground">
                 <FileDown className="w-5 h-5" />
              </div>
            )}
            
            <div className="space-y-1">
               <p className="text-sm font-bold">Upload Resume / CV</p>
-              <p className="text-[10px] uppercase font-black text-muted-foreground tracking-widest">
+              <p className="label-mono text-muted-foreground">
                  {isUploading ? "Uploading..." : uploadSuccess ? "PDF ATTACHED SECURELY" : "PDF, DOC, DOCX"}
               </p>
            </div>

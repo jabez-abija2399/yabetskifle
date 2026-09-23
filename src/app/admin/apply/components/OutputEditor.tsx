@@ -155,7 +155,7 @@ export function OutputEditor({
             onClick={() => setShowHighlights((v) => !v)}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xs font-mono text-xs border transition-colors ${
               aiCount > 0 && showHighlights
-                ? "border-amber-400/60 bg-amber-500/10 text-amber-600 dark:text-amber-400"
+                ? "border-accent/40 bg-accent/10 text-accent"
                 : "border-border text-muted-foreground hover:border-foreground"
             }`}
           >
@@ -199,7 +199,7 @@ export function OutputEditor({
           >
             <AnimatePresence mode="wait" initial={false}>
               {copied ? (
-                <motion.span key="check" initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }} className="flex items-center gap-1 text-green-600 dark:text-green-400">
+                <motion.span key="check" initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }} className="flex items-center gap-1 text-accent">
                   <Check className="w-3 h-3" /> Copied
                 </motion.span>
               ) : (
@@ -225,11 +225,11 @@ export function OutputEditor({
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="flex items-start gap-2 px-3 py-2.5 rounded-xs bg-amber-500/10 border border-amber-500/40"
+            className="flex items-start gap-2 px-3 py-2.5 rounded-xs bg-signal/10 border border-signal/40"
           >
-            <AlertTriangle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
-            <p className="text-xs text-amber-700 dark:text-amber-300 leading-relaxed">
-              <span className="font-semibold">{aiCount} phrase{aiCount > 1 ? "s" : ""} flagged</span> — highlighted in yellow. Rewrite these in the editor below before sending.
+            <AlertTriangle className="w-3.5 h-3.5 text-signal shrink-0 mt-0.5" />
+            <p className="text-xs text-signal leading-relaxed">
+              <span className="font-semibold">{aiCount} phrase{aiCount > 1 ? "s" : ""} flagged</span> — highlighted below. Rewrite these in the editor before sending.
             </p>
           </motion.div>
         )}

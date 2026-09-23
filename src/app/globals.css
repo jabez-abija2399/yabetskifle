@@ -345,16 +345,9 @@
 
 /* ── Job Application AI — phrase highlights ─────────────────── */
 .apply-highlight-preview mark.apply-ai-phrase {
-  background-color: #fef08a;
-  color: #713f12;
+  background-color: color-mix(in srgb, var(--signal) 18%, var(--background));
+  color: color-mix(in srgb, var(--signal) 85%, var(--foreground));
   border-radius: 2px;
   padding: 0 2px;
   font-style: normal;
-}
-
-@media (prefers-color-scheme: dark) {
-  .apply-highlight-preview mark.apply-ai-phrase {
-    background-color: #422006;
-    color: #fde68a;
-  }
 }
