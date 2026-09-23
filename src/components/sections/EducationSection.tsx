@@ -19,11 +19,11 @@ export const EducationSection = ({ education, certifications = [], copy }: Props
         {/* Section header — Sentence case */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-border">
           <div className="space-y-2">
-            <div className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987]">
+            <div className="font-mono text-xs text-accent">
               {t(copy, "education.eyebrow", "06. Education & credentials")}
             </div>
             <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
-              {renderRichTitle(t(copy, "education.title", "Academic background & certified programs"), "text-[#2D5F6B] dark:text-[#3E7987]")}
+              {renderRichTitle(t(copy, "education.title", "Academic background & certified programs"), "text-accent")}
             </h2>
           </div>
           <p className="font-mono text-xs text-muted-foreground max-w-sm">
@@ -41,7 +41,7 @@ export const EducationSection = ({ education, certifications = [], copy }: Props
               <div>
                 <div className="flex items-center justify-between pb-3 mb-4 border-b border-border/80 font-mono text-xs text-muted-foreground">
                   <span className="flex items-center gap-1.5 text-foreground font-medium">
-                    <GraduationCap className="w-3.5 h-3.5 text-[#2D5F6B] dark:text-[#3E7987]" />
+                    <GraduationCap className="w-3.5 h-3.5 text-accent" />
                     <span>Degree spec</span>
                   </span>
                   <span>[edu.{String(i + 1).padStart(2, "0")}]</span>
@@ -50,7 +50,7 @@ export const EducationSection = ({ education, certifications = [], copy }: Props
                 <h3 className="text-lg md:text-xl font-semibold text-foreground tracking-tight mb-1">
                   {edu.institution}
                 </h3>
-                <p className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987] font-medium">
+                <p className="font-mono text-xs text-accent font-medium">
                   {edu.degree}
                 </p>
 
@@ -75,7 +75,7 @@ export const EducationSection = ({ education, certifications = [], copy }: Props
           {/* Certifications heading if present */}
           {certifications.length > 0 && (
             <div className="col-span-12 mt-6">
-              <div className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987] pb-2 border-b border-border">
+              <div className="font-mono text-xs text-accent pb-2 border-b border-border">
                 {t(copy, "education.cert_label", "Verified technical credentials")}
               </div>
             </div>
@@ -89,7 +89,7 @@ export const EducationSection = ({ education, certifications = [], copy }: Props
               <div>
                 <div className="flex items-center justify-between pb-3 mb-3 border-b border-border/80 font-mono text-xs text-muted-foreground">
                   <span className="flex items-center gap-1.5 text-foreground font-medium">
-                    <Award className="w-3.5 h-3.5 text-[#2D5F6B] dark:text-[#3E7987]" />
+                    <Award className="w-3.5 h-3.5 text-accent" />
                     <span>Certificate</span>
                   </span>
                   <span>[crt.{String(i + 1).padStart(2, "0")}]</span>
@@ -109,7 +109,7 @@ export const EducationSection = ({ education, certifications = [], copy }: Props
                     href={cert.credential_url}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1 font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987] hover:underline transition-colors"
+                    className="inline-flex items-center gap-1 font-mono text-xs text-accent hover:underline transition-colors"
                   >
                     <span>[ {t(copy, "education.verify_link", "verify credential")} ↗ ]</span>
                   </a>

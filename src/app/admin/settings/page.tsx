@@ -1,28 +1,17 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { AdminPageHeader } from "@/components/ui/AdminPageHeader"
+import { PageHeader } from "@/components/admin/PageHeader"
+import { ListSkeleton } from "@/components/admin/ListSkeleton"
 import { SettingsForm } from "../SettingsForm"
 import { SiteSettings } from "@/types/portfolio"
 import { createSupabaseClient } from "@/lib/supabase"
 import { toast } from "sonner"
-import { Loader2 } from "lucide-react"
 
 export default function AdminSettingsPage() {
   const [settings, setSettings] = useState<SiteSettings | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
-
-  const fetchSettings = async () => {
-    const supabase = createSupabaseClient()
-    const { data, error } = await supabase.from("site_settings").select("*").single()
-    if (error) {
-      toast.error("Settings not found.")
-    } else {
-      setSettings(data as SiteSettings)
-    }
-    setIsLoading(false)
-  }
 
   const handleUpdate = async (updatedData: SiteSettings) => {
     setIsSaving(true)
@@ -33,26 +22,45 @@ export default function AdminSettingsPage() {
       .eq("id", settings?.id)
 
     if (error) {
-      toast.error(`Error Updating: ${error.message}`)
+      toast.error(`Error updating: ${error.message}`)
     } else {
-      toast.success("Site configuration updated!")
+      toast.success("Site settings updated")
       setSettings(updatedData)
     }
     setIsSaving(false)
   }
 
-  useEffect(() => { fetchSettings() }, [])
-
-  if (isLoading) return <div className="h-[60vh] flex items-center justify-center"><Loader2 className="w-8 h-8 animate-spin text-primary" /></div>
+  useEffect(() => {
+    let cancelled = false
+    ;(async () => {
+      const supabase = createSupabaseClient()
+      const { data, error } = await supabase.from("site_settings").select("*").single()
+      if (cancelled) return
+      if (error) {
+        toast.error("Settings not found.")
+      } else {
+        setSettings(data as SiteSettings)
+      }
+      setIsLoading(false)
+    })()
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   return (
-    <div className="max-w-6xl mx-auto">
-      <AdminPageHeader 
-        title="Site Settings & SEO" 
-        description="Configure your website global metadata, SEO, and legal information."
+    <div className="mx-auto max-w-6xl">
+      <PageHeader
+        index="05"
+        title="Settings"
+        description="Global metadata, SEO, and legal information."
       />
 
-      {settings && <SettingsForm initialData={settings} onSave={handleUpdate} isSaving={isSaving} />}
+      {isLoading ? (
+        <ListSkeleton rows={4} />
+      ) : (
+        settings && <SettingsForm initialData={settings} onSave={handleUpdate} isSaving={isSaving} />
+      )}
     </div>
   )
 }

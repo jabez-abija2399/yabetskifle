@@ -21,11 +21,11 @@ export const Footer = ({ settings, profile, copy }: Props) => {
         {/* Top: Structured CTA & Sitemap */}
         <div className="grid md:grid-cols-12 gap-10 pb-12 border-b border-border">
           <div className="md:col-span-7 space-y-4">
-            <div className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987]">
+            <div className="font-mono text-xs text-accent">
               {t(copy, "footer.cta_eyebrow", "11. Ready to collaborate?")}
             </div>
             <h3 className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight text-foreground">
-              {renderRichTitle(t(copy, "footer.cta_title", "Let's engineer something robust together."), "text-[#2D5F6B] dark:text-[#3E7987]")}
+              {renderRichTitle(t(copy, "footer.cta_title", "Let's engineer something robust together."), "text-accent")}
             </h3>
             <p className="text-xs sm:text-sm text-muted-foreground max-w-md font-sans">
               Open for full-time engineering roles, high-impact contracts, and design systems architecture.
@@ -33,7 +33,7 @@ export const Footer = ({ settings, profile, copy }: Props) => {
             <div className="pt-2">
               <a
                 href="#contact"
-                className="inline-flex items-center gap-2 bg-[#2D5F6B] text-white dark:bg-[#3E7987] dark:text-background h-11 px-5 rounded-xs font-mono text-xs font-medium hover:bg-[#234b54] transition-colors"
+                className="inline-flex items-center gap-2 bg-accent text-accent-foreground h-11 px-5 rounded-xs font-mono text-xs font-medium hover:bg-accent-hover transition-colors"
               >
                 <span>[ {t(copy, "footer.cta_button", "Initiate project discussion")} ]</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
@@ -47,11 +47,11 @@ export const Footer = ({ settings, profile, copy }: Props) => {
                 {t(copy, "footer.sitemap_label", "Index map")}
               </span>
               <ul className="space-y-2">
-                <li><Link href="/" className="hover:text-[#2D5F6B] transition-colors">01. Home</Link></li>
-                <li><Link href="/projects" className="hover:text-[#2D5F6B] transition-colors">02. Projects</Link></li>
-                <li><Link href="/blog" className="hover:text-[#2D5F6B] transition-colors">03. Journal</Link></li>
-                <li><Link href="/#about" className="hover:text-[#2D5F6B] transition-colors">04. About</Link></li>
-                <li><Link href="/#contact" className="hover:text-[#2D5F6B] transition-colors">05. Contact</Link></li>
+                <li><Link href="/" className="hover:text-accent transition-colors">01. Home</Link></li>
+                <li><Link href="/projects" className="hover:text-accent transition-colors">02. Projects</Link></li>
+                <li><Link href="/blog" className="hover:text-accent transition-colors">03. Journal</Link></li>
+                <li><Link href="/#about" className="hover:text-accent transition-colors">04. About</Link></li>
+                <li><Link href="/#contact" className="hover:text-accent transition-colors">05. Contact</Link></li>
               </ul>
             </div>
 
@@ -62,28 +62,28 @@ export const Footer = ({ settings, profile, copy }: Props) => {
               <ul className="space-y-2">
                 {socials.github && (
                   <li>
-                    <a href={socials.github} target="_blank" rel="noreferrer" className="hover:text-[#2D5F6B] transition-colors inline-flex items-center gap-1">
+                    <a href={socials.github} target="_blank" rel="noreferrer" className="hover:text-accent transition-colors inline-flex items-center gap-1">
                       GitHub <ArrowUpRight className="w-3 h-3" />
                     </a>
                   </li>
                 )}
                 {socials.linkedin && (
                   <li>
-                    <a href={socials.linkedin} target="_blank" rel="noreferrer" className="hover:text-[#2D5F6B] transition-colors inline-flex items-center gap-1">
+                    <a href={socials.linkedin} target="_blank" rel="noreferrer" className="hover:text-accent transition-colors inline-flex items-center gap-1">
                       LinkedIn <ArrowUpRight className="w-3 h-3" />
                     </a>
                   </li>
                 )}
                 {socials.twitter && (
                   <li>
-                    <a href={socials.twitter} target="_blank" rel="noreferrer" className="hover:text-[#2D5F6B] transition-colors inline-flex items-center gap-1">
+                    <a href={socials.twitter} target="_blank" rel="noreferrer" className="hover:text-accent transition-colors inline-flex items-center gap-1">
                       Twitter <ArrowUpRight className="w-3 h-3" />
                     </a>
                   </li>
                 )}
                 {socials.email && (
                   <li>
-                    <a href={`mailto:${socials.email}`} className="hover:text-[#2D5F6B] transition-colors inline-flex items-center gap-1">
+                    <a href={`mailto:${socials.email}`} className="hover:text-accent transition-colors inline-flex items-center gap-1">
                       Email <ArrowUpRight className="w-3 h-3" />
                     </a>
                   </li>
@@ -105,7 +105,7 @@ export const Footer = ({ settings, profile, copy }: Props) => {
           </div>
           <div className="sm:text-right">
             <span className="block text-[10px] text-muted-foreground/80">System ID</span>
-            <span className="text-[#2D5F6B] dark:text-[#3E7987]">YK-{year}-PROD</span>
+            <span className="text-accent">YK-{year}-PROD</span>
           </div>
         </div>
 

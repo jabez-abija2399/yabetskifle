@@ -1,32 +1,41 @@
 "use client"
 
 import { useState } from "react"
-import { AdminPageHeader } from "@/components/ui/AdminPageHeader"
-import { AdminEmptyState } from "@/components/ui/AdminEmptyState"
+import { PageHeader } from "@/components/admin/PageHeader"
+import { ListRow } from "@/components/admin/ListRow"
+import { EditPanel } from "@/components/admin/EditPanel"
+import { ConfirmDialog } from "@/components/admin/ConfirmDialog"
+import { EmptyState } from "@/components/admin/EmptyState"
+import { ListSkeleton } from "@/components/admin/ListSkeleton"
 import { CertForm } from "../CertForm"
 import { Certification } from "@/types/portfolio"
 import { useAdminData } from "@/hooks/useAdminData"
 import { createSupabaseClient } from "@/lib/supabase"
 import { toast } from "sonner"
-import { Pencil, Trash2, Award, ExternalLink } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Pencil, Trash2, Plus, Award, ExternalLink } from "lucide-react"
 
 export default function AdminCertificationsPage() {
-  const { data: certs, loading, deleteItem, refresh } = useAdminData<Certification>("certifications")
+  const { data: certs, loading, refresh } = useAdminData<Certification>("certifications")
   const [editingCert, setEditingCert] = useState<Certification | null>(null)
   const [isAdding, setIsAdding] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
+  const [pendingDelete, setPendingDelete] = useState<Certification | null>(null)
+  const [deleting, setDeleting] = useState(false)
+
+  const editing = isAdding || !!editingCert
 
   const handleSave = async (data: Omit<Certification, "id">) => {
     setIsSaving(true)
     const supabase = createSupabaseClient()
-    const { error } = editingCert 
+    const { error } = editingCert
       ? await supabase.from("certifications").update(data).eq("id", editingCert.id)
       : await supabase.from("certifications").insert([data])
 
     if (error) {
       toast.error(`Error: ${error.message}`)
     } else {
-      toast.success("Certification saved!")
+      toast.success(editingCert ? "Certification updated" : "Certification added")
       setEditingCert(null)
       setIsAdding(false)
       refresh()
@@ -34,58 +43,128 @@ export default function AdminCertificationsPage() {
     setIsSaving(false)
   }
 
+  const handleDelete = async () => {
+    if (!pendingDelete) return
+    setDeleting(true)
+    const supabase = createSupabaseClient()
+    const { error } = await supabase.from("certifications").delete().eq("id", pendingDelete.id)
+    if (error) {
+      toast.error(`Failed: ${error.message}`)
+    } else {
+      toast.success("Certification deleted")
+      setPendingDelete(null)
+      refresh()
+    }
+    setDeleting(false)
+  }
+
   return (
-    <div className="max-w-5xl mx-auto">
-      <AdminPageHeader 
-        title="Certifications" 
-        description="Showcase your professional credentials and verified skills."
-        actionLabel={!(isAdding || editingCert) ? "Add Certification" : undefined}
-        onAction={() => setIsAdding(true)}
+    <div className="mx-auto max-w-4xl">
+      <PageHeader
+        index="04"
+        title="Certifications"
+        description="Professional credentials and verified skills."
+        actions={
+          !editing && (
+            <Button onClick={() => setIsAdding(true)}>
+              <Plus className="size-4" aria-hidden /> Add certification
+            </Button>
+          )
+        }
       />
 
-      {(isAdding || editingCert) ? (
-        <div className="p-8 rounded-[2.5rem] border border-border bg-card shadow-sm">
-           <h3 className="text-xl font-bold mb-6">{editingCert ? "Edit Certification" : "New Certification"}</h3>
-           <CertForm 
-              initialData={editingCert || undefined} 
-              onSave={handleSave} 
-              isSaving={isSaving}
-              onCancel={() => { setEditingCert(null); setIsAdding(false); }}
-           />
-        </div>
+      {editing ? (
+        <EditPanel
+          eyebrow={editingCert ? "Editing" : "New"}
+          title={editingCert ? editingCert.title : "Add a certification"}
+          onClose={() => {
+            setEditingCert(null)
+            setIsAdding(false)
+          }}
+        >
+          <CertForm
+            initialData={editingCert || undefined}
+            onSave={handleSave}
+            isSaving={isSaving}
+            onCancel={() => {
+              setEditingCert(null)
+              setIsAdding(false)
+            }}
+          />
+        </EditPanel>
+      ) : loading ? (
+        <ListSkeleton rows={3} />
+      ) : certs.length === 0 ? (
+        <EmptyState
+          title="No certifications yet"
+          description="Add your professional credentials."
+          action={
+            <Button size="sm" onClick={() => setIsAdding(true)}>
+              <Plus className="size-3.5" aria-hidden /> Add your first certification
+            </Button>
+          }
+        />
       ) : (
-        <div className="grid md:grid-cols-2 gap-4">
-          {certs.length === 0 && !loading && <AdminEmptyState message="No certifications added yet." />}
+        <div className="space-y-2">
           {certs.map((cert) => (
-            <div key={cert.id} className="p-6 rounded-[2rem] border border-border bg-card flex items-center justify-between group">
-              <div className="flex gap-4 items-center">
-                 <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
-                    <Award className="w-6 h-6" />
-                 </div>
-                 <div>
-                    <h4 className="font-bold text-lg">{cert.title}</h4>
-                    <p className="text-sm text-primary font-medium">{cert.issuer}</p>
-                    <p className="text-xs text-muted-foreground">{cert.issued_at}</p>
-                 </div>
-              </div>
-
-              <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                {cert.credential_url && (
-                  <a href={cert.credential_url} target="_blank" className="p-3 rounded-xl bg-muted hover:bg-zinc-800 transition-colors">
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-                )}
-                <button onClick={() => setEditingCert(cert)} className="p-3 rounded-xl bg-muted hover:bg-primary hover:text-primary-foreground transition-colors">
-                  <Pencil className="w-4 h-4" />
-                </button>
-                <button onClick={() => deleteItem(cert.id)} className="p-3 rounded-xl bg-muted hover:bg-destructive hover:text-white transition-colors">
-                  <Trash2 className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
+            <ListRow
+              key={cert.id}
+              icon={<Award className="size-4" />}
+              title={cert.title}
+              meta={
+                <>
+                  {cert.issuer} <span className="text-accent">/</span> {cert.issued_at}
+                </>
+              }
+              actions={
+                <>
+                  {cert.credential_url && (
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      asChild
+                      aria-label={`Open credential for ${cert.title}`}
+                      className="text-muted-foreground hover:text-foreground"
+                    >
+                      <a href={cert.credential_url} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="size-4" />
+                      </a>
+                    </Button>
+                  )}
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    aria-label={`Edit ${cert.title}`}
+                    onClick={() => setEditingCert(cert)}
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    <Pencil className="size-4" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    aria-label={`Delete ${cert.title}`}
+                    onClick={() => setPendingDelete(cert)}
+                    className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                  >
+                    <Trash2 className="size-4" />
+                  </Button>
+                </>
+              }
+            />
           ))}
         </div>
       )}
+
+      <ConfirmDialog
+        open={!!pendingDelete}
+        onOpenChange={(o) => !o && setPendingDelete(null)}
+        title={`Delete “${pendingDelete?.title}”?`}
+        description="This removes the credential from the public site. This cannot be undone."
+        confirmLabel="Delete certification"
+        loading={deleting}
+        onConfirm={handleDelete}
+      />
     </div>
   )
 }

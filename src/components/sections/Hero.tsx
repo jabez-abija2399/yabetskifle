@@ -50,14 +50,14 @@ export const Hero = ({ profile, copy }: Props) => {
           >
             <div className="flex items-center gap-2.5">
               <span className="relative flex h-2 w-2">
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#C4432E]" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-signal" />
               </span>
               <span>{statusText}</span>
             </div>
             <div className="flex items-center gap-6">
               <span className="hidden sm:inline">loc: {profile.location || "Addis Ababa // UTC+3"}</span>
               <span className="hidden md:inline border-l border-border/80 pl-6">spec: production web architecture</span>
-              <span className="text-[#2D5F6B] dark:text-[#3E7987] font-medium">v{year}.sys</span>
+              <span className="text-accent font-medium">v{year}.sys</span>
             </div>
           </motion.div>
         </motion.div>
@@ -78,7 +78,7 @@ export const Hero = ({ profile, copy }: Props) => {
           >
             {/* Role indicator */}
             <div className="inline-flex items-center gap-2 px-2.5 py-1 border border-border bg-card font-mono text-xs text-muted-foreground rounded-xs">
-              <Terminal className="w-3.5 h-3.5 text-[#2D5F6B] dark:text-[#3E7987]" />
+              <Terminal className="w-3.5 h-3.5 text-accent" />
               <span>{profile.role_title || "Frontend Developer · Full-stack with Next.js"}</span>
             </div>
 
@@ -96,7 +96,7 @@ export const Hero = ({ profile, copy }: Props) => {
             <div className="pt-2 flex flex-wrap items-center gap-3">
               <a
                 href="#work"
-                className="inline-flex items-center gap-2 bg-[#2D5F6B] text-white dark:bg-[#3E7987] dark:text-background px-5 h-11 rounded-xs font-mono text-xs font-medium hover:bg-[#234b54] transition-colors"
+                className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-5 h-11 rounded-xs font-mono text-xs font-medium hover:bg-accent-hover transition-colors"
               >
                 <span>[ → Live projects ]</span>
               </a>
@@ -105,7 +105,7 @@ export const Hero = ({ profile, copy }: Props) => {
                 href={githubUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 border border-border bg-card px-4 h-11 rounded-xs font-mono text-xs text-foreground hover:border-[#2D5F6B] hover:text-[#2D5F6B] transition-colors"
+                className="inline-flex items-center gap-2 border border-border bg-card px-4 h-11 rounded-xs font-mono text-xs text-foreground hover:border-accent hover:text-accent transition-colors"
               >
                 <FaGithub className="w-3.5 h-3.5" />
                 <span>[ GitHub profile ↗ ]</span>
@@ -157,7 +157,7 @@ export const Hero = ({ profile, copy }: Props) => {
               {/* Header metadata bar */}
               <div className="flex items-center justify-between border-b border-border pb-3 mb-4 font-mono text-xs text-muted-foreground">
                 <span className="flex items-center gap-1.5 text-foreground font-medium">
-                  <Code2 className="w-3.5 h-3.5 text-[#2D5F6B]" />
+                  <Code2 className="w-3.5 h-3.5 text-accent" />
                   <span>system.profile</span>
                 </span>
                 <span className="text-[10px] text-muted-foreground/80">#ID-{profile.id?.slice(0, 6) || "YK-01"}</span>
@@ -194,7 +194,7 @@ export const Hero = ({ profile, copy }: Props) => {
                 </div>
                 <div className="flex justify-between py-1">
                   <span className="text-muted-foreground">Status</span>
-                  <span className="text-[#2D5F6B] dark:text-[#3E7987] font-medium">Active & shipping</span>
+                  <span className="text-accent font-medium">Active & shipping</span>
                 </div>
               </div>
 
@@ -246,7 +246,7 @@ export const Hero = ({ profile, copy }: Props) => {
       <div className="px-6 md:px-12 lg:px-16 xl:px-24 pt-4">
         <div className="max-w-[1600px] mx-auto w-full flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-border font-mono text-xs text-muted-foreground">
           <div className="flex items-center gap-2">
-            <span className="text-[#2D5F6B] dark:text-[#3E7987]">↓</span>
+            <span className="text-accent">↓</span>
             <span>Scroll for technical index & case studies</span>
           </div>
           <div className="flex items-center gap-4 text-[11px]">

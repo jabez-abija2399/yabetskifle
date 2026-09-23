@@ -1,21 +1,30 @@
 "use client"
 
 import { useState } from "react"
-import { AdminPageHeader } from "@/components/ui/AdminPageHeader"
-import { AdminEmptyState } from "@/components/ui/AdminEmptyState"
+import { PageHeader } from "@/components/admin/PageHeader"
+import { ListRow } from "@/components/admin/ListRow"
+import { StatusBadge } from "@/components/admin/StatusBadge"
+import { EditPanel } from "@/components/admin/EditPanel"
+import { ConfirmDialog } from "@/components/admin/ConfirmDialog"
+import { EmptyState } from "@/components/admin/EmptyState"
+import { ListSkeleton } from "@/components/admin/ListSkeleton"
+import { TextField, TextAreaField, SwitchRow, FormFooter } from "@/components/admin/fields"
 import { FAQ } from "@/types/portfolio"
 import { useAdminData } from "@/hooks/useAdminData"
 import { createSupabaseClient } from "@/lib/supabase"
 import { toast } from "sonner"
-import { Plus, Pencil, Trash2, HelpCircle, EyeOff, Eye } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Pencil, Trash2, Plus, HelpCircle } from "lucide-react"
 
 export default function AdminFAQPage() {
-  const { data: faqs, loading, deleteItem, refresh } = useAdminData<FAQ>("faqs")
+  const { data: faqs, loading, refresh } = useAdminData<FAQ>("faqs")
   const [editingItem, setEditingItem] = useState<FAQ | null>(null)
   const [isAdding, setIsAdding] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
+  const [pendingDelete, setPendingDelete] = useState<FAQ | null>(null)
+  const [deleting, setDeleting] = useState(false)
+
+  const editing = isAdding || !!editingItem
 
   const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -26,18 +35,18 @@ export default function AdminFAQPage() {
       answer: formData.get("answer") as string,
       category: formData.get("category") as string,
       order_index: parseInt(formData.get("order_index") as string) || 0,
-      is_published: formData.get("is_published") === "on", // 👈 Capture toggle
+      is_published: formData.get("is_published") === "on",
     }
 
     const supabase = createSupabaseClient()
-    const { error } = editingItem 
+    const { error } = editingItem
       ? await supabase.from("faqs").update(data).eq("id", editingItem.id)
       : await supabase.from("faqs").insert([data])
 
     if (error) {
       toast.error(error.message)
     } else {
-      toast.success("FAQ updated!")
+      toast.success(editingItem ? "FAQ updated" : "FAQ added")
       setEditingItem(null)
       setIsAdding(false)
       refresh()
@@ -45,70 +54,153 @@ export default function AdminFAQPage() {
     setIsSaving(false)
   }
 
+  const handleDelete = async () => {
+    if (!pendingDelete) return
+    setDeleting(true)
+    const supabase = createSupabaseClient()
+    const { error } = await supabase.from("faqs").delete().eq("id", pendingDelete.id)
+    if (error) {
+      toast.error(error.message)
+    } else {
+      toast.success("FAQ deleted")
+      setPendingDelete(null)
+      refresh()
+    }
+    setDeleting(false)
+  }
+
   return (
-    <div className="max-w-4xl mx-auto">
-      <AdminPageHeader 
-        title="FAQ Management" 
-        description="Anticipate and answer your visitors' questions before they ask."
-        actionLabel={!(isAdding || editingItem) ? "Add FAQ" : undefined}
-        onAction={() => setIsAdding(true)}
+    <div className="mx-auto max-w-4xl">
+      <PageHeader
+        index="03"
+        title="FAQs"
+        description="Answer visitors’ questions before they ask."
+        actions={
+          !editing && (
+            <Button onClick={() => setIsAdding(true)}>
+              <Plus className="size-4" aria-hidden /> Add FAQ
+            </Button>
+          )
+        }
       />
 
-      {(isAdding || editingItem) && (
-        <form onSubmit={handleSave} className="p-8 rounded-[2.5rem] border border-border bg-card shadow-sm mb-10 space-y-6 animate-in fade-in slide-in-from-top-4">
-           <h3 className="text-xl font-bold italic">{editingItem ? "Edit Question" : "New FAQ Entry"}</h3>
-           <div className="grid md:grid-cols-2 gap-4">
-              <Input name="question" defaultValue={editingItem?.question} placeholder="The Question" required />
-              <Input name="category" defaultValue={editingItem?.category} placeholder="Category (e.g. Services)" required />
-           </div>
-           <textarea name="answer" defaultValue={editingItem?.answer} placeholder="The Answer..." required className="w-full min-h-24 p-3 rounded-xl border border-border bg-background text-foreground text-sm" />
-           
-           <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                 <label className="text-xs font-bold text-zinc-500">Order</label>
-                 <Input name="order_index" type="number" defaultValue={editingItem?.order_index || 0} className="w-20" />
+      {editing ? (
+        <EditPanel
+          eyebrow={editingItem ? "Editing" : "New"}
+          title={editingItem ? editingItem.question : "Add a question"}
+          onClose={() => {
+            setEditingItem(null)
+            setIsAdding(false)
+          }}
+        >
+          <form onSubmit={handleSave} className="space-y-5">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <TextField
+                label="Question"
+                name="question"
+                defaultValue={editingItem?.question}
+                placeholder="Do you take freelance work?"
+                required
+              />
+              <TextField
+                label="Category"
+                name="category"
+                defaultValue={editingItem?.category}
+                placeholder="e.g. Services"
+                required
+              />
+            </div>
+            <TextAreaField
+              label="Answer"
+              name="answer"
+              defaultValue={editingItem?.answer}
+              rows={4}
+              required
+              placeholder="The answer…"
+            />
+            <div className="grid gap-4 sm:grid-cols-3 sm:items-end">
+              <TextField
+                label="Sort order"
+                name="order_index"
+                type="number"
+                defaultValue={editingItem?.order_index || 0}
+              />
+              <div className="sm:col-span-2">
+                <SwitchRow
+                  name="is_published"
+                  label="Public visibility"
+                  defaultChecked={editingItem?.is_published ?? true}
+                />
               </div>
-              
-              {/* 🛡️ TOGGLE */}
-              <div className="flex items-center gap-3 bg-muted/50 p-2 px-4 rounded-full border border-border">
-                 <span className="text-[10px] font-black uppercase text-zinc-500 tracking-widest">Public Visibility</span>
-                 <input type="checkbox" name="is_published" defaultChecked={editingItem?.is_published ?? true} className="w-10 h-5 accent-primary" />
-              </div>
-           </div>
-
-           <div className="flex justify-end gap-3 pt-6 border-t border-border">
-              <Button type="button" variant="ghost" onClick={() => { setEditingItem(null); setIsAdding(false); }}>Cancel</Button>
-              <Button type="submit" disabled={isSaving}>{isSaving ? "Saving..." : "Save FAQ"}</Button>
-           </div>
-        </form>
+            </div>
+            <FormFooter
+              onCancel={() => {
+                setEditingItem(null)
+                setIsAdding(false)
+              }}
+              isSaving={isSaving}
+              submitLabel="Save FAQ"
+            />
+          </form>
+        </EditPanel>
+      ) : loading ? (
+        <ListSkeleton rows={4} />
+      ) : faqs.length === 0 ? (
+        <EmptyState
+          title="No FAQs yet"
+          description="Add the questions you hear most often."
+          action={
+            <Button size="sm" onClick={() => setIsAdding(true)}>
+              <Plus className="size-3.5" aria-hidden /> Add your first FAQ
+            </Button>
+          }
+        />
+      ) : (
+        <div className="space-y-2">
+          {faqs.map((faq) => (
+            <ListRow
+              key={faq.id}
+              icon={<HelpCircle className="size-4" />}
+              dimmed={!faq.is_published}
+              title={faq.question}
+              meta={faq.category}
+              badge={!faq.is_published ? <StatusBadge variant="hidden" /> : undefined}
+              actions={
+                <>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    aria-label={`Edit ${faq.question}`}
+                    onClick={() => setEditingItem(faq)}
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    <Pencil className="size-4" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    aria-label={`Delete ${faq.question}`}
+                    onClick={() => setPendingDelete(faq)}
+                    className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                  >
+                    <Trash2 className="size-4" />
+                  </Button>
+                </>
+              }
+            />
+          ))}
+        </div>
       )}
 
-      <div className="space-y-3">
-        {faqs.length === 0 && !loading && <AdminEmptyState message="No FAQs yet." />}
-        {faqs.map((faq) => (
-          <div key={faq.id} className={`p-5 rounded-[2rem] border border-border bg-card group flex items-center justify-between hover:border-primary/30 transition-all ${!faq.is_published ? "bg-muted/30 opacity-70" : ""}`}>
-            <div className="flex items-center gap-4">
-               <div className="relative">
-                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary"><HelpCircle size={18} /></div>
-                  {!faq.is_published && (
-                    <div className="absolute -top-1 -right-1 w-4 h-4 bg-destructive text-white rounded-full flex items-center justify-center shadow-lg"><EyeOff size={8} /></div>
-                  )}
-               </div>
-               <div>
-                  <h4 className="font-bold flex items-center gap-2">
-                     {faq.question}
-                     {!faq.is_published && <span className="text-[7px] bg-destructive/10 text-destructive px-2 py-0.5 rounded-full border border-destructive/20 uppercase font-black tracking-widest">Hidden</span>}
-                  </h4>
-                  <p className="text-xs text-muted-foreground">{faq.category}</p>
-               </div>
-            </div>
-            <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-              <button onClick={() => setEditingItem(faq)} className="p-2 rounded-lg bg-muted hover:bg-primary hover:text-primary-foreground transition-all"><Pencil size={14} /></button>
-              <button onClick={() => deleteItem(faq.id)} className="p-2 rounded-lg bg-muted hover:bg-destructive hover:text-white transition-all"><Trash2 size={14} /></button>
-            </div>
-          </div>
-        ))}
-      </div>
+      <ConfirmDialog
+        open={!!pendingDelete}
+        onOpenChange={(o) => !o && setPendingDelete(null)}
+        title="Delete this FAQ?"
+        description={`“${pendingDelete?.question}” will be removed from the public site. This cannot be undone.`}
+        confirmLabel="Delete FAQ"
+        loading={deleting}
+        onConfirm={handleDelete}
+      />
     </div>
   )
 }

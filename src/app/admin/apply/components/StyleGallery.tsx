@@ -29,10 +29,10 @@ export function StyleGallery({ value, onChange }: Props) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.06, duration: 0.3 }}
               onClick={() => onChange(tpl.id)}
-              className={`relative text-left p-4 rounded-xs border transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2D5F6B] group ${
+              className={`relative text-left p-4 rounded-xs border transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent group ${
                 active
-                  ? "border-[#2D5F6B] bg-secondary"
-                  : "border-border bg-background hover:border-[#2D5F6B]/50"
+                  ? "border-accent bg-secondary"
+                  : "border-border bg-background hover:border-accent/50"
               }`}
             >
               <div

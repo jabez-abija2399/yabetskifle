@@ -69,7 +69,7 @@ export const Navbar = ({ copy }: Props) => {
           {/* Brand mark / Technical identifier */}
           <Link
             href="/"
-            className="flex items-center gap-3 font-mono text-sm tracking-tight text-foreground hover:text-[#2D5F6B] transition-colors"
+            className="flex items-center gap-3 font-mono text-sm tracking-tight text-foreground hover:text-accent transition-colors"
           >
             <span className="font-semibold text-foreground">Yabets Kifle</span>
             <span className="text-muted-foreground/60 hidden sm:inline">/</span>
@@ -90,7 +90,7 @@ export const Navbar = ({ copy }: Props) => {
                   className={cn(
                     "font-mono text-xs transition-colors flex items-center gap-1.5 py-1",
                     active
-                      ? "text-[#2D5F6B] dark:text-[#3E7987] font-medium border-b border-[#2D5F6B] dark:border-[#3E7987]"
+                      ? "text-accent font-medium border-b border-accent"
                       : "text-muted-foreground hover:text-foreground"
                   )}
                 >
@@ -106,7 +106,7 @@ export const Navbar = ({ copy }: Props) => {
             {/* Status indicator — Muted rust-red accent used specifically here */}
             <div className="hidden lg:flex items-center gap-2 border border-border px-2.5 py-1 rounded-sm bg-card text-xs font-mono text-muted-foreground">
               <span className="relative flex h-2 w-2">
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#C4432E]" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-signal" />
               </span>
               <span className="text-[11px]">available</span>
             </div>
@@ -115,7 +115,7 @@ export const Navbar = ({ copy }: Props) => {
 
             <Link
               href="/#contact"
-              className="hidden sm:inline-flex items-center gap-1.5 border border-[#2D5F6B] text-[#2D5F6B] dark:border-[#3E7987] dark:text-[#3E7987] px-3.5 py-1.5 rounded-sm font-mono text-xs hover:bg-[#2D5F6B] hover:text-white dark:hover:bg-[#3E7987] dark:hover:text-background transition-colors"
+              className="hidden sm:inline-flex items-center gap-1.5 border border-accent text-accent px-3.5 py-1.5 rounded-sm font-mono text-xs hover:bg-accent hover:text-accent-foreground dark:hover:text-background transition-colors"
             >
               {t(copy, "nav.cta", "Initiate contact")}
             </Link>
@@ -173,7 +173,7 @@ export const Navbar = ({ copy }: Props) => {
                     onClick={() => setIsMenuOpen(false)}
                     className={cn(
                       "flex items-baseline justify-between py-3 border-b border-border text-left group",
-                      active ? "text-[#2D5F6B] dark:text-[#3E7987]" : "text-foreground"
+                      active ? "text-accent" : "text-foreground"
                     )}
                   >
                     <div className="flex items-baseline gap-3">
@@ -191,14 +191,14 @@ export const Navbar = ({ copy }: Props) => {
               <div className="flex items-center justify-between text-xs font-mono text-muted-foreground">
                 <span>Status</span>
                 <span className="flex items-center gap-1.5 text-foreground">
-                  <span className="inline-block w-2 h-2 rounded-full bg-[#C4432E]" />
+                  <span className="inline-block w-2 h-2 rounded-full bg-signal" />
                   Open to work
                 </span>
               </div>
               <Link
                 href="/#contact"
                 onClick={() => setIsMenuOpen(false)}
-                className="w-full inline-flex items-center justify-center gap-2 border border-[#2D5F6B] bg-[#2D5F6B] text-white py-3 rounded-sm font-mono text-xs font-medium"
+                className="w-full inline-flex items-center justify-center gap-2 border border-accent bg-accent text-accent-foreground py-3 rounded-sm font-mono text-xs font-medium"
               >
                 {t(copy, "nav.cta", "Initiate contact")} <ArrowUpRight className="w-4 h-4" />
               </Link>

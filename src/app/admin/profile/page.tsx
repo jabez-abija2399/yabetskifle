@@ -1,66 +1,65 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { AdminPageHeader } from "@/components/ui/AdminPageHeader"
+import { PageHeader } from "@/components/admin/PageHeader"
+import { ListSkeleton } from "@/components/admin/ListSkeleton"
 import { ProfileForm } from "@/components/admin/ProfileForm"
 import { Profile } from "@/types/portfolio"
 import { PortfolioService } from "@/services/portfolio"
 import { toast } from "sonner"
-import { Loader2 } from "lucide-react"
 
 export default function AdminProfilePage() {
   const [profile, setProfile] = useState<Profile | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
 
-  const fetchProfile = async () => {
-    setIsLoading(true)
-    const data = await PortfolioService.getProfile()
-    
-    if (!data) {
-      toast.error("Could not load profile. Ensure you ran the SQL query.")
-    } else {
-      setProfile(data)
-    }
-    setIsLoading(false)
-  }
-
   const handleUpdate = async (updatedData: Profile) => {
     setIsSaving(true)
     try {
       await PortfolioService.updateProfile(updatedData)
-      toast.success("Profile updated successfully!")
+      toast.success("Profile updated")
       setProfile(updatedData)
-    } catch (error: any) {
-      toast.error(`Update failed: ${error.message}`)
+    } catch (error) {
+      toast.error(`Update failed: ${error instanceof Error ? error.message : "Unknown error"}`)
     } finally {
       setIsSaving(false)
     }
   }
 
   useEffect(() => {
-    fetchProfile()
+    let cancelled = false
+    ;(async () => {
+      try {
+        const data = await PortfolioService.getProfile()
+        if (cancelled) return
+        if (!data) {
+          toast.error("Could not load profile. Ensure you ran the SQL query.")
+        } else {
+          setProfile(data)
+        }
+      } finally {
+        if (!cancelled) setIsLoading(false)
+      }
+    })()
+    return () => {
+      cancelled = true
+    }
   }, [])
 
-  if (isLoading) return (
-    <div className="h-[60vh] flex items-center justify-center">
-      <Loader2 className="w-8 h-8 animate-spin text-primary" />
-    </div>
-  )
-
   return (
-    <div className="max-w-6xl mx-auto">
-      <AdminPageHeader 
-        title="My Profile" 
-        description="Manage your professional bio, skills, and social presence across the entire site."
+    <div className="mx-auto max-w-6xl">
+      <PageHeader
+        index="04"
+        title="Profile"
+        description="Your professional bio, skills, and social presence across the site."
       />
 
-      {profile && (
-        <ProfileForm 
-          initialData={profile} 
-          onSave={handleUpdate} 
-          isSaving={isSaving} 
-        />
+      {isLoading ? (
+        <ListSkeleton rows={4} />
+      ) : (
+        profile && (
+          <ProfileForm initialData={profile} onSave={handleUpdate} isSaving={isSaving} />
+        )
       )}
     </div>
   )

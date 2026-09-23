@@ -45,7 +45,7 @@ export default async function HomePage() {
       <div className="h-screen flex flex-col items-center justify-center gap-4 bg-background text-foreground font-mono text-xs">
         <h1 className="text-xl font-semibold text-foreground">System initialization needed</h1>
         <p className="text-muted-foreground">Configure profile parameters in the admin dashboard to deploy.</p>
-        <a href="/admin/profile" className="px-4 py-2 bg-[#2D5F6B] text-white rounded-xs font-medium">Go to Admin</a>
+        <a href="/admin/profile" className="px-4 py-2 bg-accent text-accent-foreground rounded-xs font-medium">Go to Admin</a>
       </div>
     )
   }

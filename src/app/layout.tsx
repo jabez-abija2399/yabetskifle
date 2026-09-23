@@ -98,7 +98,7 @@ export default async function RootLayout({
       className={`${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-     <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-accent selection:text-white">
+     <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-accent selection:text-accent-foreground">
       {personSchema && (
         <script
           type="application/ld+json"

@@ -1,32 +1,42 @@
 "use client"
 
 import { useState } from "react"
-import { AdminPageHeader } from "@/components/ui/AdminPageHeader"
-import { AdminEmptyState } from "@/components/ui/AdminEmptyState"
+import { PageHeader } from "@/components/admin/PageHeader"
+import { ListRow } from "@/components/admin/ListRow"
+import { StatusBadge } from "@/components/admin/StatusBadge"
+import { EditPanel } from "@/components/admin/EditPanel"
+import { ConfirmDialog } from "@/components/admin/ConfirmDialog"
+import { EmptyState } from "@/components/admin/EmptyState"
+import { ListSkeleton } from "@/components/admin/ListSkeleton"
 import { TestimonialForm } from "../TestimonialForm"
 import { Testimonial } from "@/types/portfolio"
 import { useAdminData } from "@/hooks/useAdminData"
 import { createSupabaseClient } from "@/lib/supabase"
 import { toast } from "sonner"
-import { Pencil, Trash2, Quote, Star, EyeOff } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Pencil, Trash2, Plus, Quote } from "lucide-react"
 
 export default function AdminTestimonialsPage() {
-  const { data: list, loading, deleteItem, refresh } = useAdminData<Testimonial>("testimonials")
+  const { data: list, loading, refresh } = useAdminData<Testimonial>("testimonials")
   const [editingItem, setEditingItem] = useState<Testimonial | null>(null)
   const [isAdding, setIsAdding] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
+  const [pendingDelete, setPendingDelete] = useState<Testimonial | null>(null)
+  const [deleting, setDeleting] = useState(false)
+
+  const editing = isAdding || !!editingItem
 
   const handleSave = async (data: Omit<Testimonial, "id" | "created_at">) => {
     setIsSaving(true)
     const supabase = createSupabaseClient()
-    const { error } = editingItem 
+    const { error } = editingItem
       ? await supabase.from("testimonials").update(data).eq("id", editingItem.id)
       : await supabase.from("testimonials").insert([data])
 
     if (error) {
       toast.error(`Error: ${error.message}`)
     } else {
-      toast.success(editingItem ? "Social proof updated!" : "Feedback added!")
+      toast.success(editingItem ? "Testimonial updated" : "Testimonial added")
       setEditingItem(null)
       setIsAdding(false)
       refresh()
@@ -34,73 +44,129 @@ export default function AdminTestimonialsPage() {
     setIsSaving(false)
   }
 
+  const handleDelete = async () => {
+    if (!pendingDelete) return
+    setDeleting(true)
+    const supabase = createSupabaseClient()
+    const { error } = await supabase.from("testimonials").delete().eq("id", pendingDelete.id)
+    if (error) {
+      toast.error(`Failed: ${error.message}`)
+    } else {
+      toast.success("Testimonial deleted")
+      setPendingDelete(null)
+      refresh()
+    }
+    setDeleting(false)
+  }
+
   return (
-    <div className="max-w-5xl mx-auto">
-      <AdminPageHeader 
-        title="Client Testimonials" 
-        description="Share the love! Manage what your clients and teammates say about you."
-        actionLabel={!(isAdding || editingItem) ? "Add Testimonial" : undefined}
-        onAction={() => setIsAdding(true)}
+    <div className="mx-auto max-w-5xl">
+      <PageHeader
+        index="02"
+        title="Testimonials"
+        description="Social proof from clients and collaborators."
+        actions={
+          !editing && (
+            <Button onClick={() => setIsAdding(true)}>
+              <Plus className="size-4" aria-hidden /> Add testimonial
+            </Button>
+          )
+        }
       />
 
-      {(isAdding || editingItem) ? (
-        <div className="p-10 rounded-[3rem] border border-border bg-card animate-in fade-in slide-in-from-bottom-4 shadow-sm">
-           <h3 className="text-xl font-bold mb-8 italic">{editingItem ? "Edit Story" : "New Client Praise"}</h3>
-           <TestimonialForm 
-              initialData={editingItem || undefined} 
-              onSave={handleSave} 
-              isSaving={isSaving}
-              onCancel={() => { setEditingItem(null); setIsAdding(false); }}
-           />
-        </div>
+      {editing ? (
+        <EditPanel
+          eyebrow={editingItem ? "Editing" : "New"}
+          title={editingItem ? editingItem.client_name : "Add a testimonial"}
+          onClose={() => {
+            setEditingItem(null)
+            setIsAdding(false)
+          }}
+        >
+          <TestimonialForm
+            initialData={editingItem || undefined}
+            onSave={handleSave}
+            isSaving={isSaving}
+            onCancel={() => {
+              setEditingItem(null)
+              setIsAdding(false)
+            }}
+          />
+        </EditPanel>
+      ) : loading ? (
+        <ListSkeleton rows={3} />
+      ) : list.length === 0 ? (
+        <EmptyState
+          title="No testimonials yet"
+          description="Add a review from a client or teammate."
+          action={
+            <Button size="sm" onClick={() => setIsAdding(true)}>
+              <Plus className="size-3.5" aria-hidden /> Add your first testimonial
+            </Button>
+          }
+        />
       ) : (
-        <div className="grid gap-6">
-          {list.length === 0 && !loading && <AdminEmptyState message="No one has left a review yet. Be the first to add one!" />}
-          
-          <div className="grid md:grid-cols-2 gap-6">
-            {list.map((item) => (
-              <div key={item.id} className={`p-8 rounded-[3rem] border border-border bg-card group relative hover:border-primary/40 transition-all ${!item.is_published ? "grayscale-[0.5] opacity-75" : ""}`}>
-                <Quote className="absolute top-8 right-10 w-10 h-10 text-primary/5 transition-colors group-hover:text-primary/10" />
-                
-                <div className="flex items-center gap-2 mb-6">
-                   <div className="flex gap-1 text-yellow-500">
-                      {[...Array(item.rating || 5)].map((_, i) => <Star key={i} className="w-3 h-3 fill-current" />)}
-                   </div>
-                   {!item.is_published && (
-                     <span className="flex items-center gap-1 text-[8px] px-2 py-0.5 rounded-full bg-destructive/10 text-destructive border border-destructive/20 font-black uppercase tracking-widest">
-                        <EyeOff size={8} /> Hidden
-                     </span>
-                   )}
-                </div>
-
-                <p className="text-muted-foreground text-sm leading-relaxed mb-10 italic">
-                  "{item.content}"
-                </p>
-
-                <div className="flex items-center gap-4 pt-6 border-t border-border/50">
-                  <div className="w-12 h-12 rounded-full border border-border bg-muted overflow-hidden shrink-0">
-                     {item.client_avatar ? (
-                       <img src={item.client_avatar} alt="" className="w-full h-full object-cover" />
-                     ) : (
-                       <div className="w-full h-full flex items-center justify-center font-bold text-zinc-500">
-                          {item.client_name.charAt(0)}
-                       </div>
-                     )}
-                  </div>
-                  <div className="flex-1">
-                     <h4 className="font-bold text-sm tracking-tight">{item.client_name}</h4>
-                     <p className="text-[10px] text-muted-foreground uppercase font-black">{item.client_role}</p>
-                  </div>
-                  <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-all">
-                    <button onClick={() => setEditingItem(item)} className="p-2 rounded-lg bg-muted text-primary hover:bg-primary hover:text-primary-foreground transition-all"><Pencil size={14} /></button>
-                    <button onClick={() => deleteItem(item.id)} className="p-2 rounded-lg bg-muted text-destructive hover:bg-destructive hover:text-white transition-all"><Trash2 size={14} /></button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+        <div className="space-y-2">
+          {list.map((item) => (
+            <ListRow
+              key={item.id}
+              dimmed={!item.is_published}
+              icon={
+                item.client_avatar ? (
+                  <span className="relative block size-full overflow-hidden rounded-full">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={item.client_avatar} alt="" className="h-full w-full object-cover" />
+                  </span>
+                ) : (
+                  <Quote className="size-4" />
+                )
+              }
+              title={item.client_name}
+              meta={
+                <>
+                  <span className="line-clamp-1">“{item.content}”</span>
+                  <span className="mt-0.5 block label-mono text-muted-foreground">
+                    {item.client_role} · {item.rating ?? 5}/5
+                  </span>
+                </>
+              }
+              badge={!item.is_published ? <StatusBadge variant="hidden" /> : undefined}
+              actions={
+                <>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    aria-label={`Edit testimonial from ${item.client_name}`}
+                    onClick={() => setEditingItem(item)}
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    <Pencil className="size-4" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    aria-label={`Delete testimonial from ${item.client_name}`}
+                    onClick={() => setPendingDelete(item)}
+                    className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                  >
+                    <Trash2 className="size-4" />
+                  </Button>
+                </>
+              }
+            />
+          ))}
         </div>
       )}
+
+      <ConfirmDialog
+        open={!!pendingDelete}
+        onOpenChange={(o) => !o && setPendingDelete(null)}
+        title={`Delete the testimonial from ${pendingDelete?.client_name}?`}
+        description="This removes the quote from the public site. This cannot be undone."
+        confirmLabel="Delete testimonial"
+        loading={deleting}
+        onConfirm={handleDelete}
+      />
     </div>
   )
 }

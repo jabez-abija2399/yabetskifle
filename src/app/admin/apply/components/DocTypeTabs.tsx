@@ -21,7 +21,7 @@ export function DocTypeTabs({ value, onChange }: Props) {
           <button
             key={opt.id}
             onClick={() => onChange(opt.id)}
-            className="relative flex-1 px-4 py-2.5 rounded-xs text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2D5F6B]"
+            className="relative flex-1 px-4 py-2.5 rounded-xs text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
             {active && (
               <motion.div

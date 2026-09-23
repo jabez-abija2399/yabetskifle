@@ -55,7 +55,7 @@ export default async function BlogPostPage({ params }: Props) {
         <div className="max-w-3xl mx-auto flex items-center justify-between border-b border-border pb-4">
           <Link
             href="/blog"
-            className="group inline-flex items-center gap-2 font-mono text-xs text-muted-foreground hover:text-[#2D5F6B] transition-colors"
+            className="group inline-flex items-center gap-2 font-mono text-xs text-muted-foreground hover:text-accent transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-0.5" />
             <span>[ {t(copy, "blogpost.back_link", "All articles")} ]</span>
@@ -133,8 +133,8 @@ export default async function BlogPostPage({ params }: Props) {
             prose-h3:text-2xl prose-h3:mt-10 prose-h3:mb-4
             prose-p:leading-[1.75] prose-p:text-foreground/85 prose-p:text-pretty
             prose-strong:text-foreground prose-strong:font-medium
-            prose-a:text-[#2D5F6B] dark:prose-a:text-[#3E7987] hover:prose-a:underline prose-a:no-underline
-            prose-blockquote:border-l-[#2D5F6B] prose-blockquote:bg-card prose-blockquote:rounded-r-xs prose-blockquote:py-1 prose-blockquote:px-6
+            prose-a:text-accent hover:prose-a:underline prose-a:no-underline
+            prose-blockquote:border-l-accent prose-blockquote:bg-card prose-blockquote:rounded-r-xs prose-blockquote:py-1 prose-blockquote:px-6
             prose-code:bg-secondary prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-xs prose-code:text-sm prose-code:before:content-none prose-code:after:content-none
             prose-pre:bg-card prose-pre:border prose-pre:border-border prose-pre:rounded-xs
             prose-img:rounded-xs prose-img:border prose-img:border-border
@@ -152,12 +152,12 @@ export default async function BlogPostPage({ params }: Props) {
             <div className="space-y-2">
               <p className="eyebrow">{t(copy, "blogpost.cta_eyebrow", "— Thanks for reading")}</p>
               <p className="text-2xl md:text-3xl font-semibold tracking-tight text-foreground">
-                {renderRichTitle(t(copy, "blogpost.cta_title", "More in the journal."), "text-[#2D5F6B] dark:text-[#3E7987]")}
+                {renderRichTitle(t(copy, "blogpost.cta_title", "More in the journal."), "text-accent")}
               </p>
             </div>
             <Link
               href="/blog"
-              className="inline-flex items-center gap-2 bg-[#2D5F6B] text-white dark:bg-[#3E7987] dark:text-background h-11 px-5 rounded-xs font-mono text-xs font-medium hover:bg-[#234b54] transition-colors w-fit"
+              className="inline-flex items-center gap-2 bg-accent text-accent-foreground h-11 px-5 rounded-xs font-mono text-xs font-medium hover:bg-accent-hover transition-colors w-fit"
             >
               <span>[ {t(copy, "blogpost.back_link", "All articles")} ]</span> <ArrowUpRight className="w-3.5 h-3.5" />
             </Link>

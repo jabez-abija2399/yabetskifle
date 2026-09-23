@@ -1,9 +1,7 @@
 "use client"
 
 import { Education } from "@/types/portfolio"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Loader2 } from "lucide-react"
+import { TextField, FormFooter, FormSection } from "@/components/admin/fields"
 
 interface Props {
   initialData?: Education
@@ -26,40 +24,51 @@ export const EducationForm = ({ initialData, onSave, isSaving, onCancel }: Props
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="grid md:grid-cols-2 gap-6">
-        <div className="space-y-1">
-          <label className="text-sm font-semibold text-zinc-400">Institution</label>
-          <Input name="institution" defaultValue={initialData?.institution} required placeholder="MIT, Stanford, etc." />
+    <form onSubmit={handleSubmit} className="space-y-8">
+      <FormSection title="Academic details">
+        <div className="grid gap-4 sm:grid-cols-2">
+          <TextField
+            label="Institution"
+            name="institution"
+            defaultValue={initialData?.institution}
+            placeholder="MIT, Stanford, etc."
+            required
+          />
+          <TextField
+            label="Degree"
+            name="degree"
+            defaultValue={initialData?.degree}
+            placeholder="Bachelor of Science"
+            required
+          />
         </div>
-        <div className="space-y-1">
-          <label className="text-sm font-semibold text-zinc-400">Degree</label>
-          <Input name="degree" defaultValue={initialData?.degree} required placeholder="Bachelor of Science" />
+        <div className="grid gap-4 sm:grid-cols-3">
+          <TextField
+            label="Field of study"
+            name="field_of_study"
+            defaultValue={initialData?.field_of_study}
+            placeholder="Computer Science"
+          />
+          <TextField
+            label="Duration"
+            name="duration"
+            defaultValue={initialData?.duration}
+            placeholder="2018 – 2022"
+          />
+          <TextField
+            label="Grade (optional)"
+            name="grade"
+            defaultValue={initialData?.grade}
+            placeholder="GPA: 3.9"
+          />
         </div>
-      </div>
+      </FormSection>
 
-      <div className="grid md:grid-cols-3 gap-6">
-        <div className="space-y-1">
-          <label className="text-sm font-semibold text-zinc-400">Field of Study</label>
-          <Input name="field_of_study" defaultValue={initialData?.field_of_study} placeholder="Computer Science" />
-        </div>
-        <div className="space-y-1">
-          <label className="text-sm font-semibold text-zinc-400">Duration</label>
-          <Input name="duration" defaultValue={initialData?.duration} placeholder="2018 - 2022" />
-        </div>
-        <div className="space-y-1">
-          <label className="text-sm font-semibold text-zinc-400">Grade (Optional)</label>
-          <Input name="grade" defaultValue={initialData?.grade} placeholder="GPA: 3.9" />
-        </div>
-      </div>
-
-      <div className="flex justify-end gap-3 pt-6 border-t border-border">
-        <Button type="button" variant="ghost" onClick={onCancel}>Cancel</Button>
-        <Button type="submit" disabled={isSaving} className="rounded-xl px-10 h-12 font-black shadow-xl shadow-primary/20">
-          {isSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          {initialData ? "Update Education" : "Add Education"}
-        </Button>
-      </div>
+      <FormFooter
+        onCancel={onCancel}
+        isSaving={isSaving}
+        submitLabel={initialData ? "Update education" : "Add education"}
+      />
     </form>
   )
 }

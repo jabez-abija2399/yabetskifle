@@ -17,11 +17,11 @@ export const TestimonialsSection = ({ testimonials, copy }: Props) => {
         {/* Section header — Sentence case */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-border">
           <div className="space-y-2">
-            <div className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987]">
+            <div className="font-mono text-xs text-accent">
               {t(copy, "testimonials.eyebrow", "08. Verification & feedback")}
             </div>
             <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
-              {renderRichTitle(t(copy, "testimonials.title", "Collaborator & client appraisals"), "text-[#2D5F6B] dark:text-[#3E7987]")}
+              {renderRichTitle(t(copy, "testimonials.title", "Collaborator & client appraisals"), "text-accent")}
             </h2>
           </div>
           <p className="font-mono text-xs text-muted-foreground max-w-sm">
@@ -37,10 +37,10 @@ export const TestimonialsSection = ({ testimonials, copy }: Props) => {
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between pb-3 border-b border-border font-mono text-xs text-muted-foreground">
-                  <span className="text-[#2D5F6B] dark:text-[#3E7987] font-medium">
+                  <span className="text-accent font-medium">
                     [rev.{String(i + 1).padStart(2, "0")}]
                   </span>
-                  <div className="flex gap-0.5 text-[#2D5F6B] dark:text-[#3E7987]">
+                  <div className="flex gap-0.5 text-accent">
                     {[...Array(review.rating || 5)].map((_, starIdx) => (
                       <Star key={starIdx} className="w-3 h-3 fill-current" />
                     ))}

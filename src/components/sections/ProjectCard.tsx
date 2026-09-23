@@ -50,7 +50,7 @@ export const ProjectCard = ({ project, index = 0, variant = "default" }: Project
       role="link"
       tabIndex={0}
       aria-label={`Open case study: ${project.title}`}
-      className={`group cursor-pointer border border-[#2D5F6B]/30 hover:border-[#2D5F6B] focus-visible:border-[#2D5F6B] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2D5F6B] bg-card rounded-xs transition-all duration-200 flex flex-col justify-between p-5 md:p-6 corner-ticks ${
+      className={`group cursor-pointer border border-accent/30 hover:border-accent focus-visible:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent bg-card rounded-xs transition-all duration-200 flex flex-col justify-between p-5 md:p-6 corner-ticks ${
         variant === "wide" ? "md:grid md:grid-cols-12 md:gap-8 items-stretch" : ""
       }`}
     >
@@ -59,7 +59,7 @@ export const ProjectCard = ({ project, index = 0, variant = "default" }: Project
         <div>
           {/* Monospace metadata header: stack, year, type */}
           <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-border/80 font-mono text-xs text-muted-foreground">
-            <span className="text-[#2D5F6B] dark:text-[#3E7987] font-medium">
+            <span className="text-accent font-medium">
               {`[prj.${num} // ${year}]`}
             </span>
             <span className="text-muted-foreground/80 lowercase">
@@ -68,7 +68,7 @@ export const ProjectCard = ({ project, index = 0, variant = "default" }: Project
           </div>
 
           {/* Title */}
-          <h3 className="text-xl md:text-2xl font-semibold text-foreground tracking-tight mt-3 group-hover:text-[#2D5F6B] dark:group-hover:text-[#3E7987] transition-colors">
+          <h3 className="text-xl md:text-2xl font-semibold text-foreground tracking-tight mt-3 group-hover:text-accent transition-colors">
             {project.title}
           </h3>
 
@@ -86,8 +86,8 @@ export const ProjectCard = ({ project, index = 0, variant = "default" }: Project
 
             {/* Approach */}
             {approach && (
-              <div className="border-l-2 border-[#2D5F6B]/40 pl-3 space-y-0.5">
-                <span className="text-[11px] text-[#2D5F6B] dark:text-[#3E7987] block font-normal">
+              <div className="border-l-2 border-accent/40 pl-3 space-y-0.5">
+                <span className="text-[11px] text-accent block font-normal">
                   02. Architecture & approach:
                 </span>
                 <p className="font-sans text-xs sm:text-sm text-foreground/90 leading-relaxed font-normal">
@@ -128,7 +128,7 @@ export const ProjectCard = ({ project, index = 0, variant = "default" }: Project
 
           {/* Direct action links */}
           <div className="flex flex-wrap items-center justify-between gap-3 pt-1 text-xs font-mono">
-            <span className="inline-flex items-center gap-1 text-[#2D5F6B] dark:text-[#3E7987] font-medium group-hover:underline">
+            <span className="inline-flex items-center gap-1 text-accent font-medium group-hover:underline">
               [ Case study specs <ArrowUpRight className="w-3.5 h-3.5" /> ]
             </span>
 
@@ -151,7 +151,7 @@ export const ProjectCard = ({ project, index = 0, variant = "default" }: Project
                   target="_blank"
                   rel="noreferrer"
                   onClick={(e) => e.stopPropagation()}
-                  className="inline-flex items-center gap-1 text-[#2D5F6B] dark:text-[#3E7987] hover:underline transition-colors"
+                  className="inline-flex items-center gap-1 text-accent hover:underline transition-colors"
                 >
                   <ExternalLink className="w-3.5 h-3.5" />
                   <span>live demo ↗</span>

@@ -30,7 +30,7 @@ export default async function BlogPage() {
           <div className="space-y-4 max-w-2xl">
             <p className="eyebrow">{t(copy, "blog.archive.eyebrow", "Journal")}</p>
             <h1 className="text-heading-hero text-foreground">
-              {renderRichTitle(t(copy, "blog.archive.title", "Notes & writing"), "text-[#2D5F6B] dark:text-[#3E7987]")}
+              {renderRichTitle(t(copy, "blog.archive.title", "Notes & writing"), "text-accent")}
             </h1>
             <p className="text-base md:text-lg text-muted-foreground text-pretty pt-2">
               {t(copy, "blog.archive.subtitle", "Thoughts on building products, design systems, and the craft of frontend engineering.")}
@@ -51,7 +51,7 @@ export default async function BlogPage() {
             {posts.map((post, i) => (
               <article key={post.id} className="group">
                 <Link href={`/blog/${post.slug}`} className="grid md:grid-cols-12 gap-6 md:gap-10 items-start py-8 md:py-10">
-                  <div className="md:col-span-1 font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987]">
+                  <div className="md:col-span-1 font-mono text-xs text-accent">
                     [art.{String(i + 1).padStart(2, "0")}]
                   </div>
 
@@ -93,7 +93,7 @@ export default async function BlogPage() {
                       )}
                     </div>
 
-                    <h2 className="text-xl md:text-2xl font-semibold text-foreground tracking-tight leading-snug group-hover:text-[#2D5F6B] dark:group-hover:text-[#3E7987] transition-colors">
+                    <h2 className="text-xl md:text-2xl font-semibold text-foreground tracking-tight leading-snug group-hover:text-accent transition-colors">
                       {post.title}
                     </h2>
 
@@ -101,7 +101,7 @@ export default async function BlogPage() {
                       {post.excerpt || post.content.slice(0, 180) + "…"}
                     </p>
 
-                    <span className="inline-flex items-center gap-1.5 font-mono text-xs text-muted-foreground pt-1 group-hover:text-[#2D5F6B] dark:group-hover:text-[#3E7987] transition-colors">
+                    <span className="inline-flex items-center gap-1.5 font-mono text-xs text-muted-foreground pt-1 group-hover:text-accent transition-colors">
                       <span>[ read spec ]</span> <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </span>
                   </div>

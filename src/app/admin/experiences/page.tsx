@@ -1,32 +1,42 @@
 "use client"
 
 import { useState } from "react"
-import { AdminPageHeader } from "@/components/ui/AdminPageHeader"
-import { AdminEmptyState } from "@/components/ui/AdminEmptyState"
+import { PageHeader } from "@/components/admin/PageHeader"
+import { ListRow } from "@/components/admin/ListRow"
+import { StatusBadge } from "@/components/admin/StatusBadge"
+import { EditPanel } from "@/components/admin/EditPanel"
+import { ConfirmDialog } from "@/components/admin/ConfirmDialog"
+import { EmptyState } from "@/components/admin/EmptyState"
+import { ListSkeleton } from "@/components/admin/ListSkeleton"
 import { ExperienceForm } from "../ExperienceForm"
 import { Experience } from "@/types/portfolio"
 import { useAdminData } from "@/hooks/useAdminData"
 import { createSupabaseClient } from "@/lib/supabase"
 import { toast } from "sonner"
-import { Pencil, Trash2, Briefcase, EyeOff } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Pencil, Trash2, Plus, Briefcase } from "lucide-react"
 
 export default function AdminExperiencePage() {
-  const { data: exps, loading, deleteItem, refresh } = useAdminData<Experience>("experiences")
+  const { data: exps, loading, refresh } = useAdminData<Experience>("experiences")
   const [editingExp, setEditingExp] = useState<Experience | null>(null)
   const [isAdding, setIsAdding] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
+  const [pendingDelete, setPendingDelete] = useState<Experience | null>(null)
+  const [deleting, setDeleting] = useState(false)
+
+  const editing = isAdding || !!editingExp
 
   const handleSave = async (data: Omit<Experience, "id">) => {
     setIsSaving(true)
     const supabase = createSupabaseClient()
-    const { error } = editingExp 
+    const { error } = editingExp
       ? await supabase.from("experiences").update(data).eq("id", editingExp.id)
       : await supabase.from("experiences").insert([data])
 
     if (error) {
       toast.error(`Error: ${error.message}`)
     } else {
-      toast.success("Experience journey updated!")
+      toast.success(editingExp ? "Experience updated" : "Experience added")
       setEditingExp(null)
       setIsAdding(false)
       refresh()
@@ -34,61 +44,117 @@ export default function AdminExperiencePage() {
     setIsSaving(false)
   }
 
+  const handleDelete = async () => {
+    if (!pendingDelete) return
+    setDeleting(true)
+    const supabase = createSupabaseClient()
+    const { error } = await supabase.from("experiences").delete().eq("id", pendingDelete.id)
+    if (error) {
+      toast.error(`Failed: ${error.message}`)
+    } else {
+      toast.success("Experience deleted")
+      setPendingDelete(null)
+      refresh()
+    }
+    setDeleting(false)
+  }
+
   return (
-    <div className="max-w-4xl mx-auto">
-      <AdminPageHeader 
-        title="Professional Journey" 
-        description="Tell the story of your career growth and major professional milestones."
-        actionLabel={!(isAdding || editingExp) ? "Add Experience" : undefined}
-        onAction={() => setIsAdding(true)}
+    <div className="mx-auto max-w-4xl">
+      <PageHeader
+        index="02"
+        title="Experience"
+        description="Your professional timeline and milestones."
+        actions={
+          !editing && (
+            <Button onClick={() => setIsAdding(true)}>
+              <Plus className="size-4" aria-hidden /> Add experience
+            </Button>
+          )
+        }
       />
 
-      {(isAdding || editingExp) ? (
-        <div className="p-8 rounded-[2.5rem] border border-border bg-card shadow-sm animate-in fade-in slide-in-from-bottom-2">
-           <h3 className="text-xl font-bold mb-6 italic">{editingExp ? "Edit Experience" : "New Chapter"}</h3>
-           <ExperienceForm 
-              initialData={editingExp || undefined} 
-              onSave={handleSave} 
-              isSaving={isSaving}
-              onCancel={() => { setEditingExp(null); setIsAdding(false); }}
-           />
-        </div>
+      {editing ? (
+        <EditPanel
+          eyebrow={editingExp ? "Editing" : "New"}
+          title={editingExp ? `${editingExp.role} — ${editingExp.company}` : "Add a position"}
+          onClose={() => {
+            setEditingExp(null)
+            setIsAdding(false)
+          }}
+        >
+          <ExperienceForm
+            initialData={editingExp || undefined}
+            onSave={handleSave}
+            isSaving={isSaving}
+            onCancel={() => {
+              setEditingExp(null)
+              setIsAdding(false)
+            }}
+          />
+        </EditPanel>
+      ) : loading ? (
+        <ListSkeleton rows={4} />
+      ) : exps.length === 0 ? (
+        <EmptyState
+          title="No experience entries yet"
+          description="Add the roles and milestones that shape your career story."
+          action={
+            <Button size="sm" onClick={() => setIsAdding(true)}>
+              <Plus className="size-3.5" aria-hidden /> Add your first entry
+            </Button>
+          }
+        />
       ) : (
-        <div className="space-y-4">
-          {exps.length === 0 && !loading && <AdminEmptyState message="Your professional story hasn't started here yet." />}
+        <div className="space-y-2">
           {exps.map((exp) => (
-            <div key={exp.id} className={`p-6 rounded-[2.5rem] border border-border bg-card group flex items-center justify-between hover:border-primary/30 transition-all ${!exp.is_published ? "bg-muted/30 opacity-70" : ""}`}>
-              <div className="flex items-center gap-6">
-                 <div className="relative">
-                    <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
-                        <Briefcase size={24} />
-                    </div>
-                    {!exp.is_published && (
-                      <div className="absolute -top-1 -right-1 w-5 h-5 bg-destructive text-white rounded-full flex items-center justify-center shadow-lg">
-                        <EyeOff size={10} />
-                      </div>
-                    )}
-                 </div>
-                 <div>
-                    <div className="flex items-center gap-2 mb-1">
-                       <h4 className="font-bold text-lg tracking-tight">{exp.role}</h4>
-                       {!exp.is_published && (
-                         <span className="text-[8px] font-black uppercase text-destructive tracking-widest px-2 py-0.5 rounded-full bg-destructive/10">Hidden</span>
-                       )}
-                    </div>
-                    <p className="text-sm text-zinc-500 font-medium">
-                       {exp.company} <span className="mx-2 text-primary">/</span> {exp.duration}
-                    </p>
-                 </div>
-              </div>
-              <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-all">
-                <button onClick={() => setEditingExp(exp)} className="p-3 rounded-xl bg-muted hover:bg-primary hover:text-primary-foreground transition-all shadow-sm"><Pencil size={14} /></button>
-                <button onClick={() => deleteItem(exp.id)} className="p-3 rounded-xl bg-muted hover:bg-destructive hover:text-white transition-all shadow-sm"><Trash2 size={14} /></button>
-              </div>
-            </div>
+            <ListRow
+              key={exp.id}
+              icon={<Briefcase className="size-4" />}
+              dimmed={!exp.is_published}
+              title={exp.role}
+              meta={
+                <>
+                  {exp.company} <span className="text-accent">/</span> {exp.duration}
+                </>
+              }
+              badge={!exp.is_published ? <StatusBadge variant="hidden" /> : undefined}
+              actions={
+                <>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    aria-label={`Edit ${exp.role}`}
+                    onClick={() => setEditingExp(exp)}
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    <Pencil className="size-4" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    aria-label={`Delete ${exp.role}`}
+                    onClick={() => setPendingDelete(exp)}
+                    className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                  >
+                    <Trash2 className="size-4" />
+                  </Button>
+                </>
+              }
+            />
           ))}
         </div>
       )}
+
+      <ConfirmDialog
+        open={!!pendingDelete}
+        onOpenChange={(o) => !o && setPendingDelete(null)}
+        title={`Delete the “${pendingDelete?.role}” entry?`}
+        description="This removes the position from your public timeline. This cannot be undone."
+        confirmLabel="Delete entry"
+        loading={deleting}
+        onConfirm={handleDelete}
+      />
     </div>
   )
 }

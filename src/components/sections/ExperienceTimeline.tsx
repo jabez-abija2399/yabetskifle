@@ -16,11 +16,11 @@ export const ExperienceTimeline = ({ experiences, copy }: Props) => {
         {/* Section header — Sentence case */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-border">
           <div className="space-y-2">
-            <div className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987]">
+            <div className="font-mono text-xs text-accent">
               {t(copy, "experience.eyebrow", "04. Engineering experience")}
             </div>
             <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
-              {renderRichTitle(t(copy, "experience.title", "Roles, teams & production contributions"), "text-[#2D5F6B] dark:text-[#3E7987]")}
+              {renderRichTitle(t(copy, "experience.title", "Roles, teams & production contributions"), "text-accent")}
             </h2>
           </div>
           <p className="font-mono text-xs text-muted-foreground max-w-sm">
@@ -38,14 +38,14 @@ export const ExperienceTimeline = ({ experiences, copy }: Props) => {
               {/* Index & Timestamp */}
               <div className="col-span-12 md:col-span-3 space-y-2 font-mono text-xs">
                 <div className="flex items-center gap-2 text-muted-foreground">
-                  <span className="text-[#2D5F6B] dark:text-[#3E7987] font-medium">
+                  <span className="text-accent font-medium">
                     [{String(i + 1).padStart(2, "0")}]
                   </span>
                   <span>{exp.duration}</span>
                 </div>
                 {exp.is_current && (
-                  <div className="inline-flex items-center gap-1.5 px-2 py-0.5 border border-[#C4432E]/30 bg-card rounded-xs text-[11px] text-[#C4432E]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#C4432E]" />
+                  <div className="inline-flex items-center gap-1.5 px-2 py-0.5 border border-signal/30 bg-card rounded-xs text-[11px] text-signal">
+                    <span className="w-1.5 h-1.5 rounded-full bg-signal" />
                     <span>{t(copy, "experience.current", "Active role")}</span>
                   </div>
                 )}
@@ -53,10 +53,10 @@ export const ExperienceTimeline = ({ experiences, copy }: Props) => {
 
               {/* Role + Company + Location */}
               <div className="col-span-12 md:col-span-4 space-y-1">
-                <h3 className="text-lg md:text-xl font-semibold text-foreground tracking-tight group-hover:text-[#2D5F6B] dark:group-hover:text-[#3E7987] transition-colors">
+                <h3 className="text-lg md:text-xl font-semibold text-foreground tracking-tight group-hover:text-accent transition-colors">
                   {exp.role}
                 </h3>
-                <p className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987] font-medium">
+                <p className="font-mono text-xs text-accent font-medium">
                   {exp.company}
                 </p>
                 <p className="flex items-center gap-1 text-xs text-muted-foreground pt-1 font-mono">
@@ -68,7 +68,7 @@ export const ExperienceTimeline = ({ experiences, copy }: Props) => {
               <div className="col-span-12 md:col-span-5 space-y-2 font-sans text-xs sm:text-sm text-muted-foreground">
                 {exp.description?.map((duty, j) => (
                   <div key={j} className="flex items-start gap-2.5">
-                    <span className="text-[#2D5F6B] dark:text-[#3E7987] font-mono text-xs mt-0.5 select-none">
+                    <span className="text-accent font-mono text-xs mt-0.5 select-none">
                       →
                     </span>
                     <p className="leading-relaxed text-pretty text-foreground/80">

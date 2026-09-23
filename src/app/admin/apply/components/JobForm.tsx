@@ -49,7 +49,7 @@ export function JobForm({
                 value={companyName}
                 onChange={(e) => onCompanyNameChange(e.target.value)}
                 placeholder="e.g. Stripe, HOPn, Notion"
-                className="w-full px-3 py-2.5 text-sm rounded-xs border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-[#2D5F6B] transition-colors"
+                className="w-full px-3 py-2.5 text-sm rounded-xs border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-accent transition-colors"
               />
             </div>
           )}
@@ -63,7 +63,7 @@ export function JobForm({
                 value={roleName}
                 onChange={(e) => onRoleNameChange(e.target.value)}
                 placeholder="e.g. Frontend Engineer, Full-Stack Dev"
-                className="w-full px-3 py-2.5 text-sm rounded-xs border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-[#2D5F6B] transition-colors"
+                className="w-full px-3 py-2.5 text-sm rounded-xs border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-accent transition-colors"
               />
             </div>
           )}
@@ -88,7 +88,7 @@ export function JobForm({
           onChange={(e) => onJobDescriptionChange(e.target.value)}
           placeholder={docConfig.placeholder}
           rows={8}
-          className="w-full px-4 py-3 text-sm rounded-xs border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-[#2D5F6B] resize-none leading-relaxed transition-colors"
+          className="w-full px-4 py-3 text-sm rounded-xs border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-accent resize-none leading-relaxed transition-colors"
         />
         <p className="text-xs text-muted-foreground">
           More detail → more tailored output. Paste the full JD.
@@ -98,7 +98,7 @@ export function JobForm({
       <button
         onClick={onSubmit}
         disabled={!isValid || isLoading}
-        className="w-full flex items-center justify-center gap-2 px-6 py-3.5 rounded-xs font-mono text-xs font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2D5F6B] disabled:opacity-40 disabled:cursor-not-allowed bg-[#2D5F6B] text-white dark:bg-[#3E7987] dark:text-background hover:bg-[#234b54] cursor-pointer"
+        className="w-full flex items-center justify-center gap-2 px-6 py-3.5 rounded-xs font-mono text-xs font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-40 disabled:cursor-not-allowed bg-accent text-accent-foreground hover:bg-accent-hover cursor-pointer"
       >
         {isLoading ? (
           <>

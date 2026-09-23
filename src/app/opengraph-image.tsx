@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og"
 import { PortfolioService } from "@/services/portfolio"
+import { brand } from "@/lib/brand"
 
 export const runtime = "nodejs"
 export const revalidate = 3600
@@ -22,8 +23,8 @@ export default async function Image() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          backgroundColor: "#F5F3EE",
-          color: "#1A1D23",
+          backgroundColor: brand.paper,
+          color: brand.ink,
           padding: "56px 64px",
           position: "relative",
           overflow: "hidden",
@@ -41,7 +42,7 @@ export default async function Image() {
           }}
         >
           {[0, 1, 2, 3].map((i) => (
-            <div key={i} style={{ height: 1, backgroundColor: "#DDD8CD" }} />
+            <div key={i} style={{ height: 1, backgroundColor: brand.border }} />
           ))}
         </div>
 
@@ -60,14 +61,14 @@ export default async function Image() {
                 width: 12,
                 height: 12,
                 borderRadius: 6,
-                backgroundColor: "#C4432E",
+                backgroundColor: brand.rust,
               }}
             />
             <span
               style={{
                 fontSize: 20,
                 fontFamily: "ui-monospace, monospace",
-                color: "#8B8577",
+                color: brand.warmGray,
               }}
             >
               Open to roles — Full-time · Contract · Remote
@@ -77,7 +78,7 @@ export default async function Image() {
             style={{
               fontSize: 20,
               fontFamily: "ui-monospace, monospace",
-              color: "#2D5F6B",
+              color: brand.teal,
             }}
           >
             v{year}.sys
@@ -97,7 +98,7 @@ export default async function Image() {
             style={{
               fontSize: 22,
               fontFamily: "ui-monospace, monospace",
-              color: "#2D5F6B",
+              color: brand.teal,
             }}
           >
             system.profile // portfolio
@@ -107,7 +108,7 @@ export default async function Image() {
               fontSize: 118,
               fontWeight: 700,
               letterSpacing: -4,
-              color: "#1A1D23",
+              color: brand.ink,
               lineHeight: 1,
             }}
           >
@@ -116,7 +117,7 @@ export default async function Image() {
           <span
             style={{
               fontSize: 32,
-              color: "#1A1D23",
+              color: brand.ink,
               opacity: 0.85,
               maxWidth: 900,
             }}
@@ -131,7 +132,7 @@ export default async function Image() {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "flex-end",
-            borderTop: "1px solid #DDD8CD",
+            borderTop: `1px solid ${brand.border}`,
             paddingTop: 24,
             zIndex: 1,
           }}
@@ -140,7 +141,7 @@ export default async function Image() {
             style={{
               fontSize: 20,
               fontFamily: "ui-monospace, monospace",
-              color: "#1A1D23",
+              color: brand.ink,
             }}
           >
             React · Next.js · TypeScript
@@ -149,7 +150,7 @@ export default async function Image() {
             style={{
               fontSize: 20,
               fontFamily: "ui-monospace, monospace",
-              color: "#8B8577",
+              color: brand.warmGray,
             }}
           >
             Systems, not screens · {year}

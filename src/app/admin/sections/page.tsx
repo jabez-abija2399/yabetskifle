@@ -1,13 +1,39 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { AdminPageHeader } from "@/components/ui/AdminPageHeader"
+import { PageHeader } from "@/components/admin/PageHeader"
+import { ListSkeleton } from "@/components/admin/ListSkeleton"
 import { PortfolioService } from "@/services/portfolio"
 import { SiteSettings } from "@/types/portfolio"
 import { toast } from "sonner"
-import { Layout, Eye, EyeOff, Loader2, Save } from "lucide-react"
+import { Eye, EyeOff, Save } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { TechStack } from "@/components/sections/TechStack"
+
+const DEFAULTS = {
+  site_name: "My Portfolio",
+  footer_text: "© 2026",
+  contact_email: "hello@example.com",
+  show_services: true,
+  show_projects: true,
+  show_experience: true,
+  show_testimonials: true,
+  show_blog: true,
+  show_faq: true,
+  show_languages: true,
+  show_contact: true,
+}
+
+const SECTIONS = [
+  { id: "show_services", name: "Services & expertise", desc: "Display your core service offerings." },
+  { id: "show_skills", name: "Technical ecosystem", desc: "Show your categorized tools and frameworks." },
+  { id: "show_projects", name: "Featured projects", desc: "Showcase your work gallery." },
+  { id: "show_experience", name: "Work history", desc: "Display your professional timeline." },
+  { id: "show_testimonials", name: "Testimonials", desc: "Show client and student feedback." },
+  { id: "show_contact", name: "Contact form", desc: "The “get in touch” area." },
+  { id: "show_faq", name: "FAQ section", desc: "Answer common visitor questions." },
+  { id: "show_languages", name: "Language skills", desc: "Display your linguistic proficiency." },
+  { id: "show_blog", name: "Blog posts", desc: "Show or hide your journal entries." },
+]
 
 export default function AdminSectionsPage() {
   const [settings, setSettings] = useState<SiteSettings | null>(null)
@@ -15,114 +41,104 @@ export default function AdminSectionsPage() {
   const [isSaving, setIsSaving] = useState(false)
 
   useEffect(() => {
-    fetchSettings()
-  }, [])
-
-  const fetchSettings = async () => {
-    const data = await PortfolioService.getSettings()
-    
-    if (data) setSettings(data)
-    else {
-      // Create a default object if no row exists yet
-      setSettings({
-        site_name: "My Portfolio",
-        footer_text: "© 2026",
-        contact_email: "hello@example.com",
-        show_services: true,
-        show_projects: true,
-        show_experience: true,
-        show_testimonials: true,
-        show_blog: true,
-        show_faq: true,
-        show_languages: true,
-        show_contact: true
-      } as any)
+    let cancelled = false
+    ;(async () => {
+      try {
+        const data = await PortfolioService.getSettings()
+        if (cancelled) return
+        setSettings((data as SiteSettings | null) ?? ({ ...DEFAULTS } as SiteSettings))
+      } catch {
+        if (!cancelled) setSettings({ ...DEFAULTS } as SiteSettings)
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    })()
+    return () => {
+      cancelled = true
     }
-    setLoading(false)
-  }
- 
+  }, [])
 
   const handleToggle = (field: string) => {
     if (!settings) return
-    const currentValue = (settings as any)[field] ?? true
-    setSettings({ 
-      ...settings, 
-      [field]: !currentValue 
-    } as any)
+    const flags = settings as unknown as Record<string, unknown>
+    const currentValue = Boolean(flags[field] ?? true)
+    setSettings({ ...settings, [field]: !currentValue } as SiteSettings)
   }
 
   const handleSave = async () => {
     if (!settings) return
     setIsSaving(true)
-    
-    console.log("Saving Architecture:", settings)
-
     try {
       await PortfolioService.updateSettings(settings)
-      console.log("Saved Success")
-      toast.success("Website Architecture synchronized!")
-    } catch (error: any) {
-      console.error("Save Error:", error)
-      toast.error(`Failed: ${error.message}. Make sure SQL columns were added.`)
+      toast.success("Sections synchronized")
+    } catch (error) {
+      toast.error(`Failed: ${error instanceof Error ? error.message : "Save failed"}`)
+    } finally {
+      setIsSaving(false)
     }
-    setIsSaving(false)
   }
 
-  const sections = [
-    { id: "show_services", name: "Services & Expertise", desc: "Display your core service offerings." },
-    { id: "show_skills", name: "Technical Ecosystem", desc: "Show your categorized tools and frameworks." },
-    { id: "show_projects", name: "Featured Projects", desc: "Showcase your work gallery." },
-    { id: "show_experience", name: "Work History", desc: "Display your professional timeline." },
-    { id: "show_testimonials", name: "Testimonials", desc: "Show client and student feedback." },
-    { id: "show_contact", name: "Contact Form", desc: "The 'Get in Touch' area." },
-    { id: "show_faq", name: "FAQ Section", desc: "Answer common visitor questions." },
-    { id: "show_languages", name: "Language Skills", desc: "Display your linguistic proficiency." },
-    { id: "show_blog", name: "Blog Posts", desc: "Show/Hide your journal entries." },
-  ]
-
-  if (loading) return <div className="p-20 text-center font-black italic animate-pulse">Syncing Structural Grid...</div>
-
   return (
-    <div className="max-w-4xl mx-auto pb-20">
-      <AdminPageHeader 
-        title="Layout Architect" 
-        description="Master control for your website layout. Enable or disable entire sections globally."
+    <div className="mx-auto max-w-3xl">
+      <PageHeader
+        index="05"
+        title="Sections"
+        description="Master control — enable or disable entire public sections globally."
+        actions={
+          <Button onClick={handleSave} disabled={isSaving || loading} className="gap-2">
+            <Save className="size-4" aria-hidden />
+            {isSaving ? "Saving…" : "Save layout"}
+          </Button>
+        }
       />
 
-      <div className="grid gap-4 mt-8">
-        {sections.map((section) => {
-          const isEnabled = (settings as any)?.[section.id] ?? true
-          return (
-            <div key={section.id} className={`p-8 rounded-[3rem] border border-border bg-card transition-all flex items-center justify-between ${!isEnabled ? "opacity-40 grayscale" : "shadow-xl shadow-primary/5"}`}>
-               <div className="flex items-center gap-6">
-                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all ${isEnabled ? "bg-primary/10 text-primary" : "bg-muted text-zinc-500"}`}>
-                     {isEnabled ? <Eye size={24} /> : <EyeOff size={24} />}
-                  </div>
+      {loading ? (
+        <ListSkeleton rows={5} />
+      ) : (
+        <div className="space-y-2">
+          {SECTIONS.map((section) => {
+            const flags = settings as unknown as Record<string, boolean> | null
+            const isEnabled = flags?.[section.id] ?? true
+            return (
+              <div
+                key={section.id}
+                className={`flex items-center justify-between gap-4 rounded-xs border border-border bg-card p-5 transition-opacity ${
+                  isEnabled ? "" : "opacity-60"
+                }`}
+              >
+                <div className="flex items-center gap-4">
+                  <span className="text-muted-foreground" aria-hidden>
+                    {isEnabled ? <Eye className="size-4" /> : <EyeOff className="size-4" />}
+                  </span>
                   <div>
-                     <h4 className="font-bold text-lg tracking-tight">{section.name}</h4>
-                     <p className="text-[10px] text-muted-foreground font-black uppercase tracking-[0.2em]">{section.desc}</p>
+                    <p className="text-sm font-medium">{section.name}</p>
+                    <p className="label-mono text-muted-foreground">
+                      {section.desc}
+                    </p>
                   </div>
-               </div>
+                </div>
 
-               <button 
+                <button
                   onClick={() => handleToggle(section.id)}
                   type="button"
-                  className={`w-16 h-8 rounded-full relative transition-all shadow-inner ${isEnabled ? "bg-primary" : "bg-zinc-700"}`}
-               >
-                  <div className={`absolute top-1 w-6 h-6 bg-white rounded-full shadow-lg transition-all ${isEnabled ? "right-1" : "left-1"}`} />
-               </button>
-            </div>
-          )
-        })}
-      </div>
-
-      <div className="fixed bottom-10 right-10 flex items-center gap-4 bg-background/80 backdrop-blur-xl p-4 rounded-[2rem] border border-primary/20 shadow-2xl animate-in slide-in-from-right-10 z-50">
-         <p className="text-[10px] font-black uppercase text-zinc-500 tracking-widest px-4">Instant Global Update</p>
-         <Button onClick={handleSave} disabled={isSaving} className="h-14 px-10 rounded-2xl font-black italic gap-2 shadow-xl shadow-primary/20 transition-all hover:scale-[1.02]">
-            {isSaving ? <Loader2 className="animate-spin" /> : <Save />}
-            Update Architecture
-         </Button>
-      </div>
+                  role="switch"
+                  aria-checked={isEnabled}
+                  aria-label={`${section.name} visibility`}
+                  className={`relative h-6 w-11 shrink-0 rounded-full transition-colors ${
+                    isEnabled ? "bg-accent" : "bg-border"
+                  }`}
+                >
+                  <span
+                    className={`absolute top-1 size-4 rounded-full bg-background transition-all ${
+                      isEnabled ? "left-6" : "left-1"
+                    }`}
+                  />
+                </button>
+              </div>
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }

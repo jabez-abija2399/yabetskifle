@@ -30,11 +30,11 @@ export const AboutSection = ({ profile, languagesLine, copy }: Props) => {
         {/* Section header — Sentence case */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-border">
           <div className="space-y-2">
-            <div className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987]">
+            <div className="font-mono text-xs text-accent">
               {t(copy, "about.eyebrow", "03. Engineering background")}
             </div>
             <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
-              {renderRichTitle(t(copy, "about.title", "Operating principles & technical narrative"), "text-[#2D5F6B] dark:text-[#3E7987]")}
+              {renderRichTitle(t(copy, "about.title", "Operating principles & technical narrative"), "text-accent")}
             </h2>
           </div>
           <p className="font-mono text-xs text-muted-foreground max-w-sm">
@@ -49,7 +49,7 @@ export const AboutSection = ({ profile, languagesLine, copy }: Props) => {
             <div className="space-y-4">
               <div className="flex items-center justify-between border-b border-border pb-3 font-mono text-xs text-muted-foreground">
                 <span className="flex items-center gap-2 text-foreground font-medium">
-                  <BookOpen className="w-3.5 h-3.5 text-[#2D5F6B] dark:text-[#3E7987]" />
+                  <BookOpen className="w-3.5 h-3.5 text-accent" />
                   <span>{t(copy, "about.story_eyebrow", "Field note // Narrative")}</span>
                 </span>
                 <span>doc.bio</span>
@@ -65,7 +65,7 @@ export const AboutSection = ({ profile, languagesLine, copy }: Props) => {
             </div>
 
             <div className="pt-4 border-t border-border flex flex-wrap items-center justify-between gap-3 font-mono text-xs text-muted-foreground">
-              <span className="text-[#2D5F6B] dark:text-[#3E7987] font-medium">
+              <span className="text-accent font-medium">
                 [ {t(copy, "about.story_footer", "Open to learn · Open to teach · Open to ship")} ]
               </span>
               <span>verified</span>
@@ -83,7 +83,7 @@ export const AboutSection = ({ profile, languagesLine, copy }: Props) => {
               <div>
                 <p className="font-mono text-4xl sm:text-5xl font-semibold text-foreground">
                   {profile.experience_years || 2}
-                  <span className="text-[#2D5F6B] dark:text-[#3E7987]">+</span>
+                  <span className="text-accent">+</span>
                 </p>
                 <p className="text-xs text-muted-foreground mt-1.5 font-mono">
                   {t(copy, "about.experience_unit", "years shipping production web applications")}
@@ -92,8 +92,8 @@ export const AboutSection = ({ profile, languagesLine, copy }: Props) => {
             </div>
 
             {/* Currently learning */}
-            <div className="border border-[#2D5F6B]/30 bg-card p-5 rounded-xs corner-ticks flex flex-col justify-between">
-              <div className="flex items-center justify-between font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987] border-b border-border pb-2.5 mb-3">
+            <div className="border border-accent/30 bg-card p-5 rounded-xs corner-ticks flex flex-col justify-between">
+              <div className="flex items-center justify-between font-mono text-xs text-accent border-b border-border pb-2.5 mb-3">
                 <span className="flex items-center gap-1.5">
                   <Compass className="w-3.5 h-3.5" />
                   <span>{t(copy, "about.learning_label", "Active focus & research")}</span>
@@ -109,7 +109,7 @@ export const AboutSection = ({ profile, languagesLine, copy }: Props) => {
             <div className="border border-border bg-card p-5 rounded-xs corner-ticks flex flex-col justify-between">
               <div className="flex items-center justify-between font-mono text-xs text-muted-foreground border-b border-border pb-2.5 mb-3">
                 <span className="flex items-center gap-1.5">
-                  <Quote className="w-3.5 h-3.5 text-[#2D5F6B]" />
+                  <Quote className="w-3.5 h-3.5 text-accent" />
                   <span>{t(copy, "about.philosophy_label", "Operating principle")}</span>
                 </span>
                 <span>spec.03</span>
@@ -124,14 +124,14 @@ export const AboutSection = ({ profile, languagesLine, copy }: Props) => {
             <div className="border border-border bg-card p-5 rounded-xs corner-ticks space-y-3">
               <div className="flex justify-between items-center pb-2 border-b border-border font-mono text-xs text-muted-foreground">
                 <span className="flex items-center gap-1.5 text-foreground">
-                  <MapPin className="w-3.5 h-3.5 text-[#2D5F6B]" />
+                  <MapPin className="w-3.5 h-3.5 text-accent" />
                   <span>Base</span>
                 </span>
                 <span>{location.split(",")[0]}</span>
               </div>
               <div className="flex justify-between items-center font-mono text-xs text-muted-foreground">
                 <span className="flex items-center gap-1.5 text-foreground">
-                  <Globe className="w-3.5 h-3.5 text-[#2D5F6B]" />
+                  <Globe className="w-3.5 h-3.5 text-accent" />
                   <span>Languages</span>
                 </span>
                 <span>{langShort} ({langLong})</span>

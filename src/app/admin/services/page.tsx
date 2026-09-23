@@ -1,108 +1,165 @@
 "use client"
 
 import { useState } from "react"
-import { AdminPageHeader } from "@/components/ui/AdminPageHeader"
-import { AdminEmptyState } from "@/components/ui/AdminEmptyState"
+import { PageHeader } from "@/components/admin/PageHeader"
+import { ListRow } from "@/components/admin/ListRow"
+import { StatusBadge } from "@/components/admin/StatusBadge"
+import { EditPanel } from "@/components/admin/EditPanel"
+import { ConfirmDialog } from "@/components/admin/ConfirmDialog"
+import { EmptyState } from "@/components/admin/EmptyState"
+import { ListSkeleton } from "@/components/admin/ListSkeleton"
 import { ServiceForm } from "../ServiceForm"
 import { Service } from "@/types/portfolio"
 import { useAdminData } from "@/hooks/useAdminData"
 import { PortfolioService } from "@/services/portfolio"
 import { toast } from "sonner"
-import { Pencil, Trash2, Box, Code2, Layout, Database, Smartphone, Palette, EyeOff } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Pencil, Trash2, Plus, Box, Code2, Layout, Database, Smartphone, Palette, Zap, Sparkles } from "lucide-react"
 
-const IconMap: any = { Code2, Layout, Database, Smartphone, Palette, Box }
+const IconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
+  Code2, Layout, Database, Smartphone, Palette, Box, Zap, Sparkles,
+}
 
 export default function AdminServicesPage() {
   const { data: services, loading, refresh } = useAdminData<Service>("services")
   const [editingService, setEditingService] = useState<Service | null>(null)
   const [isAdding, setIsAdding] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
+  const [pendingDelete, setPendingDelete] = useState<Service | null>(null)
+  const [deleting, setDeleting] = useState(false)
+
+  const editing = isAdding || !!editingService
 
   const handleSave = async (data: Omit<Service, "id">) => {
     setIsSaving(true)
     try {
       await PortfolioService.saveService({
         ...data,
-        id: editingService?.id
+        id: editingService?.id,
       } as Service)
-      toast.success("Service expertise updated!")
+      toast.success(editingService ? "Service updated" : "Service added")
       setEditingService(null)
       setIsAdding(false)
       refresh()
-    } catch (error: any) {
-      toast.error(`Error: ${error.message}`)
+    } catch (error) {
+      toast.error(`Error: ${error instanceof Error ? error.message : "Save failed"}`)
     } finally {
       setIsSaving(false)
     }
   }
 
-  const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to remove this service?")) return
+  const handleDelete = async () => {
+    if (!pendingDelete) return
+    setDeleting(true)
     try {
-      await PortfolioService.deleteService(id)
-      toast.success("Service removed.")
+      await PortfolioService.deleteService(pendingDelete.id)
+      toast.success("Service deleted")
+      setPendingDelete(null)
       refresh()
-    } catch (error: any) {
-      toast.error(`Failed to delete: ${error.message}`)
+    } catch (error) {
+      toast.error(`Failed: ${error instanceof Error ? error.message : "Delete failed"}`)
+    } finally {
+      setDeleting(false)
     }
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <AdminPageHeader 
-        title="Services & Expertise" 
-        description="Showcase what you offer to your clients and collaborators."
-        actionLabel={!(isAdding || editingService) ? "Add Service" : undefined}
-        onAction={() => setIsAdding(true)}
+    <div className="mx-auto max-w-4xl">
+      <PageHeader
+        index="02"
+        title="Services"
+        description="What you offer to clients and collaborators."
+        actions={
+          !editing && (
+            <Button onClick={() => setIsAdding(true)}>
+              <Plus className="size-4" aria-hidden /> Add service
+            </Button>
+          )
+        }
       />
 
-      {(isAdding || editingService) ? (
-        <div className="p-10 rounded-[3rem] border border-border bg-card shadow-sm animate-in fade-in zoom-in-95">
-           <h3 className="text-xl font-bold mb-8 italic">{editingService ? "Update Expertise" : "New Service Offering"}</h3>
-           <ServiceForm 
-              initialData={editingService || undefined} 
-              onSave={handleSave} 
-              isSaving={isSaving}
-              onCancel={() => { setEditingService(null); setIsAdding(false); }}
-           />
-        </div>
+      {editing ? (
+        <EditPanel
+          eyebrow={editingService ? "Editing" : "New"}
+          title={editingService ? editingService.title : "Add a service"}
+          onClose={() => {
+            setEditingService(null)
+            setIsAdding(false)
+          }}
+        >
+          <ServiceForm
+            initialData={editingService || undefined}
+            onSave={handleSave}
+            isSaving={isSaving}
+            onCancel={() => {
+              setEditingService(null)
+              setIsAdding(false)
+            }}
+          />
+        </EditPanel>
+      ) : loading ? (
+        <ListSkeleton rows={4} />
+      ) : services.length === 0 ? (
+        <EmptyState
+          title="No services yet"
+          description="List what you offer so visitors know how to work with you."
+          action={
+            <Button size="sm" onClick={() => setIsAdding(true)}>
+              <Plus className="size-3.5" aria-hidden /> Add your first service
+            </Button>
+          }
+        />
       ) : (
-        <div className="grid gap-4">
-          {services.length === 0 && !loading && <AdminEmptyState message="You haven't listed your services yet." />}
+        <div className="space-y-2">
           {services.map((service) => {
-            const Icon = IconMap[service.icon_name || "Box"] || Box
+            const Icon = IconMap[service.icon_name || "Box"] ?? Box
             return (
-              <div key={service.id} className={`p-6 rounded-[2.5rem] border border-border bg-card group flex items-center justify-between hover:border-primary/30 transition-all ${!service.is_published ? "opacity-60 grayscale-[0.5]" : ""}`}>
-                <div className="flex items-center gap-6">
-                   <div className="relative">
-                      <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all shrink-0">
-                         <Icon size={24} />
-                      </div>
-                      {!service.is_published && (
-                        <div className="absolute -top-1 -right-1 w-5 h-5 bg-destructive text-white rounded-full flex items-center justify-center shadow-lg">
-                           <EyeOff size={10} />
-                        </div>
-                      )}
-                   </div>
-                   <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <h4 className="font-bold text-lg tracking-tight leading-none">{service.title}</h4>
-                        {!service.is_published && (
-                           <span className="text-[8px] font-black uppercase text-destructive tracking-widest px-2 py-0.5 rounded-full bg-destructive/10">Hidden</span>
-                        )}
-                      </div>
-                      <p className="text-sm text-zinc-500 font-medium line-clamp-1 max-w-md">{service.description}</p>
-                   </div>
-                </div>
-                <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-all">
-                  <button onClick={() => setEditingService(service)} className="p-3 rounded-xl bg-muted hover:bg-primary hover:text-primary-foreground transition-all shadow-sm"><Pencil size={14} /></button>
-                  <button onClick={() => handleDelete(service.id)} className="p-3 rounded-xl bg-muted hover:bg-destructive hover:text-white transition-all shadow-sm"><Trash2 size={14} /></button>
-                </div>
-              </div>
+              <ListRow
+                key={service.id}
+                icon={<Icon size={18} />}
+                dimmed={!service.is_published}
+                title={service.title}
+                meta={service.description}
+                badge={
+                  !service.is_published ? <StatusBadge variant="hidden" /> : undefined
+                }
+                actions={
+                  <>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      aria-label={`Edit ${service.title}`}
+                      onClick={() => setEditingService(service)}
+                      className="text-muted-foreground hover:text-foreground"
+                    >
+                      <Pencil className="size-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      aria-label={`Delete ${service.title}`}
+                      onClick={() => setPendingDelete(service)}
+                      className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                    >
+                      <Trash2 className="size-4" />
+                    </Button>
+                  </>
+                }
+              />
             )
           })}
         </div>
       )}
+
+      <ConfirmDialog
+        open={!!pendingDelete}
+        onOpenChange={(o) => !o && setPendingDelete(null)}
+        title={`Delete “${pendingDelete?.title}”?`}
+        description="This removes the service from the public site. This cannot be undone."
+        confirmLabel="Delete service"
+        loading={deleting}
+        onConfirm={handleDelete}
+      />
     </div>
   )
 }

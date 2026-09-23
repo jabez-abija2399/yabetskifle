@@ -18,16 +18,16 @@ export const LatestPosts = ({ posts, copy }: Props) => {
         {/* Section header — Sentence case */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-border">
           <div className="space-y-2">
-            <div className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987]">
+            <div className="font-mono text-xs text-accent">
               {t(copy, "blog.home.eyebrow", "07. Journal & notes")}
             </div>
             <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
-              {renderRichTitle(t(copy, "blog.home.title", "Technical writing & architectural notes"), "text-[#2D5F6B] dark:text-[#3E7987]")}
+              {renderRichTitle(t(copy, "blog.home.title", "Technical writing & architectural notes"), "text-accent")}
             </h2>
           </div>
           <Link
             href="/blog"
-            className="inline-flex items-center gap-1.5 font-mono text-xs text-muted-foreground hover:text-[#2D5F6B] transition-colors"
+            className="inline-flex items-center gap-1.5 font-mono text-xs text-muted-foreground hover:text-accent transition-colors"
           >
             <span>[ {t(copy, "blog.home.archive_link", "Complete journal index")} ]</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
@@ -43,7 +43,7 @@ export const LatestPosts = ({ posts, copy }: Props) => {
               className="group grid grid-cols-12 gap-4 md:gap-8 py-6 md:py-8 hover:bg-card/60 transition-colors"
             >
               <div className="col-span-12 md:col-span-1">
-                <span className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987] font-medium">
+                <span className="font-mono text-xs text-accent font-medium">
                   [art.{String(i + 1).padStart(2, "0")}]
                 </span>
               </div>
@@ -60,7 +60,7 @@ export const LatestPosts = ({ posts, copy }: Props) => {
               </div>
 
               <div className="col-span-12 md:col-span-7 space-y-2">
-                <h3 className="text-lg md:text-xl font-semibold text-foreground tracking-tight group-hover:text-[#2D5F6B] dark:group-hover:text-[#3E7987] transition-colors">
+                <h3 className="text-lg md:text-xl font-semibold text-foreground tracking-tight group-hover:text-accent transition-colors">
                   {post.title}
                 </h3>
                 <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-2 max-w-xl text-pretty font-sans">
@@ -81,7 +81,7 @@ export const LatestPosts = ({ posts, copy }: Props) => {
               </div>
 
               <div className="col-span-12 md:col-span-2 flex md:justify-end items-start pt-1 font-mono text-xs">
-                <span className="inline-flex items-center gap-1 text-muted-foreground group-hover:text-[#2D5F6B] transition-colors">
+                <span className="inline-flex items-center gap-1 text-muted-foreground group-hover:text-accent transition-colors">
                   <span>read spec</span>
                   <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </span>

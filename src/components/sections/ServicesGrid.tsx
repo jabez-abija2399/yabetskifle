@@ -20,11 +20,11 @@ export const ServicesGrid = ({ services, copy }: Props) => {
         {/* Section header — Sentence case */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-border">
           <div className="space-y-2">
-            <div className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987]">
+            <div className="font-mono text-xs text-accent">
               {t(copy, "services.eyebrow", "05. Capabilities & domains")}
             </div>
             <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
-              {renderRichTitle(t(copy, "services.title", "Technical services & scope of work"), "text-[#2D5F6B] dark:text-[#3E7987]")}
+              {renderRichTitle(t(copy, "services.title", "Technical services & scope of work"), "text-accent")}
             </h2>
           </div>
           <p className="font-mono text-xs text-muted-foreground max-w-sm">
@@ -42,17 +42,17 @@ export const ServicesGrid = ({ services, copy }: Props) => {
                 className="group grid grid-cols-12 gap-6 md:gap-10 py-8 hover:bg-card/60 transition-colors"
               >
                 <div className="col-span-12 md:col-span-1 flex items-center md:items-start">
-                  <span className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987] font-medium">
+                  <span className="font-mono text-xs text-accent font-medium">
                     [srv.{String(i + 1).padStart(2, "0")}]
                   </span>
                 </div>
 
                 <div className="col-span-12 md:col-span-4 flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xs border border-border bg-card flex items-center justify-center shrink-0 group-hover:border-[#2D5F6B] group-hover:text-[#2D5F6B] transition-colors">
+                  <div className="w-10 h-10 rounded-xs border border-border bg-card flex items-center justify-center shrink-0 group-hover:border-accent group-hover:text-accent transition-colors">
                     <Icon className="w-4 h-4" />
                   </div>
                   <div>
-                    <h3 className="text-lg md:text-xl font-semibold text-foreground tracking-tight group-hover:text-[#2D5F6B] dark:group-hover:text-[#3E7987] transition-colors">
+                    <h3 className="text-lg md:text-xl font-semibold text-foreground tracking-tight group-hover:text-accent transition-colors">
                       {service.title.trim()}
                     </h3>
                   </div>
@@ -69,7 +69,7 @@ export const ServicesGrid = ({ services, copy }: Props) => {
                         key={j}
                         className="flex items-start gap-2"
                       >
-                        <span className="text-[#2D5F6B] dark:text-[#3E7987] select-none">→</span>
+                        <span className="text-accent select-none">→</span>
                         <span>{feature}</span>
                       </li>
                     ))}

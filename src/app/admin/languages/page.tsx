@@ -1,21 +1,30 @@
 "use client"
 
 import { useState } from "react"
-import { AdminPageHeader } from "@/components/ui/AdminPageHeader"
-import { AdminEmptyState } from "@/components/ui/AdminEmptyState"
+import { PageHeader } from "@/components/admin/PageHeader"
+import { ListRow } from "@/components/admin/ListRow"
+import { StatusBadge } from "@/components/admin/StatusBadge"
+import { EditPanel } from "@/components/admin/EditPanel"
+import { ConfirmDialog } from "@/components/admin/ConfirmDialog"
+import { EmptyState } from "@/components/admin/EmptyState"
+import { ListSkeleton } from "@/components/admin/ListSkeleton"
+import { TextField, SwitchRow, FormFooter } from "@/components/admin/fields"
 import { Language } from "@/types/portfolio"
 import { useAdminData } from "@/hooks/useAdminData"
 import { createSupabaseClient } from "@/lib/supabase"
 import { toast } from "sonner"
-import { Plus, Pencil, Trash2, Languages, EyeOff } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Pencil, Trash2, Plus, Languages } from "lucide-react"
 
 export default function AdminLanguagesPage() {
-  const { data: langs, loading, deleteItem, refresh } = useAdminData<Language>("languages")
+  const { data: langs, loading, refresh } = useAdminData<Language>("languages")
   const [editingItem, setEditingItem] = useState<Language | null>(null)
   const [isAdding, setIsAdding] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
+  const [pendingDelete, setPendingDelete] = useState<Language | null>(null)
+  const [deleting, setDeleting] = useState(false)
+
+  const editing = isAdding || !!editingItem
 
   const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -24,18 +33,18 @@ export default function AdminLanguagesPage() {
     const data = {
       name: formData.get("name") as string,
       proficiency: formData.get("proficiency") as string,
-      is_published: formData.get("is_published") === "on", // 👈 Capture toggle
+      is_published: formData.get("is_published") === "on",
     }
 
     const supabase = createSupabaseClient()
-    const { error } = editingItem 
+    const { error } = editingItem
       ? await supabase.from("languages").update(data).eq("id", editingItem.id)
       : await supabase.from("languages").insert([data])
 
     if (error) {
       toast.error(error.message)
     } else {
-      toast.success("Language profile updated!")
+      toast.success(editingItem ? "Language updated" : "Language added")
       setEditingItem(null)
       setIsAdding(false)
       refresh()
@@ -43,63 +52,139 @@ export default function AdminLanguagesPage() {
     setIsSaving(false)
   }
 
+  const handleDelete = async () => {
+    if (!pendingDelete) return
+    setDeleting(true)
+    const supabase = createSupabaseClient()
+    const { error } = await supabase.from("languages").delete().eq("id", pendingDelete.id)
+    if (error) {
+      toast.error(error.message)
+    } else {
+      toast.success("Language deleted")
+      setPendingDelete(null)
+      refresh()
+    }
+    setDeleting(false)
+  }
+
   return (
-    <div className="max-w-2xl mx-auto">
-      <AdminPageHeader 
-        title="Languages" 
-        description="List the languages you speak and your proficiency level."
-        actionLabel={!(isAdding || editingItem) ? "Add Language" : undefined}
-        onAction={() => setIsAdding(true)}
+    <div className="mx-auto max-w-3xl">
+      <PageHeader
+        index="03"
+        title="Languages"
+        description="Languages you speak and your proficiency."
+        actions={
+          !editing && (
+            <Button onClick={() => setIsAdding(true)}>
+              <Plus className="size-4" aria-hidden /> Add language
+            </Button>
+          )
+        }
       />
 
-      {(isAdding || editingItem) && (
-        <form onSubmit={handleSave} className="p-6 rounded-[2rem] border border-border bg-card shadow-sm mb-10 space-y-4 animate-in fade-in zoom-in-95">
-           <div className="grid grid-cols-2 gap-4">
-              <Input name="name" defaultValue={editingItem?.name} placeholder="Language (e.g. English)" required />
-              <Input name="proficiency" defaultValue={editingItem?.proficiency} placeholder="Level (e.g. Native)" required />
-           </div>
-
-           <div className="flex items-center justify-between pt-2">
-              {/* 🛡️ TOGGLE */}
-              <div className="flex items-center gap-3 bg-muted/50 p-2 px-4 rounded-full border border-border">
-                 <span className="text-[10px] font-black uppercase text-zinc-500 tracking-widest">Live Status</span>
-                 <input type="checkbox" name="is_published" defaultChecked={editingItem?.is_published ?? true} className="w-10 h-5 accent-primary" />
-              </div>
-
-              <div className="flex gap-2">
-                 <Button type="button" variant="ghost" size="sm" onClick={() => { setEditingItem(null); setIsAdding(false); }}>Discard</Button>
-                 <Button type="submit" size="sm" disabled={isSaving}>{isSaving ? "Updatig..." : "Save Language"}</Button>
-              </div>
-           </div>
-        </form>
+      {editing ? (
+        <EditPanel
+          eyebrow={editingItem ? "Editing" : "New"}
+          title={editingItem ? editingItem.name : "Add a language"}
+          onClose={() => {
+            setEditingItem(null)
+            setIsAdding(false)
+          }}
+        >
+          <form onSubmit={handleSave} className="space-y-5">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <TextField
+                label="Language"
+                name="name"
+                defaultValue={editingItem?.name}
+                placeholder="English"
+                required
+              />
+              <TextField
+                label="Proficiency"
+                name="proficiency"
+                defaultValue={editingItem?.proficiency}
+                placeholder="Native / Professional"
+                required
+              />
+            </div>
+            <SwitchRow
+              name="is_published"
+              label="Public visibility"
+              defaultChecked={editingItem?.is_published ?? true}
+            />
+            <FormFooter
+              onCancel={() => {
+                setEditingItem(null)
+                setIsAdding(false)
+              }}
+              isSaving={isSaving}
+              submitLabel="Save language"
+            />
+          </form>
+        </EditPanel>
+      ) : loading ? (
+        <ListSkeleton rows={3} />
+      ) : langs.length === 0 ? (
+        <EmptyState
+          title="No languages listed"
+          description="Add the languages you speak."
+          action={
+            <Button size="sm" onClick={() => setIsAdding(true)}>
+              <Plus className="size-3.5" aria-hidden /> Add a language
+            </Button>
+          }
+        />
+      ) : (
+        <div className="space-y-2">
+          {langs.map((lang) => (
+            <ListRow
+              key={lang.id}
+              icon={<Languages className="size-4" />}
+              dimmed={!lang.is_published}
+              title={lang.name}
+              meta={
+                <span className="label-mono">
+                  {lang.proficiency}
+                </span>
+              }
+              badge={!lang.is_published ? <StatusBadge variant="hidden" /> : undefined}
+              actions={
+                <>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    aria-label={`Edit ${lang.name}`}
+                    onClick={() => setEditingItem(lang)}
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    <Pencil className="size-4" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    aria-label={`Delete ${lang.name}`}
+                    onClick={() => setPendingDelete(lang)}
+                    className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                  >
+                    <Trash2 className="size-4" />
+                  </Button>
+                </>
+              }
+            />
+          ))}
+        </div>
       )}
 
-      <div className="grid gap-3">
-        {langs.length === 0 && !loading && <AdminEmptyState message="No languages listed." />}
-        {langs.map((lang) => (
-          <div key={lang.id} className={`p-4 px-6 rounded-2xl border border-border bg-card group flex items-center justify-between hover:border-primary/20 transition-all ${!lang.is_published ? "bg-muted/30 opacity-60" : ""}`}>
-            <div className="flex items-center gap-4">
-               <div className="relative">
-                  <div className="w-10 h-10 rounded-full bg-primary/5 flex items-center justify-center text-primary"><Languages size={18} /></div>
-                  {!lang.is_published && (
-                    <div className="absolute -top-1 -right-1 w-4 h-4 bg-destructive text-white rounded-full flex items-center justify-center shadow-lg"><EyeOff size={8} /></div>
-                  )}
-               </div>
-               <div>
-                  <h4 className="font-bold flex items-center gap-2 text-sm uppercase tracking-tight">
-                    {lang.name}
-                    {!lang.is_published && <span className="text-[8px] bg-destructive/10 text-destructive px-2 py-0.5 rounded-full border border-destructive/20 font-black tracking-widest">HIDDEN</span>}
-                  </h4>
-                  <p className="text-xs text-muted-foreground font-black uppercase tracking-widest opacity-60">{lang.proficiency}</p>
-               </div>
-            </div>
-            <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-              <button onClick={() => setEditingItem(lang)} className="p-2 rounded-lg bg-muted hover:bg-primary hover:text-primary-foreground transition-all"><Pencil size={12} /></button>
-              <button onClick={() => deleteItem(lang.id)} className="p-2 rounded-lg bg-muted hover:bg-destructive hover:text-white transition-all"><Trash2 size={12} /></button>
-            </div>
-          </div>
-        ))}
-      </div>
+      <ConfirmDialog
+        open={!!pendingDelete}
+        onOpenChange={(o) => !o && setPendingDelete(null)}
+        title={`Delete “${pendingDelete?.name}”?`}
+        description="This removes the language from the public site. This cannot be undone."
+        confirmLabel="Delete language"
+        loading={deleting}
+        onConfirm={handleDelete}
+      />
     </div>
   )
 }

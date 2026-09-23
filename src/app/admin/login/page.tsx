@@ -4,9 +4,9 @@ import { useMemo, useState } from "react"
 import { createBrowserClient } from "@supabase/ssr"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { TextField } from "@/components/admin/fields"
 import { toast } from "sonner"
-import { Lock, Mail, ShieldCheck } from "lucide-react"
+import { Loader2, ShieldCheck } from "lucide-react"
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
@@ -31,83 +31,64 @@ export default function LoginPage() {
 
       if (error) throw error
 
-      toast.success("Identity Verified. Entering Workspace...")
+      toast.success("Signed in")
       router.refresh()
       setTimeout(() => {
         router.push("/admin")
       }, 100)
-    } catch (error: any) {
-      toast.error(error.message || "Invalid credentials")
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Invalid credentials"
+      toast.error(message)
     } finally {
       setIsLoading(false)
     }
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent">
-      
+    <div className="flex min-h-screen flex-col items-center justify-center bg-background p-6 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-accent/5 via-transparent to-transparent">
       <div className="w-full max-w-sm space-y-8">
-        
-        {/* 🛡️ SECURITY HEADER */}
-        <div className="flex flex-col items-center space-y-4">
-          <div className="w-16 h-16 rounded-3xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shadow-2xl shadow-primary/20">
-            <ShieldCheck className="w-8 h-8" />
+        <div className="flex flex-col items-center space-y-4 text-center">
+          <div className="flex size-12 items-center justify-center rounded-xs border border-border bg-card text-accent">
+            <ShieldCheck className="size-5" aria-hidden />
           </div>
-          <div className="text-center">
-            <h1 className="text-2xl font-black italic tracking-tighter">RESTRICTED ACCESS</h1>
-            <p className="text-xs font-black uppercase tracking-[0.3em] text-zinc-500 mt-1">Admin Workspace Only</p>
+          <div>
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+              Restricted access
+            </p>
+            <h1 className="mt-1 text-2xl font-semibold tracking-tight">Admin sign in</h1>
           </div>
         </div>
 
-        {/* 🔐 LOGIN FORM */}
-        <div className="bg-card/50 backdrop-blur-3xl border border-border rounded-[2.5rem] p-10 shadow-2xl">
-          <form onSubmit={handleLogin} className="space-y-6">
-            <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-1">Universal Email</label>
-              <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
-                <Input 
-                  type="email" 
-                  placeholder="admin@yabets.k" 
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="pl-12 h-14 rounded-2xl bg-muted/30 text-foreground border-border focus:ring-primary"
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-1">Access Key</label>
-              <div className="relative">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
-                <Input 
-                  type="password" 
-                  placeholder="••••••••" 
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="pl-12 h-14 rounded-2xl bg-muted/30 border-border"
-                  required
-                />
-              </div>
-            </div>
-
-            <Button 
-              type="submit" 
-              disabled={isLoading}
-              className="w-full h-14 rounded-2xl font-black italic text-lg shadow-xl shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
-            >
-              {isLoading ? "Verifying..." : "Authenticate"}
+        <div className="rounded-xs border border-border bg-card p-6">
+          <form onSubmit={handleLogin} className="space-y-5">
+            <TextField
+              label="Email"
+              type="email"
+              autoComplete="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <TextField
+              label="Password"
+              type="password"
+              autoComplete="current-password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <Button type="submit" disabled={isLoading} className="w-full gap-2">
+              {isLoading && <Loader2 className="size-4 animate-spin" aria-hidden />}
+              {isLoading ? "Verifying…" : "Sign in"}
             </Button>
           </form>
         </div>
 
-        {/*  Footer Note */}
-        <div className="text-center">
-           <p className="text-[10px] font-black text-zinc-600 uppercase tracking-widest">
-              Secured by Supabase Architecture
-           </p>
-        </div>
+        <p className="text-center label-mono text-muted-foreground">
+          Secured by Supabase
+        </p>
       </div>
     </div>
   )

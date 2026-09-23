@@ -79,7 +79,7 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
     return (
       <div className="text-center py-32">
         <p className="text-heading-section text-foreground">Project not found.</p>
-        <Link href="/projects" className="inline-flex items-center gap-2 mt-6 font-mono text-xs text-muted-foreground hover:text-[#2D5F6B] dark:hover:text-[#3E7987] transition-colors">
+        <Link href="/projects" className="inline-flex items-center gap-2 mt-6 font-mono text-xs text-muted-foreground hover:text-accent transition-colors">
           <span>[ Back to all projects ]</span>
         </Link>
       </div>
@@ -125,12 +125,12 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
         <div className="max-w-[1600px] mx-auto flex items-center justify-between border-b border-border pb-4">
           <Link
             href="/projects"
-            className="group inline-flex items-center gap-2 font-mono text-xs text-muted-foreground hover:text-[#2D5F6B] transition-colors"
+            className="group inline-flex items-center gap-2 font-mono text-xs text-muted-foreground hover:text-accent transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-0.5" />
             <span>[ {t(copy, "project.back_link", "Return to catalog")} ]</span>
           </Link>
-          <p className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987]">
+          <p className="font-mono text-xs text-accent">
             {t(copy, "project.kicker", "system.spec // case study")}
           </p>
         </div>
@@ -146,7 +146,7 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
                   {project.project_type || "Production System"}
                 </span>
                 {project.featured && (
-                  <span className="px-2.5 py-1 rounded-xs border border-[#2D5F6B]/30 text-[#2D5F6B] dark:text-[#3E7987] font-medium">
+                  <span className="px-2.5 py-1 rounded-xs border border-accent/30 text-accent font-medium">
                     Featured Spec
                   </span>
                 )}
@@ -165,7 +165,7 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
                   href={project.live_url}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-[#2D5F6B] text-white dark:bg-[#3E7987] dark:text-background h-11 px-5 rounded-xs font-medium hover:bg-[#234b54] transition-colors"
+                  className="inline-flex items-center justify-center gap-2 bg-accent text-accent-foreground h-11 px-5 rounded-xs font-medium hover:bg-accent-hover transition-colors"
                 >
                   <span>[ {t(copy, "project.live_cta", "Launch live system")} ]</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
@@ -176,7 +176,7 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
                   href={project.github_url}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center justify-center gap-2 border border-border bg-card h-11 px-5 rounded-xs text-foreground hover:border-[#2D5F6B] transition-colors"
+                  className="inline-flex items-center justify-center gap-2 border border-border bg-card h-11 px-5 rounded-xs text-foreground hover:border-accent transition-colors"
                 >
                   <FaGithub className="w-3.5 h-3.5" />
                   <span>[ {t(copy, "project.source_cta", "View repository")} ]</span>
@@ -263,7 +263,7 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
                     }}
                     className={`relative shrink-0 w-24 aspect-video rounded-xs overflow-hidden border transition-all cursor-pointer ${
                       i === currentImage
-                        ? "border-[#2D5F6B] ring-1 ring-[#2D5F6B]"
+                        ? "border-accent ring-1 ring-accent"
                         : "border-border opacity-60 hover:opacity-100"
                     }`}
                   >
@@ -284,11 +284,11 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
             {/* Purpose */}
             {project.purpose && (
               <section className="space-y-4 border-b border-border pb-10">
-                <div className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987]">
+                <div className="font-mono text-xs text-accent">
                   {t(copy, "project.brief_eyebrow", "01. Technical brief & problem")}
                 </div>
                 <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
-                  {renderRichTitle(t(copy, "project.brief_title", "Why this was engineered"), "text-[#2D5F6B] dark:text-[#3E7987]")}
+                  {renderRichTitle(t(copy, "project.brief_title", "Why this was engineered"), "text-accent")}
                 </h2>
                 <p className="text-sm sm:text-base text-muted-foreground leading-relaxed text-pretty max-w-2xl font-sans">
                   {project.purpose}
@@ -299,11 +299,11 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
             {/* Features */}
             {features.length > 0 && (
               <section className="space-y-5 border-b border-border pb-10">
-                <div className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987]">
+                <div className="font-mono text-xs text-accent">
                   {t(copy, "project.features_eyebrow", "02. Implementation specifications")}
                 </div>
                 <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
-                  {renderRichTitle(t(copy, "project.features_title", "Core architecture & functional capabilities"), "text-[#2D5F6B] dark:text-[#3E7987]")}
+                  {renderRichTitle(t(copy, "project.features_title", "Core architecture & functional capabilities"), "text-accent")}
                 </h2>
                 <ul className="grid sm:grid-cols-2 gap-3 pt-2">
                   {features.map((feature, i) => (
@@ -311,7 +311,7 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
                       key={i}
                       className="flex items-start gap-3 bg-card border border-border rounded-xs px-4 py-3.5 corner-ticks"
                     >
-                      <span className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987] font-medium pt-0.5 shrink-0">
+                      <span className="font-mono text-xs text-accent font-medium pt-0.5 shrink-0">
                         [{String(i + 1).padStart(2, "0")}]
                       </span>
                       <span className="text-xs sm:text-sm font-sans leading-relaxed text-foreground/90">{feature}</span>
@@ -324,17 +324,17 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
             {/* Learned */}
             {learned.length > 0 && (
               <section className="space-y-5">
-                <div className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987]">
+                <div className="font-mono text-xs text-accent">
                   {t(copy, "project.learned_eyebrow", "03. Engineering takeaways")}
                 </div>
                 <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
-                  {renderRichTitle(t(copy, "project.learned_title", "Hardest technical challenges & insights"), "text-[#2D5F6B] dark:text-[#3E7987]")}
+                  {renderRichTitle(t(copy, "project.learned_title", "Hardest technical challenges & insights"), "text-accent")}
                 </h2>
                 <div className="space-y-4 pt-1">
                   {learned.map((item, i) => (
                     <div
                       key={i}
-                      className="text-xs sm:text-sm leading-relaxed text-foreground/90 font-sans max-w-2xl border-l-2 border-[#2D5F6B] pl-4"
+                      className="text-xs sm:text-sm leading-relaxed text-foreground/90 font-sans max-w-2xl border-l-2 border-accent pl-4"
                     >
                       {item}
                     </div>
@@ -385,7 +385,7 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
                     href={project.live_url}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center justify-center gap-2 bg-[#2D5F6B] text-white h-11 rounded-xs font-medium"
+                    className="inline-flex items-center justify-center gap-2 bg-accent text-accent-foreground h-11 rounded-xs font-medium"
                   >
                     <span>[ {t(copy, "project.live_cta", "Visit live site")} ]</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
@@ -412,16 +412,16 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
       <div className="px-6 md:px-12 lg:px-16 xl:px-24 pt-16 mt-16 border-t border-border">
         <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row items-start md:items-end justify-between gap-6 pb-8">
           <div className="space-y-2">
-            <div className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987]">
+            <div className="font-mono text-xs text-accent">
               {t(copy, "project.up_next_eyebrow", "Catalog traversal")}
             </div>
             <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
-              {renderRichTitle(t(copy, "project.up_next_title", "Browse more case studies"), "text-[#2D5F6B] dark:text-[#3E7987]")}
+              {renderRichTitle(t(copy, "project.up_next_title", "Browse more case studies"), "text-accent")}
             </h3>
           </div>
           <Link
             href="/projects"
-            className="inline-flex items-center gap-2 border border-border bg-card h-11 px-5 rounded-xs font-mono text-xs text-foreground hover:border-[#2D5F6B] hover:text-[#2D5F6B] transition-colors"
+            className="inline-flex items-center gap-2 border border-border bg-card h-11 px-5 rounded-xs font-mono text-xs text-foreground hover:border-accent hover:text-accent transition-colors"
           >
             <span>[ {t(copy, "project.back_link", "All cataloged projects")} ]</span>
             <ArrowUpRight className="w-3.5 h-3.5" />

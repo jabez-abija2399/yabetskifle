@@ -21,11 +21,11 @@ export const ProjectsAllWrapper = () => {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 pb-6 border-b border-border">
           <div className="space-y-3 max-w-2xl">
-            <div className="font-mono text-xs text-[#2D5F6B] dark:text-[#3E7987]">
+            <div className="font-mono text-xs text-accent">
               {t(copy, "projects.archive_eyebrow", "System archive // Index")}
             </div>
             <h1 className="text-heading-hero font-semibold tracking-tight text-foreground">
-              {renderRichTitle(t(copy, "projects.archive_title", "Selected production projects"), "text-[#2D5F6B] dark:text-[#3E7987]")}
+              {renderRichTitle(t(copy, "projects.archive_title", "Selected production projects"), "text-accent")}
             </h1>
             <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
               {t(copy, "projects.archive_subtitle", "A structured index of deployed applications, architectural case studies, and frontend experiments.")}

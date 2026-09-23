@@ -250,7 +250,7 @@ export function OutputEditor({
           value={output}
           onChange={(e) => onChange(e.target.value)}
           rows={16}
-          className="w-full px-4 py-3 text-sm rounded-xs border border-border bg-background text-foreground focus:outline-none focus:border-[#2D5F6B] resize-none leading-relaxed font-mono transition-colors"
+          className="w-full px-4 py-3 text-sm rounded-xs border border-border bg-background text-foreground focus:outline-none focus:border-accent resize-none leading-relaxed font-mono transition-colors"
         />
       </div>
     </motion.div>
