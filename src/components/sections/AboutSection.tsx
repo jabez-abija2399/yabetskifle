@@ -28,9 +28,9 @@ export const AboutSection = ({ profile, languagesLine, copy }: Props) => {
     <section id="about" className="px-6 md:px-12 lg:px-16 xl:px-24 scroll-mt-24">
       <div className="max-w-[1600px] mx-auto">
         {/* Section header — Sentence case */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-border">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-accent/30">
           <div className="space-y-2">
-            <div className="font-mono text-xs text-accent">
+            <div className="eyebrow-chip">
               {t(copy, "about.eyebrow", "03. Engineering background")}
             </div>
             <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
@@ -45,7 +45,7 @@ export const AboutSection = ({ profile, languagesLine, copy }: Props) => {
         {/* Structured Field-Notebook Grid */}
         <div className="grid grid-cols-12 gap-5">
           {/* Main Narrative Log */}
-          <article className="col-span-12 lg:col-span-8 bg-card border border-border rounded-xs p-6 md:p-8 corner-ticks flex flex-col justify-between space-y-6">
+          <article className="col-span-12 lg:col-span-8 bg-card border border-accent/30 rounded-xs p-6 md:p-8 corner-ticks flex flex-col justify-between space-y-6">
             <div className="space-y-4">
               <div className="flex items-center justify-between border-b border-border pb-3 font-mono text-xs text-muted-foreground">
                 <span className="flex items-center gap-2 text-foreground font-medium">
@@ -75,7 +75,7 @@ export const AboutSection = ({ profile, languagesLine, copy }: Props) => {
           {/* Right Rail Field Blocks */}
           <div className="col-span-12 lg:col-span-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-5">
             {/* Experience metric */}
-            <div className="border border-border bg-card p-5 rounded-xs corner-ticks flex flex-col justify-between">
+            <div className="border border-accent/30 bg-card p-5 rounded-xs corner-ticks flex flex-col justify-between">
               <div className="flex items-center justify-between font-mono text-xs text-muted-foreground border-b border-border pb-2.5 mb-3">
                 <span>{t(copy, "about.experience_label", "Experience log")}</span>
                 <span>spec.01</span>
@@ -106,7 +106,7 @@ export const AboutSection = ({ profile, languagesLine, copy }: Props) => {
             </div>
 
             {/* Philosophy */}
-            <div className="border border-border bg-card p-5 rounded-xs corner-ticks flex flex-col justify-between">
+            <div className="border border-accent/30 bg-card p-5 rounded-xs corner-ticks flex flex-col justify-between">
               <div className="flex items-center justify-between font-mono text-xs text-muted-foreground border-b border-border pb-2.5 mb-3">
                 <span className="flex items-center gap-1.5">
                   <Quote className="w-3.5 h-3.5 text-accent" />
@@ -121,7 +121,7 @@ export const AboutSection = ({ profile, languagesLine, copy }: Props) => {
             </div>
 
             {/* Location & Languages composite */}
-            <div className="border border-border bg-card p-5 rounded-xs corner-ticks space-y-3">
+            <div className="border border-accent/30 bg-card p-5 rounded-xs corner-ticks space-y-3">
               <div className="flex justify-between items-center pb-2 border-b border-border font-mono text-xs text-muted-foreground">
                 <span className="flex items-center gap-1.5 text-foreground">
                   <MapPin className="w-3.5 h-3.5 text-accent" />

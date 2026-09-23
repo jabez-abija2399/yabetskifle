@@ -16,9 +16,9 @@ export const LatestPosts = ({ posts, copy }: Props) => {
     <section className="px-6 md:px-12 lg:px-16 xl:px-24 scroll-mt-24">
       <div className="max-w-[1600px] mx-auto">
         {/* Section header — Sentence case */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-border">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-accent/30">
           <div className="space-y-2">
-            <div className="font-mono text-xs text-accent">
+            <div className="eyebrow-chip">
               {t(copy, "blog.home.eyebrow", "07. Journal & notes")}
             </div>
             <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
@@ -40,7 +40,7 @@ export const LatestPosts = ({ posts, copy }: Props) => {
             <Link
               key={post.id}
               href={`/blog/${post.slug}`}
-              className="group grid grid-cols-12 gap-4 md:gap-8 py-6 md:py-8 hover:bg-card/60 transition-colors"
+              className="group grid grid-cols-12 gap-4 md:gap-8 py-6 md:py-8 hover:bg-accent/5 transition-colors"
             >
               <div className="col-span-12 md:col-span-1">
                 <span className="font-mono text-xs text-accent font-medium">
@@ -71,7 +71,7 @@ export const LatestPosts = ({ posts, copy }: Props) => {
                     {post.tags.slice(0, 3).map((tag) => (
                       <span
                         key={tag}
-                        className="px-2 py-0.5 border border-border/60 bg-secondary rounded-xs text-muted-foreground"
+                        className="px-2 py-0.5 border border-accent/30 bg-secondary rounded-xs text-muted-foreground"
                       >
                         {tag}
                       </span>

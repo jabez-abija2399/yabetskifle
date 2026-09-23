@@ -130,7 +130,7 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
             <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-0.5" />
             <span>[ {t(copy, "project.back_link", "Return to catalog")} ]</span>
           </Link>
-          <p className="font-mono text-xs text-accent">
+          <p className="eyebrow-chip">
             {t(copy, "project.kicker", "system.spec // case study")}
           </p>
         </div>
@@ -142,7 +142,7 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-8">
             <div className="space-y-4 max-w-3xl">
               <div className="flex flex-wrap items-center gap-2 font-mono text-xs">
-                <span className="px-2.5 py-1 rounded-xs bg-secondary border border-border/80 text-foreground">
+                <span className="px-2.5 py-1 rounded-xs bg-secondary border border-accent/30 text-foreground">
                   {project.project_type || "Production System"}
                 </span>
                 {project.featured && (
@@ -283,8 +283,8 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
           <div className="lg:col-span-8 space-y-12 md:space-y-16">
             {/* Purpose */}
             {project.purpose && (
-              <section className="space-y-4 border-b border-border pb-10">
-                <div className="font-mono text-xs text-accent">
+              <section className="space-y-4 border-b border-accent/30 pb-10">
+                <div className="eyebrow-chip">
                   {t(copy, "project.brief_eyebrow", "01. Technical brief & problem")}
                 </div>
                 <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
@@ -298,8 +298,8 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
 
             {/* Features */}
             {features.length > 0 && (
-              <section className="space-y-5 border-b border-border pb-10">
-                <div className="font-mono text-xs text-accent">
+              <section className="space-y-5 border-b border-accent/30 pb-10">
+                <div className="eyebrow-chip">
                   {t(copy, "project.features_eyebrow", "02. Implementation specifications")}
                 </div>
                 <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
@@ -309,7 +309,7 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
                   {features.map((feature, i) => (
                     <li
                       key={i}
-                      className="flex items-start gap-3 bg-card border border-border rounded-xs px-4 py-3.5 corner-ticks"
+                      className="flex items-start gap-3 bg-card border border-accent/30 rounded-xs px-4 py-3.5 corner-ticks"
                     >
                       <span className="font-mono text-xs text-accent font-medium pt-0.5 shrink-0">
                         [{String(i + 1).padStart(2, "0")}]
@@ -324,7 +324,7 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
             {/* Learned */}
             {learned.length > 0 && (
               <section className="space-y-5">
-                <div className="font-mono text-xs text-accent">
+                <div className="eyebrow-chip">
                   {t(copy, "project.learned_eyebrow", "03. Engineering takeaways")}
                 </div>
                 <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
@@ -347,7 +347,7 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
           {/* Sidebar */}
           <aside className="lg:col-span-4">
             <div className="lg:sticky lg:top-24 space-y-6">
-              <div className="border border-border bg-card rounded-xs p-6 corner-ticks space-y-6 font-mono text-xs">
+              <div className="border border-accent/30 bg-card rounded-xs p-6 corner-ticks space-y-6 font-mono text-xs">
                 <div className="border-b border-border pb-3 flex justify-between items-center text-muted-foreground">
                   <span className="text-foreground font-semibold">Metadata manifest</span>
                   <span>spec.tbl</span>
@@ -369,7 +369,7 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-2 py-0.5 border border-border/80 bg-secondary rounded-xs text-[11px] text-foreground"
+                        className="px-2 py-0.5 border border-accent/30 bg-secondary rounded-xs text-[11px] text-foreground"
                       >
                         {tag}
                       </span>
@@ -412,7 +412,7 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
       <div className="px-6 md:px-12 lg:px-16 xl:px-24 pt-16 mt-16 border-t border-border">
         <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row items-start md:items-end justify-between gap-6 pb-8">
           <div className="space-y-2">
-            <div className="font-mono text-xs text-accent">
+            <div className="eyebrow-chip">
               {t(copy, "project.up_next_eyebrow", "Catalog traversal")}
             </div>
             <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">

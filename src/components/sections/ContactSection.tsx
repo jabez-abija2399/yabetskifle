@@ -45,9 +45,9 @@ export const ContactSection = ({ profile, copy }: Props) => {
     <section id="contact" className="px-6 md:px-12 lg:px-16 xl:px-24 scroll-mt-24">
       <div className="max-w-[1600px] mx-auto">
         {/* Section header — Sentence case */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-border">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-accent/30">
           <div className="space-y-2">
-            <div className="font-mono text-xs text-accent">
+            <div className="eyebrow-chip">
               {t(copy, "contact.eyebrow", "10. Communications & inquiry")}
             </div>
             <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
@@ -65,7 +65,7 @@ export const ContactSection = ({ profile, copy }: Props) => {
             {/* Direct Email block */}
             <a
               href={`mailto:${email}`}
-              className="group block border border-accent/35 bg-card p-6 md:p-8 rounded-xs corner-ticks hover:border-accent transition-colors"
+              className="group block border border-accent/30 bg-card p-6 md:p-8 rounded-xs corner-ticks hover:border-accent transition-colors"
             >
               <div className="flex items-center justify-between font-mono text-xs text-muted-foreground border-b border-border pb-3 mb-4">
                 <span className="flex items-center gap-1.5 text-foreground font-medium">
@@ -84,7 +84,7 @@ export const ContactSection = ({ profile, copy }: Props) => {
             </a>
 
             {/* Social channels spec */}
-            <div className="border border-border bg-card p-6 md:p-8 rounded-xs corner-ticks space-y-5">
+            <div className="border border-accent/30 bg-card p-6 md:p-8 rounded-xs corner-ticks space-y-5">
               <div className="flex items-center justify-between font-mono text-xs text-muted-foreground border-b border-border pb-3">
                 <span>{t(copy, "contact.socials_label", "External verification & channels")}</span>
                 <span>net.spec</span>
@@ -139,7 +139,7 @@ export const ContactSection = ({ profile, copy }: Props) => {
           {/* Right / Dispatch form */}
           <form
             onSubmit={handleSubmit}
-            className="lg:col-span-7 border border-border bg-card p-6 md:p-8 rounded-xs corner-ticks space-y-5"
+            className="lg:col-span-7 border border-accent/30 bg-card p-6 md:p-8 rounded-xs corner-ticks space-y-5"
           >
             <div className="flex items-center justify-between font-mono text-xs text-muted-foreground border-b border-border pb-3">
               <span className="flex items-center gap-1.5 text-foreground font-medium">

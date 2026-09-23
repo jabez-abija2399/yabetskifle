@@ -140,7 +140,7 @@ export const Hero = ({ profile, copy }: Props) => {
               ).map((tag) => (
                 <span
                   key={tag}
-                  className="px-2 py-0.5 border border-border/80 bg-card rounded-xs"
+                  className="px-2 py-0.5 border border-accent/30 bg-card rounded-xs"
                 >
                   {tag}
                 </span>
@@ -153,7 +153,7 @@ export const Hero = ({ profile, copy }: Props) => {
             variants={item}
             className="col-span-12 lg:col-span-4"
           >
-            <div className="relative border border-border bg-card p-4 sm:p-5 rounded-xs corner-ticks">
+            <div className="relative border border-accent/30 bg-card p-4 sm:p-5 rounded-xs corner-ticks">
               {/* Header metadata bar */}
               <div className="flex items-center justify-between border-b border-border pb-3 mb-4 font-mono text-xs text-muted-foreground">
                 <span className="flex items-center gap-1.5 text-foreground font-medium">

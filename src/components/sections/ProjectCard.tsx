@@ -118,7 +118,7 @@ export const ProjectCard = ({ project, index = 0, variant = "default" }: Project
               {project.tags.slice(0, 5).map((tag) => (
                 <span
                   key={tag}
-                  className="px-2 py-0.5 bg-secondary text-secondary-foreground rounded-xs border border-border/50"
+                  className="px-2 py-0.5 bg-secondary text-secondary-foreground rounded-xs border border-accent/30"
                 >
                   {tag}
                 </span>

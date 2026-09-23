@@ -17,9 +17,9 @@ export const EducationSection = ({ education, certifications = [], copy }: Props
     <section id="education" className="px-6 md:px-12 lg:px-16 xl:px-24 scroll-mt-24">
       <div className="max-w-[1600px] mx-auto">
         {/* Section header — Sentence case */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-border">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-accent/30">
           <div className="space-y-2">
-            <div className="font-mono text-xs text-accent">
+            <div className="eyebrow-chip">
               {t(copy, "education.eyebrow", "06. Education & credentials")}
             </div>
             <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
@@ -36,7 +36,7 @@ export const EducationSection = ({ education, certifications = [], copy }: Props
           {education?.map((edu, i) => (
             <article
               key={edu.id}
-              className="col-span-12 md:col-span-6 bg-card border border-border rounded-xs p-6 corner-ticks flex flex-col justify-between"
+              className="col-span-12 md:col-span-6 bg-card border border-accent/30 rounded-xs p-6 corner-ticks flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between pb-3 mb-4 border-b border-border/80 font-mono text-xs text-muted-foreground">
@@ -64,7 +64,7 @@ export const EducationSection = ({ education, certifications = [], copy }: Props
               <div className="flex items-center gap-4 pt-4 mt-6 border-t border-border/80 text-xs font-mono text-muted-foreground">
                 {edu.duration && <span>{edu.duration}</span>}
                 {edu.grade && (
-                  <span className="px-2 py-0.5 border border-border/60 bg-secondary rounded-xs text-[11px] text-foreground">
+                  <span className="px-2 py-0.5 border border-accent/30 bg-secondary rounded-xs text-[11px] text-foreground">
                     {edu.grade}
                   </span>
                 )}
@@ -84,7 +84,7 @@ export const EducationSection = ({ education, certifications = [], copy }: Props
           {certifications?.map((cert, i) => (
             <article
               key={cert.id}
-              className="col-span-12 md:col-span-6 lg:col-span-4 bg-card border border-border rounded-xs p-5 corner-ticks flex flex-col justify-between"
+              className="col-span-12 md:col-span-6 lg:col-span-4 bg-card border border-accent/30 rounded-xs p-5 corner-ticks flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between pb-3 mb-3 border-b border-border/80 font-mono text-xs text-muted-foreground">

@@ -21,7 +21,7 @@ export const Footer = ({ settings, profile, copy }: Props) => {
         {/* Top: Structured CTA & Sitemap */}
         <div className="grid md:grid-cols-12 gap-10 pb-12 border-b border-border">
           <div className="md:col-span-7 space-y-4">
-            <div className="font-mono text-xs text-accent">
+            <div className="eyebrow-chip">
               {t(copy, "footer.cta_eyebrow", "11. Ready to collaborate?")}
             </div>
             <h3 className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight text-foreground">

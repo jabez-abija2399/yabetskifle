@@ -17,9 +17,9 @@ export const ProjectsShowcase = ({ projects, copy }: Props) => {
     <section id="work" className="px-6 md:px-12 lg:px-16 xl:px-24 scroll-mt-24">
       <div className="max-w-[1600px] mx-auto">
         {/* Section header — Sentence case, technical indexing */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-border">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-accent/30">
           <div className="space-y-2">
-            <div className="font-mono text-xs text-accent">
+            <div className="eyebrow-chip">
               {t(copy, "projects.eyebrow", "01. Selected projects")}
             </div>
             <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
