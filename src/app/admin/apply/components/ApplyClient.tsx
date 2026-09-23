@@ -1,20 +1,24 @@
 "use client";
 // ─────────────────────────────────────────────────────────
-// src/app/apply/components/ApplyClient.tsx
+// src/app/admin/apply/components/ApplyClient.tsx
 // ─────────────────────────────────────────────────────────
 
 import { AnimatePresence, motion } from "framer-motion";
 import { AlertCircle } from "lucide-react";
+import { toast } from "sonner";
 import { DocTypeTabs } from "./DocTypeTabs";
 import { StyleGallery } from "./StyleGallery";
 import { JobForm } from "./JobForm";
 import { OutputEditor } from "./OutputEditor";
 import { SectionLabel } from "./SectionLabel";
-import { useApplyForm, useGenerate } from "../hooks/useApply";
+import { AtsPanel } from "./AtsPanel";
+import { HistoryStrip } from "./HistoryStrip";
+import { useApplyForm, useGenerate, useHistory } from "../hooks/useApply";
 
 export function ApplyClient() {
   const form = useApplyForm();
   const gen = useGenerate();
+  const history = useHistory();
 
   const handleGenerate = async () => {
     await gen.generate(form.toPayload());
@@ -25,9 +29,27 @@ export function ApplyClient() {
     form.resetForm();
   };
 
+  const handleSelectHistory = (row: {
+    content: string;
+    doc_type: string;
+    company_name?: string | null;
+    role_name?: string | null;
+  }) => {
+    gen.setOutput(row.content);
+    if (
+      ["cover_letter", "proposal", "cold_dm", "ats_resume"].includes(
+        row.doc_type
+      )
+    ) {
+      form.setDocType(row.doc_type as typeof form.docType);
+    }
+    if (row.company_name) form.setCompanyName(row.company_name);
+    if (row.role_name) form.setRoleName(row.role_name);
+    toast.success("Loaded from history");
+  };
+
   return (
-    <div className="min-h-screen bg-background px-4 py-16 sm:py-24">
-      <div className="max-w-2xl mx-auto space-y-12">
+    <div className="max-w-2xl space-y-12 pb-16">
 
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -36,17 +58,15 @@ export function ApplyClient() {
           className="space-y-3"
         >
           <p className="font-mono text-xs text-muted-foreground">
-            Private — Yabets only
+            Admin only — not linked publicly
           </p>
           <h1 className="text-3xl font-semibold tracking-tight text-foreground">
-            Job Application AI
+            Apply Studio
           </h1>
           <p className="text-sm text-muted-foreground leading-relaxed max-w-lg">
-            Reads your live portfolio at{" "}
-            <span className="font-mono text-xs text-foreground bg-secondary px-1.5 py-0.5 rounded-xs border border-border">
-              yabetskifle.vercel.app
-            </span>{" "}
-            and generates documents in your actual voice. Nothing hardcoded — updates automatically when your site updates.
+            Grounded in your portfolio data — letters read the live site, the
+            ATS resume reads the database. Export to PDF/DOC or create a share
+            link when you&apos;re ready to send.
           </p>
         </motion.div>
 
@@ -133,12 +153,38 @@ export function ApplyClient() {
                 output={gen.output}
                 onChange={gen.setOutput}
                 onReset={handleReset}
+                docType={form.docType}
+                style={form.style}
+                companyName={form.companyName}
+                roleName={form.roleName}
+                jobDescription={form.jobDescription}
+                onShared={history.refresh}
               />
+              {form.docType === "ats_resume" && (
+                <div className="mt-4">
+                  <AtsPanel
+                    output={gen.output}
+                    jobDescription={form.jobDescription}
+                  />
+                </div>
+              )}
             </motion.div>
           )}
         </AnimatePresence>
 
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25, duration: 0.4 }}
+        >
+          <HistoryStrip
+            rows={history.rows}
+            loading={history.loading}
+            onSelect={handleSelectHistory}
+            onDelete={history.remove}
+          />
+        </motion.div>
+
       </div>
-    </div>
   );
 }

@@ -1,11 +1,16 @@
 "use client";
 // ─────────────────────────────────────────────────────────
-// src/app/apply/components/OutputEditor.tsx
+// src/app/admin/apply/components/OutputEditor.tsx
 // ─────────────────────────────────────────────────────────
 
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Copy, Check, RefreshCw, AlertTriangle, Eye, EyeOff } from "lucide-react";
+import {
+  Copy, Check, RefreshCw, AlertTriangle, Eye, EyeOff,
+  Download, FileText, Share2,
+} from "lucide-react";
+import { toast } from "sonner";
+import type { DocType } from "../types";
 
 const AI_PHRASES = [
   "highly motivated",
@@ -51,11 +56,29 @@ interface Props {
   output: string;
   onChange: (v: string) => void;
   onReset: () => void;
+  docType: DocType;
+  style: string;
+  companyName?: string;
+  roleName?: string;
+  jobDescription?: string;
+  onShared?: () => void;
 }
 
-export function OutputEditor({ output, onChange, onReset }: Props) {
+export function OutputEditor({
+  output,
+  onChange,
+  onReset,
+  docType,
+  style,
+  companyName,
+  roleName,
+  jobDescription,
+  onShared,
+}: Props) {
   const [copied, setCopied] = useState(false);
   const [showHighlights, setShowHighlights] = useState(true);
+  const [exporting, setExporting] = useState<"pdf" | "doc" | null>(null);
+  const [sharing, setSharing] = useState(false);
   const aiCount = countAIPhrases(output);
 
   const handleCopy = useCallback(async () => {
@@ -63,6 +86,58 @@ export function OutputEditor({ output, onChange, onReset }: Props) {
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   }, [output]);
+
+  const handleExportPdf = useCallback(async () => {
+    setExporting("pdf");
+    try {
+      const { exportPdf } = await import("../lib/exportPdf");
+      await exportPdf(output, docType, roleName, companyName);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "PDF export failed");
+    } finally {
+      setExporting(null);
+    }
+  }, [output, docType, roleName, companyName]);
+
+  const handleExportDoc = useCallback(async () => {
+    setExporting("doc");
+    try {
+      const { exportDoc } = await import("../lib/exportDoc");
+      await exportDoc(output, docType, roleName, companyName);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "DOC export failed");
+    } finally {
+      setExporting(null);
+    }
+  }, [output, docType, roleName, companyName]);
+
+  const handleShare = useCallback(async () => {
+    setSharing(true);
+    try {
+      const res = await fetch("/api/apply/share", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          docType,
+          style,
+          companyName,
+          roleName,
+          content: output,
+          jobDescription,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? "Share failed");
+      const url = `${window.location.origin}/share/${data.slug}`;
+      await navigator.clipboard.writeText(url);
+      toast.success("Share link copied to clipboard");
+      onShared?.();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Share failed");
+    } finally {
+      setSharing(false);
+    }
+  }, [docType, style, companyName, roleName, output, jobDescription, onShared]);
 
   return (
     <motion.div
@@ -86,6 +161,36 @@ export function OutputEditor({ output, onChange, onReset }: Props) {
           >
             {showHighlights ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
             {aiCount > 0 ? `${aiCount} AI phrase${aiCount > 1 ? "s" : ""}` : "Clean"}
+          </button>
+
+          <button
+            onClick={handleExportPdf}
+            disabled={exporting !== null || sharing}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xs font-mono text-xs border border-border text-muted-foreground hover:border-foreground transition-colors disabled:opacity-50"
+            title="Download ATS-safe PDF"
+          >
+            <Download className="w-3 h-3" />
+            {exporting === "pdf" ? "…" : "PDF"}
+          </button>
+
+          <button
+            onClick={handleExportDoc}
+            disabled={exporting !== null || sharing}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xs font-mono text-xs border border-border text-muted-foreground hover:border-foreground transition-colors disabled:opacity-50"
+            title="Download ATS-safe DOCX"
+          >
+            <FileText className="w-3 h-3" />
+            {exporting === "doc" ? "…" : "DOC"}
+          </button>
+
+          <button
+            onClick={handleShare}
+            disabled={sharing || exporting !== null}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xs font-mono text-xs border border-border text-muted-foreground hover:border-foreground transition-colors disabled:opacity-50"
+            title="Create public share link"
+          >
+            <Share2 className="w-3 h-3" />
+            {sharing ? "…" : "Share"}
           </button>
 
           <button

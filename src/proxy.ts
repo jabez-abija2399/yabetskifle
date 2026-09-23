@@ -64,9 +64,14 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL('/admin/login', request.url))
   }
 
+  // 🔒 /apply moved behind admin — public route now redirects home
+  if (request.nextUrl.pathname === '/apply' || request.nextUrl.pathname.startsWith('/apply/')) {
+    return NextResponse.redirect(new URL('/', request.url))
+  }
+
   return response
 }
 
 export const config = {
-  matcher: ['/admin/:path*'],
+  matcher: ['/admin/:path*', '/apply', '/apply/:path*'],
 }

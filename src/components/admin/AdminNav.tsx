@@ -7,7 +7,7 @@ import {
   MessageSquare, Star, GraduationCap,
   FileText, Languages, ShieldCheck,
   Package, HelpCircle, Columns,
-  AwardIcon, Type
+  AwardIcon, Type, Wand2
 } from "lucide-react"
 import { createBrowserClient } from "@supabase/ssr"
 import { ThemeToggle } from "@/components/ui/ThemeToggle"
@@ -27,6 +27,7 @@ const ALLOWED_ROUTES = [
   "/admin/sections",
   "/admin/skills",
   "/admin/copy",
+  "/admin/apply",
 ]
 
 const navGroups = [
@@ -47,6 +48,12 @@ const navGroups = [
       { name: "Site Copy", href: "/admin/copy", icon: <Type className="w-4 h-4" /> },
       { name: "Section Manager", href: "/admin/sections", icon: <Columns className="w-4 h-4 text-primary" /> },
       { name: "Settings", href: "/admin/settings", icon: <Settings className="w-4 h-4" /> },
+    ]
+  },
+  {
+    title: "Apply Studio",
+    items: [
+      { name: "Apply Studio", href: "/admin/apply", icon: <Wand2 className="w-4 h-4" /> },
     ]
   },
   {

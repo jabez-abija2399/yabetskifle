@@ -1,8 +1,8 @@
 // ─────────────────────────────────────────────────────────
-// src/app/apply/types/index.ts
+// src/app/admin/apply/types/index.ts
 // ─────────────────────────────────────────────────────────
 
-export type DocType = "cover_letter" | "proposal" | "cold_dm";
+export type DocType = "cover_letter" | "proposal" | "cold_dm" | "ats_resume";
 export type StyleKey = "punchy" | "story" | "technical" | "warm";
 export type GenerationStatus = "idle" | "loading" | "success" | "error";
 
@@ -36,4 +36,15 @@ export interface GeneratePayload {
 export interface GenerateResponse {
   output?: string;
   error?: string;
+}
+
+export interface ShareRecord {
+  id: string;
+  slug: string;
+  doc_type: DocType;
+  style?: string | null;
+  company_name?: string | null;
+  role_name?: string | null;
+  content: string;
+  created_at: string;
 }

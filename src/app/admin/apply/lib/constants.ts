@@ -77,4 +77,13 @@ export const DOC_TYPES: DocTypeOption[] = [
     showCompany: true,
     showRole: true,
   },
+  {
+    id: "ats_resume",
+    label: "ATS Resume",
+    description: "Parse-safe resume tailored to the job description",
+    placeholder:
+      "Paste the full job description. Keywords from it are mirrored into your skills and summary for ATS ranking.",
+    showCompany: false,
+    showRole: true,
+  },
 ];
