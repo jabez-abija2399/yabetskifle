@@ -210,6 +210,18 @@
   html {
     scroll-behavior: smooth;
   }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 
   /* HEADINGS — Architectural, intentional hierarchy */
   h1, h2, h3, h4, .text-heading-hero, .text-heading-section, .text-heading-card {

@@ -40,11 +40,17 @@ export const TestimonialsSection = ({ testimonials, copy }: Props) => {
                   <span className="text-accent font-medium">
                     [rev.{String(i + 1).padStart(2, "0")}]
                   </span>
-                  <div className="flex gap-0.5 text-accent">
-                    {[...Array(review.rating || 5)].map((_, starIdx) => (
-                      <Star key={starIdx} className="w-3 h-3 fill-current" />
-                    ))}
-                  </div>
+                  {typeof review.rating === "number" && review.rating > 0 && (
+                    <div
+                      className="flex gap-0.5 text-accent"
+                      role="img"
+                      aria-label={`${review.rating} out of 5 stars`}
+                    >
+                      {[...Array(Math.min(5, Math.max(0, Math.round(review.rating))))].map((_, starIdx) => (
+                        <Star key={starIdx} className="w-3 h-3 fill-current" aria-hidden="true" />
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 <blockquote className="text-xs sm:text-sm text-foreground/90 font-medium leading-relaxed font-sans text-pretty">
@@ -63,7 +69,7 @@ export const TestimonialsSection = ({ testimonials, copy }: Props) => {
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center font-mono text-xs font-semibold text-foreground">
-                      {review.client_name.charAt(0)}
+                      {(review.client_name || "?").charAt(0).toUpperCase()}
                     </div>
                   )}
                 </div>

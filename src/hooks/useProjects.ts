@@ -16,6 +16,7 @@ export const useProjects = () => {
       const { data, error } = await supabase
         .from("projects")
         .select("*")
+        .eq("is_published", true)
         .order("order_index", { ascending: true })
 
       if (data) setProjects(data)

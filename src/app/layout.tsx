@@ -114,10 +114,16 @@ export default async function RootLayout({
       >
         <Track />
         <MotionConfig reducedMotion="user">
+          <a
+            href="#main"
+            className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:h-11 focus:px-4 focus:rounded-xs focus:bg-accent focus:text-accent-foreground focus:font-mono focus:text-xs focus:inline-flex focus:items-center"
+          >
+            Skip to content
+          </a>
           <Navbar copy={copy} />
-          <main className="flex-1">
+          <div id="main" tabIndex={-1} className="flex-1 outline-none">
             {children}
-          </main>
+          </div>
           <Toaster position="top-center" richColors />
         </MotionConfig>
       </ThemeProvider>

@@ -45,16 +45,7 @@ export const ProjectCard = ({ project, index = 0, variant = "default" }: Project
   return (
     <article
       onClick={handleNavigate}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault()
-          handleNavigate()
-        }
-      }}
-      role="link"
-      tabIndex={0}
-      aria-label={`Open case study: ${project.title}`}
-      className={`group cursor-pointer border border-accent/30 hover:border-accent focus-visible:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent bg-card rounded-xs transition-all duration-200 flex flex-col justify-between p-5 md:p-6 corner-ticks ${
+      className={`group cursor-pointer border border-accent/30 hover:border-accent focus-within:border-accent bg-card rounded-xs transition-all duration-200 flex flex-col justify-between p-5 md:p-6 corner-ticks ${
         variant === "wide" ? "md:grid md:grid-cols-12 md:gap-8 items-stretch" : ""
       }`}
     >
@@ -71,9 +62,18 @@ export const ProjectCard = ({ project, index = 0, variant = "default" }: Project
             </span>
           </div>
 
-          {/* Title */}
+          {/* Title — real link for keyboard/AT; whole card still clickable for mouse */}
           <h3 className="text-xl md:text-2xl font-semibold text-foreground tracking-tight mt-3 group-hover:text-accent transition-colors">
-            {project.title}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation()
+                handleNavigate()
+              }}
+              className="text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            >
+              {project.title}
+            </button>
           </h3>
 
           {/* Structured problem -> approach -> hardest-part breakdown */}
@@ -132,9 +132,16 @@ export const ProjectCard = ({ project, index = 0, variant = "default" }: Project
 
           {/* Direct action links */}
           <div className="flex flex-wrap items-center justify-between gap-3 pt-1 text-xs font-mono">
-            <span className="inline-flex items-center gap-1 text-accent font-medium group-hover:underline">
-              [ Case study specs <ArrowUpRight className="w-3.5 h-3.5" /> ]
-            </span>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation()
+                handleNavigate()
+              }}
+              className="inline-flex items-center gap-1 text-accent font-medium group-hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            >
+              [ Case study specs <ArrowUpRight className="w-3.5 h-3.5" aria-hidden /> ]
+            </button>
 
             <div className="flex items-center gap-3">
               {project.github_url && (

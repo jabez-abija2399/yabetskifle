@@ -126,7 +126,7 @@ export default async function BlogPostPage({ params }: Props) {
       {/* Body */}
       <div className="px-6 md:px-12 lg:px-16 xl:px-24 pb-20">
         <div className="max-w-3xl mx-auto">
-          <div className="prose prose-zinc dark:prose-invert prose-lg max-w-none
+          <div className="prose prose-neutral dark:prose-invert prose-lg max-w-none
             prose-headings:font-sans prose-headings:tracking-tight prose-headings:text-foreground
             prose-h1:hidden
             prose-h2:text-3xl md:prose-h2:text-4xl prose-h2:mt-12 prose-h2:mb-5

@@ -81,6 +81,13 @@ export const Footer = ({ settings, profile, copy }: Props) => {
                     </a>
                   </li>
                 )}
+                {socials.instagram && (
+                  <li>
+                    <a href={socials.instagram} target="_blank" rel="noreferrer" className="hover:text-accent transition-colors inline-flex items-center gap-1">
+                      Instagram <ArrowUpRight className="w-3 h-3" />
+                    </a>
+                  </li>
+                )}
                 {socials.email && (
                   <li>
                     <a href={`mailto:${socials.email}`} className="hover:text-accent transition-colors inline-flex items-center gap-1">

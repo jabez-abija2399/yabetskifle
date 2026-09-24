@@ -5,7 +5,6 @@ import { PageHeader } from "@/components/admin/PageHeader"
 import { EmptyState } from "@/components/admin/EmptyState"
 import { ListSkeleton } from "@/components/admin/ListSkeleton"
 import { ConfirmDialog } from "@/components/admin/ConfirmDialog"
-import { PortfolioService } from "@/services/portfolio"
 import { Message } from "@/types/portfolio"
 import { toast } from "sonner"
 import { Trash2, Inbox, Reply, MailOpen } from "lucide-react"
@@ -22,7 +21,9 @@ export default function AdminMessagesPage() {
     let cancelled = false
     ;(async () => {
       try {
-        const data = await PortfolioService.getMessages()
+        const res = await fetch("/api/admin/messages", { cache: "no-store" })
+        if (!res.ok) throw new Error("Failed to load messages")
+        const data = (await res.json()) as Message[]
         if (!cancelled) setMessages(data)
       } catch {
         toast.error("Failed to load your message log.")
@@ -39,7 +40,10 @@ export default function AdminMessagesPage() {
     if (!pendingDelete) return
     setDeleting(true)
     try {
-      await PortfolioService.deleteMessage(pendingDelete.id)
+      const res = await fetch(`/api/admin/messages?id=${encodeURIComponent(pendingDelete.id)}`, {
+        method: "DELETE",
+      })
+      if (!res.ok) throw new Error("Failed to delete")
       setMessages(messages.filter((m) => m.id !== pendingDelete.id))
       if (selectedMessage?.id === pendingDelete.id) setSelectedMessage(null)
       toast.success("Message deleted")

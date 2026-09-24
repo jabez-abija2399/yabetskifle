@@ -33,7 +33,8 @@ export default async function HomePage() {
     PortfolioService.getSiteCopy(),
   ])
 
-  const languagesLine = languages.length > 0
+  const languagesLine =
+    settings?.show_languages !== false && languages.length > 0
     ? {
         short: languages.map(l => l.name.slice(0, 2).toUpperCase()).join(" · "),
         long: languages.map(l => l.name).join(" · "),
@@ -52,7 +53,7 @@ export default async function HomePage() {
 
   return (
     <main className="bg-background min-h-screen text-foreground">
-      <Hero profile={profile} copy={copy} />
+      <Hero profile={profile} copy={copy} resumeUrl={profile.resume_url || settings?.cv_url} />
 
       <div className="space-y-24 md:space-y-28 pb-24 pt-16 md:pt-20">
         {settings?.show_projects !== false && <ProjectsShowcase projects={projects} copy={copy} />}
@@ -73,7 +74,9 @@ export default async function HomePage() {
 
         {settings?.show_faq !== false && <FAQSection faqs={faqs} copy={copy} />}
 
-        {settings?.show_contact !== false && <ContactSection profile={profile} copy={copy} />}
+        {settings?.show_contact !== false && (
+          <ContactSection profile={profile} copy={copy} contactEmail={settings?.contact_email} />
+        )}
       </div>
 
       <Footer settings={settings} profile={profile} copy={copy} />

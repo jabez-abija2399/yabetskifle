@@ -36,29 +36,42 @@ export const FAQSection = ({ faqs = fallback, copy }: Props) => {
         <div className="border-t border-border divide-y divide-border max-w-4xl">
           {faqs.map((faq, idx) => {
             const open = openIdx === idx
+            const panelId = `faq-panel-${faq.id || idx}`
+            const buttonId = `faq-button-${faq.id || idx}`
             return (
               <div key={faq.id || idx}>
-                <button
-                  onClick={() => setOpenIdx(open ? null : idx)}
-                  className="w-full py-5 sm:py-6 flex items-center justify-between gap-6 text-left group cursor-pointer"
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="font-mono text-xs text-accent">
-                      [{String(idx + 1).padStart(2, "0")}]
-                    </span>
-                    <h3 className="text-base sm:text-lg font-semibold text-foreground tracking-tight group-hover:text-accent transition-colors">
-                      {faq.question}
-                    </h3>
-                  </div>
-                  <div
-                    className={`shrink-0 w-7 h-7 rounded-xs border border-border flex items-center justify-center transition-transform duration-200 ${
-                      open ? "bg-accent/10 rotate-45 border-accent" : "bg-card"
-                    }`}
+                <h3>
+                  <button
+                    id={buttonId}
+                    type="button"
+                    onClick={() => setOpenIdx(open ? null : idx)}
+                    aria-expanded={open}
+                    aria-controls={panelId}
+                    className="w-full py-5 sm:py-6 flex items-center justify-between gap-6 text-left group cursor-pointer"
                   >
-                    <Plus className={`w-3.5 h-3.5 ${open ? "text-accent" : "text-foreground"}`} />
-                  </div>
-                </button>
+                    <span className="flex items-center gap-3">
+                      <span className="font-mono text-xs text-accent" aria-hidden="true">
+                        [{String(idx + 1).padStart(2, "0")}]
+                      </span>
+                      <span className="text-base sm:text-lg font-semibold text-foreground tracking-tight group-hover:text-accent transition-colors">
+                        {faq.question}
+                      </span>
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      className={`shrink-0 w-7 h-7 rounded-xs border border-border flex items-center justify-center transition-transform duration-200 ${
+                        open ? "bg-accent/10 rotate-45 border-accent" : "bg-card"
+                      }`}
+                    >
+                      <Plus className={`w-3.5 h-3.5 ${open ? "text-accent" : "text-foreground"}`} />
+                    </span>
+                  </button>
+                </h3>
                 <div
+                  id={panelId}
+                  role="region"
+                  aria-labelledby={buttonId}
+                  hidden={!open}
                   className={`grid transition-all duration-300 ease-out ${
                     open ? "grid-rows-[1fr] opacity-100 pb-5" : "grid-rows-[0fr] opacity-0"
                   }`}

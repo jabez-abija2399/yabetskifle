@@ -4,7 +4,7 @@
 
 import type { StyleTemplate, DocTypeOption } from "../types";
 
-export const PORTFOLIO_URL = "https://yabetskifle.vercel.app/";
+export const PORTFOLIO_URL = `${process.env.NEXT_PUBLIC_SITE_URL || "https://yabetskifle.vercel.app"}/`;
 
 export const STYLE_TEMPLATES: StyleTemplate[] = [
   {

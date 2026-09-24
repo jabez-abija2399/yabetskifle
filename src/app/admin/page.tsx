@@ -33,8 +33,50 @@ export default function AdminDashboard() {
     let cancelled = false
     ;(async () => {
       try {
-        const data = await PortfolioService.getDashboardStats()
-        if (!cancelled) setStats({ ...EMPTY, ...(data as Partial<Stats>) })
+        const [msgRes, projects, services, settings, viewsRes] = await Promise.all([
+          fetch("/api/admin/messages", { cache: "no-store" }),
+          PortfolioService.getAllProjects(),
+          PortfolioService.getServices(),
+          PortfolioService.getSettings(),
+          fetch("/api/analytics", { cache: "no-store" }).catch(() => null),
+        ])
+        const messages = msgRes.ok ? ((await msgRes.json()) as unknown[]) : []
+        let globalViews = 0
+        if (viewsRes && viewsRes.ok) {
+          try {
+            const payload = (await viewsRes.json()) as {
+              kpis?: { pageviews7d?: number }
+              series?: { day?: string; pageviews?: number; value?: number }[]
+            }
+            if (Array.isArray(payload.series)) {
+              globalViews = payload.series.reduce(
+                (sum, row) => sum + (row.pageviews ?? row.value ?? 0),
+                0
+              )
+            }
+            if (globalViews === 0 && typeof payload.kpis?.pageviews7d === "number") {
+              globalViews = payload.kpis.pageviews7d
+            }
+          } catch {
+            globalViews = 0
+          }
+        }
+        if (!cancelled) {
+          setStats({
+            ...EMPTY,
+            projectsCount: projects.length,
+            messagesCount: messages.length,
+            servicesCount: services.length,
+            activeSections: settings
+              ? Object.keys(settings).filter(
+                  (key) =>
+                    key.startsWith("show_") &&
+                    (settings as unknown as Record<string, unknown>)[key] === true
+                ).length
+              : 0,
+            globalViews,
+          })
+        }
       } catch (error) {
         console.error("Dashboard failed to sync:", error)
         if (!cancelled) setFailed(true)

@@ -11,11 +11,13 @@ import { SiteCopy, t, renderRichTitle } from "@/lib/copy"
 interface Props {
   profile?: Profile | null
   copy?: SiteCopy
+  contactEmail?: string
 }
 
-export const ContactSection = ({ profile, copy }: Props) => {
+export const ContactSection = ({ profile, copy, contactEmail }: Props) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const email =
+    contactEmail ||
     profile?.social_links?.email ||
     "yabetskifle@gmail.com"
 
@@ -24,6 +26,11 @@ export const ContactSection = ({ profile, copy }: Props) => {
     setIsSubmitting(true)
     const form = e.currentTarget
     const formData = new FormData(form)
+    // Honeypot — bots fill hidden fields; humans never see them
+    if (formData.get("company_website")) {
+      setIsSubmitting(false)
+      return
+    }
     try {
       await PortfolioService.submitMessage({
         name: formData.get("name") as string,
@@ -151,52 +158,69 @@ export const ContactSection = ({ profile, copy }: Props) => {
 
             <div className="grid md:grid-cols-2 gap-5">
               <div className="space-y-1.5">
-                <label className="font-mono text-xs text-muted-foreground block">
+                <label htmlFor="contact-name" className="font-mono text-xs text-muted-foreground block">
                   {t(copy, "contact.form.name_label", "01. Name / Company")}
                 </label>
                 <input
+                  id="contact-name"
                   name="name"
                   required
+                  autoComplete="name"
                   placeholder={t(copy, "contact.form.name_ph", "Jane Doe")}
-                  className="w-full h-11 px-3.5 rounded-xs border border-border bg-background focus:border-accent focus:outline-none transition-colors font-mono text-xs"
+                  className="w-full h-11 px-3.5 rounded-xs border border-border bg-background focus:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-colors font-mono text-xs"
                 />
               </div>
               <div className="space-y-1.5">
-                <label className="font-mono text-xs text-muted-foreground block">
+                <label htmlFor="contact-email" className="font-mono text-xs text-muted-foreground block">
                   {t(copy, "contact.form.email_label", "02. Return email")}
                 </label>
                 <input
+                  id="contact-email"
                   name="email"
                   type="email"
                   required
+                  autoComplete="email"
                   placeholder={t(copy, "contact.form.email_ph", "jane@company.com")}
-                  className="w-full h-11 px-3.5 rounded-xs border border-border bg-background focus:border-accent focus:outline-none transition-colors font-mono text-xs"
+                  className="w-full h-11 px-3.5 rounded-xs border border-border bg-background focus:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-colors font-mono text-xs"
                 />
               </div>
             </div>
 
             <div className="space-y-1.5">
-              <label className="font-mono text-xs text-muted-foreground block">
+              <label htmlFor="contact-subject" className="font-mono text-xs text-muted-foreground block">
                 {t(copy, "contact.form.subject_label", "03. Topic / Project scope")}
               </label>
               <input
+                id="contact-subject"
                 name="subject"
                 required
                 placeholder={t(copy, "contact.form.subject_ph", "Frontend role, Next.js architecture, product contract…")}
-                className="w-full h-11 px-3.5 rounded-xs border border-border bg-background focus:border-accent focus:outline-none transition-colors font-mono text-xs"
+                className="w-full h-11 px-3.5 rounded-xs border border-border bg-background focus:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-colors font-mono text-xs"
               />
             </div>
 
             <div className="space-y-1.5">
-              <label className="font-mono text-xs text-muted-foreground block">
+              <label htmlFor="contact-message" className="font-mono text-xs text-muted-foreground block">
                 {t(copy, "contact.form.message_label", "04. Specifications & requirements")}
               </label>
               <textarea
+                id="contact-message"
                 name="message"
                 required
                 rows={5}
                 placeholder={t(copy, "contact.form.message_ph", "Describe your requirements, stack, timeline, and goals.")}
-                className="w-full p-3.5 rounded-xs border border-border bg-background focus:border-accent focus:outline-none transition-colors resize-none font-sans text-xs sm:text-sm"
+                className="w-full p-3.5 rounded-xs border border-border bg-background focus:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-colors resize-none font-sans text-xs sm:text-sm"
+              />
+            </div>
+
+            {/* Honeypot — hidden from humans, bots fill it and get dropped */}
+            <div className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+              <label htmlFor="contact-website">Company website</label>
+              <input
+                id="contact-website"
+                name="company_website"
+                tabIndex={-1}
+                autoComplete="off"
               />
             </div>
 

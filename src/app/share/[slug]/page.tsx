@@ -107,7 +107,7 @@ export default async function SharePage({
             href="/"
             className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors"
           >
-            ← yabetskifle.vercel.app
+            ← Back to portfolio
           </Link>
         </footer>
       </div>

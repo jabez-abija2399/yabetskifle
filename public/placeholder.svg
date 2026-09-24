@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="360" viewBox="0 0 480 360">
+  <rect width="480" height="360" fill="#E8E4DB"/>
+  <rect x="24" y="24" width="432" height="312" fill="none" stroke="#8B8577" stroke-width="2"/>
+  <circle cx="240" cy="150" r="56" fill="#8B8577" opacity="0.45"/>
+  <ellipse cx="240" cy="270" rx="96" ry="54" fill="#8B8577" opacity="0.45"/>
+  <text x="240" y="330" text-anchor="middle" font-family="ui-monospace, monospace" font-size="14" fill="#5A564C">portrait pending</text>
+</svg>

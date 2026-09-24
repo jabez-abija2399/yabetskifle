@@ -10,6 +10,7 @@ import { SiteCopy, t } from "@/lib/copy"
 interface Props {
   profile: Profile
   copy?: SiteCopy
+  resumeUrl?: string
 }
 
 const container: Variants = {
@@ -25,11 +26,12 @@ const item: Variants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
 }
 
-export const Hero = ({ profile, copy }: Props) => {
+export const Hero = ({ profile, copy, resumeUrl }: Props) => {
   const fullName = profile.full_name || "Yabets Kifle"
   const year = new Date().getFullYear()
   const statusText = t(copy, "hero.status_text", `Open to roles — Full-time · Contract · Remote · ${year}`)
   const githubUrl = profile.social_links?.github || "https://github.com/jabez-abija2399"
+  const resumeHref = resumeUrl || profile.resume_url
 
   return (
     <section id="hero" className="relative min-h-[90svh] flex flex-col justify-between border-b border-border bg-schematic-grid pt-24 pb-12">
@@ -108,9 +110,9 @@ export const Hero = ({ profile, copy }: Props) => {
                 <span>[ GitHub profile ↗ ]</span>
               </a>
 
-              {profile.resume_url && (
+              {resumeHref && (
                 <a
-                  href={profile.resume_url}
+                  href={resumeHref}
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-2 border border-border bg-card px-4 h-11 rounded-xs font-mono text-xs text-muted-foreground hover:text-foreground hover:border-foreground transition-colors"
@@ -163,7 +165,7 @@ export const Hero = ({ profile, copy }: Props) => {
               {/* Photo in crisp technical framing */}
               <div className="relative aspect-4/3 w-full border border-border bg-secondary overflow-hidden rounded-xs mb-4">
                 <Image
-                  src={profile.avatar_url || "/placeholder.jpg"}
+                  src={profile.avatar_url || "/placeholder.svg"}
                   alt={fullName}
                   fill
                   className="object-cover grayscale contrast-105 hover:grayscale-0 transition-all duration-300"

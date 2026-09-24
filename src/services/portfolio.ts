@@ -55,7 +55,12 @@ export const PortfolioService = {
   },
 
   async getProjectById(id: string): Promise<Project | null> {
-    const { data, error } = await supabase.from("projects").select("*").eq("id", id).maybeSingle()
+    const { data, error } = await supabase
+      .from("projects")
+      .select("*")
+      .eq("id", id)
+      .eq("is_published", true)
+      .maybeSingle()
     if (error) console.error("❌ DB Read Error:", error)
     return data ? transformProject(data) : null
   },
@@ -96,7 +101,12 @@ export const PortfolioService = {
   },
 
   async getEducation(): Promise<Education[]> {
-    const { data } = await supabase.from("education").select("*").order("created_at", { ascending: false })
+    const { data, error } = await supabase
+      .from("education")
+      .select("*")
+      .order("order_index", { ascending: true })
+      .order("institution", { ascending: true })
+    if (error) console.error("❌ Education Read Error:", error)
     return (data as Education[]) || []
   },
 
@@ -247,39 +257,4 @@ export const PortfolioService = {
       throw new Error("Could not send message. Please try again.")
     }
   },
-
-  /** 📩 List Received Messages (Admin Only) */
-  async getMessages(): Promise<Message[]> {
-    const { data, error } = await supabase.from("messages").select("*").order("created_at", { ascending: false })
-    if (error) throw error
-    return data as Message[]
-  },
-
-  /** 🗑️ Delete a message */
-  async deleteMessage(id: string): Promise<void> {
-    const { error } = await supabase.from("messages").delete().eq("id", id)
-    if (error) throw error
-  },
-
-  /** 📊 Get Dashboard Analytics */
-  async getDashboardStats() {
-    const [projects, messages, services, settings, pageViews] = await Promise.all([
-      supabase.from("projects").select("id", { count: "exact" }),
-      supabase.from("messages").select("id", { count: "exact" }),
-      supabase.from("services").select("id", { count: "exact" }),
-      supabase.from("site_settings").select("*").single(),
-      supabase.from("page_views").select("view_count")
-    ])
-
-    const activeSections = settings.data ? Object.keys(settings.data).filter(key => key.startsWith('show_') && settings.data[key] === true).length : 0
-    const globalViews = pageViews.data?.reduce((acc, row) => acc + (row.view_count || 0), 0) || 0
-
-    return {
-      projectsCount: projects.count || 0,
-      messagesCount: messages.count || 0,
-      servicesCount: services.count || 0,
-      globalViews: globalViews,
-      activeSections
-    }
-  }
 }

@@ -87,6 +87,7 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
 
   const features = ensureArray(project.key_features)
   const learned = ensureArray(project.what_i_learned)
+  const tagsList = ensureArray(project.tags)
 
   const variants = {
     enter: (d: number) => ({ x: d > 0 ? 60 : -60, opacity: 0 }),
@@ -97,21 +98,29 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
   return (
     <div className="pb-24 md:pb-32">
       {/* Zoom modal */}
-      {isZoomed && (
+      {isZoomed && project.images?.[currentImage] && (
         <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${project.title} — image preview`}
           className="fixed inset-0 z-100 bg-foreground/95 backdrop-blur-3xl flex items-center justify-center p-4 md:p-12 cursor-zoom-out"
           onClick={() => setIsZoomed(false)}
+          onKeyDown={(e) => {
+            if (e.key === "Escape") setIsZoomed(false)
+          }}
         >
           <button
-            aria-label="Close"
-            className="absolute top-6 right-6 w-10 h-10 rounded-xs bg-background/10 hover:bg-background/20 border border-background/20 flex items-center justify-center text-background"
+            type="button"
+            aria-label="Close preview"
+            onClick={() => setIsZoomed(false)}
+            className="absolute top-6 right-6 w-10 h-10 rounded-xs bg-background/10 hover:bg-background/20 border border-background/20 flex items-center justify-center text-background focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-background"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5" aria-hidden />
           </button>
           <div className="relative w-full h-full max-w-7xl">
             <Image
               src={project.images[currentImage]}
-              alt={project.title}
+              alt={`${project.title} — frame ${currentImage + 1} (enlarged)`}
               fill
               className="object-contain"
               priority
@@ -366,14 +375,18 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
                 <div className="space-y-2">
                   <span className="text-muted-foreground block text-[11px]">{t(copy, "project.stack_label", "Stack manifest")}</span>
                   <div className="flex flex-wrap gap-1.5 pt-1">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2 py-0.5 border border-accent/30 bg-secondary rounded-xs text-[11px] text-foreground"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                    {tagsList.length > 0 ? (
+                      tagsList.map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-2 py-0.5 border border-accent/30 bg-secondary rounded-xs text-[11px] text-foreground"
+                        >
+                          {tag}
+                        </span>
+                      ))
+                    ) : (
+                      <span className="text-[11px] text-muted-foreground">—</span>
+                    )}
                   </div>
                 </div>
               </div>

@@ -161,4 +161,5 @@ export interface Education {
   field_of_study?: string;
   duration?: string;
   grade?: string;
+  order_index?: number;
 }

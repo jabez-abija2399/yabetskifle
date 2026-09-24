@@ -79,6 +79,15 @@ export const ServicesGrid = ({ services, copy }: Props) => {
             )
           })}
         </div>
+
+        <div className="mt-10 flex justify-end">
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-2 border border-border bg-card px-5 h-11 rounded-xs font-mono text-xs text-foreground hover:border-accent hover:text-accent transition-colors"
+          >
+            <span>[ {t(copy, "services.cta", "Discuss a project")} ]</span>
+          </a>
+        </div>
       </div>
     </section>
   )
