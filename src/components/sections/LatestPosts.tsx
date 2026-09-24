@@ -13,7 +13,7 @@ export const LatestPosts = ({ posts, copy }: Props) => {
   const displayPosts = posts.slice(0, 3)
 
   return (
-    <section className="px-6 md:px-12 lg:px-16 xl:px-24 scroll-mt-24">
+    <section id="journal" className="px-6 md:px-12 lg:px-16 xl:px-24 scroll-mt-24">
       <div className="max-w-[1600px] mx-auto">
         {/* Section header — Sentence case */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-accent/30">

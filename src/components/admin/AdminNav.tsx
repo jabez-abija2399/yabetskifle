@@ -9,7 +9,7 @@ import {
   FileText, MessageSquare, HelpCircle, Languages,
   User, AwardIcon, School,
   Columns, Type, Settings, Wand2,
-  ShieldCheck, Menu, X,
+  ShieldCheck, Menu, X, BarChart3,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { ThemeToggle } from "@/components/ui/ThemeToggle"
@@ -32,6 +32,7 @@ const NAV_GROUPS: NavGroup[] = [
     title: "Overview",
     items: [
       { name: "Dashboard", href: "/admin", icon: <LayoutDashboard className="size-4" /> },
+      { name: "Analytics", href: "/admin/analytics", icon: <BarChart3 className="size-4" /> },
     ],
   },
   {

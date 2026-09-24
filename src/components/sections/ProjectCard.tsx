@@ -5,6 +5,7 @@ import { ArrowUpRight, ExternalLink } from "lucide-react"
 import { FaGithub } from "react-icons/fa"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
+import { trackEvent } from "@/lib/analytics-client"
 
 interface ProjectCardProps {
   project: Project
@@ -28,7 +29,10 @@ const ensureArray = (data: unknown): string[] => {
 
 export const ProjectCard = ({ project, index = 0, variant = "default" }: ProjectCardProps) => {
   const router = useRouter()
-  const handleNavigate = () => router.push(`/projects/${project.id}`)
+  const handleNavigate = () => {
+    trackEvent("project_open", { id: project.id, title: project.title })
+    router.push(`/projects/${project.id}`)
+  }
   const num = String(index + 1).padStart(2, "0")
   const year = project.created_at ? new Date(project.created_at).getFullYear() : 2026
 
@@ -138,6 +142,8 @@ export const ProjectCard = ({ project, index = 0, variant = "default" }: Project
                   href={project.github_url}
                   target="_blank"
                   rel="noreferrer"
+                  data-track-event="github_click"
+                  data-track-props={JSON.stringify({ id: project.id, title: project.title })}
                   onClick={(e) => e.stopPropagation()}
                   className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors"
                 >
@@ -150,6 +156,8 @@ export const ProjectCard = ({ project, index = 0, variant = "default" }: Project
                   href={project.live_url}
                   target="_blank"
                   rel="noreferrer"
+                  data-track-event="demo_click"
+                  data-track-props={JSON.stringify({ id: project.id, title: project.title })}
                   onClick={(e) => e.stopPropagation()}
                   className="inline-flex items-center gap-1 text-accent hover:underline transition-colors"
                 >

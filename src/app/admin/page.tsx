@@ -50,7 +50,7 @@ export default function AdminDashboard() {
   const s = stats ?? EMPTY
 
   const kpis = [
-    { label: "Page views", value: s.globalViews, href: "/admin", icon: <Eye className="size-4" /> },
+    { label: "Page views", value: s.globalViews, href: "/admin/analytics", icon: <Eye className="size-4" /> },
     { label: "Projects", value: s.projectsCount, href: "/admin/projects", icon: <Briefcase className="size-4" /> },
     { label: "Messages", value: s.messagesCount, href: "/admin/messages", icon: <MessageSquare className="size-4" /> },
     { label: "Services", value: s.servicesCount, href: "/admin/services", icon: <Package className="size-4" /> },

@@ -5,7 +5,6 @@ import { Profile } from "@/types/portfolio"
 import { Download, Terminal, Code2 } from "lucide-react"
 import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa"
 import { motion, Variants } from "framer-motion"
-import { ViewTracker } from "@/components/analytics/ViewTracker"
 import { SiteCopy, t } from "@/lib/copy"
 
 interface Props {
@@ -33,9 +32,7 @@ export const Hero = ({ profile, copy }: Props) => {
   const githubUrl = profile.social_links?.github || "https://github.com/jabez-abija2399"
 
   return (
-    <section className="relative min-h-[90svh] flex flex-col justify-between border-b border-border bg-schematic-grid pt-24 pb-12">
-      <ViewTracker path="/" />
-
+    <section id="hero" className="relative min-h-[90svh] flex flex-col justify-between border-b border-border bg-schematic-grid pt-24 pb-12">
       {/* Top technical annotation strip */}
       <div className="px-6 md:px-12 lg:px-16 xl:px-24 mb-6">
         <motion.div
