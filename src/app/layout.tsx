@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import { Navbar } from "@/components/layout/NavBar"
 import { ThemeProvider } from "@/components/providers/ThemeProvider"
 import { Track } from "@/components/analytics/Track"
+import { ScrollProgress } from "@/components/ui/ScrollProgress"
 import { MotionConfig } from "framer-motion"
 import { PortfolioService } from "@/services/portfolio"
 
@@ -113,6 +114,7 @@ export default async function RootLayout({
         disableTransitionOnChange
       >
         <Track />
+        <ScrollProgress />
         <MotionConfig reducedMotion="user">
           <a
             href="#main"
