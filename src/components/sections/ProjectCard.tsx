@@ -48,7 +48,7 @@ export const ProjectCard = ({ project, index = 0, variant = "default" }: Project
     <article
       onClick={handleNavigate}
       className={cn(
-        "group lift-card relative flex h-full cursor-pointer flex-col overflow-hidden rounded-xs border border-border bg-card hover:border-accent/60 focus-within:border-accent",
+        "group lift-card relative flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border border-border bg-card hover:border-accent/60 focus-within:border-accent",
       )}
     >
       {/* Image — leads the card so the work is seen before it is read */}
@@ -76,7 +76,7 @@ export const ProjectCard = ({ project, index = 0, variant = "default" }: Project
         <div className="absolute left-3 top-3 border border-border bg-background/90 px-2 py-0.5 font-mono text-[10px] text-muted-foreground backdrop-blur-xs">
           {`fig.${num}`}
         </div>
-        <div className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-xs border border-border bg-background/90 text-foreground opacity-0 transition-opacity duration-200 group-hover:opacity-100 backdrop-blur-xs">
+        <div className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-2xl border border-border bg-background/90 text-foreground opacity-0 transition-opacity duration-200 group-hover:opacity-100 backdrop-blur-xs">
           <ArrowUpRight className="h-4 w-4" aria-hidden />
         </div>
       </div>
@@ -126,7 +126,7 @@ export const ProjectCard = ({ project, index = 0, variant = "default" }: Project
           {tags.length > 0 && (
             <div className="flex flex-wrap gap-1.5 font-mono text-[11px]">
               {tags.map((tag) => (
-                <span key={tag} className="rounded-xs border border-accent/25 bg-secondary px-2 py-0.5 text-secondary-foreground">
+                <span key={tag} className="rounded-2xl border border-accent/25 bg-secondary px-2 py-0.5 text-secondary-foreground">
                   {tag}
                 </span>
               ))}

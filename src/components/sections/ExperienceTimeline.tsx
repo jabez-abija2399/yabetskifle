@@ -14,7 +14,7 @@ export const ExperienceTimeline = ({ experiences, copy }: Props) => {
     <section id="experience" className="px-6 md:px-12 lg:px-16 xl:px-24 scroll-mt-24">
       <div className="max-w-[1600px] mx-auto">
         {/* Section header — Sentence case */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-accent/30">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-border">
           <div className="space-y-2">
             <div className="eyebrow-chip">
               {t(copy, "experience.eyebrow", "04. Engineering experience")}
@@ -44,7 +44,7 @@ export const ExperienceTimeline = ({ experiences, copy }: Props) => {
                   <span>{exp.duration}</span>
                 </div>
                 {exp.is_current && (
-                  <div className="inline-flex items-center gap-1.5 px-2 py-0.5 border border-signal/30 bg-card rounded-xs text-[11px] text-signal">
+                  <div className="inline-flex items-center gap-1.5 px-2 py-0.5 border border-signal/30 bg-card rounded-2xl text-[11px] text-signal">
                     <span className="w-1.5 h-1.5 rounded-full bg-signal" />
                     <span>{t(copy, "experience.current", "Active role")}</span>
                   </div>

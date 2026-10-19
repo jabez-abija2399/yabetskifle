@@ -18,7 +18,7 @@ export const ServicesGrid = ({ services, copy }: Props) => {
     <section id="services" className="px-6 md:px-12 lg:px-16 xl:px-24 scroll-mt-24">
       <div className="max-w-[1600px] mx-auto">
         {/* Section header — Sentence case */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-accent/30">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-border">
           <div className="space-y-2">
             <div className="eyebrow-chip">
               {t(copy, "services.eyebrow", "05. Capabilities & domains")}
@@ -48,7 +48,7 @@ export const ServicesGrid = ({ services, copy }: Props) => {
                 </div>
 
                 <div className="col-span-12 md:col-span-4 flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xs border border-border bg-card flex items-center justify-center shrink-0 group-hover:border-accent group-hover:text-accent transition-colors">
+                  <div className="w-10 h-10 rounded-2xl border border-border bg-card flex items-center justify-center shrink-0 group-hover:border-accent group-hover:text-accent transition-colors">
                     <Icon className="w-4 h-4" />
                   </div>
                   <div>
@@ -83,7 +83,7 @@ export const ServicesGrid = ({ services, copy }: Props) => {
         <div className="mt-10 flex justify-end">
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 border border-border bg-card px-5 h-11 rounded-xs font-mono text-xs text-foreground hover:border-accent hover:text-accent transition-colors"
+            className="inline-flex items-center gap-2 border border-border bg-card px-5 h-11 rounded-2xl font-mono text-xs text-foreground hover:border-accent hover:text-accent transition-colors"
           >
             <span>[ {t(copy, "services.cta", "Discuss a project")} ]</span>
           </a>

@@ -55,79 +55,74 @@ export const Navbar = ({ copy }: Props) => {
 
   if (pathname?.startsWith("/admin")) return null
 
+  const isActive = (href: string) =>
+    !href.startsWith("/#") && (href === pathname || (href !== "/" && pathname?.startsWith(href)))
+
   return (
     <>
-      <header
-        className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-200 border-b",
-          isScrolled
-            ? "bg-background/95 backdrop-blur-md border-border shadow-xs"
-            : "bg-background/80 backdrop-blur-xs border-border/70"
-        )}
-      >
-        <div className="max-w-[1600px] mx-auto flex items-center justify-between px-6 md:px-12 lg:px-16 xl:px-24 h-16">
-          {/* Brand mark / Technical identifier */}
-          <Link
-            href="/"
-            className="flex items-center gap-3 font-mono text-sm tracking-tight text-foreground hover:text-accent transition-colors"
-          >
-            <span className="font-semibold text-foreground">Yabets Kifle</span>
-            <span className="text-muted-foreground/60 hidden sm:inline">/</span>
-            <span className="text-xs text-muted-foreground hidden sm:inline font-normal">sys.engineer</span>
+      {/* Floating glass bar — sits above content, never full-bleed */}
+      <header className="pointer-events-none fixed inset-x-0 top-4 z-50 px-4">
+        <div
+          className={cn(
+            "pointer-events-auto mx-auto flex h-14 max-w-5xl items-center justify-between gap-4 rounded-full border pl-5 pr-2 transition-all duration-300",
+            isScrolled
+              ? "border-border bg-background/80 shadow-[0_12px_40px_-16px_rgba(0,0,0,0.5)] backdrop-blur-xl"
+              : "border-border/60 bg-background/50 backdrop-blur-md"
+          )}
+        >
+          {/* Brand */}
+          <Link href="/" className="group flex items-center gap-2.5 text-sm font-semibold tracking-tight text-foreground">
+            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-accent text-[11px] font-bold text-accent-foreground transition-transform group-hover:rotate-12">
+              YK
+            </span>
+            <span className="hidden sm:inline">Yabets Kifle</span>
           </Link>
 
-          {/* Desktop nav — Monospace technical index links */}
-          <nav className="hidden md:flex items-center gap-7">
-            {navLinks.map((link) => {
-              const active =
-                !link.href.startsWith("/#") &&
-                (link.href === pathname ||
-                  (link.href !== "/" && pathname?.startsWith(link.href)))
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={cn(
-                    "font-mono text-xs transition-colors flex items-center gap-1.5 py-1",
-                    active
-                      ? "text-accent font-medium border-b border-accent"
-                      : "text-muted-foreground hover:text-foreground"
-                  )}
-                >
-                  <span className="text-[10px] text-muted-foreground/70">{link.num}.</span>
-                  <span>{link.name}</span>
-                </Link>
-              )
-            })}
+          {/* Desktop links */}
+          <nav className="hidden items-center gap-1 md:flex">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  "rounded-full px-3.5 py-1.5 text-sm transition-colors",
+                  isActive(link.href)
+                    ? "bg-foreground/10 font-medium text-foreground"
+                    : "text-muted-foreground hover:bg-foreground/5 hover:text-foreground"
+                )}
+              >
+                {link.name}
+              </Link>
+            ))}
           </nav>
 
-          {/* Right rail: Status dot + Theme toggle + Contact CTA */}
-          <div className="flex items-center gap-3 md:gap-4">
-            {/* Status indicator — Muted rust-red accent used specifically here */}
-            <div className="hidden lg:flex items-center gap-2 border border-border px-2.5 py-1 rounded-sm bg-card text-xs font-mono text-muted-foreground">
+          {/* Right rail */}
+          <div className="flex items-center gap-2">
+            <div className="hidden items-center gap-2 px-2 text-xs text-muted-foreground lg:flex">
               <span className="relative flex h-2 w-2">
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-signal" />
+                <span className="absolute inset-0 animate-ping rounded-full bg-accent opacity-60" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
               </span>
-              <span className="text-[11px]">available</span>
+              <span>Available</span>
             </div>
 
             <ThemeToggle size="compact" />
 
             <Link
               href="/#contact"
-              className="hidden sm:inline-flex items-center gap-1.5 border border-accent text-accent px-3.5 py-1.5 rounded-sm font-mono text-xs hover:bg-accent hover:text-accent-foreground dark:hover:text-background transition-colors"
+              className="hidden items-center gap-1.5 rounded-full bg-accent px-4 py-2 text-sm font-medium text-accent-foreground transition-transform hover:-translate-y-px hover:bg-accent-hover sm:inline-flex"
             >
-              {t(copy, "nav.cta", "Initiate contact")}
+              {t(copy, "nav.cta", "Let's talk")}
+              <ArrowUpRight className="h-3.5 w-3.5" />
             </Link>
 
-            {/* Mobile menu trigger */}
             <button
               type="button"
               onClick={() => setIsMenuOpen(true)}
               aria-label="Open menu"
-              className="md:hidden inline-flex items-center justify-center w-9 h-9 border border-border rounded-sm hover:border-foreground transition-colors"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border md:hidden"
             >
-              <Menu className="w-4 h-4 text-foreground" />
+              <Menu className="h-4 w-4 text-foreground" />
             </button>
           </div>
         </div>
@@ -141,66 +136,53 @@ export const Navbar = ({ copy }: Props) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[60] md:hidden bg-background/98 flex flex-col backdrop-blur-md"
+            className="fixed inset-0 z-[60] flex flex-col bg-background/95 backdrop-blur-xl md:hidden"
           >
-            {/* Top bar */}
-            <div className="px-6 h-16 border-b border-border flex items-center justify-between">
-              <div className="font-mono text-sm text-foreground">
-                <span className="font-semibold">Yabets Kifle</span>
-                <span className="text-xs text-muted-foreground ml-2">[index]</span>
-              </div>
+            <div className="flex h-20 items-center justify-between px-6">
+              <span className="text-sm font-semibold text-foreground">Yabets Kifle</span>
               <button
                 type="button"
                 onClick={() => setIsMenuOpen(false)}
                 aria-label="Close menu"
-                className="inline-flex items-center justify-center w-9 h-9 border border-border rounded-sm hover:border-foreground transition-colors"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border"
               >
-                <X className="w-4 h-4 text-foreground" />
+                <X className="h-4 w-4 text-foreground" />
               </button>
             </div>
 
-            {/* Navigation links */}
-            <nav className="flex-1 px-6 py-10 flex flex-col justify-center space-y-4">
-              {navLinks.map((link) => {
-                const active =
-                  !link.href.startsWith("/#") &&
-                  (link.href === pathname ||
-                    (link.href !== "/" && pathname?.startsWith(link.href)))
-                return (
+            <nav className="flex flex-1 flex-col justify-center gap-2 px-6">
+              {navLinks.map((link, i) => (
+                <motion.div
+                  key={link.href}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.05 * i, duration: 0.35 }}
+                >
                   <Link
-                    key={link.href}
                     href={link.href}
                     onClick={() => setIsMenuOpen(false)}
                     className={cn(
-                      "flex items-baseline justify-between py-3 border-b border-border text-left group",
-                      active ? "text-accent" : "text-foreground"
+                      "group flex items-center justify-between border-b border-border py-4 text-4xl font-semibold tracking-tight",
+                      isActive(link.href) ? "text-accent" : "text-foreground"
                     )}
                   >
-                    <div className="flex items-baseline gap-3">
-                      <span className="font-mono text-xs text-muted-foreground">{link.num}.</span>
-                      <span className="text-2xl font-medium">{link.name}</span>
-                    </div>
-                    <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" />
+                    <span className="flex items-baseline gap-3">
+                      <span className="font-mono text-xs text-muted-foreground">{link.num}</span>
+                      {link.name}
+                    </span>
+                    <ArrowUpRight className="h-6 w-6 text-muted-foreground transition-colors group-hover:text-foreground" />
                   </Link>
-                )
-              })}
+                </motion.div>
+              ))}
             </nav>
 
-            {/* Footer */}
-            <div className="px-6 pb-8 pt-4 border-t border-border space-y-3">
-              <div className="flex items-center justify-between text-xs font-mono text-muted-foreground">
-                <span>Status</span>
-                <span className="flex items-center gap-1.5 text-foreground">
-                  <span className="inline-block w-2 h-2 rounded-full bg-signal" />
-                  Open to work
-                </span>
-              </div>
+            <div className="px-6 pb-8">
               <Link
                 href="/#contact"
                 onClick={() => setIsMenuOpen(false)}
-                className="w-full inline-flex items-center justify-center gap-2 border border-accent bg-accent text-accent-foreground py-3 rounded-sm font-mono text-xs font-medium"
+                className="flex w-full items-center justify-center gap-2 rounded-full bg-accent py-4 text-sm font-medium text-accent-foreground"
               >
-                {t(copy, "nav.cta", "Initiate contact")} <ArrowUpRight className="w-4 h-4" />
+                {t(copy, "nav.cta", "Let's talk")} <ArrowUpRight className="h-4 w-4" />
               </Link>
             </div>
           </motion.div>

@@ -17,7 +17,7 @@ export const ProjectsShowcase = ({ projects, copy }: Props) => {
     <section id="work" className="px-6 md:px-12 lg:px-16 xl:px-24 scroll-mt-24">
       <div className="max-w-[1600px] mx-auto">
         {/* Section header — Sentence case, technical indexing */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-accent/30">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-border">
           <div className="space-y-2">
             <div className="eyebrow-chip">
               {t(copy, "projects.eyebrow", "01. Selected projects")}
@@ -36,11 +36,11 @@ export const ProjectsShowcase = ({ projects, copy }: Props) => {
         </div>
 
         {projects.length === 0 ? (
-          <div className="py-20 text-center border border-dashed border-border rounded-xs font-mono text-xs text-muted-foreground space-y-4">
+          <div className="py-20 text-center border border-dashed border-border rounded-2xl font-mono text-xs text-muted-foreground space-y-4">
             <p>{t(copy, "projects.empty", "Case studies are being prepared — check back soon.")}</p>
             <a
               href="#contact"
-              className="inline-flex items-center gap-2 bg-accent text-accent-foreground h-11 px-5 rounded-xs font-mono text-xs font-medium hover:bg-accent-hover transition-colors"
+              className="inline-flex items-center gap-2 bg-accent text-accent-foreground h-11 px-5 rounded-2xl font-mono text-xs font-medium hover:bg-accent-hover transition-colors"
             >
               <span>[ {t(copy, "projects.empty_cta", "Start a conversation")} ]</span>
             </a>
@@ -63,7 +63,7 @@ export const ProjectsShowcase = ({ projects, copy }: Props) => {
           <div className="flex justify-center mt-12">
             <Link
               href="/projects"
-              className="group inline-flex items-center gap-2 border border-border bg-card px-5 h-11 rounded-xs font-mono text-xs text-foreground hover:border-accent hover:text-accent transition-colors"
+              className="group inline-flex items-center gap-2 border border-border bg-card px-5 h-11 rounded-2xl font-mono text-xs text-foreground hover:border-accent hover:text-accent transition-colors"
             >
               <span>
                 [ {t(copy, "projects.see_all_format", "View all {count} cataloged projects").replace("{count}", String(projects.length))} ]

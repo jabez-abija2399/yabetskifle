@@ -68,10 +68,10 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
   if (isLoading)
     return (
       <div className="px-6 md:px-12 lg:px-16 xl:px-24 py-32 max-w-[1600px] mx-auto animate-pulse">
-        <div className="h-4 w-32 bg-secondary rounded-xs mb-8" />
-        <div className="h-12 w-2/3 bg-secondary rounded-xs mb-6" />
-        <div className="h-4 w-1/2 bg-secondary rounded-xs mb-12" />
-        <div className="aspect-video bg-secondary rounded-xs border border-border" />
+        <div className="h-4 w-32 bg-secondary rounded-2xl mb-8" />
+        <div className="h-12 w-2/3 bg-secondary rounded-2xl mb-6" />
+        <div className="h-4 w-1/2 bg-secondary rounded-2xl mb-12" />
+        <div className="aspect-video bg-secondary rounded-2xl border border-border" />
       </div>
     )
 
@@ -113,7 +113,7 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
             type="button"
             aria-label="Close preview"
             onClick={() => setIsZoomed(false)}
-            className="absolute top-6 right-6 w-10 h-10 rounded-xs bg-background/10 hover:bg-background/20 border border-background/20 flex items-center justify-center text-background focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-background"
+            className="absolute top-6 right-6 w-10 h-10 rounded-2xl bg-background/10 hover:bg-background/20 border border-background/20 flex items-center justify-center text-background focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-background"
           >
             <X className="w-5 h-5" aria-hidden />
           </button>
@@ -151,11 +151,11 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-8">
             <div className="space-y-4 max-w-3xl">
               <div className="flex flex-wrap items-center gap-2 font-mono text-xs">
-                <span className="px-2.5 py-1 rounded-xs bg-secondary border border-accent/30 text-foreground">
+                <span className="px-2.5 py-1 rounded-2xl bg-secondary border border-border text-foreground">
                   {project.project_type || "Production System"}
                 </span>
                 {project.featured && (
-                  <span className="px-2.5 py-1 rounded-xs border border-accent/30 text-accent font-medium">
+                  <span className="px-2.5 py-1 rounded-2xl border border-border text-accent font-medium">
                     Featured Spec
                   </span>
                 )}
@@ -174,7 +174,7 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
                   href={project.live_url}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-accent text-accent-foreground h-11 px-5 rounded-xs font-medium hover:bg-accent-hover transition-colors"
+                  className="inline-flex items-center justify-center gap-2 bg-accent text-accent-foreground h-11 px-5 rounded-2xl font-medium hover:bg-accent-hover transition-colors"
                 >
                   <span>[ {t(copy, "project.live_cta", "Launch live system")} ]</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
@@ -185,7 +185,7 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
                   href={project.github_url}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center justify-center gap-2 border border-border bg-card h-11 px-5 rounded-xs text-foreground hover:border-accent transition-colors"
+                  className="inline-flex items-center justify-center gap-2 border border-border bg-card h-11 px-5 rounded-2xl text-foreground hover:border-accent transition-colors"
                 >
                   <FaGithub className="w-3.5 h-3.5" />
                   <span>[ {t(copy, "project.source_cta", "View repository")} ]</span>
@@ -203,7 +203,7 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
             <div className="relative">
               <div
                 onClick={() => setIsZoomed(true)}
-                className="group relative aspect-video rounded-xs overflow-hidden border border-border bg-secondary cursor-zoom-in corner-ticks"
+                className="group relative aspect-video rounded-2xl overflow-hidden border border-border bg-secondary cursor-zoom-in "
               >
                 <AnimatePresence initial={false} custom={direction} mode="wait">
                   <motion.div
@@ -230,12 +230,12 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
                 </AnimatePresence>
 
                 <div className="absolute inset-0 bg-foreground/20 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none flex items-center justify-center">
-                  <span className="bg-background/90 text-foreground font-mono text-xs px-3 py-1.5 rounded-xs border border-border">
+                  <span className="bg-background/90 text-foreground font-mono text-xs px-3 py-1.5 rounded-2xl border border-border">
                     [ Click to inspect frame ]
                   </span>
                 </div>
 
-                <div className="absolute bottom-4 right-4 bg-background/90 backdrop-blur-xs text-foreground text-xs font-mono px-2.5 py-1 rounded-xs border border-border">
+                <div className="absolute bottom-4 right-4 bg-background/90 backdrop-blur-xs text-foreground text-xs font-mono px-2.5 py-1 rounded-2xl border border-border">
                   frame {currentImage + 1} / {project.images.length}
                 </div>
               </div>
@@ -245,14 +245,14 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
                   <button
                     onClick={prev}
                     aria-label="Previous frame"
-                    className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-xs bg-background/90 backdrop-blur-xs border border-border flex items-center justify-center hover:border-foreground transition-colors cursor-pointer"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-2xl bg-background/90 backdrop-blur-xs border border-border flex items-center justify-center hover:border-foreground transition-colors cursor-pointer"
                   >
                     <ChevronLeft className="w-4 h-4 text-foreground" />
                   </button>
                   <button
                     onClick={next}
                     aria-label="Next frame"
-                    className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-xs bg-background/90 backdrop-blur-xs border border-border flex items-center justify-center hover:border-foreground transition-colors cursor-pointer"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-2xl bg-background/90 backdrop-blur-xs border border-border flex items-center justify-center hover:border-foreground transition-colors cursor-pointer"
                   >
                     <ChevronRight className="w-4 h-4 text-foreground" />
                   </button>
@@ -270,7 +270,7 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
                       setDirection(i > currentImage ? 1 : -1)
                       setCurrentImage(i)
                     }}
-                    className={`relative shrink-0 w-24 aspect-video rounded-xs overflow-hidden border transition-all cursor-pointer ${
+                    className={`relative shrink-0 w-24 aspect-video rounded-2xl overflow-hidden border transition-all cursor-pointer ${
                       i === currentImage
                         ? "border-accent ring-1 ring-accent"
                         : "border-border opacity-60 hover:opacity-100"
@@ -292,7 +292,7 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
           <div className="lg:col-span-8 space-y-12 md:space-y-16">
             {/* Purpose */}
             {project.purpose && (
-              <section className="space-y-4 border-b border-accent/30 pb-10">
+              <section className="space-y-4 border-b border-border pb-10">
                 <div className="eyebrow-chip">
                   {t(copy, "project.brief_eyebrow", "01. Technical brief & problem")}
                 </div>
@@ -307,7 +307,7 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
 
             {/* Features */}
             {features.length > 0 && (
-              <section className="space-y-5 border-b border-accent/30 pb-10">
+              <section className="space-y-5 border-b border-border pb-10">
                 <div className="eyebrow-chip">
                   {t(copy, "project.features_eyebrow", "02. Implementation specifications")}
                 </div>
@@ -318,7 +318,7 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
                   {features.map((feature, i) => (
                     <li
                       key={i}
-                      className="flex items-start gap-3 bg-card border border-accent/30 rounded-xs px-4 py-3.5 corner-ticks"
+                      className="flex items-start gap-3 bg-card border border-border rounded-2xl px-4 py-3.5 "
                     >
                       <span className="font-mono text-xs text-accent font-medium pt-0.5 shrink-0">
                         [{String(i + 1).padStart(2, "0")}]
@@ -356,7 +356,7 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
           {/* Sidebar */}
           <aside className="lg:col-span-4">
             <div className="lg:sticky lg:top-24 space-y-6">
-              <div className="border border-accent/30 bg-card rounded-xs p-6 corner-ticks space-y-6 font-mono text-xs">
+              <div className="border border-border bg-card rounded-2xl p-6  space-y-6 font-mono text-xs">
                 <div className="border-b border-border pb-3 flex justify-between items-center text-muted-foreground">
                   <span className="text-foreground font-semibold">Metadata manifest</span>
                   <span>spec.tbl</span>
@@ -379,7 +379,7 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
                       tagsList.map((tag) => (
                         <span
                           key={tag}
-                          className="px-2 py-0.5 border border-accent/30 bg-secondary rounded-xs text-[11px] text-foreground"
+                          className="px-2 py-0.5 border border-border bg-secondary rounded-2xl text-[11px] text-foreground"
                         >
                           {tag}
                         </span>
@@ -398,7 +398,7 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
                     href={project.live_url}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center justify-center gap-2 bg-accent text-accent-foreground h-11 rounded-xs font-medium"
+                    className="inline-flex items-center justify-center gap-2 bg-accent text-accent-foreground h-11 rounded-2xl font-medium"
                   >
                     <span>[ {t(copy, "project.live_cta", "Visit live site")} ]</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
@@ -409,7 +409,7 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
                     href={project.github_url}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center justify-center gap-2 border border-border bg-card h-11 rounded-xs font-medium"
+                    className="inline-flex items-center justify-center gap-2 border border-border bg-card h-11 rounded-2xl font-medium"
                   >
                     <FaGithub className="w-3.5 h-3.5" />
                     <span>[ {t(copy, "project.source_cta", "Source code")} ]</span>
@@ -434,7 +434,7 @@ export const ProjectDetailWrapper = ({ id, initialProject = null }: Props) => {
           </div>
           <Link
             href="/projects"
-            className="inline-flex items-center gap-2 border border-border bg-card h-11 px-5 rounded-xs font-mono text-xs text-foreground hover:border-accent hover:text-accent transition-colors"
+            className="inline-flex items-center gap-2 border border-border bg-card h-11 px-5 rounded-2xl font-mono text-xs text-foreground hover:border-accent hover:text-accent transition-colors"
           >
             <span>[ {t(copy, "project.back_link", "All cataloged projects")} ]</span>
             <ArrowUpRight className="w-3.5 h-3.5" />

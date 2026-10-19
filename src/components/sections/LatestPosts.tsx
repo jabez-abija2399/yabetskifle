@@ -16,7 +16,7 @@ export const LatestPosts = ({ posts, copy }: Props) => {
     <section id="journal" className="px-6 md:px-12 lg:px-16 xl:px-24 scroll-mt-24">
       <div className="max-w-[1600px] mx-auto">
         {/* Section header — Sentence case */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-accent/30">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-border">
           <div className="space-y-2">
             <div className="eyebrow-chip">
               {t(copy, "blog.home.eyebrow", "07. Journal & notes")}
@@ -71,7 +71,7 @@ export const LatestPosts = ({ posts, copy }: Props) => {
                     {post.tags.slice(0, 3).map((tag) => (
                       <span
                         key={tag}
-                        className="px-2 py-0.5 border border-accent/30 bg-secondary rounded-xs text-muted-foreground"
+                        className="px-2 py-0.5 border border-border bg-secondary rounded-2xl text-muted-foreground"
                       >
                         {tag}
                       </span>

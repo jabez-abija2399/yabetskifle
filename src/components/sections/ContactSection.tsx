@@ -52,7 +52,7 @@ export const ContactSection = ({ profile, copy, contactEmail }: Props) => {
     <section id="contact" className="px-6 md:px-12 lg:px-16 xl:px-24 scroll-mt-24">
       <div className="max-w-[1600px] mx-auto">
         {/* Section header — Sentence case */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-accent/30">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-border">
           <div className="space-y-2">
             <div className="eyebrow-chip">
               {t(copy, "contact.eyebrow", "10. Communications & inquiry")}
@@ -72,7 +72,7 @@ export const ContactSection = ({ profile, copy, contactEmail }: Props) => {
             {/* Direct Email block */}
             <a
               href={`mailto:${email}`}
-              className="group block border border-accent/30 bg-card p-6 md:p-8 rounded-xs corner-ticks hover:border-accent transition-colors"
+              className="group block border border-border bg-card p-6 md:p-8 rounded-2xl  hover:border-accent transition-colors"
             >
               <div className="flex items-center justify-between font-mono text-xs text-muted-foreground border-b border-border pb-3 mb-4">
                 <span className="flex items-center gap-1.5 text-foreground font-medium">
@@ -91,7 +91,7 @@ export const ContactSection = ({ profile, copy, contactEmail }: Props) => {
             </a>
 
             {/* Social channels spec */}
-            <div className="border border-accent/30 bg-card p-6 md:p-8 rounded-xs corner-ticks space-y-5">
+            <div className="border border-border bg-card p-6 md:p-8 rounded-2xl  space-y-5">
               <div className="flex items-center justify-between font-mono text-xs text-muted-foreground border-b border-border pb-3">
                 <span>{t(copy, "contact.socials_label", "External verification & channels")}</span>
                 <span>net.spec</span>
@@ -103,7 +103,7 @@ export const ContactSection = ({ profile, copy, contactEmail }: Props) => {
                     href={profile.social_links.github}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 border border-border bg-secondary px-3.5 py-2 rounded-xs font-mono text-xs text-foreground hover:border-accent transition-colors"
+                    className="inline-flex items-center gap-2 border border-border bg-secondary px-3.5 py-2 rounded-2xl font-mono text-xs text-foreground hover:border-accent transition-colors"
                   >
                     <FaGithub className="w-3.5 h-3.5" /> GitHub
                   </a>
@@ -113,7 +113,7 @@ export const ContactSection = ({ profile, copy, contactEmail }: Props) => {
                     href={profile.social_links.linkedin}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 border border-border bg-secondary px-3.5 py-2 rounded-xs font-mono text-xs text-foreground hover:border-accent transition-colors"
+                    className="inline-flex items-center gap-2 border border-border bg-secondary px-3.5 py-2 rounded-2xl font-mono text-xs text-foreground hover:border-accent transition-colors"
                   >
                     <FaLinkedin className="w-3.5 h-3.5" /> LinkedIn
                   </a>
@@ -123,7 +123,7 @@ export const ContactSection = ({ profile, copy, contactEmail }: Props) => {
                     href={profile.social_links.twitter}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 border border-border bg-secondary px-3.5 py-2 rounded-xs font-mono text-xs text-foreground hover:border-accent transition-colors"
+                    className="inline-flex items-center gap-2 border border-border bg-secondary px-3.5 py-2 rounded-2xl font-mono text-xs text-foreground hover:border-accent transition-colors"
                   >
                     <FaTwitter className="w-3.5 h-3.5" /> Twitter
                   </a>
@@ -146,7 +146,7 @@ export const ContactSection = ({ profile, copy, contactEmail }: Props) => {
           {/* Right / Dispatch form */}
           <form
             onSubmit={handleSubmit}
-            className="lg:col-span-7 border border-accent/30 bg-card p-6 md:p-8 rounded-xs corner-ticks space-y-5"
+            className="lg:col-span-7 border border-border bg-card p-6 md:p-8 rounded-2xl  space-y-5"
           >
             <div className="flex items-center justify-between font-mono text-xs text-muted-foreground border-b border-border pb-3">
               <span className="flex items-center gap-1.5 text-foreground font-medium">
@@ -167,7 +167,7 @@ export const ContactSection = ({ profile, copy, contactEmail }: Props) => {
                   required
                   autoComplete="name"
                   placeholder={t(copy, "contact.form.name_ph", "Jane Doe")}
-                  className="w-full h-11 px-3.5 rounded-xs border border-border bg-background focus:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-colors font-mono text-xs"
+                  className="w-full h-11 px-3.5 rounded-2xl border border-border bg-background focus:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-colors font-mono text-xs"
                 />
               </div>
               <div className="space-y-1.5">
@@ -181,7 +181,7 @@ export const ContactSection = ({ profile, copy, contactEmail }: Props) => {
                   required
                   autoComplete="email"
                   placeholder={t(copy, "contact.form.email_ph", "jane@company.com")}
-                  className="w-full h-11 px-3.5 rounded-xs border border-border bg-background focus:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-colors font-mono text-xs"
+                  className="w-full h-11 px-3.5 rounded-2xl border border-border bg-background focus:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-colors font-mono text-xs"
                 />
               </div>
             </div>
@@ -195,7 +195,7 @@ export const ContactSection = ({ profile, copy, contactEmail }: Props) => {
                 name="subject"
                 required
                 placeholder={t(copy, "contact.form.subject_ph", "Frontend role, Next.js architecture, product contract…")}
-                className="w-full h-11 px-3.5 rounded-xs border border-border bg-background focus:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-colors font-mono text-xs"
+                className="w-full h-11 px-3.5 rounded-2xl border border-border bg-background focus:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-colors font-mono text-xs"
               />
             </div>
 
@@ -209,7 +209,7 @@ export const ContactSection = ({ profile, copy, contactEmail }: Props) => {
                 required
                 rows={5}
                 placeholder={t(copy, "contact.form.message_ph", "Describe your requirements, stack, timeline, and goals.")}
-                className="w-full p-3.5 rounded-xs border border-border bg-background focus:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-colors resize-none font-sans text-xs sm:text-sm"
+                className="w-full p-3.5 rounded-2xl border border-border bg-background focus:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-colors resize-none font-sans text-xs sm:text-sm"
               />
             </div>
 
@@ -227,7 +227,7 @@ export const ContactSection = ({ profile, copy, contactEmail }: Props) => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full h-11 bg-accent text-accent-foreground rounded-xs font-mono text-xs font-medium hover:bg-accent-hover transition-colors flex items-center justify-center gap-2 disabled:opacity-60 cursor-pointer"
+              className="w-full h-11 bg-accent text-accent-foreground rounded-2xl font-mono text-xs font-medium hover:bg-accent-hover transition-colors flex items-center justify-center gap-2 disabled:opacity-60 cursor-pointer"
             >
               {isSubmitting ? (
                 <>

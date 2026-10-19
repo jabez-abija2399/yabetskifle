@@ -5,18 +5,26 @@
  * text-muted-foreground — they resolve per theme automatically.
  */
 export const brand = {
-  /** Warm paper-white — page background */
-  paper: "#F5F3EE",
-  /** Ink-black — primary text */
-  ink: "#1A1D23",
-  /** Deep blueprint teal — accent (links, active states, key data) */
-  teal: "#2D5F6B",
-  /** Teal hover/deep shade */
-  tealDeep: "#234B54",
-  /** Muted rust-red — secondary accent (status indicators only) */
-  rust: "#C4432E",
-  /** Warm gray — secondary text/metadata */
-  warmGray: "#8B8577",
-  /** Hairline border on paper */
-  border: "#DDD8CD",
+  /** Volt lime — the single loud accent on dark */
+  volt: "#C8F169",
+  /** Lighter volt for hover on dark */
+  voltHover: "#D8FA8A",
+  /** Violet — secondary glow and gradients */
+  violet: "#8B7CFF",
+  /** Near-black canvas — dark background */
+  ink950: "#0A0B0E",
+  /** Card surface on dark */
+  ink850: "#14171D",
+  /** Primary text on dark */
+  mist: "#EDEEF2",
+  /** Muted text on dark */
+  slate: "#9499A8",
+  /** Warm paper — light background */
+  paper: "#F7F7F4",
+  /** Deep green — accent on light (AA text) */
+  green700: "#3F6212",
+  /** Charcoal — primary text on light */
+  charcoal: "#0B0C10",
+  /** Muted text on light */
+  graphite: "#5C5F6A",
 } as const

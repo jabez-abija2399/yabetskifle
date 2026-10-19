@@ -22,7 +22,7 @@ export const FAQSection = ({ faqs = fallback, copy }: Props) => {
     <section id="faq" className="px-6 md:px-12 lg:px-16 xl:px-24 scroll-mt-24">
       <div className="max-w-[1600px] mx-auto">
         {/* Section header — Sentence case */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-accent/30">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-border">
           <div className="space-y-2">
             <div className="eyebrow-chip">
               {t(copy, "faq.eyebrow", "09. Inquiries & parameters")}
@@ -59,7 +59,7 @@ export const FAQSection = ({ faqs = fallback, copy }: Props) => {
                     </span>
                     <span
                       aria-hidden="true"
-                      className={`shrink-0 w-7 h-7 rounded-xs border border-border flex items-center justify-center transition-transform duration-200 ${
+                      className={`shrink-0 w-7 h-7 rounded-2xl border border-border flex items-center justify-center transition-transform duration-200 ${
                         open ? "bg-accent/10 rotate-45 border-accent" : "bg-card"
                       }`}
                     >
