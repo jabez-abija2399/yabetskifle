@@ -1,8 +1,9 @@
 import { SiteSettings, Profile } from "@/types/portfolio"
-import { FaGithub, FaLinkedin, FaTwitter, FaInstagram } from "react-icons/fa"
+import { FaGithub, FaLinkedin, FaTwitter, FaInstagram, FaEnvelope } from "react-icons/fa"
 import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
 import { SiteCopy, t, renderRichTitle } from "@/lib/copy"
+import { Magnetic } from "@/components/interactive/Magnetic"
 
 interface Props {
   settings: SiteSettings | null
@@ -15,134 +16,119 @@ export const Footer = ({ settings, profile, copy }: Props) => {
   const year = new Date().getFullYear()
   const fullName = profile?.full_name || "Yabets Kifle"
 
+  const endpoints = [
+    socials.github && { href: socials.github, label: "GitHub" },
+    socials.linkedin && { href: socials.linkedin, label: "LinkedIn" },
+    socials.twitter && { href: socials.twitter, label: "Twitter" },
+    socials.instagram && { href: socials.instagram, label: "Instagram" },
+    socials.email && { href: `mailto:${socials.email}`, label: "Email" },
+  ].filter((e): e is { href: string; label: string } => Boolean(e))
+
+  const iconLinks = [
+    { href: socials.github, label: "GitHub", Icon: FaGithub },
+    { href: socials.linkedin, label: "LinkedIn", Icon: FaLinkedin },
+    { href: socials.twitter, label: "Twitter", Icon: FaTwitter },
+    { href: socials.instagram, label: "Instagram", Icon: FaInstagram },
+    { href: socials.email && `mailto:${socials.email}`, label: "Email", Icon: FaEnvelope },
+  ].filter((s): s is { href: string; label: string; Icon: typeof FaGithub } => Boolean(s.href))
+
+  const sitemap = [
+    { href: "/", label: t(copy, "footer.nav_home", "Home") },
+    { href: "/projects", label: t(copy, "footer.nav_projects", "Work") },
+    { href: "/blog", label: t(copy, "footer.nav_journal", "Journal") },
+    { href: "/#about", label: t(copy, "footer.nav_about", "About") },
+    { href: "/#contact", label: t(copy, "footer.nav_contact", "Contact") },
+  ]
+
   return (
-    <footer className="mt-24 border-t border-border bg-card/60 pt-16 pb-12 px-6 md:px-12 lg:px-16 xl:px-24">
-      <div className="max-w-[1600px] mx-auto space-y-12">
-        {/* Top: Structured CTA & Sitemap */}
-        <div className="grid md:grid-cols-12 gap-10 pb-12 border-b border-border">
-          <div className="md:col-span-7 space-y-4">
-            <div className="eyebrow-chip">
-              {t(copy, "footer.cta_eyebrow", "11. Ready to collaborate?")}
-            </div>
-            <h3 className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight text-foreground">
-              {renderRichTitle(t(copy, "footer.cta_title", "Let's engineer something robust together."), "text-accent")}
+    <footer className="relative mt-32 overflow-hidden border-t border-border pb-10 pt-20">
+      <div aria-hidden className="pointer-events-none absolute inset-0 bg-aurora opacity-60" />
+
+      <div className="relative mx-auto max-w-6xl space-y-16 px-6 md:px-10">
+        {/* Closing call to action */}
+        <div className="flex flex-col items-start justify-between gap-8 rounded-3xl border border-border bg-card/70 p-8 backdrop-blur-sm md:flex-row md:items-center md:p-12">
+          <div className="max-w-2xl space-y-4">
+            <span className="eyebrow-chip">{t(copy, "footer.cta_eyebrow", "Available for work")}</span>
+            <h3 className="text-3xl font-semibold tracking-tight text-foreground md:text-5xl text-balance">
+              {renderRichTitle(t(copy, "footer.cta_title", "Let's engineer something *remarkable* together."), "text-accent")}
             </h3>
-            <p className="text-xs sm:text-sm text-muted-foreground max-w-md font-sans">
-              Open for full-time engineering roles, high-impact contracts, and design systems architecture.
-            </p>
-            <div className="pt-2">
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-2 bg-accent text-accent-foreground h-11 px-5 rounded-2xl font-mono text-xs font-medium hover:bg-accent-hover transition-colors"
-              >
-                <span>[ {t(copy, "footer.cta_button", "Initiate project discussion")} ]</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </a>
-            </div>
           </div>
-
-          <div className="md:col-span-5 grid grid-cols-2 gap-8 md:justify-self-end">
-            <div className="space-y-3 font-mono text-xs">
-              <span className="text-muted-foreground block text-[11px]">
-                {t(copy, "footer.sitemap_label", "Index map")}
-              </span>
-              <ul className="space-y-2">
-                <li><Link href="/" className="hover:text-accent transition-colors">01. Home</Link></li>
-                <li><Link href="/projects" className="hover:text-accent transition-colors">02. Projects</Link></li>
-                <li><Link href="/blog" className="hover:text-accent transition-colors">03. Journal</Link></li>
-                <li><Link href="/#about" className="hover:text-accent transition-colors">04. About</Link></li>
-                <li><Link href="/#contact" className="hover:text-accent transition-colors">05. Contact</Link></li>
-              </ul>
-            </div>
-
-            <div className="space-y-3 font-mono text-xs">
-              <span className="text-muted-foreground block text-[11px]">
-                {t(copy, "footer.elsewhere_label", "Endpoints")}
-              </span>
-              <ul className="space-y-2">
-                {socials.github && (
-                  <li>
-                    <a href={socials.github} target="_blank" rel="noreferrer" className="hover:text-accent transition-colors inline-flex items-center gap-1">
-                      GitHub <ArrowUpRight className="w-3 h-3" />
-                    </a>
-                  </li>
-                )}
-                {socials.linkedin && (
-                  <li>
-                    <a href={socials.linkedin} target="_blank" rel="noreferrer" className="hover:text-accent transition-colors inline-flex items-center gap-1">
-                      LinkedIn <ArrowUpRight className="w-3 h-3" />
-                    </a>
-                  </li>
-                )}
-                {socials.twitter && (
-                  <li>
-                    <a href={socials.twitter} target="_blank" rel="noreferrer" className="hover:text-accent transition-colors inline-flex items-center gap-1">
-                      Twitter <ArrowUpRight className="w-3 h-3" />
-                    </a>
-                  </li>
-                )}
-                {socials.instagram && (
-                  <li>
-                    <a href={socials.instagram} target="_blank" rel="noreferrer" className="hover:text-accent transition-colors inline-flex items-center gap-1">
-                      Instagram <ArrowUpRight className="w-3 h-3" />
-                    </a>
-                  </li>
-                )}
-                {socials.email && (
-                  <li>
-                    <a href={`mailto:${socials.email}`} className="hover:text-accent transition-colors inline-flex items-center gap-1">
-                      Email <ArrowUpRight className="w-3 h-3" />
-                    </a>
-                  </li>
-                )}
-              </ul>
-            </div>
-          </div>
+          <Magnetic>
+            <a
+              href="#contact"
+              className="group inline-flex h-14 shrink-0 items-center gap-2 rounded-full bg-accent px-7 text-sm font-medium text-accent-foreground transition-all hover:bg-accent-hover hover:shadow-[0_12px_32px_-10px_var(--glow)]"
+            >
+              {t(copy, "footer.cta_button", "Start a project")}
+              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
+          </Magnetic>
         </div>
 
-        {/* Technical Colophon Block */}
-        <div className="grid sm:grid-cols-3 gap-6 p-4 border border-border bg-secondary/40 rounded-2xl font-mono text-xs text-muted-foreground">
-          <div>
-            <span className="block text-[10px] text-muted-foreground/80">System & Engine</span>
-            <span className="text-foreground">Next.js 16 · React 18 · TypeScript</span>
+        {/* Sitemap + endpoints */}
+        <div className="grid gap-10 md:grid-cols-12">
+          <div className="space-y-4 md:col-span-5">
+            <p className="text-2xl font-semibold tracking-tight text-foreground">{fullName}</p>
+            <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
+              {profile?.role_title || "Frontend engineer building fast, thoughtful web products."}
+            </p>
+            {iconLinks.length > 0 && (
+              <div className="flex items-center gap-2 pt-2">
+                {iconLinks.map(({ href, label, Icon }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target={href.startsWith("mailto:") ? undefined : "_blank"}
+                    rel="noreferrer"
+                    aria-label={label}
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-accent hover:text-accent"
+                  >
+                    <Icon className="h-4 w-4" />
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
-          <div>
-            <span className="block text-[10px] text-muted-foreground/80">Design Specification</span>
-            <span className="text-foreground">Systems, not screens · Field-notebook</span>
-          </div>
-          <div className="sm:text-right">
-            <span className="block text-[10px] text-muted-foreground/80">System ID</span>
-            <span className="text-accent">YK-{year}-PROD</span>
+
+          <div className="grid grid-cols-2 gap-8 md:col-span-7 md:justify-self-end">
+            <div className="space-y-4">
+              <p className="text-sm font-medium text-foreground">{t(copy, "footer.sitemap_label", "Explore")}</p>
+              <ul className="space-y-3 text-sm text-muted-foreground">
+                {sitemap.map((item) => (
+                  <li key={item.href}>
+                    <Link href={item.href} className="transition-colors hover:text-foreground">
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="space-y-4">
+              <p className="text-sm font-medium text-foreground">{t(copy, "footer.elsewhere_label", "Elsewhere")}</p>
+              <ul className="space-y-3 text-sm text-muted-foreground">
+                {endpoints.map((item) => (
+                  <li key={item.label}>
+                    <a
+                      href={item.href}
+                      target={item.href.startsWith("mailto:") ? undefined : "_blank"}
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1 transition-colors hover:text-foreground"
+                    >
+                      {item.label} <ArrowUpRight className="h-3 w-3" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-border font-mono text-xs text-muted-foreground">
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-border pt-8 text-sm text-muted-foreground sm:flex-row">
           <p>
-            © {year} {fullName}. {settings?.footer_text || "Engineered with precision."}
+            © {year} {fullName}. {settings?.footer_text || "Built with care."}
           </p>
-          <div className="flex items-center gap-2">
-            {socials.github && (
-              <a href={socials.github} target="_blank" rel="noreferrer" aria-label="GitHub" className="w-8 h-8 border border-border rounded-2xl flex items-center justify-center hover:border-foreground hover:text-foreground transition-colors">
-                <FaGithub className="w-3.5 h-3.5" />
-              </a>
-            )}
-            {socials.linkedin && (
-              <a href={socials.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn" className="w-8 h-8 border border-border rounded-2xl flex items-center justify-center hover:border-foreground hover:text-foreground transition-colors">
-                <FaLinkedin className="w-3.5 h-3.5" />
-              </a>
-            )}
-            {socials.twitter && (
-              <a href={socials.twitter} target="_blank" rel="noreferrer" aria-label="Twitter" className="w-8 h-8 border border-border rounded-2xl flex items-center justify-center hover:border-foreground hover:text-foreground transition-colors">
-                <FaTwitter className="w-3.5 h-3.5" />
-              </a>
-            )}
-            {socials.instagram && (
-              <a href={socials.instagram} target="_blank" rel="noreferrer" aria-label="Instagram" className="w-8 h-8 border border-border rounded-2xl flex items-center justify-center hover:border-foreground hover:text-foreground transition-colors">
-                <FaInstagram className="w-3.5 h-3.5" />
-              </a>
-            )}
-          </div>
+          <p className="font-mono text-xs">Next.js · React · TypeScript</p>
         </div>
       </div>
     </footer>

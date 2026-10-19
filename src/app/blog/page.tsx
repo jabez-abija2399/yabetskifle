@@ -26,7 +26,7 @@ export default async function BlogPage() {
     <main className="min-h-screen bg-background px-6 md:px-12 lg:px-16 xl:px-24 py-24 md:py-32">
       <div className="max-w-5xl mx-auto">
         {/* Header — sentence case, mono index, no serif display */}
-        <div className="flex items-end justify-between gap-8 mb-16 md:mb-20 border-b border-accent/30 pb-10">
+        <div className="flex items-end justify-between gap-8 mb-16 md:mb-20 border-b border-border pb-10">
           <div className="space-y-4 max-w-2xl">
             <p className="eyebrow-chip">{t(copy, "blog.archive.eyebrow", "Journal")}</p>
             <h1 className="text-heading-hero text-foreground">
@@ -43,7 +43,7 @@ export default async function BlogPage() {
 
         {/* Posts list */}
         {posts.length === 0 ? (
-          <div className="py-24 text-center border border-dashed border-border rounded-xs font-mono text-xs text-muted-foreground">
+          <div className="py-24 text-center border border-dashed border-border rounded-2xl font-mono text-xs text-muted-foreground">
             {t(copy, "blog.archive.empty", "New articles coming soon.")}
           </div>
         ) : (
@@ -56,7 +56,7 @@ export default async function BlogPage() {
                   </div>
 
                   {/* Cover — crisp 1px technical frame, no zoom-on-hover */}
-                  <div className="md:col-span-4 relative aspect-4/3 rounded-xs overflow-hidden border border-accent/30 bg-secondary corner-ticks">
+                  <div className="md:col-span-4 relative aspect-4/3 rounded-2xl overflow-hidden border border-border bg-secondary ">
                     {post.cover_image ? (
                       <Image
                         src={post.cover_image}
@@ -87,7 +87,7 @@ export default async function BlogPage() {
                           : "Recent"}
                       </span>
                       {post.tags?.[0] && (
-                        <span className="px-2 py-0.5 rounded-xs border border-accent/30 bg-secondary text-secondary-foreground">
+                        <span className="px-2 py-0.5 rounded-2xl border border-border bg-secondary text-secondary-foreground">
                           {post.tags[0]}
                         </span>
                       )}

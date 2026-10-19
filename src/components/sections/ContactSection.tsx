@@ -4,15 +4,21 @@ import { useState } from "react"
 import { PortfolioService } from "@/services/portfolio"
 import { Profile } from "@/types/portfolio"
 import { toast } from "sonner"
-import { Loader2, ArrowUpRight, Send, Mail } from "lucide-react"
+import { Loader2, ArrowUpRight, Mail, MapPin, Clock } from "lucide-react"
 import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa"
 import { SiteCopy, t, renderRichTitle } from "@/lib/copy"
+import { SectionHeader } from "@/components/ui/SectionHeader"
 
 interface Props {
   profile?: Profile | null
   copy?: SiteCopy
   contactEmail?: string
 }
+
+const fieldClass =
+  "w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/60 transition-colors focus:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+
+const labelClass = "block text-sm font-medium text-foreground"
 
 export const ContactSection = ({ profile, copy, contactEmail }: Props) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -38,7 +44,7 @@ export const ContactSection = ({ profile, copy, contactEmail }: Props) => {
         subject: formData.get("subject") as string,
         message: formData.get("message") as string,
       })
-      toast.success(t(copy, "contact.form.success", "Dispatch sent successfully."))
+      toast.success(t(copy, "contact.form.success", "Message sent — thank you. I'll reply soon."))
       form.reset()
     } catch (error: unknown) {
       const msg = error instanceof Error ? error.message : "Something went wrong."
@@ -48,201 +54,159 @@ export const ContactSection = ({ profile, copy, contactEmail }: Props) => {
     }
   }
 
+  const socials = [
+    { href: profile?.social_links?.github, label: "GitHub", Icon: FaGithub },
+    { href: profile?.social_links?.linkedin, label: "LinkedIn", Icon: FaLinkedin },
+    { href: profile?.social_links?.twitter, label: "Twitter", Icon: FaTwitter },
+  ].filter((s): s is { href: string; label: string; Icon: typeof FaGithub } => Boolean(s.href))
+
   return (
-    <section id="contact" className="px-6 md:px-12 lg:px-16 xl:px-24 scroll-mt-24">
-      <div className="max-w-[1600px] mx-auto">
-        {/* Section header — Sentence case */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-border">
-          <div className="space-y-2">
-            <div className="eyebrow-chip">
-              {t(copy, "contact.eyebrow", "10. Communications & inquiry")}
-            </div>
-            <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
-              {renderRichTitle(t(copy, "contact.title", "Initiate project or discuss open roles"), "text-accent")}
-            </h2>
-          </div>
-          <p className="font-mono text-xs text-muted-foreground max-w-sm">
-            {t(copy, "contact.subtitle", "Have a technical engagement or full-time opportunity? Direct transmissions are reviewed promptly.")}
-          </p>
-        </div>
+    <section id="contact" className="mx-auto max-w-6xl scroll-mt-28 px-6 md:px-10">
+      <SectionHeader
+        eyebrow={t(copy, "contact.eyebrow", "Contact")}
+        title={renderRichTitle(t(copy, "contact.title", "Let's build something *remarkable*"), "text-accent")}
+        subtitle={t(copy, "contact.subtitle", "Full-time roles, contracts, or a product that needs a sharp frontend. Tell me about it.")}
+      />
 
-        <div className="grid lg:grid-cols-12 gap-8">
-          {/* Left / Direct dispatch rail */}
-          <div className="lg:col-span-5 flex flex-col gap-6">
-            {/* Direct Email block */}
-            <a
-              href={`mailto:${email}`}
-              className="group block border border-border bg-card p-6 md:p-8 rounded-2xl  hover:border-accent transition-colors"
-            >
-              <div className="flex items-center justify-between font-mono text-xs text-muted-foreground border-b border-border pb-3 mb-4">
-                <span className="flex items-center gap-1.5 text-foreground font-medium">
-                  <Mail className="w-3.5 h-3.5 text-accent" />
-                  <span>{t(copy, "contact.email_label", "Direct protocol")}</span>
-                </span>
-                <span>inbox</span>
-              </div>
-              <p className="font-mono text-xl sm:text-2xl text-foreground font-medium break-words leading-tight">
-                {email}
-              </p>
-              <p className="mt-4 inline-flex items-center gap-2 font-mono text-xs text-accent font-medium group-hover:underline">
-                <span>[ {t(copy, "contact.email_cta", "Transmit email directly")} ]</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </p>
-            </a>
-
-            {/* Social channels spec */}
-            <div className="border border-border bg-card p-6 md:p-8 rounded-2xl  space-y-5">
-              <div className="flex items-center justify-between font-mono text-xs text-muted-foreground border-b border-border pb-3">
-                <span>{t(copy, "contact.socials_label", "External verification & channels")}</span>
-                <span>net.spec</span>
-              </div>
-
-              <div className="flex flex-wrap gap-2.5">
-                {profile?.social_links?.github && (
-                  <a
-                    href={profile.social_links.github}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 border border-border bg-secondary px-3.5 py-2 rounded-2xl font-mono text-xs text-foreground hover:border-accent transition-colors"
-                  >
-                    <FaGithub className="w-3.5 h-3.5" /> GitHub
-                  </a>
-                )}
-                {profile?.social_links?.linkedin && (
-                  <a
-                    href={profile.social_links.linkedin}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 border border-border bg-secondary px-3.5 py-2 rounded-2xl font-mono text-xs text-foreground hover:border-accent transition-colors"
-                  >
-                    <FaLinkedin className="w-3.5 h-3.5" /> LinkedIn
-                  </a>
-                )}
-                {profile?.social_links?.twitter && (
-                  <a
-                    href={profile.social_links.twitter}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 border border-border bg-secondary px-3.5 py-2 rounded-2xl font-mono text-xs text-foreground hover:border-accent transition-colors"
-                  >
-                    <FaTwitter className="w-3.5 h-3.5" /> Twitter
-                  </a>
-                )}
-              </div>
-
-              <div className="grid grid-cols-2 gap-4 pt-4 border-t border-border font-mono text-xs">
-                <div>
-                  <span className="text-muted-foreground block text-[11px]">{t(copy, "contact.based_label", "Based")}</span>
-                  <span className="font-medium text-foreground">{t(copy, "contact.based_value", "Addis Ababa")}</span>
-                </div>
-                <div>
-                  <span className="text-muted-foreground block text-[11px]">{t(copy, "contact.working_label", "Availability")}</span>
-                  <span className="font-medium text-foreground">{t(copy, "contact.working_value", "Global · Remote")}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Right / Dispatch form */}
-          <form
-            onSubmit={handleSubmit}
-            className="lg:col-span-7 border border-border bg-card p-6 md:p-8 rounded-2xl  space-y-5"
+      <div className="grid gap-6 lg:grid-cols-12">
+        {/* Left — direct channels */}
+        <div className="flex flex-col gap-6 lg:col-span-5">
+          <a
+            href={`mailto:${email}`}
+            className="group relative block overflow-hidden rounded-3xl border border-border bg-card p-7 md:p-8 transition-colors hover:border-accent/60"
           >
-            <div className="flex items-center justify-between font-mono text-xs text-muted-foreground border-b border-border pb-3">
-              <span className="flex items-center gap-1.5 text-foreground font-medium">
-                <Send className="w-3.5 h-3.5 text-accent" />
-                <span>Transmit form</span>
+            <div aria-hidden className="pointer-events-none absolute inset-0 bg-aurora opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
+            <div className="relative space-y-6">
+              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-accent text-accent-foreground">
+                <Mail className="h-5 w-5" />
               </span>
-              <span>form.post</span>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-5">
-              <div className="space-y-1.5">
-                <label htmlFor="contact-name" className="font-mono text-xs text-muted-foreground block">
-                  {t(copy, "contact.form.name_label", "01. Name / Company")}
-                </label>
-                <input
-                  id="contact-name"
-                  name="name"
-                  required
-                  autoComplete="name"
-                  placeholder={t(copy, "contact.form.name_ph", "Jane Doe")}
-                  className="w-full h-11 px-3.5 rounded-2xl border border-border bg-background focus:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-colors font-mono text-xs"
-                />
+              <div className="space-y-2">
+                <p className="text-sm text-muted-foreground">{t(copy, "contact.email_label", "Email me directly")}</p>
+                <p className="break-all text-xl font-semibold tracking-tight text-foreground md:text-2xl">{email}</p>
               </div>
-              <div className="space-y-1.5">
-                <label htmlFor="contact-email" className="font-mono text-xs text-muted-foreground block">
-                  {t(copy, "contact.form.email_label", "02. Return email")}
-                </label>
-                <input
-                  id="contact-email"
-                  name="email"
-                  type="email"
-                  required
-                  autoComplete="email"
-                  placeholder={t(copy, "contact.form.email_ph", "jane@company.com")}
-                  className="w-full h-11 px-3.5 rounded-2xl border border-border bg-background focus:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-colors font-mono text-xs"
-                />
+              <span className="inline-flex items-center gap-1.5 text-sm font-medium text-accent">
+                {t(copy, "contact.email_cta", "Open your mail app")}
+                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </span>
+            </div>
+          </a>
+
+          <div className="rounded-3xl border border-border bg-card p-7 md:p-8">
+            <div className="grid grid-cols-2 gap-6 text-sm">
+              <div className="space-y-1">
+                <p className="flex items-center gap-1.5 text-muted-foreground"><MapPin className="h-3.5 w-3.5" /> {t(copy, "contact.based_label", "Based in")}</p>
+                <p className="font-medium text-foreground">{t(copy, "contact.based_value", profile?.location || "Addis Ababa")}</p>
+              </div>
+              <div className="space-y-1">
+                <p className="flex items-center gap-1.5 text-muted-foreground"><Clock className="h-3.5 w-3.5" /> {t(copy, "contact.working_label", "Availability")}</p>
+                <p className="font-medium text-foreground">{t(copy, "contact.working_value", "Global · Remote")}</p>
               </div>
             </div>
 
-            <div className="space-y-1.5">
-              <label htmlFor="contact-subject" className="font-mono text-xs text-muted-foreground block">
-                {t(copy, "contact.form.subject_label", "03. Topic / Project scope")}
-              </label>
-              <input
-                id="contact-subject"
-                name="subject"
-                required
-                placeholder={t(copy, "contact.form.subject_ph", "Frontend role, Next.js architecture, product contract…")}
-                className="w-full h-11 px-3.5 rounded-2xl border border-border bg-background focus:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-colors font-mono text-xs"
-              />
-            </div>
-
-            <div className="space-y-1.5">
-              <label htmlFor="contact-message" className="font-mono text-xs text-muted-foreground block">
-                {t(copy, "contact.form.message_label", "04. Specifications & requirements")}
-              </label>
-              <textarea
-                id="contact-message"
-                name="message"
-                required
-                rows={5}
-                placeholder={t(copy, "contact.form.message_ph", "Describe your requirements, stack, timeline, and goals.")}
-                className="w-full p-3.5 rounded-2xl border border-border bg-background focus:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-colors resize-none font-sans text-xs sm:text-sm"
-              />
-            </div>
-
-            {/* Honeypot — hidden from humans, bots fill it and get dropped */}
-            <div className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
-              <label htmlFor="contact-website">Company website</label>
-              <input
-                id="contact-website"
-                name="company_website"
-                tabIndex={-1}
-                autoComplete="off"
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full h-11 bg-accent text-accent-foreground rounded-2xl font-mono text-xs font-medium hover:bg-accent-hover transition-colors flex items-center justify-center gap-2 disabled:opacity-60 cursor-pointer"
-            >
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                  <span>{t(copy, "contact.form.submitting", "Transmitting…")}</span>
-                </>
-              ) : (
-                <>
-                  <span>[ {t(copy, "contact.form.submit", "Send dispatch message")} ]</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" />
-                </>
-              )}
-            </button>
-          </form>
+            {socials.length > 0 && (
+              <div className="mt-8 flex flex-wrap gap-2.5 border-t border-border pt-6">
+                {socials.map(({ href, label, Icon }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary px-4 py-2 text-sm text-foreground transition-colors hover:border-accent hover:text-accent"
+                  >
+                    <Icon className="h-3.5 w-3.5" /> {label}
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
+
+        {/* Right — message form */}
+        <form
+          onSubmit={handleSubmit}
+          className="relative space-y-5 rounded-3xl border border-border bg-card p-7 md:p-8 lg:col-span-7"
+        >
+          <div className="grid gap-5 md:grid-cols-2">
+            <div className="space-y-2">
+              <label htmlFor="contact-name" className={labelClass}>
+                {t(copy, "contact.form.name_label", "Name")}
+              </label>
+              <input
+                id="contact-name"
+                name="name"
+                required
+                autoComplete="name"
+                placeholder={t(copy, "contact.form.name_ph", "Jane Doe")}
+                className={fieldClass}
+              />
+            </div>
+            <div className="space-y-2">
+              <label htmlFor="contact-email" className={labelClass}>
+                {t(copy, "contact.form.email_label", "Email")}
+              </label>
+              <input
+                id="contact-email"
+                name="email"
+                type="email"
+                required
+                autoComplete="email"
+                placeholder={t(copy, "contact.form.email_ph", "jane@company.com")}
+                className={fieldClass}
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="contact-subject" className={labelClass}>
+              {t(copy, "contact.form.subject_label", "Topic")}
+            </label>
+            <input
+              id="contact-subject"
+              name="subject"
+              required
+              placeholder={t(copy, "contact.form.subject_ph", "Frontend role, Next.js architecture, product contract…")}
+              className={fieldClass}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="contact-message" className={labelClass}>
+              {t(copy, "contact.form.message_label", "Message")}
+            </label>
+            <textarea
+              id="contact-message"
+              name="message"
+              required
+              rows={6}
+              placeholder={t(copy, "contact.form.message_ph", "Tell me about the work, the stack, the timeline, and what success looks like.")}
+              className={`${fieldClass} resize-none`}
+            />
+          </div>
+
+          {/* Honeypot — hidden from humans, bots fill it and get dropped */}
+          <div className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+            <label htmlFor="contact-website">Company website</label>
+            <input id="contact-website" name="company_website" tabIndex={-1} autoComplete="off" />
+          </div>
+
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="inline-flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-accent text-sm font-medium text-accent-foreground transition-all hover:-translate-y-px hover:bg-accent-hover disabled:opacity-60"
+          >
+            {isSubmitting ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                <span>{t(copy, "contact.form.submitting", "Sending…")}</span>
+              </>
+            ) : (
+              <>
+                <span>{t(copy, "contact.form.submit", "Send message")}</span>
+                <ArrowUpRight className="h-4 w-4" />
+              </>
+            )}
+          </button>
+        </form>
       </div>
     </section>
   )

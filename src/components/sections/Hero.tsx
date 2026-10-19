@@ -6,6 +6,9 @@ import { ArrowDown, ArrowUpRight, Download, MapPin } from "lucide-react"
 import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa"
 import { motion, Variants } from "framer-motion"
 import { SiteCopy, t } from "@/lib/copy"
+import { Magnetic } from "@/components/interactive/Magnetic"
+import { TiltCard } from "@/components/interactive/TiltCard"
+import { CountUp } from "@/components/interactive/CountUp"
 
 interface Props {
   profile: Profile
@@ -76,20 +79,24 @@ export const Hero = ({ profile, copy, resumeUrl, stats = [] }: Props) => {
           </motion.p>
 
           <motion.div variants={item} className="flex flex-wrap items-center gap-3 pt-2">
-            <a
-              href="#work"
-              className="group inline-flex h-12 items-center gap-2 rounded-full bg-accent px-6 text-sm font-medium text-accent-foreground transition-all hover:-translate-y-px hover:bg-accent-hover hover:shadow-[0_12px_32px_-10px_var(--glow)]"
-            >
-              View selected work
-              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </a>
+            <Magnetic>
+              <a
+                href="#work"
+                className="group inline-flex h-12 items-center gap-2 rounded-full bg-accent px-6 text-sm font-medium text-accent-foreground transition-all hover:bg-accent-hover hover:shadow-[0_12px_32px_-10px_var(--glow)]"
+              >
+                View selected work
+                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+            </Magnetic>
 
-            <a
-              href="#contact"
-              className="inline-flex h-12 items-center rounded-full border border-border bg-card/60 px-6 text-sm text-foreground backdrop-blur-sm transition-colors hover:border-foreground/40"
-            >
-              Start a conversation
-            </a>
+            <Magnetic>
+              <a
+                href="#contact"
+                className="inline-flex h-12 items-center rounded-full border border-border bg-card/60 px-6 text-sm text-foreground backdrop-blur-sm transition-colors hover:border-foreground/40"
+              >
+                Start a conversation
+              </a>
+            </Magnetic>
 
             {resumeHref && (
               <a
@@ -136,7 +143,8 @@ export const Hero = ({ profile, copy, resumeUrl, stats = [] }: Props) => {
           transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           className="relative lg:col-span-5"
         >
-          <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-3xl border border-border bg-card shadow-[0_40px_80px_-40px_var(--glow)]">
+          <TiltCard className="relative mx-auto w-full max-w-md">
+          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl border border-border bg-card shadow-[0_40px_80px_-40px_var(--glow)]">
             <Image
               src={profile.avatar_url || "/placeholder.svg"}
               alt={fullName}
@@ -152,6 +160,7 @@ export const Hero = ({ profile, copy, resumeUrl, stats = [] }: Props) => {
               </p>
             </div>
           </div>
+          </TiltCard>
 
           <div className="absolute -bottom-5 -left-4 hidden items-center gap-3 rounded-2xl border border-border bg-card/90 px-4 py-3 shadow-xl backdrop-blur-md sm:flex">
             <span className="relative flex h-2.5 w-2.5">
@@ -170,7 +179,7 @@ export const Hero = ({ profile, copy, resumeUrl, stats = [] }: Props) => {
             {stats.map((s) => (
               <div key={s.label} className="bg-card/80 px-6 py-6 backdrop-blur-sm">
                 <dt className="text-sm text-muted-foreground">{s.label}</dt>
-                <dd className="mt-2 text-3xl font-semibold tracking-tight text-foreground md:text-4xl">{s.value}</dd>
+                <dd className="mt-2 text-3xl font-semibold tracking-tight text-foreground md:text-4xl"><CountUp value={s.value} /></dd>
               </div>
             ))}
           </dl>

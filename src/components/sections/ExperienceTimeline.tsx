@@ -1,6 +1,7 @@
 import { Experience } from "@/types/portfolio"
 import { MapPin } from "lucide-react"
 import { SiteCopy, t, renderRichTitle } from "@/lib/copy"
+import { SectionHeader } from "@/components/ui/SectionHeader"
 
 interface Props {
   experiences: Experience[]
@@ -11,76 +12,61 @@ export const ExperienceTimeline = ({ experiences, copy }: Props) => {
   if (!experiences || experiences.length === 0) return null
 
   return (
-    <section id="experience" className="px-6 md:px-12 lg:px-16 xl:px-24 scroll-mt-24">
-      <div className="max-w-[1600px] mx-auto">
-        {/* Section header — Sentence case */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-border">
-          <div className="space-y-2">
-            <div className="eyebrow-chip">
-              {t(copy, "experience.eyebrow", "04. Engineering experience")}
-            </div>
-            <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
-              {renderRichTitle(t(copy, "experience.title", "Roles, teams & production contributions"), "text-accent")}
-            </h2>
-          </div>
-          <p className="font-mono text-xs text-muted-foreground max-w-sm">
-            {t(copy, "experience.subtitle", "Chronological record of shipped software and engineering responsibilities.")}
-          </p>
-        </div>
+    <section id="experience" className="mx-auto max-w-6xl scroll-mt-28 px-6 md:px-10">
+      <SectionHeader
+        eyebrow={t(copy, "experience.eyebrow", "Experience")}
+        title={renderRichTitle(t(copy, "experience.title", "Roles, teams & production *contributions*"), "text-accent")}
+        subtitle={t(copy, "experience.subtitle", "A record of shipped software and the teams I shipped it with.")}
+      />
 
-        {/* Structured Schematic Log */}
-        <div className="border-t border-border divide-y divide-border">
-          {experiences.map((exp, i) => (
-            <div
-              key={exp.id}
-              className="group grid grid-cols-12 gap-6 md:gap-8 py-8 hover:bg-accent/5 transition-colors"
-            >
-              {/* Index & Timestamp */}
-              <div className="col-span-12 md:col-span-3 space-y-2 font-mono text-xs">
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <span className="text-accent font-medium">
-                    [{String(i + 1).padStart(2, "0")}]
-                  </span>
-                  <span>{exp.duration}</span>
+      {/* Vertical timeline — a single rail with a node per role */}
+      <ol className="relative ml-2 space-y-6 border-l border-border md:ml-4">
+        {experiences.map((exp) => (
+          <li key={exp.id} className="group relative pl-8 md:pl-12">
+            <span
+              aria-hidden
+              className={`absolute -left-[7px] top-7 h-3.5 w-3.5 rounded-full border-2 border-background ${
+                exp.is_current ? "bg-accent shadow-[0_0_0_4px_var(--glow)]" : "bg-muted-foreground/40"
+              }`}
+            />
+            <article className="lift-card rounded-2xl border border-border bg-card p-6 md:p-8">
+              <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                <div className="space-y-2">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <h3 className="text-xl font-semibold tracking-tight text-foreground md:text-2xl">{exp.role}</h3>
+                    {exp.is_current && (
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/15 px-2.5 py-0.5 text-xs font-medium text-accent">
+                        <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+                        {t(copy, "experience.current", "Current")}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-base font-medium text-foreground/80">{exp.company}</p>
                 </div>
-                {exp.is_current && (
-                  <div className="inline-flex items-center gap-1.5 px-2 py-0.5 border border-signal/30 bg-card rounded-2xl text-[11px] text-signal">
-                    <span className="w-1.5 h-1.5 rounded-full bg-signal" />
-                    <span>{t(copy, "experience.current", "Active role")}</span>
-                  </div>
-                )}
-              </div>
-
-              {/* Role + Company + Location */}
-              <div className="col-span-12 md:col-span-4 space-y-1">
-                <h3 className="text-lg md:text-xl font-semibold text-foreground tracking-tight group-hover:text-accent transition-colors">
-                  {exp.role}
-                </h3>
-                <p className="font-mono text-xs text-accent font-medium">
-                  {exp.company}
-                </p>
-                <p className="flex items-center gap-1 text-xs text-muted-foreground pt-1 font-mono">
-                  <MapPin className="w-3 h-3" /> {exp.location}
-                </p>
-              </div>
-
-              {/* Responsibilities & Achievements */}
-              <div className="col-span-12 md:col-span-5 space-y-2 font-sans text-xs sm:text-sm text-muted-foreground">
-                {exp.description?.map((duty, j) => (
-                  <div key={j} className="flex items-start gap-2.5">
-                    <span className="text-accent font-mono text-xs mt-0.5 select-none">
-                      →
+                <div className="flex shrink-0 flex-col gap-1 text-sm text-muted-foreground md:items-end">
+                  <span className="font-mono text-xs">{exp.duration}</span>
+                  {exp.location && (
+                    <span className="inline-flex items-center gap-1">
+                      <MapPin className="h-3.5 w-3.5" /> {exp.location}
                     </span>
-                    <p className="leading-relaxed text-pretty text-foreground/80">
-                      {duty}
-                    </p>
-                  </div>
-                ))}
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      </div>
+
+              {exp.description && exp.description.length > 0 && (
+                <ul className="mt-6 space-y-3 border-t border-border pt-6">
+                  {exp.description.map((duty, j) => (
+                    <li key={j} className="flex items-start gap-3 text-[15px] leading-relaxed text-muted-foreground text-pretty">
+                      <span className="mt-2 h-1 w-3 shrink-0 rounded-full bg-accent" />
+                      <span>{duty}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </article>
+          </li>
+        ))}
+      </ol>
     </section>
   )
 }

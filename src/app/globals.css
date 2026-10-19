@@ -470,3 +470,10 @@
   padding: 0 3px;
   font-style: normal;
 }
+
+/* Custom cursor only exists where a fine pointer does */
+@media (hover: none), (pointer: coarse) {
+  .cursor-follower {
+    display: none;
+  }
+}

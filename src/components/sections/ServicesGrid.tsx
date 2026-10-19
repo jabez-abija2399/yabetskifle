@@ -1,6 +1,7 @@
 import { Service } from "@/types/portfolio"
-import { Box, Code2, Layout, Database, Smartphone, Palette, Zap, Cpu } from "lucide-react"
+import { Box, Code2, Layout, Database, Smartphone, Palette, Zap, Cpu, ArrowUpRight } from "lucide-react"
 import { SiteCopy, t, renderRichTitle } from "@/lib/copy"
+import { SectionHeader } from "@/components/ui/SectionHeader"
 
 const IconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Code2, Layout, Database, Smartphone, Palette, Box, Zap, Cpu,
@@ -15,79 +16,55 @@ export const ServicesGrid = ({ services, copy }: Props) => {
   if (!services || services.length === 0) return null
 
   return (
-    <section id="services" className="px-6 md:px-12 lg:px-16 xl:px-24 scroll-mt-24">
-      <div className="max-w-[1600px] mx-auto">
-        {/* Section header — Sentence case */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-border">
-          <div className="space-y-2">
-            <div className="eyebrow-chip">
-              {t(copy, "services.eyebrow", "05. Capabilities & domains")}
-            </div>
-            <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
-              {renderRichTitle(t(copy, "services.title", "Technical services & scope of work"), "text-accent")}
-            </h2>
-          </div>
-          <p className="font-mono text-xs text-muted-foreground max-w-sm">
-            {t(copy, "services.subtitle", "Selected service engagements for teams looking to build robust, scalable web products.")}
-          </p>
-        </div>
+    <section id="services" className="mx-auto max-w-6xl scroll-mt-28 px-6 md:px-10">
+      <SectionHeader
+        eyebrow={t(copy, "services.eyebrow", "What I do")}
+        title={renderRichTitle(t(copy, "services.title", "Services built for *shipping*"), "text-accent")}
+        subtitle={t(copy, "services.subtitle", "Focused engagements for teams that want robust, scalable web products.")}
+      />
 
-        {/* Structured Schematic Capabilities List */}
-        <div className="divide-y divide-border border-y border-border">
-          {services.map((service, i) => {
-            const Icon = IconMap[service.icon_name || "Box"] || Box
-            return (
-              <div
-                key={service.id}
-                className="group grid grid-cols-12 gap-6 md:gap-10 py-8 hover:bg-accent/5 transition-colors"
-              >
-                <div className="col-span-12 md:col-span-1 flex items-center md:items-start">
-                  <span className="font-mono text-xs text-accent font-medium">
-                    [srv.{String(i + 1).padStart(2, "0")}]
-                  </span>
-                </div>
-
-                <div className="col-span-12 md:col-span-4 flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-2xl border border-border bg-card flex items-center justify-center shrink-0 group-hover:border-accent group-hover:text-accent transition-colors">
-                    <Icon className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg md:text-xl font-semibold text-foreground tracking-tight group-hover:text-accent transition-colors">
-                      {service.title.trim()}
-                    </h3>
-                  </div>
-                </div>
-
-                <div className="col-span-12 md:col-span-4 text-xs sm:text-sm text-muted-foreground leading-relaxed text-pretty font-sans">
-                  {service.description}
-                </div>
-
-                <div className="col-span-12 md:col-span-3">
-                  <ul className="space-y-1.5 font-mono text-xs text-muted-foreground">
-                    {service.features?.map((feature, j) => (
-                      <li
-                        key={j}
-                        className="flex items-start gap-2"
-                      >
-                        <span className="text-accent select-none">→</span>
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+      <div className="grid gap-5 md:grid-cols-2">
+        {services.map((service) => {
+          const Icon = IconMap[service.icon_name || "Box"] || Box
+          return (
+            <article
+              key={service.id}
+              className="spotlight lift-card group relative flex flex-col gap-6 overflow-hidden rounded-3xl border border-border bg-card p-7 md:p-8"
+            >
+              <div className="flex items-start justify-between gap-4">
+                <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-accent/15 text-accent transition-transform duration-500 group-hover:rotate-6 group-hover:scale-110">
+                  <Icon className="h-5 w-5" />
+                </span>
+                <ArrowUpRight className="h-5 w-5 text-muted-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
               </div>
-            )
-          })}
-        </div>
 
-        <div className="mt-10 flex justify-end">
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 border border-border bg-card px-5 h-11 rounded-2xl font-mono text-xs text-foreground hover:border-accent hover:text-accent transition-colors"
-          >
-            <span>[ {t(copy, "services.cta", "Discuss a project")} ]</span>
-          </a>
-        </div>
+              <div className="space-y-3">
+                <h3 className="text-xl font-semibold tracking-tight text-foreground md:text-2xl">{service.title.trim()}</h3>
+                <p className="text-[15px] leading-relaxed text-muted-foreground text-pretty">{service.description}</p>
+              </div>
+
+              {service.features && service.features.length > 0 && (
+                <ul className="mt-auto flex flex-wrap gap-2">
+                  {service.features.map((feature, j) => (
+                    <li key={j} className="rounded-full border border-border bg-secondary px-3 py-1 text-xs text-secondary-foreground">
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </article>
+          )
+        })}
+      </div>
+
+      <div className="mt-12 flex justify-center">
+        <a
+          href="#contact"
+          className="inline-flex h-12 items-center gap-2 rounded-full border border-border px-6 text-sm text-foreground transition-colors hover:border-accent hover:text-accent"
+        >
+          {t(copy, "services.cta", "Discuss a project")}
+          <ArrowUpRight className="h-4 w-4" />
+        </a>
       </div>
     </section>
   )
