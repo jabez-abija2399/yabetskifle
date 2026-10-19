@@ -7,6 +7,7 @@ import { ThemeToggle } from "../ui/ThemeToggle"
 import { SiteCopy, t } from "@/lib/copy"
 import { Menu, X, ArrowUpRight } from "lucide-react"
 import { AnimatePresence, motion } from "framer-motion"
+import { Magnetic } from "@/components/interactive/Magnetic"
 
 interface Props {
   copy?: SiteCopy
@@ -108,13 +109,15 @@ export const Navbar = ({ copy }: Props) => {
 
             <ThemeToggle size="compact" />
 
-            <Link
-              href="/#contact"
-              className="hidden items-center gap-1.5 rounded-full bg-accent px-4 py-2 text-sm font-medium text-accent-foreground transition-transform hover:-translate-y-px hover:bg-accent-hover sm:inline-flex"
-            >
-              {t(copy, "nav.cta", "Let's talk")}
-              <ArrowUpRight className="h-3.5 w-3.5" />
-            </Link>
+            <Magnetic className="hidden sm:inline-block">
+              <Link
+                href="/#contact"
+                className="inline-flex items-center gap-1.5 rounded-full bg-accent px-4 py-2 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent-hover"
+              >
+                {t(copy, "nav.cta", "Let's talk")}
+                <ArrowUpRight className="h-3.5 w-3.5" />
+              </Link>
+            </Magnetic>
 
             <button
               type="button"

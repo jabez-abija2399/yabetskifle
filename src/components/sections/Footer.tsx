@@ -3,6 +3,7 @@ import { FaGithub, FaLinkedin, FaTwitter, FaInstagram, FaEnvelope } from "react-
 import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
 import { SiteCopy, t, renderRichTitle } from "@/lib/copy"
+import { Magnetic } from "@/components/interactive/Magnetic"
 
 interface Props {
   settings: SiteSettings | null
@@ -52,13 +53,15 @@ export const Footer = ({ settings, profile, copy }: Props) => {
               {renderRichTitle(t(copy, "footer.cta_title", "Let's engineer something *remarkable* together."), "text-accent")}
             </h3>
           </div>
-          <a
-            href="#contact"
-            className="group inline-flex h-14 shrink-0 items-center gap-2 rounded-full bg-accent px-7 text-sm font-medium text-accent-foreground transition-all hover:-translate-y-px hover:bg-accent-hover hover:shadow-[0_12px_32px_-10px_var(--glow)]"
-          >
-            {t(copy, "footer.cta_button", "Start a project")}
-            <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </a>
+          <Magnetic>
+            <a
+              href="#contact"
+              className="group inline-flex h-14 shrink-0 items-center gap-2 rounded-full bg-accent px-7 text-sm font-medium text-accent-foreground transition-all hover:bg-accent-hover hover:shadow-[0_12px_32px_-10px_var(--glow)]"
+            >
+              {t(copy, "footer.cta_button", "Start a project")}
+              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
+          </Magnetic>
         </div>
 
         {/* Sitemap + endpoints */}
