@@ -1,6 +1,7 @@
 import { Profile } from "@/types/portfolio"
-import { Globe, MapPin, Compass, BookOpen, Quote } from "lucide-react"
+import { Globe, MapPin, Compass, Quote } from "lucide-react"
 import { SiteCopy, t, renderRichTitle } from "@/lib/copy"
+import { SectionHeader } from "@/components/ui/SectionHeader"
 
 interface Props {
   profile: Profile
@@ -25,121 +26,66 @@ export const AboutSection = ({ profile, languagesLine, copy }: Props) => {
   const langLong = languagesLine?.long || "English · Amharic"
 
   return (
-    <section id="about" className="px-6 md:px-12 lg:px-16 xl:px-24 scroll-mt-24">
-      <div className="max-w-[1600px] mx-auto">
-        {/* Section header — Sentence case */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-border">
-          <div className="space-y-2">
-            <div className="eyebrow-chip">
-              {t(copy, "about.eyebrow", "03. Engineering background")}
-            </div>
-            <h2 className="text-heading-section font-semibold tracking-tight text-foreground">
-              {renderRichTitle(t(copy, "about.title", "Operating principles & technical narrative"), "text-accent")}
-            </h2>
+    <section id="about" className="mx-auto max-w-6xl scroll-mt-28 px-6 md:px-10">
+      <SectionHeader
+        eyebrow={t(copy, "about.eyebrow", "About")}
+        title={renderRichTitle(t(copy, "about.title", "Engineering with *care*, end to end"), "text-accent")}
+        subtitle={t(copy, "about.subtitle", "How I approach architecture, craft, and working with people.")}
+      />
+
+      <div className="grid gap-5 lg:grid-cols-12">
+        {/* Story */}
+        <article className="rounded-3xl border border-border bg-card p-7 md:p-10 lg:col-span-7">
+          <p className="mb-6 text-sm font-medium text-accent">{t(copy, "about.story_eyebrow", "My story")}</p>
+          <div className="space-y-5 text-lg leading-relaxed text-foreground/90 text-pretty md:text-xl">
+            {story.map((para, i) => (
+              <p key={i}>{para}</p>
+            ))}
           </div>
-          <p className="font-mono text-xs text-muted-foreground max-w-sm">
-            {t(copy, "about.subtitle", "How I approach architecture, code craftsmanship, and team collaboration.")}
+          <p className="mt-10 border-t border-border pt-6 text-sm text-muted-foreground">
+            {t(copy, "about.story_footer", "Open to learn · Open to teach · Open to ship")}
           </p>
-        </div>
+        </article>
 
-        {/* Structured Field-Notebook Grid */}
-        <div className="grid grid-cols-12 gap-5">
-          {/* Main Narrative Log */}
-          <article className="col-span-12 lg:col-span-8 bg-card border border-border rounded-2xl p-6 md:p-8  flex flex-col justify-between space-y-6">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between border-b border-border pb-3 font-mono text-xs text-muted-foreground">
-                <span className="flex items-center gap-2 text-foreground font-medium">
-                  <BookOpen className="w-3.5 h-3.5 text-accent" />
-                  <span>{t(copy, "about.story_eyebrow", "Field note // Narrative")}</span>
-                </span>
-                <span>doc.bio</span>
-              </div>
-
-              <div className="space-y-4 text-sm sm:text-base leading-relaxed text-foreground/90 font-sans">
-                {story.map((para, i) => (
-                  <p key={i} className="text-pretty">
-                    {para}
-                  </p>
-                ))}
-              </div>
-            </div>
-
-            <div className="pt-4 border-t border-border flex flex-wrap items-center justify-between gap-3 font-mono text-xs text-muted-foreground">
-              <span className="text-accent font-medium">
-                [ {t(copy, "about.story_footer", "Open to learn · Open to teach · Open to ship")} ]
-              </span>
-              <span>verified</span>
-            </div>
-          </article>
-
-          {/* Right Rail Field Blocks */}
-          <div className="col-span-12 lg:col-span-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-5">
-            {/* Experience metric */}
-            <div className="border border-border bg-card p-5 rounded-2xl  flex flex-col justify-between">
-              <div className="flex items-center justify-between font-mono text-xs text-muted-foreground border-b border-border pb-2.5 mb-3">
-                <span>{t(copy, "about.experience_label", "Experience log")}</span>
-                <span>spec.01</span>
-              </div>
-              <div>
-                <p className="font-mono text-4xl sm:text-5xl font-semibold text-foreground">
-                  {profile.experience_years || 2}
-                  <span className="text-accent">+</span>
-                </p>
-                <p className="text-xs text-muted-foreground mt-1.5 font-mono">
-                  {t(copy, "about.experience_unit", "years shipping production web applications")}
-                </p>
-              </div>
-            </div>
-
-            {/* Currently learning */}
-            <div className="border border-border bg-card p-5 rounded-2xl  flex flex-col justify-between">
-              <div className="flex items-center justify-between font-mono text-xs text-accent border-b border-border pb-2.5 mb-3">
-                <span className="flex items-center gap-1.5">
-                  <Compass className="w-3.5 h-3.5" />
-                  <span>{t(copy, "about.learning_label", "Active focus & research")}</span>
-                </span>
-                <span>spec.02</span>
-              </div>
-              <p className="text-sm font-medium text-foreground leading-snug">
-                {learning}
+        {/* Facts */}
+        <div className="grid gap-5 sm:grid-cols-2 lg:col-span-5 lg:grid-cols-1">
+          <div className="relative overflow-hidden rounded-3xl border border-border bg-card p-7">
+            <div aria-hidden className="pointer-events-none absolute inset-0 bg-aurora opacity-70" />
+            <div className="relative">
+              <p className="text-sm text-muted-foreground">{t(copy, "about.experience_label", "Experience")}</p>
+              <p className="mt-2 text-6xl font-semibold tracking-tight text-foreground">
+                {profile.experience_years || 2}
+                <span className="text-accent">+</span>
+              </p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                {t(copy, "about.experience_unit", "years shipping production web applications")}
               </p>
             </div>
+          </div>
 
-            {/* Philosophy */}
-            <div className="border border-border bg-card p-5 rounded-2xl  flex flex-col justify-between">
-              <div className="flex items-center justify-between font-mono text-xs text-muted-foreground border-b border-border pb-2.5 mb-3">
-                <span className="flex items-center gap-1.5">
-                  <Quote className="w-3.5 h-3.5 text-accent" />
-                  <span>{t(copy, "about.philosophy_label", "Operating principle")}</span>
-                </span>
-                <span>spec.03</span>
-              </div>
-              <p className="text-xs sm:text-sm text-foreground/90 font-medium leading-relaxed">
-                &ldquo;{quote}&rdquo;
-              </p>
-              <p className="text-[11px] font-mono text-muted-foreground mt-2">— {author}</p>
-            </div>
+          <div className="rounded-3xl border border-border bg-card p-7">
+            <p className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Compass className="h-4 w-4 text-accent" /> {t(copy, "about.learning_label", "Currently exploring")}
+            </p>
+            <p className="mt-3 text-lg font-medium leading-snug text-foreground">{learning}</p>
+          </div>
 
-            {/* Location & Languages composite */}
-            <div className="border border-border bg-card p-5 rounded-2xl  space-y-3">
-              <div className="flex justify-between items-center pb-2 border-b border-border font-mono text-xs text-muted-foreground">
-                <span className="flex items-center gap-1.5 text-foreground">
-                  <MapPin className="w-3.5 h-3.5 text-accent" />
-                  <span>Base</span>
-                </span>
-                <span>{location.split(",")[0]}</span>
-              </div>
-              <div className="flex justify-between items-center font-mono text-xs text-muted-foreground">
-                <span className="flex items-center gap-1.5 text-foreground">
-                  <Globe className="w-3.5 h-3.5 text-accent" />
-                  <span>Languages</span>
-                </span>
-                <span>{langShort} ({langLong})</span>
-              </div>
-              <div className="pt-2 border-t border-border/60 text-[11px] font-mono text-muted-foreground">
-                <span>{timezone}</span>
-              </div>
+          <div className="rounded-3xl border border-border bg-card p-7">
+            <Quote className="h-6 w-6 text-accent" />
+            <p className="mt-4 text-lg leading-relaxed text-foreground text-pretty">&ldquo;{quote}&rdquo;</p>
+            <p className="mt-4 text-sm text-muted-foreground">— {author}</p>
+          </div>
+
+          <div className="space-y-4 rounded-3xl border border-border bg-card p-7 text-sm">
+            <div className="flex items-center justify-between gap-4">
+              <span className="flex items-center gap-2 text-muted-foreground"><MapPin className="h-4 w-4 text-accent" /> Based in</span>
+              <span className="font-medium text-foreground">{location.split(",")[0]}</span>
             </div>
+            <div className="flex items-center justify-between gap-4">
+              <span className="flex items-center gap-2 text-muted-foreground"><Globe className="h-4 w-4 text-accent" /> Languages</span>
+              <span className="text-right font-medium text-foreground">{langShort} <span className="text-muted-foreground">({langLong})</span></span>
+            </div>
+            <p className="border-t border-border pt-4 text-muted-foreground">{timezone}</p>
           </div>
         </div>
       </div>

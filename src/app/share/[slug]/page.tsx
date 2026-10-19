@@ -98,7 +98,7 @@ export default async function SharePage({
           companyName={doc.company_name ?? undefined}
         />
 
-        <article className="rounded-xs border border-border bg-card p-6 sm:p-10 text-sm leading-relaxed text-foreground whitespace-pre-wrap font-mono">
+        <article className="rounded-2xl border border-border bg-card p-6 sm:p-10 text-sm leading-relaxed text-foreground whitespace-pre-wrap font-mono">
           {doc.content}
         </article>
 

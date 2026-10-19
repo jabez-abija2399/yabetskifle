@@ -53,7 +53,7 @@ export function ShareActions({ text, docType, roleName, companyName }: Props) {
       <button
         onClick={handlePdf}
         disabled={busy !== null}
-        className="flex items-center gap-1.5 px-3 py-2 rounded-xs font-mono text-xs border border-border text-foreground hover:border-foreground transition-colors disabled:opacity-50"
+        className="flex items-center gap-1.5 px-3 py-2 rounded-2xl font-mono text-xs border border-border text-foreground hover:border-foreground transition-colors disabled:opacity-50"
       >
         <Download className="w-3.5 h-3.5" />
         {busy === "pdf" ? "Preparing…" : "Download PDF"}
@@ -61,14 +61,14 @@ export function ShareActions({ text, docType, roleName, companyName }: Props) {
       <button
         onClick={handleDoc}
         disabled={busy !== null}
-        className="flex items-center gap-1.5 px-3 py-2 rounded-xs font-mono text-xs border border-border text-foreground hover:border-foreground transition-colors disabled:opacity-50"
+        className="flex items-center gap-1.5 px-3 py-2 rounded-2xl font-mono text-xs border border-border text-foreground hover:border-foreground transition-colors disabled:opacity-50"
       >
         <FileText className="w-3.5 h-3.5" />
         {busy === "doc" ? "Preparing…" : "Download DOC"}
       </button>
       <button
         onClick={handleCopy}
-        className="flex items-center gap-1.5 px-3 py-2 rounded-xs font-mono text-xs border border-border text-muted-foreground hover:border-foreground transition-colors"
+        className="flex items-center gap-1.5 px-3 py-2 rounded-2xl font-mono text-xs border border-border text-muted-foreground hover:border-foreground transition-colors"
       >
         {copied ? (
           <>

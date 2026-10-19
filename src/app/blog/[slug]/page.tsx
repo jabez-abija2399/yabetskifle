@@ -95,7 +95,7 @@ export default async function BlogPostPage({ params }: Props) {
               {post.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="text-xs px-2 py-0.5 rounded-xs border border-border/60 bg-secondary text-secondary-foreground"
+                  className="text-xs px-2 py-0.5 rounded-2xl border border-border/60 bg-secondary text-secondary-foreground"
                 >
                   {tag}
                 </span>
@@ -109,7 +109,7 @@ export default async function BlogPostPage({ params }: Props) {
       {post.cover_image && (
         <div className="px-6 md:px-12 lg:px-16 xl:px-24 mb-14 md:mb-20">
           <div className="max-w-5xl mx-auto">
-            <div className="relative aspect-21/10 rounded-xs overflow-hidden border border-border bg-secondary corner-ticks">
+            <div className="relative aspect-21/10 rounded-2xl overflow-hidden border border-border bg-secondary ">
               <Image
                 src={post.cover_image}
                 alt={post.title}
@@ -135,9 +135,9 @@ export default async function BlogPostPage({ params }: Props) {
             prose-strong:text-foreground prose-strong:font-medium
             prose-a:text-accent hover:prose-a:underline prose-a:no-underline
             prose-blockquote:border-l-accent prose-blockquote:bg-card prose-blockquote:rounded-r-xs prose-blockquote:py-1 prose-blockquote:px-6
-            prose-code:bg-secondary prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-xs prose-code:text-sm prose-code:before:content-none prose-code:after:content-none
-            prose-pre:bg-card prose-pre:border prose-pre:border-border prose-pre:rounded-xs
-            prose-img:rounded-xs prose-img:border prose-img:border-border
+            prose-code:bg-secondary prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-2xl prose-code:text-sm prose-code:before:content-none prose-code:after:content-none
+            prose-pre:bg-card prose-pre:border prose-pre:border-border prose-pre:rounded-2xl
+            prose-img:rounded-2xl prose-img:border prose-img:border-border
             prose-li:my-1
             ">
             <ReactMarkdown>{post.content}</ReactMarkdown>
@@ -157,7 +157,7 @@ export default async function BlogPostPage({ params }: Props) {
             </div>
             <Link
               href="/blog"
-              className="inline-flex items-center gap-2 bg-accent text-accent-foreground h-11 px-5 rounded-xs font-mono text-xs font-medium hover:bg-accent-hover transition-colors w-fit"
+              className="inline-flex items-center gap-2 bg-accent text-accent-foreground h-11 px-5 rounded-2xl font-mono text-xs font-medium hover:bg-accent-hover transition-colors w-fit"
             >
               <span>[ {t(copy, "blogpost.back_link", "All articles")} ]</span> <ArrowUpRight className="w-3.5 h-3.5" />
             </Link>
