@@ -43,22 +43,23 @@
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
 
-  /* SYSTEMS ACCENTS */
+  /* SYSTEM ACCENTS */
   --color-signal: var(--signal);
   --color-signal-foreground: var(--signal-foreground);
   --color-accent-hover: var(--accent-hover);
-  --color-teal: var(--blueprint-teal);
-  --color-rust: var(--rust-red);
+  --color-violet: var(--violet);
+  --color-glow: var(--glow);
 
-  /* PRECISE TECHNICAL RADIUS - no puffy pills */
-  --radius-sm: 2px;
-  --radius-md: 4px;
-  --radius-lg: 6px;
-  --radius-xl: 8px;
-  --radius-2xl: 12px;
-  --radius-3xl: 16px;
+  /* SOFT, MODERN RADII — cards and controls read as friendly, not form-like */
+  --radius-xs: 0.5rem;
+  --radius-sm: 0.625rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
 
-  /* INTENTIONAL ARCHITECTURAL TYPOGRAPHY SCALE */
+  /* TYPE SCALE */
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
@@ -67,134 +68,138 @@
   --font-size-2xl: 1.5rem;
   --font-size-3xl: 1.875rem;
   --font-size-4xl: 2.25rem;
-  --font-size-display: clamp(2rem, 1.6rem + 1.8vw, 3rem);
-  --font-size-hero: clamp(2.5rem, 1.8rem + 3.2vw, 4.25rem);
+  --font-size-display: clamp(2.25rem, 1.5rem + 2.6vw, 3.75rem);
+  --font-size-hero: clamp(2.75rem, 1.6rem + 5vw, 5.5rem);
 }
 
 /* ══════════════════════════════════════════════════════════════
    BRAND PALETTE — single source of truth.
-   All semantic tokens below derive from these five values.
-   JS contexts (OG image, PDF export) import them from
-   src/lib/brand.ts — keep both files in sync.
-   Contrast (WCAG AA 4.5:1 on paper #F5F3EE):
-     ink 15.22 ✓ · teal 6.40 ✓ · rust 4.52 ✓
-     warm-gray 3.31 ✗ → deepened 22% toward ink for body text (4.58 ✓)
+   Mirrored in src/lib/brand.ts for JS contexts (OG image, PDF).
+   Keep both files in sync.
+
+   Dark is the flagship: near-black canvas, one volt-lime accent,
+   a violet secondary for atmosphere. Light is the same system in
+   warm paper with a deeper green accent so text clears WCAG AA.
    ══════════════════════════════════════════════════════════════ */
 :root {
-  --brand-paper: #f5f3ee;
-  --brand-ink: #1a1d23;
-  --brand-teal: #2d5f6b;
-  --brand-teal-deep: #234b54;
-  --brand-rust: #c4432e;
-  --brand-warm-gray: #8b8577;
+  --brand-volt: #c8f169;
+  --brand-volt-hover: #d8fa8a;
+  --brand-violet: #8b7cff;
+  --brand-ink-950: #0a0b0e;
+  --brand-ink-900: #111318;
+  --brand-ink-850: #14171d;
+  --brand-ink-800: #1d212a;
+  --brand-mist: #edeef2;
+  --brand-slate: #9499a8;
 
-  /* ── Semantic roles (light — warm paper-white & ink) ── */
+  --brand-green-700: #3f6212;
+  --brand-green-800: #2f4a0c;
+  --brand-paper: #f7f7f4;
+  --brand-paper-deep: #efefea;
+  --brand-charcoal: #0b0c10;
+  --brand-graphite: #5c5f6a;
+  --brand-violet-600: #6d5ce6;
+
+  /* ── Light ── */
   --background: var(--brand-paper);
-  --foreground: var(--brand-ink);
+  --foreground: var(--brand-charcoal);
 
   --card: #ffffff;
-  --card-foreground: var(--brand-ink);
+  --card-foreground: var(--brand-charcoal);
 
   --popover: #ffffff;
-  --popover-foreground: var(--brand-ink);
+  --popover-foreground: var(--brand-charcoal);
 
-  --primary: var(--brand-ink);
+  --primary: var(--brand-charcoal);
   --primary-foreground: var(--brand-paper);
 
-  --secondary: #ece8df;
-  --secondary-foreground: var(--brand-ink);
+  --secondary: var(--brand-paper-deep);
+  --secondary-foreground: var(--brand-charcoal);
 
-  --muted: #ece8e0;
-  /* Brand warm-gray, deepened 22% toward ink to clear AA on paper */
-  --muted-foreground: color-mix(in srgb, var(--brand-warm-gray) 78%, var(--brand-ink));
+  --muted: var(--brand-paper-deep);
+  --muted-foreground: var(--brand-graphite);
 
-  /* Accent: deep blueprint teal — links, active states, key data only */
-  --accent: var(--brand-teal);
-  --accent-hover: var(--brand-teal-deep);
-  --accent-foreground: var(--brand-paper);
-  --blueprint-teal: var(--brand-teal);
+  --accent: var(--brand-green-700);
+  --accent-hover: var(--brand-green-800);
+  --accent-foreground: #ffffff;
 
-  /* Secondary accent: muted rust-red — status indicators only */
-  --signal: var(--brand-rust);
+  --signal: var(--brand-violet-600);
   --signal-foreground: #ffffff;
-  --rust-red: var(--brand-rust);
+  --violet: var(--brand-violet-600);
+  --glow: rgba(200, 241, 105, 0.35);
 
-  --border: #ddd8cd;
-  --input: #ddd8cd;
-  --ring: var(--brand-teal);
-  --destructive: var(--brand-rust);
+  --border: rgba(11, 12, 16, 0.1);
+  --input: rgba(11, 12, 16, 0.14);
+  --ring: var(--brand-green-700);
+  --destructive: #c2410c;
 
-  --radius: 0.25rem;
+  --radius: 0.75rem;
 
-  --chart-1: var(--brand-teal);
-  --chart-2: var(--brand-warm-gray);
-  --chart-3: var(--brand-ink);
-  --chart-4: var(--brand-rust);
-  --chart-5: #ddd8cd;
+  --chart-1: var(--brand-green-700);
+  --chart-2: var(--brand-violet-600);
+  --chart-3: var(--brand-charcoal);
+  --chart-4: #c2410c;
+  --chart-5: var(--brand-paper-deep);
 
   --sidebar: var(--brand-paper);
-  --sidebar-foreground: var(--brand-ink);
-  --sidebar-primary: var(--brand-teal);
-  --sidebar-primary-foreground: var(--brand-paper);
-  --sidebar-accent: #ece8df;
-  --sidebar-accent-foreground: var(--brand-ink);
-  --sidebar-border: #ddd8cd;
-  --sidebar-ring: var(--brand-teal);
+  --sidebar-foreground: var(--brand-charcoal);
+  --sidebar-primary: var(--brand-green-700);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--brand-paper-deep);
+  --sidebar-accent-foreground: var(--brand-charcoal);
+  --sidebar-border: rgba(11, 12, 16, 0.1);
+  --sidebar-ring: var(--brand-green-700);
 }
 
-/* ── Dark — deep blueprint & technical slate ──────────────────
-   Teal lifted from #2D5F6B → #5A96A5 so accent text clears AA
-   on both #12151A (5.52) and card #181C23 (5.16). */
-.dark {
-  --background: #12151a;
-  --foreground: #e8e6df;
+/* ── Dark — the flagship. Near-black, volt accent, violet glow ── */
+.dark,
+:root[data-theme="dark"] {
+  --background: var(--brand-ink-950);
+  --foreground: var(--brand-mist);
 
-  --card: #181c23;
-  --card-foreground: #e8e6df;
+  --card: var(--brand-ink-850);
+  --card-foreground: var(--brand-mist);
 
-  --popover: #181c23;
-  --popover-foreground: #e8e6df;
+  --popover: var(--brand-ink-850);
+  --popover-foreground: var(--brand-mist);
 
-  --primary: #e8e6df;
-  --primary-foreground: #12151a;
+  --primary: var(--brand-mist);
+  --primary-foreground: var(--brand-ink-950);
 
-  --secondary: #1f242d;
-  --secondary-foreground: #e8e6df;
+  --secondary: var(--brand-ink-800);
+  --secondary-foreground: var(--brand-mist);
 
-  --muted: #1f242d;
-  /* Exact brand warm-gray passes AA on slate (4.98) */
-  --muted-foreground: var(--brand-warm-gray);
+  --muted: var(--brand-ink-800);
+  --muted-foreground: var(--brand-slate);
 
-  --accent: #5a96a5;
-  --accent-hover: #6ba6b4;
-  --accent-foreground: #12151a;
-  --blueprint-teal: #5a96a5;
+  --accent: var(--brand-volt);
+  --accent-hover: var(--brand-volt-hover);
+  --accent-foreground: var(--brand-ink-950);
 
-  --signal: #d9533d;
-  --signal-foreground: #ffffff;
-  --rust-red: #d9533d;
+  --signal: var(--brand-violet);
+  --signal-foreground: var(--brand-ink-950);
+  --violet: var(--brand-violet);
+  --glow: rgba(200, 241, 105, 0.22);
 
-  --border: rgba(232, 230, 223, 0.12);
-  --input: rgba(232, 230, 223, 0.15);
-  --ring: #5a96a5;
-  --destructive: #d9533d;
+  --border: rgba(237, 238, 242, 0.09);
+  --input: rgba(237, 238, 242, 0.14);
+  --ring: var(--brand-volt);
+  --destructive: #fb7185;
 
-  --radius: 0.25rem;
+  --chart-1: var(--brand-volt);
+  --chart-2: var(--brand-violet);
+  --chart-3: var(--brand-mist);
+  --chart-4: #fb7185;
+  --chart-5: var(--brand-ink-800);
 
-  --chart-1: #5a96a5;
-  --chart-2: var(--brand-warm-gray);
-  --chart-3: #e8e6df;
-  --chart-4: #d9533d;
-  --chart-5: #2b313d;
-
-  --sidebar: #181c23;
-  --sidebar-foreground: #e8e6df;
-  --sidebar-primary: #5a96a5;
-  --sidebar-primary-foreground: #e8e6df;
-  --sidebar-accent: #1f242d;
-  --sidebar-accent-foreground: #e8e6df;
-  --sidebar-border: rgba(232, 230, 223, 0.12);
-  --sidebar-ring: #5a96a5;
+  --sidebar: var(--brand-ink-900);
+  --sidebar-foreground: var(--brand-mist);
+  --sidebar-primary: var(--brand-volt);
+  --sidebar-primary-foreground: var(--brand-ink-950);
+  --sidebar-accent: var(--brand-ink-800);
+  --sidebar-accent-foreground: var(--brand-mist);
+  --sidebar-border: rgba(237, 238, 242, 0.09);
+  --sidebar-ring: var(--brand-volt);
 }
 
 @layer base {
@@ -206,6 +211,7 @@
     font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
     font-size: var(--font-size-base);
     line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
   }
   html {
     scroll-behavior: smooth;
@@ -223,27 +229,27 @@
     }
   }
 
-  /* HEADINGS — Architectural, intentional hierarchy */
+  /* HEADINGS — tight, confident display type */
   h1, h2, h3, h4, .text-heading-hero, .text-heading-section, .text-heading-card {
     font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
     font-weight: 600;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
     color: var(--foreground);
   }
   h1, .text-heading-hero {
     font-size: var(--font-size-hero);
-    line-height: 1.08;
-    letter-spacing: -0.03em;
+    line-height: 0.98;
+    letter-spacing: -0.045em;
   }
   h2, .text-heading-section {
     font-size: var(--font-size-display);
-    line-height: 1.15;
-    letter-spacing: -0.025em;
+    line-height: 1.04;
+    letter-spacing: -0.035em;
   }
   h3, .text-heading-card {
     font-size: var(--font-size-2xl);
-    line-height: 1.25;
-    letter-spacing: -0.015em;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
   }
 
   p, .text-body {
@@ -263,97 +269,92 @@
   .text-balance { text-wrap: balance; }
   .text-pretty { text-wrap: pretty; }
 
-  /* Technical metadata / Section marker — Sentence case, clean mono */
+  /* Small metadata labels — quiet, sentence case */
   .eyebrow, .meta-label, .meta-mono, .field-label {
     @apply font-mono text-xs text-muted-foreground font-normal tracking-normal;
   }
 
-  /* ── Reusable typography: mono micro-label (labels, metadata, nav) ──
-     Color is intentionally NOT set here — pair with text-muted-foreground,
-     text-accent, or text-signal so tokens stay in control. */
+  /* Micro label — uppercase mono, color comes from the caller */
   .label-mono {
     font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 0.625rem;
+    font-size: 0.6875rem;
     line-height: 1.4;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    font-weight: 400;
+    font-weight: 500;
   }
 
-  /* ── Reusable brand index chip — every section eyebrow/anchor label ──
-     Derives all color from --accent so light/dark stay token-driven. */
+  /* Section eyebrow — a soft pill with an accent dot */
   .eyebrow-chip {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     width: fit-content;
-    padding: 0.25rem 0.6rem;
-    border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
-    background-color: color-mix(in srgb, var(--accent) 8%, transparent);
+    padding: 0.3rem 0.75rem;
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+    background-color: color-mix(in srgb, var(--accent) 10%, transparent);
     color: var(--accent);
-    border-radius: 2px;
+    border-radius: 999px;
     font-family: var(--font-mono), ui-monospace, monospace;
     font-size: 0.75rem;
     line-height: 1.4;
-    letter-spacing: 0.04em;
-    font-weight: 400;
+    letter-spacing: 0.02em;
+    font-weight: 500;
+  }
+  .eyebrow-chip::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
   }
 
-  /* Technical schematic border accents */
+  /* Surfaces — soft cards with a hairline and a gentle inner highlight */
   .schematic-box {
     @apply relative border border-border bg-card transition-colors;
   }
   .schematic-box-accent {
     @apply relative border border-accent/30 bg-card transition-colors hover:border-accent;
   }
+  .surface {
+    @apply relative rounded-lg border border-border bg-card;
+    box-shadow: inset 0 1px 0 0 color-mix(in srgb, var(--foreground) 6%, transparent);
+  }
 
-  /* Technical corner ticks */
+  /* Retired blueprint marks — kept as no-ops so old markup stays safe */
   .corner-ticks {
     position: relative;
   }
-  .corner-ticks::before,
-  .corner-ticks::after {
-    content: "";
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    border-color: var(--blueprint-teal);
-    pointer-events: none;
-  }
-  .corner-ticks::before {
-    top: -1px;
-    left: -1px;
-    border-top: 1px solid;
-    border-left: 1px solid;
-  }
-  .corner-ticks::after {
-    bottom: -1px;
-    right: -1px;
-    border-bottom: 1px solid;
-    border-right: 1px solid;
-  }
 
-  /* Drafting / Technical Grid Background */
+  /* Soft dot grid for hero/404 backdrops */
   .bg-grid,
-  .bg-drafting-grid {
-    background-image:
-      linear-gradient(to right, color-mix(in srgb, var(--border) 60%, transparent) 1px, transparent 1px),
-      linear-gradient(to bottom, color-mix(in srgb, var(--border) 60%, transparent) 1px, transparent 1px);
-    background-size: 32px 32px;
-  }
-
-  /* Brand blueprint grid — teal-tinted schematic background (hero, 404) */
+  .bg-drafting-grid,
   .bg-schematic-grid {
-    background-image:
-      linear-gradient(to right, color-mix(in srgb, var(--accent) 16%, transparent) 1px, transparent 1px),
-      linear-gradient(to bottom, color-mix(in srgb, var(--accent) 16%, transparent) 1px, transparent 1px);
-    background-size: 32px 32px;
+    background-image: radial-gradient(color-mix(in srgb, var(--foreground) 12%, transparent) 1px, transparent 1px);
+    background-size: 24px 24px;
+    mask-image: radial-gradient(ellipse at 50% 0%, #000 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 0%, #000 30%, transparent 75%);
   }
 
   .bg-blueprint-lines {
     background-image:
       linear-gradient(to right, color-mix(in srgb, var(--border) 40%, transparent) 1px, transparent 1px);
     background-size: 24px 100%;
+  }
+
+  /* Ambient aurora — the signature backdrop (hero, CTA bands) */
+  .bg-aurora {
+    background-image:
+      radial-gradient(55% 60% at 85% -10%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%),
+      radial-gradient(45% 50% at 0% 20%, color-mix(in srgb, var(--violet) 18%, transparent), transparent 70%);
+  }
+
+  .text-gradient {
+    background-image: linear-gradient(100deg, var(--foreground) 10%, var(--accent) 60%, var(--violet) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
   .no-scrollbar {
@@ -381,22 +382,16 @@
   }
 }
 
-/* ── Showcase layer — aurora glow, lift cards, gradient type ─────
-   Decorative only. Colors still derive from the brand tokens, so
-   light and dark stay on-palette. */
-.bg-aurora {
-  background-image:
-    radial-gradient(60% 50% at 80% 0%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%),
-    radial-gradient(45% 40% at 0% 30%, color-mix(in srgb, var(--signal) 10%, transparent), transparent 70%);
+@keyframes marquee-x {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
-.text-gradient {
-  background-image: linear-gradient(100deg, var(--foreground) 15%, var(--accent) 85%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+.animate-marquee {
+  animation: marquee-x 36s linear infinite;
 }
 
+/* Cards lift and take on an accent glow on hover */
 .lift-card {
   transition:
     transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
@@ -405,14 +400,14 @@
 }
 .lift-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 18px 40px -18px color-mix(in srgb, var(--accent) 45%, transparent);
+  box-shadow: 0 24px 48px -24px color-mix(in srgb, var(--accent) 35%, transparent);
 }
 
 /* ── Job Application AI — phrase highlights ─────────────────── */
 .apply-highlight-preview mark.apply-ai-phrase {
   background-color: color-mix(in srgb, var(--signal) 18%, var(--background));
   color: color-mix(in srgb, var(--signal) 85%, var(--foreground));
-  border-radius: 2px;
-  padding: 0 2px;
+  border-radius: 4px;
+  padding: 0 3px;
   font-style: normal;
 }

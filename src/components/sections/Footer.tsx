@@ -33,7 +33,7 @@ export const Footer = ({ settings, profile, copy }: Props) => {
             <div className="pt-2">
               <a
                 href="#contact"
-                className="inline-flex items-center gap-2 bg-accent text-accent-foreground h-11 px-5 rounded-xs font-mono text-xs font-medium hover:bg-accent-hover transition-colors"
+                className="inline-flex items-center gap-2 bg-accent text-accent-foreground h-11 px-5 rounded-2xl font-mono text-xs font-medium hover:bg-accent-hover transition-colors"
               >
                 <span>[ {t(copy, "footer.cta_button", "Initiate project discussion")} ]</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
@@ -101,7 +101,7 @@ export const Footer = ({ settings, profile, copy }: Props) => {
         </div>
 
         {/* Technical Colophon Block */}
-        <div className="grid sm:grid-cols-3 gap-6 p-4 border border-border bg-secondary/40 rounded-xs font-mono text-xs text-muted-foreground">
+        <div className="grid sm:grid-cols-3 gap-6 p-4 border border-border bg-secondary/40 rounded-2xl font-mono text-xs text-muted-foreground">
           <div>
             <span className="block text-[10px] text-muted-foreground/80">System & Engine</span>
             <span className="text-foreground">Next.js 16 · React 18 · TypeScript</span>
@@ -123,22 +123,22 @@ export const Footer = ({ settings, profile, copy }: Props) => {
           </p>
           <div className="flex items-center gap-2">
             {socials.github && (
-              <a href={socials.github} target="_blank" rel="noreferrer" aria-label="GitHub" className="w-8 h-8 border border-border rounded-xs flex items-center justify-center hover:border-foreground hover:text-foreground transition-colors">
+              <a href={socials.github} target="_blank" rel="noreferrer" aria-label="GitHub" className="w-8 h-8 border border-border rounded-2xl flex items-center justify-center hover:border-foreground hover:text-foreground transition-colors">
                 <FaGithub className="w-3.5 h-3.5" />
               </a>
             )}
             {socials.linkedin && (
-              <a href={socials.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn" className="w-8 h-8 border border-border rounded-xs flex items-center justify-center hover:border-foreground hover:text-foreground transition-colors">
+              <a href={socials.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn" className="w-8 h-8 border border-border rounded-2xl flex items-center justify-center hover:border-foreground hover:text-foreground transition-colors">
                 <FaLinkedin className="w-3.5 h-3.5" />
               </a>
             )}
             {socials.twitter && (
-              <a href={socials.twitter} target="_blank" rel="noreferrer" aria-label="Twitter" className="w-8 h-8 border border-border rounded-xs flex items-center justify-center hover:border-foreground hover:text-foreground transition-colors">
+              <a href={socials.twitter} target="_blank" rel="noreferrer" aria-label="Twitter" className="w-8 h-8 border border-border rounded-2xl flex items-center justify-center hover:border-foreground hover:text-foreground transition-colors">
                 <FaTwitter className="w-3.5 h-3.5" />
               </a>
             )}
             {socials.instagram && (
-              <a href={socials.instagram} target="_blank" rel="noreferrer" aria-label="Instagram" className="w-8 h-8 border border-border rounded-xs flex items-center justify-center hover:border-foreground hover:text-foreground transition-colors">
+              <a href={socials.instagram} target="_blank" rel="noreferrer" aria-label="Instagram" className="w-8 h-8 border border-border rounded-2xl flex items-center justify-center hover:border-foreground hover:text-foreground transition-colors">
                 <FaInstagram className="w-3.5 h-3.5" />
               </a>
             )}

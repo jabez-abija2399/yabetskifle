@@ -52,9 +52,17 @@ export default async function HomePage() {
     )
   }
 
+  const toolCount = skills.reduce((acc, cat) => acc + (cat.technologies?.length ?? 0), 0)
+  const heroStats = [
+    profile.experience_years ? { value: `${profile.experience_years}+`, label: "years shipping" } : null,
+    projects.length ? { value: String(projects.length), label: "case studies" } : null,
+    toolCount ? { value: String(toolCount), label: "tools in stack" } : null,
+    experiences.length ? { value: String(experiences.length), label: "roles" } : null,
+  ].filter((s): s is { value: string; label: string } => s !== null)
+
   return (
     <main className="bg-background min-h-screen text-foreground">
-      <Hero profile={profile} copy={copy} resumeUrl={profile.resume_url || settings?.cv_url} />
+      <Hero profile={profile} copy={copy} resumeUrl={profile.resume_url || settings?.cv_url} stats={heroStats} />
 
       <div className="space-y-24 md:space-y-32 pb-24 pt-16 md:pt-24">
         {settings?.show_projects !== false && <Reveal><ProjectsShowcase projects={projects} copy={copy} /></Reveal>}
