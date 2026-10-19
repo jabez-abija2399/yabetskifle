@@ -11,6 +11,7 @@ import { IconType } from "react-icons"
 import { Braces, Layers } from "lucide-react"
 
 import { SiteCopy, t, renderRichTitle } from "@/lib/copy"
+import { useSpotlight } from "@/hooks/useSpotlight"
 
 interface SkillCategory {
   category_name: string
@@ -47,6 +48,7 @@ const getIcon = (name: string): { icon: IconType; color: string } => {
 }
 
 export const TechStack = ({ skills, copy }: Props) => {
+  const onSpotlight = useSpotlight()
   if (!skills || skills.length === 0) return null
 
   const totalTools = skills.reduce((acc, cat) => acc + cat.technologies.length, 0)
@@ -74,7 +76,8 @@ export const TechStack = ({ skills, copy }: Props) => {
           {skills.map((cat, i) => (
             <div
               key={i}
-              className="border border-border bg-card p-5 rounded-2xl  flex flex-col justify-between"
+              onPointerMove={onSpotlight}
+              className="spotlight border border-border bg-card p-5 rounded-2xl  flex flex-col justify-between"
             >
               {/* Category Header */}
               <div className="pb-4 mb-4 border-b border-border/80 flex items-center justify-between font-mono text-xs">

@@ -7,6 +7,7 @@ import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { trackEvent } from "@/lib/analytics-client"
 import { cn } from "@/lib/utils"
+import { useSpotlight } from "@/hooks/useSpotlight"
 
 interface ProjectCardProps {
   project: Project
@@ -30,6 +31,7 @@ const ensureArray = (data: unknown): string[] => {
 
 export const ProjectCard = ({ project, index = 0, variant = "default" }: ProjectCardProps) => {
   const router = useRouter()
+  const onSpotlight = useSpotlight()
   const featured = variant === "featured"
   const handleNavigate = () => {
     trackEvent("project_open", { id: project.id, title: project.title })
@@ -47,8 +49,9 @@ export const ProjectCard = ({ project, index = 0, variant = "default" }: Project
   return (
     <article
       onClick={handleNavigate}
+      onPointerMove={onSpotlight}
       className={cn(
-        "group lift-card relative flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border border-border bg-card hover:border-accent/60 focus-within:border-accent",
+        "group spotlight lift-card relative flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border border-border bg-card hover:border-accent/60 focus-within:border-accent",
       )}
     >
       {/* Image — leads the card so the work is seen before it is read */}

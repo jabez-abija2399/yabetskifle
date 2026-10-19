@@ -391,6 +391,65 @@
   animation: marquee-x 36s linear infinite;
 }
 
+/* ── Motion system ──────────────────────────────────────────────
+   One easing curve and two durations for the whole site, so every
+   movement feels like it came from the same hand. */
+:root {
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 200ms;
+  --dur-base: 500ms;
+  --dur-slow: 800ms;
+}
+
+/* Spotlight — a glow that follows the pointer inside a card.
+   Only appears on hover-capable devices with motion allowed. */
+.spotlight {
+  position: relative;
+  isolation: isolate;
+}
+.spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  opacity: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    360px circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in srgb, var(--accent) 16%, transparent),
+    transparent 70%
+  );
+  transition: opacity var(--dur-base) var(--ease-out-expo);
+}
+.spotlight:hover::before {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .spotlight::before {
+    display: none;
+  }
+}
+
+/* Scroll progress — native scroll timeline, hidden where unsupported */
+.scroll-progress {
+  transform: scaleX(0);
+}
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    animation: scroll-progress-grow linear both;
+    animation-timeline: scroll(root block);
+  }
+}
+@keyframes scroll-progress-grow {
+  to { transform: scaleX(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress {
+    display: none;
+  }
+}
+
 /* Cards lift and take on an accent glow on hover */
 .lift-card {
   transition:

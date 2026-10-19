@@ -22,6 +22,16 @@ const container: Variants = {
   },
 }
 
+const headline: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.09, delayChildren: 0.15 } },
+}
+
+const wordIn: Variants = {
+  hidden: { opacity: 0, y: "0.45em" },
+  show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
+}
+
 const item: Variants = {
   hidden: { opacity: 0, y: 18 },
   show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
@@ -49,8 +59,16 @@ export const Hero = ({ profile, copy, resumeUrl, stats = [] }: Props) => {
             <span className="eyebrow-chip">{statusText}</span>
           </motion.div>
 
-          <motion.h1 variants={item} className="text-heading-hero text-gradient font-semibold">
-            {fullName}
+          {/* Word-level stagger: short, transform-only, and readable with motion off */}
+          <motion.h1
+            variants={headline}
+            className="text-heading-hero text-gradient font-semibold"
+          >
+            {fullName.split(" ").map((word, i) => (
+              <motion.span key={`${word}-${i}`} variants={wordIn} className="inline-block pr-[0.25em]">
+                {word}
+              </motion.span>
+            ))}
           </motion.h1>
 
           <motion.p variants={item} className="max-w-xl text-lg leading-relaxed text-muted-foreground md:text-xl text-pretty">
