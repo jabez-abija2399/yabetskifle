@@ -11,6 +11,7 @@ interface Props {
   profile: Profile
   copy?: SiteCopy
   resumeUrl?: string
+  stats?: { value: string; label: string }[]
 }
 
 const container: Variants = {
@@ -26,7 +27,7 @@ const item: Variants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
 }
 
-export const Hero = ({ profile, copy, resumeUrl }: Props) => {
+export const Hero = ({ profile, copy, resumeUrl, stats = [] }: Props) => {
   const fullName = profile.full_name || "Yabets Kifle"
   const year = new Date().getFullYear()
   const statusText = t(copy, "hero.status_text", `Open to roles — Full-time · Contract · Remote · ${year}`)
@@ -145,6 +146,18 @@ export const Hero = ({ profile, copy, resumeUrl }: Props) => {
                 </span>
               ))}
             </div>
+
+            {/* Proof at a glance — every number comes from the database */}
+            {stats.length > 0 && (
+              <dl className="pt-6 grid grid-cols-2 sm:grid-cols-4 gap-px bg-border border border-border rounded-xs overflow-hidden max-w-2xl">
+                {stats.map((s) => (
+                  <div key={s.label} className="bg-card px-4 py-4">
+                    <dt className="font-mono text-[11px] text-muted-foreground">{s.label}</dt>
+                    <dd className="mt-1 text-2xl font-semibold tracking-tight text-foreground">{s.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
           </motion.div>
 
           {/* Right / Engineer's Field-Notebook Spec Card */}
@@ -241,16 +254,19 @@ export const Hero = ({ profile, copy, resumeUrl }: Props) => {
         </motion.div>
       </div>
 
-      {/* Bottom technical footer rail */}
-      <div className="px-6 md:px-12 lg:px-16 xl:px-24 pt-4">
-        <div className="max-w-[1600px] mx-auto w-full flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-border font-mono text-xs text-muted-foreground">
-          <div className="flex items-center gap-2">
-            <span className="text-accent">↓</span>
-            <span>Scroll for technical index & case studies</span>
-          </div>
-          <div className="flex items-center gap-4 text-[11px]">
-            <span>[SYS_ARCH // REACT · NEXT · TS]</span>
-          </div>
+      {/* Bottom rail — scroll cue plus a slow marquee of the stack */}
+      <div className="mt-10 border-y border-border bg-card/60 backdrop-blur-xs overflow-hidden">
+        <div className="flex w-max animate-marquee items-center gap-10 py-3 font-mono text-xs text-muted-foreground">
+          {[0, 1].map((dup) => (
+            <div key={dup} className="flex shrink-0 items-center gap-10" aria-hidden={dup === 1}>
+              {["Scroll for case studies ↓", ...(profile.availability_tags?.length ? profile.availability_tags : ["Next.js", "TypeScript", "React", "Tailwind", "Supabase"])].map((item) => (
+                <span key={`${dup}-${item}`} className="flex items-center gap-10 whitespace-nowrap">
+                  <span>{item}</span>
+                  <span className="text-accent">✦</span>
+                </span>
+              ))}
+            </div>
+          ))}
         </div>
       </div>
     </section>

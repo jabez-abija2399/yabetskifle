@@ -46,20 +46,16 @@ export const ProjectsShowcase = ({ projects, copy }: Props) => {
             </a>
           </div>
         ) : (
-          <div className="space-y-8 md:space-y-10">
-            {/* Featured */}
+          /* Bento: the featured case study takes a 2×2 tile, the rest fill the grid */
+          <div className="grid auto-rows-fr gap-5 md:grid-cols-3 md:gap-6">
             {featured && (
-              <ProjectCard project={featured} index={0} variant="wide" />
-            )}
-
-            {/* Rest */}
-            {rest.length > 0 && (
-              <div className="grid md:grid-cols-2 gap-8">
-                {rest.map((project, i) => (
-                  <ProjectCard key={project.id} project={project} index={i + 1} />
-                ))}
+              <div className="md:col-span-2 md:row-span-2">
+                <ProjectCard project={featured} index={0} variant="featured" />
               </div>
             )}
+            {rest.map((project, i) => (
+              <ProjectCard key={project.id} project={project} index={i + 1} />
+            ))}
           </div>
         )}
 

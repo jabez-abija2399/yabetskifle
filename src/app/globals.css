@@ -397,6 +397,15 @@
   color: transparent;
 }
 
+@keyframes marquee-x {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee-x 36s linear infinite;
+}
+
 .lift-card {
   transition:
     transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
