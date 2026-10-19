@@ -34,7 +34,7 @@ export const Hero = ({ profile, copy, resumeUrl }: Props) => {
   const resumeHref = resumeUrl || profile.resume_url
 
   return (
-    <section id="hero" className="relative min-h-[90svh] flex flex-col justify-between border-b border-border bg-schematic-grid pt-24 pb-12">
+    <section id="hero" className="relative min-h-[90svh] flex flex-col justify-between border-b border-border bg-schematic-grid bg-aurora pt-24 pb-12 overflow-hidden">
       {/* Top technical annotation strip */}
       <div className="px-6 md:px-12 lg:px-16 xl:px-24 mb-6">
         <motion.div
@@ -82,7 +82,7 @@ export const Hero = ({ profile, copy, resumeUrl }: Props) => {
             </div>
 
             {/* Engineer name in intentional architectural type scale */}
-            <h1 className="text-heading-hero tracking-tight text-foreground font-semibold">
+            <h1 className="text-heading-hero tracking-tight text-gradient font-semibold">
               {fullName}
             </h1>
 
@@ -152,7 +152,7 @@ export const Hero = ({ profile, copy, resumeUrl }: Props) => {
             variants={item}
             className="col-span-12 lg:col-span-4"
           >
-            <div className="relative border border-accent/30 bg-card p-4 sm:p-5 rounded-xs corner-ticks">
+            <div className="relative border border-accent/30 bg-card/90 backdrop-blur-sm p-4 sm:p-5 rounded-xs corner-ticks shadow-[0_24px_60px_-28px_color-mix(in_srgb,var(--accent)_50%,transparent)]">
               {/* Header metadata bar */}
               <div className="flex items-center justify-between border-b border-border pb-3 mb-4 font-mono text-xs text-muted-foreground">
                 <span className="flex items-center gap-1.5 text-foreground font-medium">

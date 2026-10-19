@@ -45,7 +45,7 @@ export const ProjectCard = ({ project, index = 0, variant = "default" }: Project
   return (
     <article
       onClick={handleNavigate}
-      className={`group cursor-pointer border border-accent/30 hover:border-accent focus-within:border-accent bg-card rounded-xs transition-all duration-200 flex flex-col justify-between p-5 md:p-6 corner-ticks ${
+      className={`group lift-card cursor-pointer border border-accent/30 hover:border-accent focus-within:border-accent bg-card rounded-xs flex flex-col justify-between p-5 md:p-6 corner-ticks ${
         variant === "wide" ? "md:grid md:grid-cols-12 md:gap-8 items-stretch" : ""
       }`}
     >
@@ -188,7 +188,7 @@ export const ProjectCard = ({ project, index = 0, variant = "default" }: Project
             src={project.images[0]}
             alt={project.title}
             fill
-            className="object-cover grayscale contrast-105 group-hover:grayscale-0 transition-all duration-300"
+            className="object-cover saturate-[0.85] contrast-105 group-hover:saturate-100 group-hover:scale-[1.03] transition-all duration-500"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
           />
         ) : (

@@ -15,6 +15,7 @@ import { FAQSection } from "@/components/sections/FAQSection"
 import { ContactSection } from "@/components/sections/ContactSection"
 import { EducationSection } from "@/components/sections/EducationSection"
 import { Footer } from "@/components/sections/Footer"
+import { Reveal } from "@/components/ui/Reveal"
 
 export default async function HomePage() {
   const [profile, skills, services, projects, experiences, testimonials, settings, posts, faqs, education, certifications, languages, copy] = await Promise.all([
@@ -55,27 +56,29 @@ export default async function HomePage() {
     <main className="bg-background min-h-screen text-foreground">
       <Hero profile={profile} copy={copy} resumeUrl={profile.resume_url || settings?.cv_url} />
 
-      <div className="space-y-24 md:space-y-28 pb-24 pt-16 md:pt-20">
-        {settings?.show_projects !== false && <ProjectsShowcase projects={projects} copy={copy} />}
+      <div className="space-y-24 md:space-y-32 pb-24 pt-16 md:pt-24">
+        {settings?.show_projects !== false && <Reveal><ProjectsShowcase projects={projects} copy={copy} /></Reveal>}
 
-        {settings?.show_skills !== false && <TechStack skills={skills} copy={copy} />}
+        {settings?.show_skills !== false && <Reveal><TechStack skills={skills} copy={copy} /></Reveal>}
 
-        <AboutSection profile={profile} languagesLine={languagesLine} copy={copy} />
+        <Reveal><AboutSection profile={profile} languagesLine={languagesLine} copy={copy} /></Reveal>
 
-        {settings?.show_experience !== false && <ExperienceTimeline experiences={experiences} copy={copy} />}
+        {settings?.show_experience !== false && <Reveal><ExperienceTimeline experiences={experiences} copy={copy} /></Reveal>}
 
-        {settings?.show_services !== false && <ServicesGrid services={services} copy={copy} />}
+        {settings?.show_services !== false && <Reveal><ServicesGrid services={services} copy={copy} /></Reveal>}
 
-        <EducationSection education={education} certifications={certifications} copy={copy} />
+        <Reveal><EducationSection education={education} certifications={certifications} copy={copy} /></Reveal>
 
-        {settings?.show_blog !== false && <LatestPosts posts={posts} copy={copy} />}
+        {settings?.show_blog !== false && <Reveal><LatestPosts posts={posts} copy={copy} /></Reveal>}
 
-        {settings?.show_testimonials !== false && <TestimonialsSection testimonials={testimonials} copy={copy} />}
+        {settings?.show_testimonials !== false && <Reveal><TestimonialsSection testimonials={testimonials} copy={copy} /></Reveal>}
 
-        {settings?.show_faq !== false && <FAQSection faqs={faqs} copy={copy} />}
+        {settings?.show_faq !== false && <Reveal><FAQSection faqs={faqs} copy={copy} /></Reveal>}
 
         {settings?.show_contact !== false && (
-          <ContactSection profile={profile} copy={copy} contactEmail={settings?.contact_email} />
+          <Reveal>
+            <ContactSection profile={profile} copy={copy} contactEmail={settings?.contact_email} />
+          </Reveal>
         )}
       </div>
 
